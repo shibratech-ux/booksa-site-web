@@ -9,4 +9,6 @@ export interface UserProfile {
   department: string;
   createdAt: string;
   avatarUrl?: string;
+  language?: SupportedLanguage;
 }
+import type { SupportedLanguage } from '@/i18n/types';

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dialog Motion"
+  short_description: "Build consistent animated project dialogs"
+  default_prompt: "Use $dialog-motion to build or refine an animated dialog in this project."

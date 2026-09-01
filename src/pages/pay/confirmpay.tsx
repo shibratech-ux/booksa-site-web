@@ -5,10 +5,12 @@ import {
   CheckmarkRegular,
   StarFilled
 } from '@fluentui/react-icons';
-import dayjs from 'dayjs';
+import { formatCurrency, formatDate } from '@/utils/formatters';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '@/utils/constants';
-import type { Listing } from '@/pages/home/listing.types';
+import type { Listing } from '@/pages/home/listing/listing.types';
 import BooksaLogo from '@/components/layout/BooksaLogo';
+import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import {
   readPersistedConfirmPayContext,
   readPersistedListingContext
@@ -36,7 +38,7 @@ function parsePriceValue(price: string) {
 }
 
 function formatCurrencyValue(value: number) {
-  return `CDF ${new Intl.NumberFormat('en-US').format(Math.round(value))}`;
+  return formatCurrency(Math.round(value), 'CDF');
 }
 
 function getReservationPrice(basePrice: string, nights: number) {
@@ -51,12 +53,12 @@ function getReservationPrice(basePrice: string, nights: number) {
   return formatCurrencyValue(nightlyRate * normalizedNights);
 }
 
-function buildDateLabel(start?: string | null, end?: string | null) {
+function buildDateLabel(start: string | null | undefined, end: string | null | undefined, emptyLabel: string) {
   if (!start || !end) {
-    return 'Sélectionner des dates';
+    return emptyLabel;
   }
 
-  return `${dayjs(start).format('MMM D')} - ${dayjs(end).format('MMM D, YYYY')}`;
+  return `${formatDate(start, undefined, { month: 'short', day: 'numeric' })} – ${formatDate(end, undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
 }
 
 function PaymentChoice({
@@ -80,8 +82,8 @@ function PaymentChoice({
       ].join(' ')}
     >
       <span className="min-w-0 flex-1">
-        <span className="block text-[14px] font-normal">{title}</span>
-        {description ? <span className="mt-1 block text-[14px] leading-4 text-[var(--color-text-secondary)]">{description}</span> : null}
+        <span className="block text-[11.76px] font-normal">{title}</span>
+        {description ? <span className="mt-1 block text-[11.76px] leading-4 text-[var(--color-text-secondary)]">{description}</span> : null}
       </span>
       <span
         className={[
@@ -105,9 +107,9 @@ function SectionCard({
   subtitle?: string;
 }) {
   return (
-    <div className="rounded-[22px] px-5 py-5 gap-10 shadow-[0_11px_16px_rgba(15,23,42,0.12)] sm:px-6 sm:py-6">
+    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 sm:px-6 sm:py-6">
       <div className="mb-5">
-        <h2 className="text-[17px] font-semibold tracking-tight text-[var(--color-text-primary)]">{title}</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]">{title}</h2>
         {subtitle ? <p className="mt-1 text-xs leading-6 text-[var(--color-text-secondary)]">{subtitle}</p> : null}
       </div>
       {children}
@@ -116,6 +118,7 @@ function SectionCard({
 }
 
 export default function ConfirmPayPage() {
+  const { t } = useTranslation('booking');
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as ConfirmPayState | null;
@@ -135,15 +138,16 @@ export default function ConfirmPayPage() {
     return {
       dates: buildDateLabel(
         state?.range?.start ?? persistedState?.range?.start,
-        state?.range?.end ?? persistedState?.range?.end
+        state?.range?.end ?? persistedState?.range?.end,
+        t('selectDates')
       ),
       guests: guestCounts
-        ? `${guestCounts.adults + guestCounts.children} voyageur${guestCounts.adults + guestCounts.children === 1 ? '' : 's'}`
-        : '1 voyageur',
+        ? t('guests', { count: guestCounts.adults + guestCounts.children })
+        : t('guests', { count: 1 }),
       nights,
       total
     };
-  }, [listing, persistedState, state]);
+  }, [listing, persistedState, state, t]);
 
   if (!listing) {
     return <Navigate to={ROUTES.home} replace />;
@@ -165,25 +169,25 @@ export default function ConfirmPayPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1120px] px-4 py-8 sm:px-6 lg:py-10">
+      <main className="mx-auto max-w-[1120px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <div className="flex items-center gap-4">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_8px_20px_rgba(15,23,42,0.08)] ring-1 ring-[var(--color-border)] transition hover:-translate-y-0.5"
+            className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border)] transition hover:-translate-y-0.5"
             aria-label="Retour"
           >
             <ArrowLeftRegular className="h-5 w-5" />
           </button>
           <div>
-            <h1 className="text-[30px] font-medium tracking-tight text-[var(--color-text-primary)] sm:text-[30px]">Confirmer et payer</h1>
+            <h1 className="text-[23.52px] font-bold tracking-tight text-[var(--color-text-primary)] sm:text-[26.88px]">Confirmer et payer</h1>
           </div>
         </div>
 
         <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
           <section className="space-y-5">
             <SectionCard title="1. Choisissez quand payer">
-              <div className="overflow-hidden rounded-[22px] bg-[var(--color-surface)]">
+              <div className="overflow-hidden rounded-xl bg-[var(--color-surface)]">
                 <div className="border-b border-[var(--color-border)] px-0 py-2">
                   <PaymentChoice
                     active={selectedChoice === 'now'}
@@ -204,7 +208,7 @@ export default function ConfirmPayPage() {
               <div className="mt-6 flex justify-end">
                 <button
                   type="button"
-                  className="inline-flex min-w-[116px] cursor-pointer items-center justify-center rounded-[14px] bg-[var(--color-primary-500)] px-8 py-3.5 text-xs font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
+                  className="inline-flex min-h-12 min-w-[116px] cursor-pointer items-center justify-center rounded-lg bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
                 >
                   Suivant
                 </button>
@@ -214,11 +218,11 @@ export default function ConfirmPayPage() {
           </section>
 
           <aside className="space-y-4 lg:sticky lg:top-8 lg:self-start">
-            <div className="rounded-[26px] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+            <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] sm:p-6">
               <div className="flex gap-4">
-                <img alt={listing.location} src={roomImage} className="h-[96px] w-[96px] rounded-[18px] object-cover" />
+                <ShimmerImage alt={listing.location} src={roomImage} className="h-[96px] w-[96px] rounded-[14px] object-cover" />
                 <div className="min-w-0">
-                  <h2 className="text-[18px] font-semibold leading-6 text-[var(--color-text-primary)]">
+                  <h2 className="text-[15.12px] font-semibold leading-6 text-[var(--color-text-primary)]">
                     {listing.title ?? listing.location}
                   </h2>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-secondary)]">
@@ -262,28 +266,28 @@ export default function ConfirmPayPage() {
                 <div className="border-t border-[var(--color-border)] py-4">
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-xs font-medium text-[var(--color-text-primary)]">Voyageurs</p>
+                      <p className="text-xs font-medium text-[var(--color-text-primary)]">{t('guests')}</p>
                       <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{bookingSummary.guests}</p>
                     </div>
                     <button
                       type="button"
                       className="cursor-pointer rounded-full bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-4 py-2 text-xs font-medium text-[var(--color-text-primary)]"
                     >
-                      Modifier
+                      {t('edit')}
                     </button>
                   </div>
                 </div>
 
                 <div className="border-t border-[var(--color-border)] py-4">
-                  <p className="text-xs font-medium text-[var(--color-text-primary)]">Détails du prix</p>
+                  <p className="text-xs font-medium text-[var(--color-text-primary)]">{t('priceDetails')}</p>
                   <div className="mt-3 flex items-center justify-between gap-4 text-xs text-[var(--color-text-secondary)]">
                     <span>
-                      {bookingSummary.nights} nuit{bookingSummary.nights === 1 ? '' : 's'} x {formatCurrencyValue(parsePriceValue(listing.price) / 2)}
+                      {t('nightlyPrice', { count: bookingSummary.nights, price: formatCurrencyValue(parsePriceValue(listing.price) / 2) })}
                     </span>
                     <span>{bookingSummary.total}</span>
                   </div>
-                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-4 text-[15px] font-semibold text-[var(--color-text-primary)]">
-                    <span>Total</span>
+                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-4 text-[12.6px] font-semibold text-[var(--color-text-primary)]">
+                    <span>{t('total')}</span>
                     <span>{bookingSummary.total}</span>
                   </div>
                   <button
@@ -308,7 +312,7 @@ export default function ConfirmPayPage() {
               </div>
             </div>
 
-            <div className="rounded-[22px] bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-5 py-4 text-xs text-[var(--color-text-primary)]">
+            <div className="rounded-xl bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-5 py-4 text-sm text-[var(--color-text-primary)]">
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-[var(--color-primary-700)]">
                   <CheckmarkRegular className="h-4 w-4" />

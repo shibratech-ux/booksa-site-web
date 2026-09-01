@@ -1,28 +1,38 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { loginSchema, type LoginFormValues } from '@/utils/validators';
+import {
+  createLoginResolver,
+  createLoginSchema,
+  type LoginFormValues
+} from '@/utils/validators';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/utils/constants';
+import { getFirebaseAuthErrorKey } from '@/utils/firebaseErrors';
 
 // React Hook Form + Zod keeps the auth form strict and easy to extend.
-export function LoginForm() {
+export function LoginForm({ defaultEmail = 'jordan.wells@booksa.io' }: { defaultEmail?: string }) {
+  const { t } = useTranslation('auth');
+  const { t: tErrors } = useTranslation('errors');
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const loginSchema = useMemo(() => createLoginSchema(t), [t]);
+  const loginResolver = useMemo(() => createLoginResolver(loginSchema), [loginSchema]);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: loginResolver,
     defaultValues: {
-      email: 'jordan.wells@booksa.io',
+      email: defaultEmail,
       password: 'password123'
     }
   });
@@ -30,32 +40,34 @@ export function LoginForm() {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       await login(values);
-      toast.success('Authentification réussie');
-      navigate(ROUTES.home);
+      toast.success(t('success'));
+      const requestedPath = (location.state as { from?: { pathname?: string } } | null)?.from
+        ?.pathname;
+      navigate(requestedPath ?? ROUTES.home, { replace: true });
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Impossible de se connecter';
-      toast.error(message);
+      console.error('Authentication failed.', error);
+      toast.error(tErrors(getFirebaseAuthErrorKey(error)));
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <Input
-        label="E-mail"
+        label={t('email')}
         type="email"
         autoComplete="email"
-        placeholder="nom@entreprise.com"
+        placeholder={t('emailPlaceholder')}
         error={errors.email?.message}
         {...register('email')}
       />
 
       <Input
-        label="Mot de passe"
+        label={t('password')}
         type={showPassword ? 'text' : 'password'}
         autoComplete="current-password"
-        placeholder="Entrez votre mot de passe"
+        placeholder={t('passwordPlaceholder')}
         error={errors.password?.message}
-        helperText="Utilisez vos identifiants professionnels."
+        helperText={t('credentialsHelper')}
         {...register('password')}
       />
 
@@ -64,11 +76,11 @@ export function LoginForm() {
         onClick={() => setShowPassword((value) => !value)}
         className="text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
       >
-        {showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+        {showPassword ? t('hidePassword') : t('showPassword')}
       </button>
 
       <Button type="submit" className="w-full" loading={isSubmitting}>
-        Se connecter en toute sécurité
+        {t('signIn')}
       </Button>
     </form>
   );

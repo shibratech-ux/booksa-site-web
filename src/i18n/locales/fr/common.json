@@ -1,0 +1,9 @@
+{
+  "actions": { "add": "Ajouter", "back": "Retour", "cancel": "Annuler", "close": "Fermer", "continue": "Continuer", "done": "Terminé", "edit": "Modifier", "retry": "Réessayer", "save": "Enregistrer", "saving": "Enregistrement…", "search": "Rechercher", "start": "Commencer" },
+  "states": { "loading": "Chargement…", "loadingInterface": "Chargement de l’interface…", "notProvided": "Non renseigné", "notStarted": "Non commencé" },
+  "errors": { "generic": "Une erreur est survenue", "loadSection": "Impossible de charger cette section pour le moment. Veuillez réessayer.", "save": "Impossible d’enregistrer vos modifications." },
+  "accessibility": { "changeLanguage": "Changer la langue", "currentLanguage": "Langue actuelle : {{language}}", "goHome": "Aller à l’accueil" },
+  "brand": { "defaultUser": "Utilisateur Booksa", "host": "Hôte Booksa" },
+  "notFound": { "title": "Page introuvable", "description": "La page demandée n’existe pas ou a été déplacée.", "home": "Retour à l’accueil" },
+  "booking": { "reserve": "Réserver" }, "modal": { "subtitle": "Échange sécurisé, fluide et clair" }
+}

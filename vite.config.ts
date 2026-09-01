@@ -42,6 +42,35 @@ export default defineConfig({
               return 'amcharts';
             }
 
+            if (id.includes('/firebase/') || id.includes('/@firebase/')) {
+              return 'firebase';
+            }
+
+            if (
+              id.includes('/lucide-react/') ||
+              id.includes('/react-icons/') ||
+              id.includes('/@heroicons/') ||
+              id.includes('/@fluentui/react-icons/')
+            ) {
+              return 'icons';
+            }
+
+            if (
+              id.includes('/react-hook-form/') ||
+              id.includes('/@hookform/resolvers/') ||
+              id.includes('/zod/')
+            ) {
+              return 'forms';
+            }
+
+            if (id.includes('/recharts/')) {
+              return 'charts';
+            }
+
+            if (id.includes('/i18next')) {
+              return 'i18n';
+            }
+
             return 'vendor';
           }
         }

@@ -1,0 +1,8 @@
+{
+  "nav": { "today": "Today", "calendar": "Calendar", "listings": "Listings", "messages": "Messages", "host": "Host navigation", "hostMobile": "Mobile host navigation", "travelerMode": "Switch to traveling" },
+  "messages": { "title": "Messages", "search": "Search messages", "settings": "Message settings", "all": "All", "unread": "Unread", "empty": "No messages found", "emptyHelp": "Try removing or changing your filters.", "clearFilters": "Clear all filters" },
+  "reservations": { "upcoming": "Upcoming", "empty": "You have no reservations", "emptyHelp": "To receive reservations, finish and publish your listing.", "finishListing": "Finish your listing", "calendarImage": "Open calendar" },
+  "listingSetup": { "welcomeBack": "Welcome back, {{name}}", "finish": "Finish your listing", "create": "Create a listing", "startedOn": "{{listing}} started on {{date}}", "uniqueSpace": "Your unique space", "bedBreakfast": "Your bed and breakfast", "listing": "Your listing", "new": "Create a new listing", "fromExisting": "Create from an existing listing", "createError": "We couldn't create your listing. Please try again.", "loadError": "We couldn't load your unfinished listings." },
+  "drawer": { "title": "Menu", "accountSettings": "Account settings", "languagesCurrency": "Languages & currency", "hostResources": "Resources for hosts", "getHelp": "Get help", "findCoHost": "Find a co-host", "newListing": "Create a new listing", "referHost": "Refer a host", "newToBooksa": "Discover to Booksa?", "onboarding": "Discover tips and best practices shared by experienced hosts.", "hostAccountMenu": "Host account menu" },
+  "accessibility": { "hostHome": "Booksa host home", "hostAccount": "{{name}}’s account", "accountMenu": "Account menu" }
+}

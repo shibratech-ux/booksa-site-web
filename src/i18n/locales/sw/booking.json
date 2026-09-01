@@ -1,0 +1,3 @@
+{
+  "selectDates": "Chagua tarehe", "guests": "Wageni", "guests_one": "Mgeni {{count}}", "guests_other": "Wageni {{count}}", "nights_one": "Usiku {{count}}", "nights_other": "Usiku {{count}}", "forNights_one": "kwa usiku {{count}}", "forNights_other": "kwa usiku {{count}}", "nightsInCity_one": "Usiku {{count}} huko {{city}}", "nightsInCity_other": "Usiku {{count}} huko {{city}}", "nightlyPrice_one": "Usiku {{count}} × {{price}}", "nightlyPrice_other": "Usiku {{count}} × {{price}}", "checkIn": "Kuingia", "checkOut": "Kutoka", "reserve": "Weka nafasi", "dates": "Tarehe", "priceDetails": "Maelezo ya bei", "total": "Jumla", "edit": "Hariri"
+}

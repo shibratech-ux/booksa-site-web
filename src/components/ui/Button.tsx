@@ -24,9 +24,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'h-9 px-3 text-sm',
-  md: 'h-11 px-4 text-sm',
-  lg: 'h-12 px-6 text-base'
+  sm: 'h-9 min-h-9 px-4 text-sm',
+  md: 'h-12 min-h-12 px-6 text-base',
+  lg: 'h-14 min-h-14 px-6 text-base'
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
@@ -52,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       whileTap={{ scale: disabled || loading ? 1 : 0.98 }}
       transition={{ duration: 0.18 }}
       className={cn(
-        'inline-flex items-center justify-center gap-2 disabled:cursor-not-allowed disabled:opacity-60',
+        'inline-flex items-center justify-center gap-2 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60',
         variantStyles[variant],
         sizeStyles[size],
         className

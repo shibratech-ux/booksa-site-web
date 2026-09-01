@@ -1,0 +1,4 @@
+{
+  "auth": { "invalidCredential": "Imɛlɛ to mot de passe ezali malamu te.", "userNotFound": "Konte moko te ezali na imɛlɛ oyo.", "wrongPassword": "Mot de passe ezali malamu te.", "emailInUse": "Imɛlɛ oyo esalelami deja.", "tooManyRequests": "Omeki mbala mingi. Meka lisusu sima.", "network": "Tala internet na yo mpe meka lisusu.", "requiresRecentLogin": "Kɔtá lisusu liboso ya kosala likambo oyo.", "notConfigured": "Kokɔta ezali te mpo na sikoyo.", "generic": "Tokoki kokɔtisa yo te. Meka lisusu." },
+  "profile": { "notAuthenticated": "Esengeli okɔta mpo na kobongola profil na yo.", "notFound": "Profil na yo ezwami te.", "load": "Tokoki kokɔtisa makambo ya konte na yo te.", "save": "Tokoki kobomba makambo ya konte na yo te." }
+}

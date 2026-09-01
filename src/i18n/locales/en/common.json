@@ -1,0 +1,9 @@
+{
+  "actions": { "add": "Add", "back": "Back", "cancel": "Cancel", "close": "Close", "continue": "Continue", "done": "Done", "edit": "Edit", "retry": "Retry", "save": "Save", "saving": "Saving…", "search": "Search", "start": "Start" },
+  "states": { "loading": "Loading…", "loadingInterface": "Loading the interface…", "notProvided": "Not provided", "notStarted": "Not started" },
+  "errors": { "generic": "Something went wrong", "loadSection": "This section cannot be loaded right now. Please try again.", "save": "Unable to save your changes." },
+  "accessibility": { "changeLanguage": "Change language", "currentLanguage": "Current language: {{language}}", "goHome": "Go to home" },
+  "brand": { "defaultUser": "Booksa user", "host": "Booksa Host" },
+  "notFound": { "title": "Page not found", "description": "The requested page does not exist or has moved.", "home": "Back to home" },
+  "booking": { "reserve": "Reserve" }, "modal": { "subtitle": "A secure, smooth, and clear exchange" }
+}

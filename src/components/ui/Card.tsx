@@ -13,9 +13,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   return (
     <motion.div
       ref={ref}
-      whileHover={hover ? { y: -3 } : undefined}
+      whileHover={hover ? { y: -2 } : undefined}
       transition={{ duration: 0.2 }}
-      className={cn('dashboard-card p-5', hover && 'card-hover', className)}
+      className={cn('dashboard-card p-5 sm:p-6', hover && 'card-hover', className)}
       {...props}
     />
   );

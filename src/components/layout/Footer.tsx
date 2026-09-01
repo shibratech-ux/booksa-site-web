@@ -1,4 +1,5 @@
-import { ChevronRightRegular, GlobeRegular } from '@fluentui/react-icons';
+import { ChevronRightRegular } from '@fluentui/react-icons';
+import { LanguageSwitcher } from '@/components/language/LanguageSwitcher';
 
 const footerBrowseTabs = ['Populaire', 'Arts et culture', 'Appartements adaptés à Booksa'];
 
@@ -34,11 +35,11 @@ const footerLinks = [
 
 function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white/90">
-      <div className="mx-auto max-w-[1500px] px-4 py-12 lg:px-6">
-        <section className="rounded-[32px]  px-5 py-8 sm:px-8">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
+      <div className="mx-auto max-w-[1500px] px-4 py-10 sm:px-5 lg:px-8 lg:py-16">
+        <section className="rounded-2xl bg-[var(--color-surface-muted)] px-5 py-8 sm:px-8">
           <div className="max-w-7xl">
-            <h2 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-xl">
+            <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)] sm:text-[18.48px]">
               Inspiration pour vos prochaines escapades
             </h2>
 
@@ -49,8 +50,8 @@ function Footer() {
                   type="button"
                   className={`whitespace-nowrap border-b-2 pb-3 text-sm font-medium transition ${
                     index === 0
-                      ? 'border-slate-900 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:text-gray-900'
+                      ? 'border-[var(--color-text-primary)] text-[var(--color-text-primary)]'
+                      : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
                   }`}
                 >
                   {tab}
@@ -61,10 +62,10 @@ function Footer() {
             <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
               {footerBrowseDestinations.map((destination) => (
                 <button key={destination.location} type="button" className="group text-left">
-                  <p className="text-sm font-semibold text-gray-900 transition group-hover:text-[var(--color-primary-500)]">
+                  <p className="text-sm font-semibold text-[var(--color-text-primary)] transition group-hover:text-[var(--color-primary-500)]">
                     {destination.location}
                   </p>
-                  <p className="mt-0.5 text-sm text-gray-500">{destination.meta}</p>
+                  <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{destination.meta}</p>
                 </button>
               ))}
             </div>
@@ -72,7 +73,7 @@ function Footer() {
             <div className="mt-6 flex justify-end">
               <button
                 type="button"
-                className="inline-flex items-center gap-1 text-sm font-semibold text-gray-900 transition hover:text-[var(--color-primary-500)]"
+                className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[var(--color-text-primary)] transition hover:text-[var(--color-primary-500)]"
               >
                 Voir plus
                 <ChevronRightRegular className="h-4 w-4" />
@@ -84,7 +85,7 @@ function Footer() {
         <div className="mt-14 grid gap-10 md:grid-cols-2 xl:grid-cols-3">
           {footerLinks.map((group) => (
             <div key={group.title} className="space-y-4">
-              <h3 className="text-[13px] font-bold uppercase tracking-[0.12em] text-gray-900">
+              <h3 className="text-[10.92px] font-bold uppercase tracking-[0.12em] text-[var(--color-text-primary)]">
                 {group.title}
               </h3>
               <ul className="space-y-3">
@@ -92,7 +93,7 @@ function Footer() {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-[12px] text-gray-600 transition hover:text-[var(--color-primary-500)]"
+                      className="text-[10.92px] text-[var(--color-text-secondary)] transition hover:text-[var(--color-primary-500)]"
                     >
                       {link}
                     </a>
@@ -103,8 +104,8 @@ function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-slate-200 pt-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-gray-600">
+        <div className="mt-12 flex flex-col gap-4 border-t border-[var(--color-border)] pt-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-[var(--color-text-secondary)]">
             <span>© 2026 Booksa</span>
             <a href="#" className="transition hover:text-[var(--color-primary-500)]">
               Confidentialité
@@ -118,16 +119,10 @@ function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
+            <LanguageSwitcher compact />
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <GlobeRegular className="h-4 w-4" />
-              Français
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-xs text-[var(--color-text-primary)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
             >
               CDF
             </button>

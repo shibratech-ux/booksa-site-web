@@ -1,5 +1,6 @@
 import type { FluentIcon } from '@fluentui/react-icons';
 import { CameraRegular, ClockRegular, HeartRegular, LocationRegular, SparkleRegular, FoodRegular } from '@fluentui/react-icons';
+import { formatCurrency } from '@/utils/formatters';
 
 export type ServiceCard = {
   title: string;
@@ -42,7 +43,7 @@ function unsplashImage(photoId: string) {
 }
 
 function formatCdfAmount(amount: number) {
-  return `CDF ${new Intl.NumberFormat('en-US').format(Math.round(amount))}`;
+  return formatCurrency(Math.round(amount), 'CDF');
 }
 
 function quarteredPriceLabel(amount: number) {

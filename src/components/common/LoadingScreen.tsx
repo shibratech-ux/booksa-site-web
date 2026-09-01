@@ -1,6 +1,7 @@
 import BooksaLogo from '@/components/layout/BooksaLogo';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/theme/useTheme';
+import { useTranslation } from 'react-i18next';
 
 interface LoadingScreenProps {
   fullScreen?: boolean;
@@ -10,10 +11,12 @@ interface LoadingScreenProps {
 
 export function LoadingScreen({
   fullScreen = true,
-  label = 'Chargement de l’interface...',
+  label,
   className
 }: LoadingScreenProps) {
   const { theme } = useTheme();
+  const { t } = useTranslation('common');
+  const statusLabel = label ?? t('states.loadingInterface');
 
   return (
     <div
@@ -55,22 +58,22 @@ export function LoadingScreen({
           />
 
           <div
-            className="relative rounded-[28px] border px-5 py-4 shadow-[0_20px_60px_rgba(15,23,42,0.10)]"
+            className="relative rounded-2xl px-5 py-4"
             style={{
-              backgroundColor: theme.colors.surface,
-              borderColor: theme.colors.border
+              backgroundColor: 'transparent'
             }}
           >
-            <BooksaLogo className="h-14 w-[150px]" />
+            <BooksaLogo className="h-8 w-[110px]" />
           </div>
+          <p className="sr-only" role="status" aria-live="polite">{statusLabel}</p>
         </motion.div>
 
-        <p className="mt-5 text-sm font-medium" style={{ color: theme.colors.textPrimary }}>
+        {/* <p className="mt-5 text-sm font-medium" style={{ color: theme.colors.textPrimary }}>
           {label}
         </p>
         <p className="mt-1 text-xs" style={{ color: theme.colors.textSecondary }}>
           Préparation de l’espace sécurisé
-        </p>
+        </p> */}
       </motion.div>
     </div>
   );

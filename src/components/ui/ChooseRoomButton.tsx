@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/utils/helpers';
+import { useTranslation } from 'react-i18next';
 
 interface ChooseRoomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode;
@@ -8,21 +9,22 @@ interface ChooseRoomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> 
 
 export function ChooseRoomButton({
   className,
-  children = 'Réserver',
+  children,
   compact = false,
   ...props
 }: ChooseRoomButtonProps) {
+  const { t } = useTranslation('common');
   return (
     <button
       type="button"
       className={cn(
-        'cursor-pointer rounded-full bg-[var(--color-primary-500)] px-5 py-3 text-[15px] font-normal text-white transition hover:-translate-y-0.5',
+        'min-h-12 cursor-pointer rounded-lg bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-primary-600)]',
         compact ? 'mt-0 w-auto' : 'mt-4 w-full',
         className
       )}
       {...props}
     >
-      {children}
+      {children ?? t('booking.reserve')}
     </button>
   );
 }

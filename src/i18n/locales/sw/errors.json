@@ -1,0 +1,4 @@
+{
+  "auth": { "invalidCredential": "Barua pepe au nenosiri si sahihi.", "userNotFound": "Hakuna akaunti yenye anwani hii ya barua pepe.", "wrongPassword": "Nenosiri si sahihi.", "emailInUse": "Anwani hii ya barua pepe tayari inatumika.", "tooManyRequests": "Majaribio mengi sana. Jaribu tena baadaye.", "network": "Angalia muunganisho wako wa intaneti na ujaribu tena.", "requiresRecentLogin": "Ingia tena kabla ya kufanya kitendo hiki.", "notConfigured": "Huduma ya kuingia haipatikani sasa.", "generic": "Imeshindikana kuingia. Tafadhali jaribu tena." },
+  "profile": { "notAuthenticated": "Lazima uingie ili kubadilisha wasifu wako.", "notFound": "Wasifu wako haukupatikana.", "load": "Imeshindikana kupakia taarifa za akaunti yako.", "save": "Imeshindikana kuhifadhi taarifa za akaunti yako." }
+}

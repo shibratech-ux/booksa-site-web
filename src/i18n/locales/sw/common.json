@@ -1,0 +1,9 @@
+{
+  "actions": { "add": "Ongeza", "back": "Rudi", "cancel": "Ghairi", "close": "Funga", "continue": "Endelea", "done": "Imekamilika", "edit": "Hariri", "retry": "Jaribu tena", "save": "Hifadhi", "saving": "Inahifadhi…", "search": "Tafuta", "start": "Anza" },
+  "states": { "loading": "Inapakia…", "loadingInterface": "Inapakia programu…", "notProvided": "Haijatolewa", "notStarted": "Haijaanza" },
+  "errors": { "generic": "Hitilafu imetokea", "loadSection": "Sehemu hii haiwezi kupakiwa sasa. Tafadhali jaribu tena.", "save": "Imeshindikana kuhifadhi mabadiliko yako." },
+  "accessibility": { "changeLanguage": "Badilisha lugha", "currentLanguage": "Lugha ya sasa: {{language}}", "goHome": "Nenda mwanzo" },
+  "brand": { "defaultUser": "Mtumiaji wa Booksa", "host": "Mwenyeji wa Booksa" },
+  "notFound": { "title": "Ukurasa haujapatikana", "description": "Ukurasa ulioomba haupo au umehamishwa.", "home": "Rudi mwanzo" },
+  "booking": { "reserve": "Weka nafasi" }, "modal": { "subtitle": "Mawasiliano salama, rahisi na wazi" }
+}

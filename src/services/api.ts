@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosHeaders, type InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/store/auth.store';
+import { firebaseAuth } from '@/services/firebase';
 
 // Central Axios client: injects auth tokens and normalizes API errors.
 const baseURL = import.meta.env.VITE_API_BASE_URL ?? '/api';
@@ -12,8 +13,13 @@ export const api = axios.create({
   }
 });
 
-api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = useAuthStore.getState().token;
+api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  let token = useAuthStore.getState().token;
+
+  if (firebaseAuth?.currentUser) {
+    token = await firebaseAuth.currentUser.getIdToken();
+    useAuthStore.getState().setToken(token);
+  }
 
   if (token) {
     if (config.headers instanceof AxiosHeaders) {

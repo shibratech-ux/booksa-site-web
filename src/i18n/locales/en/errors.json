@@ -1,0 +1,4 @@
+{
+  "auth": { "invalidCredential": "Incorrect email or password.", "userNotFound": "No account matches this email address.", "wrongPassword": "The password is incorrect.", "emailInUse": "This email address is already in use.", "tooManyRequests": "Too many attempts. Try again later.", "network": "Check your internet connection and try again.", "requiresRecentLogin": "Sign in again before performing this action.", "notConfigured": "Authentication is currently unavailable.", "generic": "Unable to sign in. Please try again." },
+  "profile": { "notAuthenticated": "You must be signed in to update your profile.", "notFound": "Your user profile could not be found.", "load": "Unable to load your account information.", "save": "Unable to save your account information." }
+}

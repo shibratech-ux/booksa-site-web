@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import dayjs from 'dayjs';
-import 'dayjs/locale/fr';
+import '@/i18n';
 import App from './App';
 import './index.css';
 import { ThemeProvider } from '@/theme/ThemeProvider';
+import { startAuthSessionPersistence } from '@/services/authSession';
 
-dayjs.locale('fr');
+startAuthSessionPersistence();
 
 const queryClient = new QueryClient({
   defaultOptions: {

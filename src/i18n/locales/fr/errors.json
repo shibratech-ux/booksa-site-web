@@ -1,0 +1,4 @@
+{
+  "auth": { "invalidCredential": "E-mail ou mot de passe incorrect.", "userNotFound": "Aucun compte ne correspond à cette adresse e-mail.", "wrongPassword": "Le mot de passe est incorrect.", "emailInUse": "Cette adresse e-mail est déjà utilisée.", "tooManyRequests": "Trop de tentatives. Réessayez plus tard.", "network": "Vérifiez votre connexion Internet et réessayez.", "requiresRecentLogin": "Reconnectez-vous avant d’effectuer cette action.", "notConfigured": "L’authentification n’est pas disponible pour le moment.", "generic": "Impossible de vous connecter. Veuillez réessayer." },
+  "profile": { "notAuthenticated": "Vous devez être connecté pour modifier votre profil.", "notFound": "Votre profil utilisateur est introuvable.", "load": "Impossible de charger les informations de votre compte.", "save": "Impossible d’enregistrer les informations de votre compte." }
+}

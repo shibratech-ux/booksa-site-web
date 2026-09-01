@@ -1,0 +1,3 @@
+{
+  "selectDates": "Select dates", "guests": "Guests", "guests_one": "{{count}} guest", "guests_other": "{{count}} guests", "nights_one": "{{count}} night", "nights_other": "{{count}} nights", "forNights_one": "for {{count}} night", "forNights_other": "for {{count}} nights", "nightsInCity_one": "{{count}} night in {{city}}", "nightsInCity_other": "{{count}} nights in {{city}}", "nightlyPrice_one": "{{count}} night × {{price}}", "nightlyPrice_other": "{{count}} nights × {{price}}", "checkIn": "Check-in", "checkOut": "Checkout", "reserve": "Reserve", "dates": "Dates", "priceDetails": "Price details", "total": "Total", "edit": "Edit"
+}

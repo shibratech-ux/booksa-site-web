@@ -1,0 +1,3 @@
+{
+  "selectDates": "Sélectionner des dates", "guests": "Voyageurs", "guests_one": "{{count}} voyageur", "guests_other": "{{count}} voyageurs", "nights_one": "{{count}} nuit", "nights_other": "{{count}} nuits", "forNights_one": "pour {{count}} nuit", "forNights_other": "pour {{count}} nuits", "nightsInCity_one": "{{count}} nuit à {{city}}", "nightsInCity_other": "{{count}} nuits à {{city}}", "nightlyPrice_one": "{{count}} nuit × {{price}}", "nightlyPrice_other": "{{count}} nuits × {{price}}", "checkIn": "Arrivée", "checkOut": "Départ", "reserve": "Réserver", "dates": "Dates", "priceDetails": "Détails du prix", "total": "Total", "edit": "Modifier"
+}

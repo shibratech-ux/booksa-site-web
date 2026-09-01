@@ -40,6 +40,9 @@ export interface ThemeColorTokens {
     textPrimary: string;
     textSecondary: string;
     border: string;
+    borderSubtle: string;
+    surfaceMuted: string;
+    surfaceRaised: string;
   };
   dark: {
     background: string;
@@ -49,6 +52,9 @@ export interface ThemeColorTokens {
     textPrimary: string;
     textSecondary: string;
     border: string;
+    borderSubtle: string;
+    surfaceMuted: string;
+    surfaceRaised: string;
   };
   chart: {
     blue: string[];
@@ -100,7 +106,10 @@ export const colors: ThemeColorTokens = {
     sidebar: '#FFFFFF',
     textPrimary: '#0F172A',
     textSecondary: '#64748B',
-    border: '#E2E8F0'
+    border: '#E2E8F0',
+    borderSubtle: '#EDF0F3',
+    surfaceMuted: '#F7F7F7',
+    surfaceRaised: '#FFFFFF'
   },
   dark: {
     background: '#0F172A',
@@ -109,7 +118,10 @@ export const colors: ThemeColorTokens = {
     sidebar: '#111827',
     textPrimary: '#F8FAFC',
     textSecondary: '#CBD5E1',
-    border: '#334155'
+    border: '#334155',
+    borderSubtle: '#27364A',
+    surfaceMuted: '#172033',
+    surfaceRaised: '#253349'
   },
   chart: {
     blue: ['#385CFF', '#5B8CFF', '#3A5BFF', '#6179FF', '#8AB4FF'],

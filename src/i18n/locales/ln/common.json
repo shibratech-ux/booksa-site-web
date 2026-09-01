@@ -1,0 +1,9 @@
+{
+  "actions": { "add": "Bakisa", "back": "Zonga", "cancel": "Tika", "close": "Kanga", "continue": "Koba", "done": "Esili", "edit": "Bongisa", "retry": "Meka lisusu", "save": "Bomba", "saving": "Ezali kobomba…", "search": "Luka", "start": "Banda" },
+  "states": { "loading": "Ezali kokɔta…", "loadingInterface": "Ezali kobongisa programɛ…", "notProvided": "Epesami te", "notStarted": "Ebandi te" },
+  "errors": { "generic": "Libunga esalemi", "loadSection": "Tokoki kofungola eteni oyo sikoyo te. Meka lisusu.", "save": "Tokoki kobomba mbongwana na yo te." },
+  "accessibility": { "changeLanguage": "Bongola monɔkɔ", "currentLanguage": "Monɔkɔ ya sikoyo: {{language}}", "goHome": "Kende na ebandeli" },
+  "brand": { "defaultUser": "Mosali ya Booksa", "host": "Moyambi ya Booksa" },
+  "notFound": { "title": "Lokasa ezwami te", "description": "Lokasa oyo osengi ezali te to elongwaki.", "home": "Zonga na ebandeli" },
+  "booking": { "reserve": "Bomba" }, "modal": { "subtitle": "Bosololi ya bokengi, pete mpe polele" }
+}

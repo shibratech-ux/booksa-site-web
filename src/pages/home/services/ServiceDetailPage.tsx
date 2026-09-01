@@ -6,7 +6,6 @@ import {
   AccessibilityRegular,
   HatGraduationRegular,
   HeartRegular,
-  MaximizeRegular,
   PeopleRegular,
   CalendarRegular,
   SearchRegular,
@@ -20,8 +19,11 @@ import { useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import BooksaHeader from '@/components/layout/BooksaHeader';
 import Footer from '@/components/layout/Footer';
+import { ShimmerImage } from '@/components/ui/ShimmerImage';
+import { BooksaMap } from '@/components/maps/BooksaMap';
 import { useTheme } from '@/theme/useTheme';
 import { getServiceDetailBySlug } from './serviceData';
+import { formatCurrency, formatDate } from '@/utils/formatters';
 
 
 
@@ -68,7 +70,7 @@ const CDF_PER_USD = 2321;
 
 function formatExperiencePriceInCdf(priceInUsd: number) {
   const converted = Math.round(priceInUsd * CDF_PER_USD);
-  return `CDF ${new Intl.NumberFormat('en-US').format(converted)}`;
+  return formatCurrency(converted, 'CDF');
 }
 
 const scheduleExperiences = [
@@ -107,7 +109,7 @@ function TimePill({ label }: { label: string }) {
   return (
     <button
       type="button"
-      className="inline-flex h-10 items-center justify-center rounded-xl border border-neutral-200 px-4 text-[13px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
+      className="inline-flex h-10 items-center justify-center rounded-xl border border-neutral-200 px-4 text-[10.92px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
     >
       {label}
     </button>
@@ -162,8 +164,8 @@ function ScheduleContent({
   visibleMonth: dayjs.Dayjs;
 }) {
   const contentShellClassName = compact
-    ? 'fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col overflow-hidden rounded-t-[32px] bg-white px-4 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-4 shadow-[0_-18px_60px_rgba(0,0,0,0.24)]'
-    : 'relative flex max-h-[90vh] w-full max-w-[680px] flex-col overflow-hidden rounded-[34px] bg-white px-5 py-5 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:px-8 sm:py-8';
+    ? 'fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col overflow-hidden rounded-t-3xl bg-white px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-4 shadow-[0_-12px_40px_rgba(0,0,0,0.16)]'
+    : 'relative flex max-h-[90vh] w-full max-w-[680px] flex-col overflow-hidden rounded-3xl bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8';
 
   return (
     <div
@@ -177,10 +179,10 @@ function ScheduleContent({
       {compact ? (
         <div className="mt-4 flex items-start justify-between gap-4">
           <div className="min-w-0 pr-12">
-            <h2 className="text-[20px] font-medium tracking-tight text-neutral-900">
+            <h2 className="text-[16.8px] font-medium tracking-tight text-neutral-900">
               Planifiez votre séance photo
             </h2>
-            <p className="mt-1 text-[13px] text-neutral-500">Choisissez vos dates et horaires ci-dessous.</p>
+            <p className="mt-1 text-[10.92px] text-neutral-500">Choisissez vos dates et horaires ci-dessous.</p>
           </div>
           <button
             type="button"
@@ -193,14 +195,14 @@ function ScheduleContent({
         </div>
       ) : (
         <div className="pr-12 sm:pr-16">
-          <h2 className="text-[21px] font-medium tracking-tight text-neutral-900 sm:text-[20px]">
+          <h2 className="text-[17.64px] font-medium tracking-tight text-neutral-900 sm:text-[16.8px]">
             Planifiez votre séance photo
           </h2>
         </div>
       )}
 
       <div className={`mt-6 flex items-center justify-between border-b border-neutral-200 pb-5 ${compact ? 'mt-5' : ''}`}>
-        <p className="text-[14px] font-medium leading-none text-neutral-900">1 invité</p>
+        <p className="text-[11.76px] font-medium leading-none text-neutral-900">1 invité</p>
 
         <div className="flex items-center gap-3 text-neutral-900">
           <button
@@ -209,7 +211,7 @@ function ScheduleContent({
           >
             −
           </button>
-          <span className="min-w-5 text-center text-[10px] font-medium leading-none">1</span>
+          <span className="min-w-5 text-center text-[8.4px] font-medium leading-none">1</span>
           <button
             type="button"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full text-md leading-none transition hover:text-neutral-500"
@@ -228,9 +230,9 @@ function ScheduleContent({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="text-[14px] font-medium text-neutral-900"
+              className="text-[11.76px] font-medium text-neutral-900"
             >
-              {visibleMonth.locale('en').format('MMMM YYYY')}
+              {formatDate(visibleMonth.toDate(), undefined, { month: 'long', year: 'numeric' })}
             </motion.h3>
           </AnimatePresence>
           <CalendarRegular className="h-5 w-5 text-neutral-700" />
@@ -255,10 +257,10 @@ function ScheduleContent({
                   ref={(element) => {
                     monthSectionRefs.current[index] = element;
                   }}
-                  className="shrink-0 snap-start bg-white px-4 py-4 shadow-[0_8px_28px_rgba(15,23,42,0.04)]"
+                  className="shrink-0 snap-start rounded-xl border border-slate-200 bg-white px-4 py-4"
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <h4 className="text-[14px] font-medium text-neutral-900">{month.locale('en').format('MMMM YYYY')}</h4>
+                    <h4 className="text-[11.76px] font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
                     <CalendarRegular className="h-5 w-5 text-neutral-700" />
                   </div>
 
@@ -274,7 +276,7 @@ function ScheduleContent({
                           ref={isSelected ? selectedButtonRef : null}
                           onClick={() => setSelectedDate(item.date.toDate())}
                           className={[
-                            'flex min-w-[56px] shrink-0 flex-col items-center rounded-[18px] px-3 py-3 text-center transition',
+                            'flex min-w-[56px] shrink-0 flex-col items-center rounded-xl px-3 py-3 text-center transition',
                             isSelected
                               ? 'text-neutral-900'
                               : isPast
@@ -282,12 +284,12 @@ function ScheduleContent({
                                 : 'text-neutral-900 hover:bg-neutral-100'
                           ].join(' ')}
                         >
-                          <span className="text-[11px] font-medium uppercase leading-none tracking-[0.08em] text-inherit">
+                          <span className="text-[9.24px] font-medium uppercase leading-none tracking-[0.08em] text-inherit">
                             {item.dayLabel}
                           </span>
                           <span
                             className={[
-                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-[13px] font-semibold leading-none transition',
+                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-[10.92px] font-semibold leading-none transition',
                               isSelected ? 'bg-neutral-900 text-white' : 'text-inherit'
                             ].join(' ')}
                           >
@@ -308,14 +310,14 @@ function ScheduleContent({
         {scheduleExperiences.map((experience) => (
           <article key={experience.id} className="space-y-4">
             <div className="flex items-start gap-4">
-              <img
+              <ShimmerImage
                 src={experience.image}
                 alt={experience.title}
                 className="h-16 w-16 shrink-0 rounded-[16px] object-cover"
               />
               <div className="min-w-0">
-                <h3 className="text-[15px] font-semibold leading-5 text-neutral-900">{experience.title}</h3>
-                <p className="mt-1 text-[14px] text-neutral-600">
+                <h3 className="text-[12.6px] font-semibold leading-5 text-neutral-900">{experience.title}</h3>
+                <p className="mt-1 text-[11.76px] text-neutral-600">
                   <span className="font-semibold text-neutral-900">{experience.price}</span> · {experience.meta}
                 </p>
               </div>
@@ -492,22 +494,22 @@ function ExperienceList() {
         {experiences.map((item) => (
           <article
             key={item.id}
-            className="flex min-h-[150px] items-center gap-5 rounded-[26px] border border-gray-100 bg-white p-2 shadow-[0_10px_30px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
+            className="flex min-h-[150px] items-center gap-5 rounded-2xl border border-gray-100 bg-white p-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
           >
-            <img
+            <ShimmerImage
               src={item.image}
               alt={item.title}
-              className="h-[136px] w-[144px] shrink-0 rounded-[18px] object-cover"
+              className="h-[136px] w-[144px] shrink-0 rounded-[14px] object-cover"
             />
 
             <div className="min-w-0 flex-1 pr-3">
-              <h3 className="mb-1 text-[13px] font-semibold text-neutral-900 max-[611px]:text-[12px]">{item.title}</h3>
+              <h3 className="mb-1 text-[10.92px] font-semibold text-neutral-900 max-[611px]:text-[10.08px]">{item.title}</h3>
 
-              <p className="line-clamp-2 text-[12px] leading-4 text-neutral-600 max-[611px]:text-[11px] max-[611px]:leading-4">
+              <p className="line-clamp-2 text-[10.08px] leading-4 text-neutral-600 max-[611px]:text-[9.24px] max-[611px]:leading-4">
                 {item.description}
               </p>
 
-              <div className="mt-4 flex items-center gap-1 text-[11px] text-neutral-500 max-[611px]:text-[10px]">
+              <div className="mt-4 flex items-center gap-1 text-[9.24px] text-neutral-500 max-[611px]:text-[8.4px]">
                 <span className="font-bold text-neutral-900">{formatExperiencePriceInCdf(item.price)}</span>
                 <span>/ invité</span>
                 <span className="mx-1">·</span>
@@ -531,14 +533,14 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[21px] font-semibold tracking-tight text-neutral-900">Mon portfolio</h2>
+        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">Mon portfolio</h2>
 
         <div className="mt-5 grid gap-1.5 sm:grid-cols-[minmax(0,1.85fr)_minmax(0,1fr)]">
           <button
             type="button"
-            className="group relative overflow-hidden rounded-[28px] bg-slate-100 shadow-[0_14px_34px_rgba(15,23,42,0.10)]"
+            className="group relative overflow-hidden rounded-2xl bg-slate-100"
           >
-            <img
+            <ShimmerImage
               src={portfolioImages[0]}
               alt="Portfolio highlight"
               className="h-full min-h-[430px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
@@ -550,9 +552,9 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
               <button
                 key={`${image}-${index}`}
                 type="button"
-                className="group relative overflow-hidden rounded-[20px] bg-slate-100 shadow-[0_14px_34px_rgba(15,23,42,0.10)]"
+                className="group relative overflow-hidden rounded-[14px] bg-slate-100"
               >
-                <img
+                <ShimmerImage
                   src={image}
                   alt={`Détail du portfolio ${index + 1}`}
                   className="h-full min-h-[199px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
@@ -573,18 +575,18 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
 }
 
 function WhereYoullGoBlock({ city, placeLabel }: { city: string; placeLabel: string }) {
-  const mapImageUrl =
-    'https://staticmap.openstreetmap.de/staticmap.php?center=45.4642,9.19&zoom=11&size=960x520&maptype=mapnik&markers=45.4642,9.19,red-pushpin';
-
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[21px] font-semibold tracking-tight text-neutral-900">Où vous irez</h2>
-        <p className="mt-2 text-[14px] text-neutral-500">{city}</p>
+        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">Où vous irez</h2>
+        <p className="mt-2 text-[11.76px] text-neutral-500">{city}</p>
 
-        <div className="relative mt-6 overflow-hidden rounded-[24px] border border-slate-200 bg-slate-100 shadow-[0_14px_34px_rgba(15,23,42,0.10)]">
-          <img src={mapImageUrl} alt={`Carte de ${placeLabel}`} className="h-[350px] w-full object-cover" />
-
+        <BooksaMap
+          center={{ latitude: 45.4642, longitude: 9.19 }}
+          initialZoom={11}
+          title={`Carte de ${placeLabel}`}
+          className="mt-6 h-[350px] rounded-2xl border border-slate-200"
+        >
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
             <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-neutral-900 shadow-[0_12px_24px_rgba(15,23,42,0.18)]">
               <span className="h-3 w-3 rounded-full bg-white" />
@@ -594,14 +596,7 @@ function WhereYoullGoBlock({ city, placeLabel }: { city: string; placeLabel: str
             </span>
           </div>
 
-          <button
-            type="button"
-            aria-label="Agrandir la carte"
-            className="absolute right-4 top-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-neutral-900 shadow-[0_10px_22px_rgba(15,23,42,0.16)] transition hover:bg-slate-50"
-          >
-            <MaximizeRegular className="h-4 w-4" />
-          </button>
-        </div>
+        </BooksaMap>
       </div>
     </section>
   );
@@ -654,7 +649,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
   return (
     <section className="w-full px-3 py-6 pt-10">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[21px] font-semibold tracking-tight text-neutral-900">
+        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">
           ★ 5.0 · 14 avis
         </h2>
 
@@ -665,21 +660,21 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
               className="w-screen shrink-0 border-r border-slate-200 px-4 pr-6 md:w-auto md:shrink md:border-r-0 md:px-0 md:pr-0"
             >
               <div className="flex items-center gap-3">
-                <img
+                <ShimmerImage
                   src={review.avatar}
                   alt={review.name}
                   className="h-10 w-10 shrink-0 rounded-full object-cover"
                 />
                 <div className="min-w-0">
-                  <h3 className="text-[14px] font-normal leading-5 text-neutral-900">{review.name}</h3>
-                  <p className="text-[13px] text-neutral-500">{review.location}</p>
+                  <h3 className="text-[11.76px] font-normal leading-5 text-neutral-900">{review.name}</h3>
+                  <p className="text-[10.92px] text-neutral-500">{review.location}</p>
                 </div>
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[13px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
-                <p className="text-[12px] leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
-                <button type="button" className="text-[12px] font-semibold text-neutral-900 underline underline-offset-2">
+                <p className="text-[10.92px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
+                <p className="text-[10.08px] leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
+                <button type="button" className="text-[10.08px] font-semibold text-neutral-900 underline underline-offset-2">
                   Voir plus
                 </button>
               </div>
@@ -691,7 +686,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
           <button
             type="button"
             onClick={onShowReviews}
-            className="w-full rounded-full bg-gray-100 px-6 py-3 text-[15px] font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[640px]"
+            className="w-full rounded-full bg-gray-100 px-6 py-3 text-[12.6px] font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[640px]"
           >
             Voir les avis
           </button>
@@ -715,7 +710,7 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[900px] rounded-[34px] bg-white px-5 py-5 shadow-[0_30px_80px_rgba(0,0,0,0.30)] sm:px-8 sm:py-8"
+        className="relative w-full max-w-[900px] rounded-3xl bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -728,13 +723,13 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
         </button>
 
         <div className="flex items-start justify-between gap-4 pr-12">
-          <h2 className="text-[18px] font-medium tracking-tight text-neutral-900">
+          <h2 className="text-[15.12px] font-medium tracking-tight text-neutral-900">
             ★ 5.0 · 14 avis
           </h2>
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-[14px] font-medium text-gray-800 shadow-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-[11.76px] font-medium text-gray-800 shadow-sm"
           >
             Plus récents
             <ChevronDownRegular className="h-4 w-4" />
@@ -746,7 +741,7 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
           <input
             type="text"
             placeholder="Rechercher dans tous les avis"
-            className="w-full bg-transparent text-[15px] text-gray-900 outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-[12.6px] text-gray-900 outline-none placeholder:text-gray-500"
           />
         </div>
 
@@ -754,28 +749,28 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
           {reviews.slice(0, 2).map((review) => (
             <article key={review.id} className="border-b border-gray-200 pb-8 last:border-b-0 last:pb-0">
               <div className="flex items-start gap-3">
-                <img
+                <ShimmerImage
                   src={review.avatar}
                   alt={review.name}
                   className="h-11 w-11 shrink-0 rounded-full object-cover"
                 />
                 <div>
-                  <h3 className="text-[16px] font-semibold leading-5 text-neutral-900">{review.name}</h3>
-                  <p className="text-[13px] text-neutral-500">{review.location}</p>
+                  <h3 className="text-[13.44px] font-semibold leading-5 text-neutral-900">{review.name}</h3>
+                  <p className="text-[10.92px] text-neutral-500">{review.location}</p>
                 </div>
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[13px] text-neutral-800">★★★★★ · 3 weeks ago</p>
-                <p className="text-[14px] leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
+                <p className="text-[10.92px] text-neutral-800">★★★★★ · 3 weeks ago</p>
+                <p className="text-[11.76px] leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
                 <button
                   type="button"
-                  className="text-[13px] font-semibold text-neutral-900 underline underline-offset-2"
+                  className="text-[10.92px] font-semibold text-neutral-900 underline underline-offset-2"
                 >
                   Voir plus
                 </button>
                 {review.id === 2 ? (
-                  <p className="pt-2 text-[13px] text-neutral-500">
+                  <p className="pt-2 text-[10.92px] text-neutral-500">
                     Traduit de l’italien.{' '}
                     <button type="button" className="underline underline-offset-2">
                       Voir l’original
@@ -795,19 +790,19 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[21px] font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
+        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
-          <div className="rounded-[28px] bg-white px-8 py-10 text-center shadow-[0_12px_36px_rgba(15,23,42,0.08)]">
+          <div className="rounded-2xl border border-slate-200 bg-white px-8 py-10 text-center">
             <div className="mx-auto h-24 w-24 overflow-hidden rounded-full">
-              <img
+              <ShimmerImage
                 src={avatarImage}
                 alt="Victor"
                 className="h-full w-full object-cover"
               />
             </div>
-              <h3 className="mt-6 text-[24px] font-semibold leading-none text-neutral-900">Victor</h3>
-            <p className="mt-2 text-[12px] font-normal text-neutral-500">Photographe</p>
+              <h3 className="mt-6 text-[20.16px] font-semibold leading-none text-neutral-900">Victor</h3>
+            <p className="mt-2 text-[10.08px] font-normal text-neutral-500">Photographe</p>
           </div>
 
           <div className="space-y-6">
@@ -834,8 +829,8 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
                 <div key={item.title} className="flex items-start gap-4">
                   <Icon className="mt-1 h-6 w-6 shrink-0 text-neutral-900" />
                   <div>
-                    <h4 className="text-[14px] font-medium text-neutral-900">{item.title}</h4>
-                    <p className="mt-1 text-[13px] leading-5 text-neutral-600">{item.text}</p>
+                    <h4 className="text-[11.76px] font-medium text-neutral-900">{item.title}</h4>
+                    <p className="mt-1 text-[10.92px] leading-5 text-neutral-600">{item.text}</p>
                   </div>
                 </div>
               );
@@ -846,13 +841,13 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
         <div className="mt-8 flex justify-center">
           <button
             type="button"
-            className="w-full rounded-full bg-[#f1f1f1] px-6 py-3 text-[12px] font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[640px]"
+            className="w-full rounded-full bg-[#f1f1f1] px-6 py-3 text-[10.08px] font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[640px]"
           >
             Envoyer un message à Victor
           </button>
         </div>
 
-        <p className="mx-auto mt-6 max-w-xl text-center text-[14px] leading-6 text-neutral-500">
+        <p className="mx-auto mt-6 max-w-xl text-center text-[11.76px] leading-6 text-neutral-500">
           Pour mieux protéger votre paiement, utilisez toujours Booksa pour envoyer de l’argent et communiquer avec les hôtes.
         </p>
       </div>
@@ -883,7 +878,7 @@ function ThingsToKnowBlock() {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[21px] font-semibold tracking-tight text-neutral-900">À savoir</h2>
+        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">À savoir</h2>
 
         <div className="mt-8 grid gap-x-16 gap-y-12 sm:grid-cols-2">
           {items.map((item) => {
@@ -892,8 +887,8 @@ function ThingsToKnowBlock() {
             return (
               <article key={item.title} className="max-w-[260px]">
                 <Icon className="h-7 w-7 text-neutral-900" />
-                <h3 className="mt-4 text-[14px] font-semibold text-neutral-900">{item.title}</h3>
-                <p className="mt-1 text-[13px] leading-5 text-neutral-600">
+                <h3 className="mt-4 text-[11.76px] font-semibold text-neutral-900">{item.title}</h3>
+                <p className="mt-1 text-[10.92px] leading-5 text-neutral-600">
                   {item.text}{' '}
                   {'linkLabel' in item ? (
                     <button type="button" className="underline underline-offset-2">
@@ -921,11 +916,11 @@ function QualityTrustBlock() {
             </div>
           </div>
 
-          <h2 className="mx-auto mt-8 max-w-2xl text-[29px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-[33px]">
+          <h2 className="mx-auto mt-8 max-w-2xl text-[24.36px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-[27.72px]">
             Les photographes sur Booksa sont sélectionnés pour leur qualité
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-[15px] leading-7 text-neutral-600">
+          <p className="mx-auto mt-4 max-w-xl text-[12.6px] leading-7 text-neutral-600">
             Les photographes sont évalués selon leur expérience professionnelle, la qualité de leur portfolio et leur
             réputation d’excellence.{' '}
             <button type="button" className="underline underline-offset-2">
@@ -934,7 +929,7 @@ function QualityTrustBlock() {
           </p>
         </div>
 
-        <p className="mt-8 text-center text-[13px] text-neutral-500">
+        <p className="mt-8 text-center text-[10.92px] text-neutral-500">
           Un problème ?{' '}
           <button type="button" className="underline underline-offset-2">
             Signaler cette annonce
@@ -961,10 +956,10 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
         style={{ borderColor: theme.colors.border }}
       >
         <div className="space-y-1">
-          <p className="text-base font-medium leading-none max-[611px]:text-[13px] sm:text-sm" style={{ color: theme.colors.textPrimary }}>
+          <p className="text-base font-medium leading-none max-[611px]:text-[10.92px] sm:text-sm" style={{ color: theme.colors.textPrimary }}>
             {price}
           </p>
-          <p className="text-[10px] font-medium leading-none max-[611px]:text-[9px]" style={{ color: theme.colors.primary[500] }}>
+          <p className="text-[8.4px] font-medium leading-none max-[611px]:text-[7.56px]" style={{ color: theme.colors.primary[500] }}>
             Annulation gratuite
           </p>
         </div>
@@ -1006,27 +1001,27 @@ function ServiceHeroPanel({
     <>
       <div className="relative overflow-visible max-[611px]:mx-0 max-[611px]:w-full max-[611px]:max-w-none">
         <div className="overflow-hidden sm:rounded-[34px] max-[611px]:rounded-none shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
-          <img src={service.heroImage} alt={title} className="h-[198px] w-full object-cover max-[611px]:h-[210px]" />
+          <ShimmerImage src={service.heroImage} alt={title} className="h-[198px] w-full object-cover max-[611px]:h-[210px]" />
         </div>
 
         <div className="absolute left-1/2 top-full z-10 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-[0_10px_24px_rgba(15,23,42,0.12)] max-[611px]:border-0 max-[611px]:shadow-none">
-          <img src={hostAvatarImage} alt={hostName} className="h-full w-full object-cover" />
+          <ShimmerImage src={hostAvatarImage} alt={hostName} className="h-full w-full object-cover" />
         </div>
       </div>
 
       <div className="mx-auto max-w-[380px] space-y-5 px-6 pt-8 text-center max-[611px]:pt-12 sm:px-0">
         <div className="space-y-3">
           <h1 className="text-3xl px-2 font-semibold tracking-tight text-gray-900 sm:text-3xl">{title}</h1>
-          <p className="mx-auto max-w-lg text-[14px] leading-5 text-gray-500 sm:text-[15px] sm:leading-6">
+          <p className="mx-auto max-w-lg text-[11.76px] leading-5 text-gray-500 sm:text-[12.6px] sm:leading-6">
             {description}
           </p>
         </div>
 
-        <div className="space-y-1 text-[12px] text-gray-700">
+        <div className="space-y-1 text-[10.08px] text-gray-700">
           <p>
             ★ {rating} • {reviewCount} • {service.hostRole} à {service.city}
           </p>
-          <p className="text-gray-500 text-[12px]">{summary}</p>
+          <p className="text-gray-500 text-[10.08px]">{summary}</p>
         </div>
       </div>
     </>

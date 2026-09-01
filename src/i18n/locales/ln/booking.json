@@ -1,0 +1,3 @@
+{
+  "selectDates": "Poná mikolo", "guests": "Bapaya", "guests_one": "Mopaya {{count}}", "guests_other": "Bapaya {{count}}", "nights_one": "Butu {{count}}", "nights_other": "Butu {{count}}", "forNights_one": "mpo na butu {{count}}", "forNights_other": "mpo na butu {{count}}", "nightsInCity_one": "Butu {{count}} na {{city}}", "nightsInCity_other": "Butu {{count}} na {{city}}", "nightlyPrice_one": "Butu {{count}} × {{price}}", "nightlyPrice_other": "Butu {{count}} × {{price}}", "checkIn": "Kokɔta", "checkOut": "Kobima", "reserve": "Bomba", "dates": "Mikolo", "priceDetails": "Makambo ya ntalo", "total": "Nyonso", "edit": "Bongisa"
+}

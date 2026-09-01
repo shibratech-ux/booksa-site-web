@@ -4,6 +4,9 @@ import { borderRadius } from './borderRadius';
 import { typography } from './typography';
 import { spacing } from './spacing';
 import { animations } from './animations';
+import { borderWidths } from './borders';
+import { breakpoints, contentWidths } from './breakpoints';
+import { avatarSizes, controlSizes, iconSizes, sizes } from './sizes';
 
 export const darkTheme = {
   mode: 'dark',
@@ -15,6 +18,9 @@ export const darkTheme = {
     textPrimary: colors.dark.textPrimary,
     textSecondary: colors.dark.textSecondary,
     border: colors.dark.border,
+    borderSubtle: colors.dark.borderSubtle,
+    surfaceMuted: colors.dark.surfaceMuted,
+    surfaceRaised: colors.dark.surfaceRaised,
     primary: colors.primary,
     secondary: colors.secondary,
     success: colors.success,
@@ -29,6 +35,13 @@ export const darkTheme = {
   shadows,
   borderRadius,
   animations,
+  borderWidths,
+  breakpoints,
+  contentWidths,
+  sizes,
+  iconSizes,
+  controlSizes,
+  avatarSizes,
   ui: {
     button: {
       primary: 'primary-button',

@@ -18,7 +18,7 @@ export function ThemeProvider({ children, defaultMode = 'system' }: { children: 
     return stored ?? defaultMode;
   });
 
-  const prefersDark = getSystemPreference();
+  const [prefersDark, setPrefersDark] = useState(getSystemPreference);
   const resolvedTheme = mode === 'system' ? (prefersDark ? 'dark' : 'light') : mode;
   const theme = useMemo(() => getResolvedTheme(mode, prefersDark), [mode, prefersDark]);
 
@@ -29,21 +29,33 @@ export function ThemeProvider({ children, defaultMode = 'system' }: { children: 
     root.style.setProperty('--theme-gradient-top-left', theme.colors.gradient.topLeft);
     root.style.setProperty('--theme-gradient-top-right', theme.colors.gradient.topRight);
     root.style.setProperty('--theme-gradient-base', theme.colors.gradient.base);
+    root.style.setProperty('--color-background', theme.colors.background);
+    root.style.setProperty('--color-surface', theme.colors.surface);
+    root.style.setProperty('--color-card', theme.colors.card);
+    root.style.setProperty('--color-sidebar', theme.colors.sidebar);
+    root.style.setProperty('--color-text-primary', theme.colors.textPrimary);
+    root.style.setProperty('--color-text-secondary', theme.colors.textSecondary);
+    root.style.setProperty('--color-border', theme.colors.border);
+    root.style.setProperty('--color-border-subtle', theme.colors.borderSubtle);
+    root.style.setProperty('--color-surface-muted', theme.colors.surfaceMuted);
+    root.style.setProperty('--color-surface-raised', theme.colors.surfaceRaised);
+    root.style.setProperty('--color-primary-50', theme.colors.primary[50]);
+    root.style.setProperty('--color-primary-100', theme.colors.primary[100]);
+    root.style.setProperty('--color-primary-500', theme.colors.primary[500]);
+    root.style.setProperty('--color-primary-600', theme.colors.primary[600]);
+    root.style.setProperty('--color-primary-700', theme.colors.primary[700]);
+    root.style.setProperty('--color-danger', theme.colors.danger);
+    root.style.setProperty('--color-project-shell', theme.colors.background);
     window.localStorage.setItem(STORAGE_KEY, mode);
-  }, [mode, resolvedTheme]);
+  }, [mode, resolvedTheme, theme]);
 
   useEffect(() => {
-    if (mode !== 'system') return;
-
     const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const listener = () => {
-      document.documentElement.dataset.theme = media.matches ? 'dark' : 'light';
-      document.documentElement.style.colorScheme = media.matches ? 'dark' : 'light';
-    };
+    const listener = (event: MediaQueryListEvent) => setPrefersDark(event.matches);
 
     media.addEventListener('change', listener);
     return () => media.removeEventListener('change', listener);
-  }, [mode]);
+  }, []);
 
   const value = useMemo(
     () => ({

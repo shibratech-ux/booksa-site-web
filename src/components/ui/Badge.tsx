@@ -6,18 +6,18 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const toneStyles: Record<NonNullable<BadgeProps['tone']>, string> = {
-  success: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/20',
-  warning: 'bg-amber-500/15 text-amber-300 ring-amber-400/20',
-  danger: 'bg-rose-500/15 text-rose-300 ring-rose-400/20',
-  neutral: 'bg-slate-500/15 text-gray-300 ring-slate-400/20',
-  info: 'bg-cyan-500/15 text-cyan-300 ring-cyan-400/20'
+  success: 'bg-emerald-500/10 text-emerald-700 ring-emerald-500/20 dark:text-emerald-300',
+  warning: 'bg-amber-500/10 text-amber-700 ring-amber-500/20 dark:text-amber-300',
+  danger: 'bg-rose-500/10 text-rose-700 ring-rose-500/20 dark:text-rose-300',
+  neutral: 'bg-slate-500/10 text-[var(--color-text-secondary)] ring-[var(--color-border)]',
+  info: 'bg-blue-500/10 text-blue-700 ring-blue-500/20 dark:text-blue-300'
 };
 
 export function Badge({ className, tone = 'neutral', ...props }: BadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset',
+        'inline-flex min-h-6 items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset',
         toneStyles[tone],
         className
       )}
