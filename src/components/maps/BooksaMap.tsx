@@ -84,7 +84,7 @@ export function BooksaMap({
   renderMarker
 }: BooksaMapProps) {
   const [zoom, setZoom] = useState<number>(initialZoom);
-  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim();
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_EMBED_API_KEY?.trim();
   const baseBounds = useMemo(
     () => initialBounds ?? defaultBounds(center, initialZoom),
     [center.latitude, center.longitude, initialBounds, initialZoom]

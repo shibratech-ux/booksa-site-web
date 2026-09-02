@@ -21,7 +21,7 @@ Copy `.env.example` into your Netlify environment and set the matching `VITE_*` 
 Set these in Netlify if you want the corresponding features to work:
 
 - `VITE_API_BASE_URL`: your backend API base URL. If you leave it empty, the app falls back to mock data for some views and `/api` for the shared Axios client.
-- `VITE_GOOGLE_MAPS_API_KEY`: a browser-restricted key with the Google Maps Embed API enabled.
+- `VITE_GOOGLE_MAPS_EMBED_API_KEY`: a browser-restricted key with the Google Maps Embed API enabled.
 - `VITE_FIREBASE_API_KEY`
 - `VITE_FIREBASE_AUTH_DOMAIN`
 - `VITE_FIREBASE_PROJECT_ID`
@@ -34,3 +34,13 @@ If you are not using Firebase yet, you can leave the Firebase variables blank. T
 ## Non-production rollout
 
 To keep the site out of production for now, connect the repository as a Deploy Preview or branch deploy first, then leave the production publish step disabled until you are ready.
+
+## Deployment script
+
+From the repository root, deploy the current `main` branch with a custom commit message:
+
+```bash
+./deploy.sh "Update Booksa website"
+```
+
+If the message is omitted, the script uses `Update Booksa website`. The script checks the repository, branch, remote, local changes, and sensitive environment files before committing. It fetches `origin/main` and refuses to push when the local branch is behind. Netlify CLI is not used; continuous deployment is expected to start from the GitHub push.
