@@ -65,22 +65,22 @@ export function InProgressListingDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="relative flex min-h-[456px] w-full max-w-[378px] flex-col items-center rounded-[30px] bg-[var(--color-surface)] px-6 pb-7 pt-16 text-center text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
+            className="relative flex min-h-[501.6px] w-full max-w-[415.8px] flex-col items-center rounded-lg bg-[var(--color-surface)] px-6 pb-7 pt-16 text-center text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
           >
             <button
               type="button"
               onClick={onClose}
               disabled={isRemoving}
               aria-label="Close listing dialog"
-              className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
+              className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
             >
               <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
             </button>
 
-            <div className="flex h-[140px] w-[140px] items-center justify-center overflow-hidden rounded-lg bg-[var(--color-surface-muted)]">
+            <div className="flex h-[154px] w-[154px] items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)]">
               {cover}
             </div>
-            <h2 id={titleId} className="mt-4 max-w-[310px] text-sm font-semibold leading-snug">
+            <h2 id={titleId} className="mt-4 max-w-[341px] text-sm font-semibold leading-snug">
               {title}
             </h2>
             <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{location}</p>
@@ -89,7 +89,7 @@ export function InProgressListingDialog({
               type="button"
               onClick={onEdit}
               disabled={isRemoving}
-              className="mt-10 h-12 w-full rounded-[14px] bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90 disabled:opacity-50"
+              className="mt-10 h-12 w-full rounded-md bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90 disabled:opacity-50"
             >
               Edit listing
             </button>
@@ -97,7 +97,7 @@ export function InProgressListingDialog({
               type="button"
               onClick={onRemove}
               disabled={isRemoving}
-              className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 text-base font-semibold transition hover:bg-[var(--color-surface-muted)] disabled:cursor-wait disabled:opacity-60"
+              className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 text-base font-semibold transition hover:bg-[var(--color-surface-muted)] disabled:cursor-wait disabled:opacity-60"
             >
               {isRemoving ? (
                 <LoaderCircle className="h-5 w-5 animate-spin" aria-hidden="true" />

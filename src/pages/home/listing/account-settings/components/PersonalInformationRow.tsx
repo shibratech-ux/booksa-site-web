@@ -169,7 +169,7 @@ export function PersonalInformationRow({
             }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.18, ease: 'easeOut' }}
             aria-hidden={isEditing}
-            className="max-w-[650px] overflow-hidden text-sm leading-5 text-[var(--color-text-secondary)]"
+            className="max-w-[715px] overflow-hidden text-sm leading-5 text-[var(--color-text-secondary)]"
           >
             {helper ?? displayedValue}
           </motion.p>
@@ -209,7 +209,7 @@ export function PersonalInformationRow({
                           autoComplete="given-name"
                           tabIndex={isEditing ? 0 : -1}
                           disabled={isSaving}
-                          className="h-[62px] w-full rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 pb-2 pt-6 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
+                          className="h-[68.2px] w-full rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 pb-2 pt-6 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
                         />
                       </label>
                       <label className="relative block">
@@ -223,7 +223,7 @@ export function PersonalInformationRow({
                           autoComplete="family-name"
                           tabIndex={isEditing ? 0 : -1}
                           disabled={isSaving}
-                          className="h-[62px] w-full rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 pb-2 pt-6 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
+                          className="h-[68.2px] w-full rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 pb-2 pt-6 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
                         />
                       </label>
                     </div>
@@ -238,7 +238,7 @@ export function PersonalInformationRow({
                         autoComplete="name"
                         tabIndex={isEditing ? 0 : -1}
                         disabled={isSaving}
-                        className="h-[60px] w-full rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
+                        className="h-[66px] w-full rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
                       />
                       <input
                         value={relationship}
@@ -247,7 +247,7 @@ export function PersonalInformationRow({
                         placeholder={t('profile.relationship')}
                         tabIndex={isEditing ? 0 : -1}
                         disabled={isSaving}
-                        className="h-[60px] w-full rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
+                        className="h-[66px] w-full rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
                       />
                       <SelectField
                         value={preferredLanguage}
@@ -255,7 +255,7 @@ export function PersonalInformationRow({
                         tabIndex={isEditing ? 0 : -1}
                         disabled={isSaving}
                         aria-label={t('profile.preferredLanguage')}
-                        className="h-[60px] text-base focus:border-2 focus:border-[var(--color-text-primary)]"
+                        className="h-[66px] text-base focus:border-2 focus:border-[var(--color-text-primary)]"
                       >
                         <option value="" disabled>{t('profile.preferredLanguage')}</option>
                         {SUPPORTED_LANGUAGES.map(({ code, label: languageLabel }) => (
@@ -271,7 +271,7 @@ export function PersonalInformationRow({
                         autoComplete="email"
                         tabIndex={isEditing ? 0 : -1}
                         disabled={isSaving}
-                        className="h-[60px] w-full rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
+                        className="h-[66px] w-full rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
                       />
                       <div className="grid gap-4 sm:grid-cols-[220px_1fr]">
                         <SelectField
@@ -280,7 +280,7 @@ export function PersonalInformationRow({
                           tabIndex={isEditing ? 0 : -1}
                           disabled={isSaving}
                           aria-label={t('profile.countryCode')}
-                          className="h-[60px] text-base focus:border-2 focus:border-[var(--color-text-primary)]"
+                          className="h-[66px] text-base focus:border-2 focus:border-[var(--color-text-primary)]"
                         >
                           <option value="" disabled>{t('profile.countryCode')}</option>
                           <option value="+243">DR Congo (+243)</option>
@@ -297,7 +297,7 @@ export function PersonalInformationRow({
                           autoComplete="tel"
                           tabIndex={isEditing ? 0 : -1}
                           disabled={isSaving}
-                          className="h-[60px] w-full rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
+                          className="h-[66px] w-full rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
                         />
                       </div>
                     </div>
@@ -310,7 +310,7 @@ export function PersonalInformationRow({
                       aria-label={label}
                       tabIndex={isEditing ? 0 : -1}
                       disabled={isSaving}
-                      className="h-[58px] w-full max-w-xl rounded-[var(--radius-md)] border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
+                      className="h-[63.8px] w-full max-w-xl rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
                     />
                   )}
 
@@ -319,7 +319,7 @@ export function PersonalInformationRow({
                     onClick={() => void save()}
                     tabIndex={isEditing ? 0 : -1}
                     disabled={isSaving}
-                    className="mt-4 min-h-12 min-w-28 rounded-[var(--radius-md)] bg-[var(--color-text-primary)] px-10 font-semibold text-[var(--color-surface)] transition hover:opacity-85 disabled:cursor-wait disabled:opacity-60"
+                    className="mt-4 min-h-12 min-w-28 rounded-md bg-[var(--color-text-primary)] px-10 font-semibold text-[var(--color-surface)] transition hover:opacity-85 disabled:cursor-wait disabled:opacity-60"
                   >
                     {isSaving ? tCommon('actions.saving') : tCommon('actions.save')}
                   </button>

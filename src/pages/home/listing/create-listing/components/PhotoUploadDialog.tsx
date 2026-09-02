@@ -149,7 +149,7 @@ export function PhotoUploadDialog({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className={`flex w-full max-w-[568px] flex-col overflow-hidden rounded-t-[28px] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_24px_70px_rgba(0,0,0,0.3)] sm:rounded-[28px] ${
+            className={`flex w-full max-w-[624.8px] flex-col overflow-hidden rounded-lg bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_24px_70px_rgba(0,0,0,0.3)] sm:rounded-lg ${
               pendingFiles.length > 0
                 ? 'h-[min(664px,92dvh)]'
                 : 'max-h-[92dvh]'
@@ -157,7 +157,7 @@ export function PhotoUploadDialog({
           >
             <header
               className={`grid shrink-0 grid-cols-[44px_1fr_44px] items-center px-5 sm:px-6 ${
-                pendingFiles.length > 0 ? 'min-h-16' : 'min-h-[88px]'
+                pendingFiles.length > 0 ? 'min-h-16' : 'min-h-[96.8px]'
               }`}
             >
               <button
@@ -165,7 +165,7 @@ export function PhotoUploadDialog({
                 onClick={closeDialog}
                 disabled={isUploading}
                 aria-label="Close photo upload"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
               >
                 <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
               </button>
@@ -192,7 +192,7 @@ export function PhotoUploadDialog({
                 onClick={() => inputRef.current?.click()}
                 disabled={isUploading || isUploadComplete}
                 aria-label="Browse for more photos"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
               >
                 <Plus className="h-6 w-6" strokeWidth={1.6} aria-hidden="true" />
               </button>
@@ -223,10 +223,10 @@ export function PhotoUploadDialog({
                   if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsDragging(false);
                 }}
                 onDrop={handleDrop}
-                className={`rounded-[var(--radius-md)] text-center transition ${
+                className={`rounded-sm text-center transition ${
                   pendingFiles.length > 0
                     ? 'block min-h-0 border-0 p-0'
-                    : `flex min-h-[272px] flex-col items-center justify-center border-2 p-5 sm:min-h-[272px] ${
+                    : `flex min-h-[299.2px] flex-col items-center justify-center border-2 p-5 sm:min-h-[299.2px] ${
                         isDragging
                           ? 'border-[var(--color-text-primary)] bg-[var(--color-surface-muted)]'
                           : 'border-dashed border-[var(--color-text-secondary)]'
@@ -242,7 +242,7 @@ export function PhotoUploadDialog({
                       type="button"
                       onClick={() => inputRef.current?.click()}
                       disabled={isUploading || isUploadComplete}
-                      className="mt-5 inline-flex h-12 min-w-[112px] items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
+                      className="mt-5 inline-flex h-12 min-w-[123.2px] items-center justify-center rounded-md bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
                     >
                       Browse
                     </button>
@@ -256,7 +256,7 @@ export function PhotoUploadDialog({
                       return (
                         <figure
                           key={key}
-                          className={`group flex min-w-0 flex-col overflow-hidden rounded-[var(--radius-md)] border bg-[var(--color-surface-muted)] transition ${
+                          className={`group flex min-w-0 flex-col overflow-hidden rounded-sm border bg-[var(--color-surface-muted)] transition ${
                             isFileUploaded
                               ? 'border-[var(--color-success)]'
                               : 'border-transparent'
@@ -291,13 +291,13 @@ export function PhotoUploadDialog({
                               }
                               disabled={isUploading || isUploadComplete}
                               aria-label={`Remove ${file.name}`}
-                              className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/75 text-white shadow-[var(--shadow-sm)] transition hover:bg-black disabled:opacity-70"
+                              className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-md bg-black/75 text-white shadow-[var(--shadow-sm)] transition hover:bg-black disabled:opacity-70"
                             >
                               <Trash2 className="h-4 w-4" aria-hidden="true" />
                             </button>
                             {isFileUploaded ? (
                               <span
-                                className="absolute bottom-2 left-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-success)] text-white shadow-[var(--shadow-sm)]"
+                                className="absolute bottom-2 left-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-success)] text-white shadow-[var(--shadow-sm)]"
                                 aria-label={`${file.name} uploaded`}
                               >
                                 <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden="true" />
@@ -317,7 +317,7 @@ export function PhotoUploadDialog({
               ) : null}
             </div>
 
-            <footer className="flex min-h-[80px] shrink-0 items-center justify-between border-t border-[var(--color-border)] px-6">
+            <footer className="flex min-h-[88px] shrink-0 items-center justify-between border-t border-[var(--color-border)] px-6">
               <button
                 type="button"
                 onClick={closeDialog}
@@ -330,7 +330,7 @@ export function PhotoUploadDialog({
                 type="button"
                 disabled={pendingFiles.length === 0 || isUploading || isUploadComplete}
                 onClick={() => void handleUpload()}
-                className={`inline-flex h-12 min-w-[112px] items-center justify-center gap-2 rounded-[var(--radius-md)] px-6 text-base font-semibold transition hover:opacity-90 disabled:cursor-not-allowed ${
+                className={`inline-flex h-12 min-w-[123.2px] items-center justify-center gap-2 rounded-md px-6 text-base font-semibold transition hover:opacity-90 disabled:cursor-not-allowed ${
                   pendingFiles.length === 0
                     ? 'bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)] opacity-60'
                     : 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'

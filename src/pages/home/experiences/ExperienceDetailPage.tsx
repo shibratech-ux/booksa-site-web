@@ -177,7 +177,7 @@ const scheduleTimes = [
 function ReviewsSection() {
   return (
     <section className="pt-2">
-      <h2 className="mb-6 text-[18.48px] font-medium tracking-tight text-gray-950 sm:text-[20.16px]">
+      <h2 className="mb-6 text-[21.73248px] font-medium tracking-tight text-gray-950 sm:text-[23.70816px]">
         <span className="inline-flex items-center gap-2">
           <Star className="h-5 w-5 fill-current text-gray-950" />
           5.0 · 11 reviews
@@ -186,9 +186,9 @@ function ReviewsSection() {
 
       <div className="mt-8 grid gap-x-16 gap-y-14 md:grid-cols-2">
         {reviewItems.map((review) => (
-          <article key={review.name} className="max-w-[360px]">
+          <article key={review.name} className="max-w-[396px]">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-rose-100 text-sm font-semibold text-rose-700">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-rose-100 text-sm font-semibold text-rose-700">
                 {'avatarUrl' in review ? (
                   <ShimmerImage src={review.avatarUrl} alt={review.name} className="h-full w-full object-cover" />
                 ) : (
@@ -201,7 +201,7 @@ function ReviewsSection() {
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-2 text-[8.4px] text-gray-700">
+            <div className="mt-4 flex items-center gap-2 text-[9.8784px] text-gray-700">
               <span className="leading-none">★★★★★</span>
               <span>· {review.date}</span>
             </div>
@@ -213,7 +213,7 @@ function ReviewsSection() {
 
       <button
         type="button"
-        className="mt-8 rounded-lg border border-gray-900 px-5 py-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50"
+        className="mt-8 rounded-md border border-gray-900 px-5 py-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50"
       >
         Show all 11 reviews
       </button>
@@ -225,7 +225,7 @@ function MoreExperiencesSection() {
   return (
     <section className="pt-16">
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h2 className="text-[18.48px] font-medium tracking-tight text-gray-950 sm:text-[23.52px]">
+        <h2 className="text-[21.73248px] font-medium tracking-tight text-gray-950 sm:text-[27.65952px]">
           <span className="inline-flex items-center gap-3">
             More experiences in Shibuya
   
@@ -235,14 +235,14 @@ function MoreExperiencesSection() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition hover:bg-gray-200"
+            className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-100 text-gray-900 transition hover:bg-gray-200"
             aria-label="Previous experiences"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition hover:bg-gray-200"
+            className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-100 text-gray-900 transition hover:bg-gray-200"
             aria-label="Next experiences"
           >
             <ChevronRight className="h-5 w-5" />
@@ -253,12 +253,12 @@ function MoreExperiencesSection() {
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {moreExperiences.map((experience) => (
           <article key={experience.title} className="space-y-3">
-            <div className="aspect-[1] overflow-hidden rounded-[24px] bg-gray-100 shadow-sm">
+            <div className="aspect-[1] overflow-hidden rounded-sm bg-gray-100 shadow-sm">
               <ShimmerImage src={experience.image} alt={experience.title} className="h-full w-full object-cover" />
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-[10.92px] font-medium leading-4 text-gray-950">{experience.title}</h3>
+              <h3 className="text-[12.84192px] font-medium leading-4 text-gray-950">{experience.title}</h3>
               <p className="text-xs text-gray-500">
                 {experience.category} · {experience.duration}
               </p>
@@ -276,12 +276,12 @@ function MoreExperiencesSection() {
 function AboutSection({ hostName = '逹也', hostDescription = 'Founder of EAST GREEN MATCHA' }: { hostName?: string; hostDescription?: string }) {
   return (
     <section className="pt-16">
-      <h2 className="mb-6 text-[18.48px] font-medium tracking-tight text-gray-950 sm:text-[20.16px]">About me</h2>
+      <h2 className="mb-6 text-[21.73248px] font-medium tracking-tight text-gray-950 sm:text-[23.70816px]">About me</h2>
 
       <div className="grid gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
         <div className="space-y-6">
-          <div className="rounded-2xl border border-gray-100 bg-white px-6 py-8 text-center">
-            <div className="mx-auto h-24 w-24 overflow-hidden rounded-full">
+          <div className="rounded-sm border border-gray-100 bg-white px-6 py-8 text-center">
+            <div className="mx-auto h-24 w-24 overflow-hidden rounded-sm">
               <ShimmerImage
                 src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300"
                 alt={hostName}
@@ -294,18 +294,18 @@ function AboutSection({ hostName = '逹也', hostDescription = 'Founder of EAST 
 
           <button
             type="button"
-            className="flex h-14 w-full items-center justify-center rounded-2xl bg-gray-100 px-6 text-sm font-semibold text-gray-900 transition hover:bg-gray-200"
+            className="flex h-14 w-full items-center justify-center rounded-md bg-gray-100 px-6 text-sm font-semibold text-gray-900 transition hover:bg-gray-200"
           >
             Message {hostName}
           </button>
 
-          <p className="mx-auto max-w-[340px] text-center text-[9.24px] leading-5 text-gray-500">
+          <p className="mx-auto max-w-[374px] text-center text-[10.86624px] leading-5 text-gray-500">
             To help protect your payment, always use Booksa to send money and communicate with hosts.
           </p>
         </div>
 
-        <div className="max-w-[740px]">
-          <p className="text-[12.6px] leading-7 text-gray-800">{aboutText}</p>
+        <div className="max-w-[814px]">
+          <p className="text-[14.8176px] leading-7 text-gray-800">{aboutText}</p>
         </div>
       </div>
     </section>
@@ -348,17 +348,17 @@ function ThingsToKnowSection() {
   return (
     <section className="pt-16">
       <div className="border-t border-gray-200 pt-10">
-        <h2 className="mb-8 text-[18.48px] font-semibold tracking-tight text-gray-950 sm:text-[23.52px]">Things to know</h2>
+        <h2 className="mb-8 text-[21.73248px] font-semibold tracking-tight text-gray-950 sm:text-[27.65952px]">Things to know</h2>
 
         <div className="grid gap-x-14 gap-y-14 md:grid-cols-2 xl:grid-cols-3">
           {items.map((item) => {
             const Icon = item.icon;
 
             return (
-              <article key={item.title} className="max-w-[320px]">
+              <article key={item.title} className="max-w-[352px]">
                 <Icon className="h-7 w-7 text-gray-900" />
-                <h3 className="mt-5 text-[12.6px] font-semibold text-gray-950">{item.title}</h3>
-                <p className="mt-2 text-[12.6px] leading-6 text-gray-500">{item.description}</p>
+                <h3 className="mt-5 text-[14.8176px] font-semibold text-gray-950">{item.title}</h3>
+                <p className="mt-2 text-[14.8176px] leading-6 text-gray-500">{item.description}</p>
               </article>
             );
           })}
@@ -397,7 +397,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
     borderColor: theme.colors.border
   } as const;
   const headingStyles = {
-    fontSize: `clamp(0.84rem, 1.68vw, ${theme.typography.headings.h1})`,
+    fontSize: `clamp(0.98784rem, 1.97568vw, ${theme.typography.headings.h1})`,
     lineHeight: 1.1,
     letterSpacing: '-0.03em'
   } as const;
@@ -433,11 +433,11 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
           backgroundColor: `${theme.colors.surface}f2`
         }}
       >
-        <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:px-8">
-          <BooksaLogo className="h-10 w-[110px]" />
+        <div className="mx-auto flex h-20 max-w-[1584px] items-center justify-between px-4 sm:px-6 lg:px-8">
+          <BooksaLogo className="h-10 w-[121px]" />
 
           <div
-            className="hidden items-center rounded-full border shadow-[var(--shadow-sm)] md:flex"
+            className="hidden items-center rounded-sm border shadow-[var(--shadow-sm)] md:flex"
             style={surfaceStyles}
           >
             <button
@@ -452,45 +452,45 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
             </button>
             <button className="px-4 py-3 text-sm font-medium">Add guests</button>
             <button
-              className="m-1 flex h-10 w-10 items-center justify-center rounded-full text-white"
+              className="m-1 flex h-10 w-10 items-center justify-center rounded-md text-white"
               style={{ backgroundColor: theme.colors.primary[500] }}
             >
-              <navigationIcons.search className="h-4 w-4" />
+              <navigationIcons.search className="h-2 w-2" />
             </button>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <button className="hidden rounded-full px-4 py-2 text-sm font-medium transition hover:bg-black/5 md:block">
+            <button className="hidden rounded-md px-4 py-2 text-sm font-medium transition hover:bg-black/5 md:block">
               Become a host
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-black/5">
+            <button className="flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-black/5">
               <Globe className="h-4 w-4" />
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-black/5">
+            <button className="flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-black/5">
               <navigationIcons.menu className="h-4 w-4" />
             </button>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1340px] px-10 py-10 sm:px-8 lg:px-12">
+      <main className="mx-auto max-w-[1474px] px-10 py-10 sm:px-8 lg:px-12">
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_430px] xl:gap-10">
           <section className="space-y-8">
-            <div className="grid gap-2 overflow-hidden rounded-2xl md:grid-cols-2 md:grid-rows-2">
-              <div className="aspect-[0.98] overflow-hidden rounded-tl-[32px]">
+            <div className="grid gap-2 overflow-hidden rounded-sm md:grid-cols-2 md:grid-rows-2">
+              <div className="aspect-[0.98] overflow-hidden rounded-sm">
                 <ShimmerImage src={galleryImages[0]} alt="Experience photo 1" className="h-full w-full object-cover" />
               </div>
-              <div className="aspect-[0.98] overflow-hidden rounded-tr-[32px]">
+              <div className="aspect-[0.98] overflow-hidden rounded-sm">
                 <ShimmerImage src={galleryImages[1]} alt="Experience photo 2" className="h-full w-full object-cover" />
               </div>
-              <div className="aspect-[0.98] overflow-hidden rounded-bl-[32px]">
+              <div className="aspect-[0.98] overflow-hidden rounded-sm">
                 <ShimmerImage src={galleryImages[2]} alt="Experience photo 3" className="h-full w-full object-cover" />
               </div>
-              <div className="relative aspect-[0.98] overflow-hidden rounded-br-[32px]">
+              <div className="relative aspect-[0.98] overflow-hidden rounded-sm">
                 <ShimmerImage src={galleryImages[3]} alt="Experience photo 4" className="h-full w-full object-cover" />
                 <button
                   type="button"
-                  className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#d3a8a2] text-gray-900 shadow-lg transition hover:scale-105"
+                  className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-md bg-[#d3a8a2] text-gray-900 shadow-lg transition hover:scale-105"
                   aria-label="View photos"
                 >
                   <Share2 className="h-2.5 w-2.5" />
@@ -499,14 +499,14 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
             </div>
 
             <section className="space-y-5 px-1">
-              <h2 className="text-[23.52px] font-semibold tracking-tight text-gray-950 sm:text-[26.88px]" style={{ color: theme.colors.textPrimary }}>
+              <h2 className="text-[27.65952px] font-semibold tracking-tight text-gray-950 sm:text-[31.61088px]" style={{ color: theme.colors.textPrimary }}>
                 What you’ll do
               </h2>
               <div className="space-y-5">
                 {whatYoullDo.map((step, index) => (
                   <div key={step.title} className="flex gap-4">
                     <div
-                      className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
+                      className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-sm font-semibold"
                       style={{ backgroundColor: `${theme.colors.primary[50]}99`, color: theme.colors.primary[700] }}
                     >
                       {index + 1}
@@ -538,7 +538,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                   {title}
                 </h1>
 
-                <p className="mx-auto max-w-[520px] font-light text-[12.6px] leading-6" style={{ color: theme.colors.textSecondary }}>
+                <p className="mx-auto max-w-[572px] font-light text-[14.8176px] leading-6" style={{ color: theme.colors.textSecondary }}>
                   With the recent matcha boom, true quality is harder to find. I come from four generations of tea farmers. In my tea room, whisk your own bowl of premium matcha and slow down through a Japanese ritual.
                 </p>
 
@@ -555,10 +555,10 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </div>
 
                 <div className="flex items-center justify-center gap-6 pt-1">
-                  <button className="rounded-full p-2 transition hover:bg-black/5" aria-label="Share">
+                  <button className="rounded-md p-2 transition hover:bg-black/5" aria-label="Share">
                     <Share2 className="h-5 w-5" />
                   </button>
-                  <button className="rounded-full p-2 transition hover:bg-black/5" aria-label="Save">
+                  <button className="rounded-md p-2 transition hover:bg-black/5" aria-label="Save">
                     <Heart className="h-5 w-5" />
                   </button>
                 </div>
@@ -571,7 +571,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                   return (
                     <div key={item.title} className="flex items-start gap-4">
                       <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border shadow-sm"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-sm border shadow-sm"
                         style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.surface }}
                       >
                         {'avatarUrl' in item ? (
@@ -584,7 +584,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                         <h3 className="text-sm font-semibold text-gray-950" style={{ color: theme.colors.textPrimary }}>
                           {item.title}
                         </h3>
-                        <p className="mt-0.5 text-[10.08px] leading-5" style={{ color: theme.colors.textSecondary }}>
+                        <p className="mt-0.5 text-[11.85408px] leading-5" style={{ color: theme.colors.textSecondary }}>
                           {item.description}
                         </p>
                       </div>
@@ -595,21 +595,21 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
             </section>
 
             <section
-              className="dashboard-card dashboard-card-elevated sticky top-28 rounded-2xl p-6"
+              className="dashboard-card dashboard-card-elevated sticky top-28 rounded-sm p-6"
             >
               <div className="flex items-end justify-between gap-4 pb-4">
                 <div>
                   <p className="text-sm" style={{ color: theme.colors.textSecondary }}>
-                    From <span className="text-[11.76px] font-semibold underline" style={{ color: theme.colors.textPrimary }}>${price}</span>
+                    From <span className="text-[13.82976px] font-semibold underline" style={{ color: theme.colors.textPrimary }}>${price}</span>
                   </p>
-                  <p className="text-[8.4px] font-normal" style={{ color: theme.colors.primary[500] }}>
+                  <p className="text-[9.8784px] font-normal" style={{ color: theme.colors.primary[500] }}>
                     Free cancellation
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsScheduleOpen(true)}
-                  className="rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:brightness-95"
+                  className="rounded-md px-6 py-3 text-sm font-semibold text-white transition hover:brightness-95"
                   style={{ backgroundColor: theme.colors.primary[500] }}
                 >
                   Show dates
@@ -620,7 +620,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 {bookingSlots.map((slot) => (
                   <div
                     key={slot.day}
-                    className={`flex items-start justify-between rounded-2xl border p-4 ${
+                    className={`flex items-start justify-between rounded-sm border p-4 ${
                       slot.active ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50/70 opacity-70'
                     }`}
                     style={slot.active ? { borderColor: theme.colors.border, backgroundColor: theme.colors.surface } : undefined}
@@ -654,12 +654,12 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
               style={{ backgroundColor: 'rgba(2, 6, 23, 0.72)' }}
             >
               <div
-                className="dashboard-card dashboard-card-elevated relative flex max-h-[calc(100vh-3rem)] w-full max-w-[590px] flex-col overflow-hidden rounded-3xl"
+                className="dashboard-card dashboard-card-elevated relative flex max-h-[calc(100vh-3rem)] w-full max-w-[649px] flex-col overflow-hidden rounded-sm"
               >
                 <button
                   type="button"
                   onClick={() => setIsScheduleOpen(false)}
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full transition hover:text-gray-900"
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-md transition hover:text-gray-900"
                   style={{ color: theme.colors.textSecondary }}
                   aria-label="Close dialog"
                 >
@@ -667,7 +667,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </button>
 
                 <div className="border-b px-6 pb-5 pt-8" style={{ borderColor: theme.colors.border }}>
-                  <h2 className="text-[11.76px] font-semibold tracking-tight" style={{ color: theme.colors.textPrimary }}>
+                  <h2 className="text-[13.82976px] font-semibold tracking-tight" style={{ color: theme.colors.textPrimary }}>
                     Select a time
                   </h2>
                 </div>
@@ -675,10 +675,10 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 <div className="border-b px-6 py-5" style={{ borderColor: theme.colors.border }}>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-[7.56px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                      <p className="text-[8.89056px] font-semibold" style={{ color: theme.colors.textPrimary }}>
                         1 adult
                       </p>
-                      <p className="text-[6.72px]" style={{ color: theme.colors.textSecondary }}>
+                      <p className="text-[7.90272px]" style={{ color: theme.colors.textSecondary }}>
                         Age 14+
                       </p>
                     </div>
@@ -686,7 +686,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                       <button type="button" className="leading-none transition hover:text-gray-900" aria-label="Decrease guests">
                         −
                       </button>
-                      <span className="text-[7.56px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                      <span className="text-[8.89056px] font-semibold" style={{ color: theme.colors.textPrimary }}>
                         1
                       </span>
                       <button type="button" className="leading-none transition hover:text-gray-900" aria-label="Increase guests">
@@ -698,11 +698,11 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
 
                 <div className="border-b px-6 py-5" style={{ borderColor: theme.colors.border }}>
                   <div className="flex items-center justify-between">
-                    <p className="text-[8.4px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                    <p className="text-[9.8784px] font-semibold" style={{ color: theme.colors.textPrimary }}>
                       July 2026
                     </p>
-                    <button type="button" className="rounded-full p-2 transition hover:bg-black/5" aria-label="Open calendar" style={{ color: theme.colors.textSecondary }}>
-                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <button type="button" className="rounded-md p-2 transition hover:bg-black/5" aria-label="Open calendar" style={{ color: theme.colors.textSecondary }}>
+                      <svg className="booksa-icon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <rect x="3" y="5" width="18" height="16" rx="2" />
                         <path d="M8 3v4M16 3v4M3 11h18" />
                       </svg>
@@ -711,7 +711,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-6 py-5">
-                  <p className="mb-4 text-[8.4px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                  <p className="mb-4 text-[9.8784px] font-semibold" style={{ color: theme.colors.textPrimary }}>
                     Tomorrow, July 15
                   </p>
                   <div className="space-y-3">
@@ -719,7 +719,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                       <button
                         key={slot.time}
                         type="button"
-                        className={`flex w-full items-center justify-between rounded-[20px] border px-5 py-4 text-left transition ${
+                        className={`flex w-full items-center justify-between rounded-md border px-5 py-4 text-left transition ${
                           slot.active
                             ? 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                             : 'border-gray-100 bg-gray-50 text-gray-400'
@@ -730,14 +730,14 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                           <p className={`text-sm ${slot.active ? '' : 'text-gray-400 line-through'}`} style={slot.active ? { color: theme.colors.textPrimary } : undefined}>
                             {slot.time}
                           </p>
-                          <p className="mt-1 text-[8.4px] font-medium" style={{ color: theme.colors.textPrimary }}>
+                          <p className="mt-1 text-[9.8784px] font-medium" style={{ color: theme.colors.textPrimary }}>
                             {slot.priceLabel}
                           </p>
-                          <p className="text-[8.4px]" style={{ color: theme.colors.textSecondary }}>
+                          <p className="text-[9.8784px]" style={{ color: theme.colors.textSecondary }}>
                             Private pricing available
                           </p>
                         </div>
-                        <p className="text-[8.4px] font-medium" style={{ color: theme.colors.textSecondary }}>
+                        <p className="text-[9.8784px] font-medium" style={{ color: theme.colors.textSecondary }}>
                           {slot.availability}
                         </p>
                       </button>
@@ -746,7 +746,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </div>
 
                 <div className="flex items-center justify-between border-t px-6 py-4" style={{ borderColor: theme.colors.border }}>
-                  <p className="text-[8.4px]" style={{ color: theme.colors.textSecondary }}>
+                  <p className="text-[9.8784px]" style={{ color: theme.colors.textSecondary }}>
                     <span className="font-semibold underline" style={{ color: theme.colors.textPrimary }}>
                       ${price}
                     </span>{' '}
@@ -754,7 +754,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                   </p>
                   <button
                     type="button"
-                    className="rounded-full px-8 py-3 text-xs font-semibold text-white transition hover:brightness-95"
+                    className="rounded-md px-8 py-3 text-xs font-semibold text-white transition hover:brightness-95"
                     style={{ backgroundColor: theme.colors.primary[500] }}
                   >
                     Next

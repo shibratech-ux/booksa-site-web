@@ -39,14 +39,14 @@ export function ListingSafetyDetailsStep({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -24 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-0 w-full max-w-[710px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
+      className="mx-auto flex min-h-0 w-full max-w-[781px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
     >
-      <h1 className="text-[28px] font-semibold leading-tight tracking-tight sm:text-4xl">Share safety details</h1>
+      <h1 className="text-[32.928px] font-semibold leading-tight tracking-tight sm:text-4xl">Share safety details</h1>
 
       <fieldset className="mt-8">
         <legend className="flex items-center gap-2 text-lg font-semibold">
           How are you hosting on Booksa?
-          <button type="button" aria-label="Learn about hosting types" className="rounded-full">
+          <button type="button" aria-label="Learn about hosting types" className="rounded-md">
             <InfoIcon />
           </button>
         </legend>
@@ -64,8 +64,8 @@ export function ListingSafetyDetailsStep({
                 onChange={() => onHostingTypeChange(value)}
                 className="peer sr-only"
               />
-              <span className="inline-flex h-[23px] w-[23px] items-center justify-center rounded-full border border-[var(--color-text-secondary)] peer-checked:border-2 peer-checked:border-[var(--color-text-primary)]">
-                <span className={`h-[13px] w-[13px] rounded-full ${hostingType === value ? 'bg-[var(--color-text-primary)]' : ''}`} />
+              <span className="inline-flex h-[25.3px] w-[25.3px] items-center justify-center rounded-sm border border-[var(--color-text-secondary)] peer-checked:border-2 peer-checked:border-[var(--color-text-primary)]">
+                <span className={`h-[14.3px] w-[14.3px] rounded-sm ${hostingType === value ? 'bg-[var(--color-text-primary)]' : ''}`} />
               </span>
               {label}
             </label>
@@ -76,7 +76,7 @@ export function ListingSafetyDetailsStep({
       <fieldset className="mt-10">
         <legend className="flex items-center gap-2 text-lg font-semibold">
           Does your place have any of these?
-          <button type="button" aria-label="Learn about required safety disclosures" className="rounded-full">
+          <button type="button" aria-label="Learn about required safety disclosures" className="rounded-md">
             <InfoIcon />
           </button>
         </legend>
@@ -97,7 +97,7 @@ export function ListingSafetyDetailsStep({
                   className="peer sr-only"
                 />
                 <span
-                  className={`inline-flex h-[23px] w-[23px] shrink-0 items-center justify-center rounded-md border transition ${
+                  className={`inline-flex h-[25.3px] w-[25.3px] shrink-0 items-center justify-center rounded-sm border transition ${
                     selected
                       ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                       : 'border-[var(--color-text-secondary)] bg-[var(--color-surface)]'
@@ -114,7 +114,7 @@ export function ListingSafetyDetailsStep({
 
       <div className="mt-8 border-t border-[var(--color-border)] pt-8">
         <h2 className="text-lg font-semibold">Important things to know</h2>
-        <p className="mt-2 max-w-[650px] text-base leading-snug">
+        <p className="mt-2 max-w-[715px] text-base leading-snug">
           Security cameras that monitor indoor spaces are not allowed even if they’re turned off.
           All exterior security cameras must be disclosed.
         </p>

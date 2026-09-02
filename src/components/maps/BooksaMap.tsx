@@ -31,6 +31,7 @@ type BooksaMapProps = {
   interactive?: boolean;
   showControls?: boolean;
   showExpandControl?: boolean;
+  controlLayout?: 'stacked' | 'split';
   children?: ReactNode;
   renderMarker?: (marker: BooksaMapMarker) => ReactNode;
 };
@@ -80,6 +81,7 @@ export function BooksaMap({
   interactive = true,
   showControls = true,
   showExpandControl = true,
+  controlLayout = 'stacked',
   children,
   renderMarker
 }: BooksaMapProps) {
@@ -126,7 +128,7 @@ export function BooksaMap({
   };
 
   return (
-    <div className={`relative overflow-hidden bg-[#e9e7e2] ${className}`.trim()}>
+    <div className={`relative overflow-hidden rounded-[19px] bg-[#e9e7e2] ${className}`.trim()}>
       {mapUrl ? (
         <iframe
           key={mapUrl}
@@ -142,7 +144,7 @@ export function BooksaMap({
           role="status"
           className="absolute inset-0 flex items-center justify-center bg-neutral-100 px-6 text-center text-neutral-700"
         >
-          <div className="max-w-sm rounded-2xl bg-white/95 p-5 shadow-sm ring-1 ring-black/5">
+          <div className="max-w-sm rounded-sm bg-white/95 p-5 shadow-sm ring-1 ring-black/5">
             <p className="text-sm font-semibold text-neutral-900">Google Maps is not configured</p>
             <p className="mt-2 text-xs leading-5">
               Add a Maps Embed API key to display this map.
@@ -169,7 +171,7 @@ export function BooksaMap({
           ) : (
             <span
               aria-label={marker.ariaLabel ?? marker.label}
-              className="block rounded-full border border-neutral-200 bg-white px-3 py-2 text-xs font-semibold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)]"
+              className="block rounded-sm border border-neutral-200 bg-white px-3 py-2 text-xs font-semibold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)]"
             >
               {marker.label}
             </span>
@@ -180,18 +182,25 @@ export function BooksaMap({
       {mapUrl ? children : null}
 
       {showControls && mapUrl ? (
-        <div className="absolute right-4 top-4 z-20 flex flex-col overflow-hidden rounded-full bg-white text-neutral-900 shadow-md">
+        <div className={`absolute right-4 top-4 z-20 flex flex-col text-neutral-900 ${controlLayout === 'split' ? 'gap-3' : 'overflow-hidden rounded-sm bg-white shadow-md'}`}>
           {showExpandControl ? (
-            <button type="button" aria-label="Expand map" onClick={openExpandedMap} className="inline-flex h-12 w-12 items-center justify-center border-b border-neutral-200">
+            <button
+              type="button"
+              aria-label="Expand map"
+              onClick={openExpandedMap}
+              className={`inline-flex items-center justify-center bg-white shadow-md ${controlLayout === 'split' ? 'h-[44px] w-[44px] rounded-full' : 'h-12 w-12 border-b border-neutral-200'}`}
+            >
               <MaximizeRegular className="h-5 w-5" />
             </button>
           ) : null}
-          <button type="button" aria-label="Zoom in" disabled={zoom >= maxZoom} onClick={() => setZoom((value) => Math.min(maxZoom, value + 1))} className="inline-flex h-12 w-12 items-center justify-center border-b border-neutral-200 disabled:opacity-35">
-            <AddRegular className="h-5 w-5" />
-          </button>
-          <button type="button" aria-label="Zoom out" disabled={zoom <= minZoom} onClick={() => setZoom((value) => Math.max(minZoom, value - 1))} className="inline-flex h-12 w-12 items-center justify-center disabled:opacity-35">
-            <SubtractRegular className="h-5 w-5" />
-          </button>
+          <div className={`flex flex-col overflow-hidden bg-white shadow-md ${controlLayout === 'split' ? 'rounded-full' : ''}`}>
+            <button type="button" aria-label="Zoom in" disabled={zoom >= maxZoom} onClick={() => setZoom((value) => Math.min(maxZoom, value + 1))} className={`inline-flex items-center justify-center border-b border-neutral-200 disabled:opacity-35 ${controlLayout === 'split' ? 'h-[44px] w-[44px]' : 'h-12 w-12'}`}>
+              <AddRegular className="h-5 w-5" />
+            </button>
+            <button type="button" aria-label="Zoom out" disabled={zoom <= minZoom} onClick={() => setZoom((value) => Math.max(minZoom, value - 1))} className={`inline-flex items-center justify-center disabled:opacity-35 ${controlLayout === 'split' ? 'h-[44px] w-[44px]' : 'h-12 w-12'}`}>
+              <SubtractRegular className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       ) : null}
     </div>

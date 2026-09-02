@@ -174,8 +174,8 @@ export function ListingHighlightsStep({
       className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
       aria-labelledby="listing-highlights-heading"
     >
-      <div className="mx-auto flex min-h-full w-full max-w-[680px] flex-col justify-start py-2 sm:justify-center sm:py-6">
-        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full bg-[var(--color-surface-muted)] px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)]">
+      <div className="mx-auto flex min-h-full w-full max-w-[748px] flex-col justify-start py-2 sm:justify-center sm:py-6">
+        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--color-surface-muted)] px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)]">
           <CategoryIcon className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
           <span>{category.label}</span>
           <span aria-hidden="true">·</span>
@@ -186,11 +186,11 @@ export function ListingHighlightsStep({
 
         <h1
           id="listing-highlights-heading"
-          className="text-[28px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           {content.title}
         </h1>
-        <p className="mt-2 max-w-[660px] text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
+        <p className="mt-2 max-w-[726px] text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
           {content.description}
         </p>
 
@@ -206,7 +206,7 @@ export function ListingHighlightsStep({
                 aria-pressed={selected}
                 aria-disabled={unavailable}
                 onClick={() => toggleHighlight(id)}
-                className={`inline-flex min-h-12 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition sm:min-h-14 sm:gap-3 sm:px-5 sm:text-base ${
+                className={`inline-flex min-h-12 items-center gap-2 rounded-md border px-4 text-sm font-semibold transition sm:min-h-14 sm:gap-3 sm:px-5 sm:text-base ${
                   selected
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-[var(--shadow-sm)]'
                     : unavailable

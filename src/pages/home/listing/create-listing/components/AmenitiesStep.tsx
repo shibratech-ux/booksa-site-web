@@ -228,10 +228,10 @@ export function AmenitiesStep({
       className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-12"
       aria-labelledby="amenities-title"
     >
-      <div className="mx-auto w-full max-w-[640px]">
+      <div className="mx-auto w-full max-w-[704px]">
         <h1
           id="amenities-title"
-          className="max-w-[620px] text-[28px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="max-w-[682px] text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           Tell guests which amenities they&apos;ll find at your place
         </h1>
@@ -253,7 +253,7 @@ export function AmenitiesStep({
                       type="button"
                       aria-pressed={selected}
                       onClick={() => onToggle(id)}
-                      className={`flex min-h-[104px] flex-col items-start rounded-[var(--radius-md)] border bg-[var(--color-surface)] p-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[124px] ${
+                      className={`flex min-h-[114.4px] flex-col items-start rounded-md border bg-[var(--color-surface)] p-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[136.4px] ${
                         selected
                           ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
                           : 'border-[var(--color-border)]'

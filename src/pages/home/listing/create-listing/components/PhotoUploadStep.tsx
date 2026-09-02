@@ -52,10 +52,10 @@ export function PhotoUploadStep({
       className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-12"
       aria-labelledby="photo-upload-title"
     >
-      <div className="mx-auto w-full max-w-[640px]">
+      <div className="mx-auto w-full max-w-[704px]">
         <h1
           id="photo-upload-title"
-          className="text-[28px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           Add some photos of your {listingType}
         </h1>
@@ -64,27 +64,27 @@ export function PhotoUploadStep({
         </p>
 
         {files.length === 0 ? (
-          <div className="mt-7 flex min-h-[280px] items-center justify-center rounded-[var(--radius-md)] border border-dashed border-[var(--color-text-secondary)] bg-[var(--color-surface-muted)]/35 sm:mt-12 sm:min-h-[430px]">
+          <div className="mt-7 flex min-h-[308px] items-center justify-center rounded-sm border border-dashed border-[var(--color-text-secondary)] bg-[var(--color-surface-muted)]/35 sm:mt-12 sm:min-h-[473px]">
             <div className="flex flex-col items-center px-6 text-center">
-              <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+              <span className="inline-flex h-24 w-24 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
                 <Camera className="h-12 w-12" strokeWidth={1.45} aria-hidden="true" />
               </span>
               <button
                 type="button"
                 onClick={() => setIsUploadDialogOpen(true)}
-                className="mt-8 inline-flex h-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-surface)] px-5 text-sm font-semibold shadow-[var(--shadow-xs)] transition hover:bg-[var(--color-surface-muted)]"
+                className="mt-8 inline-flex h-11 items-center justify-center rounded-md bg-[var(--color-surface)] px-5 text-sm font-semibold shadow-[var(--shadow-xs)] transition hover:bg-[var(--color-surface-muted)]"
               >
                 Add photos
               </button>
             </div>
           </div>
         ) : (
-          <div className="mt-10 rounded-[var(--radius-lg)] p-3 sm:p-4">
+          <div className="mt-10 rounded-sm p-3 sm:p-4">
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {previews.map(({ file, key, url }, index) => (
                 <figure
                   key={key}
-                  className={`group flex flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] ${
+                  className={`group flex flex-col overflow-hidden rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-muted)] ${
                     index === 0 ? 'col-span-2 row-span-2 sm:col-span-2' : ''
                   }`}
                 >
@@ -101,7 +101,7 @@ export function PhotoUploadStep({
                       type="button"
                       onClick={() => onChange(files.filter((candidate) => getFileKey(candidate) !== key))}
                       aria-label={`Remove ${file.name}`}
-                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
                     >
                       <X className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
                     </button>
@@ -112,7 +112,7 @@ export function PhotoUploadStep({
               <button
                 type="button"
                 onClick={() => setIsUploadDialogOpen(true)}
-                className="flex aspect-square flex-col items-center justify-center rounded-[var(--radius-md)] border border-dashed border-[var(--color-text-secondary)] bg-[var(--color-surface-muted)]/35 text-sm font-semibold transition hover:border-[var(--color-text-primary)]"
+                className="flex aspect-square flex-col items-center justify-center rounded-md border border-dashed border-[var(--color-text-secondary)] bg-[var(--color-surface-muted)]/35 text-sm font-semibold transition hover:border-[var(--color-text-primary)]"
               >
                 <Plus className="mb-2 h-7 w-7" strokeWidth={1.8} aria-hidden="true" />
                 Add more

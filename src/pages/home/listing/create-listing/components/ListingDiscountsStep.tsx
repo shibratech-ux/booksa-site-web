@@ -65,10 +65,10 @@ export function ListingDiscountsStep({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -24 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-0 w-full max-w-[710px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
+      className="mx-auto flex min-h-0 w-full max-w-[781px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
     >
       <div className="mb-8">
-        <h1 className="text-[28px] font-semibold leading-tight tracking-tight sm:text-4xl">Add discounts</h1>
+        <h1 className="text-[32.928px] font-semibold leading-tight tracking-tight sm:text-4xl">Add discounts</h1>
         <p className="mt-2 text-base text-[var(--color-text-secondary)] sm:text-lg">
           Help your place stand out to get booked faster and earn your first reviews.
         </p>
@@ -85,13 +85,13 @@ export function ListingDiscountsStep({
               role="checkbox"
               aria-checked={selected}
               onClick={() => toggleDiscount(id)}
-              className="grid min-h-[96px] grid-cols-[48px_1fr_28px] items-center gap-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[108px] sm:grid-cols-[60px_1fr_32px] sm:gap-4 sm:px-6"
+              className="grid min-h-[105.6px] grid-cols-[48px_1fr_28px] items-center gap-3 rounded-md border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[118.8px] sm:grid-cols-[60px_1fr_32px] sm:gap-4 sm:px-6"
             >
               <span
                 className={`inline-flex w-fit items-center justify-center text-base font-bold ${
                   fixedPercentage
                     ? ''
-                    : 'min-w-[44px] rounded-[14px] border border-[var(--color-text-secondary)] px-2 py-2 sm:min-w-[60px] sm:px-3'
+                    : 'min-w-[48.4px] rounded-sm border border-[var(--color-text-secondary)] px-2 py-2 sm:min-w-[66px] sm:px-3'
                 }`}
               >
                 {percentage}%
@@ -103,7 +103,7 @@ export function ListingDiscountsStep({
                 </span>
               </span>
               <span
-                className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-md border transition ${
+                className={`inline-flex h-[24.2px] w-[24.2px] items-center justify-center rounded-sm border transition ${
                   selected
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                     : 'border-[var(--color-text-secondary)] bg-[var(--color-surface)]'

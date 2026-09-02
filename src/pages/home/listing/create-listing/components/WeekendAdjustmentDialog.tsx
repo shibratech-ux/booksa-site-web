@@ -88,13 +88,13 @@ export function WeekendAdjustmentDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="flex h-[min(420px,92dvh)] max-h-[92dvh] w-full max-w-[480px] flex-col overflow-y-auto rounded-t-[28px] bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:h-[394px] sm:max-h-[calc(100vh-32px)] sm:rounded-[30px] sm:px-6 sm:pb-4"
+            className="flex h-[min(420px,92dvh)] max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-lg bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:h-[433.4px] sm:max-h-[calc(100vh-32px)] sm:rounded-lg sm:px-6 sm:pb-4"
           >
             <header className="grid h-12 shrink-0 grid-cols-[44px_1fr_44px] items-center">
               <button
                 type="button"
                 aria-label="Learn about weekend adjustments"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
               >
                 <CircleHelp className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
               </button>
@@ -105,7 +105,7 @@ export function WeekendAdjustmentDialog({
                 type="button"
                 onClick={onClose}
                 aria-label="Close weekend adjustment dialog"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
               >
                 <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
               </button>
@@ -113,7 +113,7 @@ export function WeekendAdjustmentDialog({
 
             <div className="flex min-h-0 flex-1 flex-col items-center pt-8">
               <div className="flex items-center justify-center gap-2">
-                <label className="flex items-center text-[44px] font-bold leading-none tracking-[-0.05em]">
+                <label className="flex items-center text-[51.744px] font-bold leading-none tracking-[-0.05em]">
                   <input
                     ref={inputRef}
                     type="text"
@@ -136,7 +136,7 @@ export function WeekendAdjustmentDialog({
                   type="button"
                   onClick={() => inputRef.current?.select()}
                   aria-label="Edit weekend adjustment percentage"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-border)] transition hover:border-[var(--color-text-primary)]"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-border)] transition hover:border-[var(--color-text-primary)]"
                 >
                   <Pencil className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true" />
                 </button>
@@ -154,7 +154,7 @@ export function WeekendAdjustmentDialog({
                 value={draftAdjustment}
                 onChange={(event) => setDraftAdjustment(Number(event.target.value))}
                 aria-label="Weekend adjustment slider"
-                className="mt-10 h-1 w-full max-w-[432px] cursor-pointer appearance-none rounded-full bg-[var(--color-border)] [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[var(--color-text-primary)] [&::-moz-range-thumb]:bg-[var(--color-surface)] [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-[var(--color-text-primary)] [&::-webkit-slider-thumb]:bg-[var(--color-surface)] [&::-webkit-slider-thumb]:shadow-md"
+                className="mt-10 h-1 w-full max-w-[475.2px] cursor-pointer appearance-none rounded-md bg-[var(--color-border)] [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:rounded-md [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-[var(--color-text-primary)] [&::-moz-range-thumb]:bg-[var(--color-surface)] [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-md [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-[var(--color-text-primary)] [&::-webkit-slider-thumb]:bg-[var(--color-surface)] [&::-webkit-slider-thumb]:shadow-md"
               />
             </div>
 
@@ -168,7 +168,7 @@ export function WeekendAdjustmentDialog({
               <button
                 type="button"
                 onClick={handleSave}
-                className="min-w-[96px] rounded-[14px] bg-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-surface)] transition hover:opacity-90"
+                className="min-w-[105.6px] rounded-md bg-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-surface)] transition hover:opacity-90"
               >
                 Done
               </button>

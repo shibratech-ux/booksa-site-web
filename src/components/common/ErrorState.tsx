@@ -16,8 +16,8 @@ export function ErrorState({
   const { t } = useTranslation('common');
 
   return (
-    <div className="surface-card flex min-h-[280px] flex-col items-center justify-center p-8 text-center" role="alert">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-rose-500/10 text-[var(--color-danger)]">
+    <div className="surface-card flex min-h-[308px] flex-col items-center justify-center p-8 text-center" role="alert">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-sm bg-rose-500/10 text-[var(--color-danger)]">
         <WarningRegular className="h-7 w-7" />
       </div>
       <h3 className="text-xl font-semibold text-[var(--color-text-primary)]">{title ?? t('errors.generic')}</h3>

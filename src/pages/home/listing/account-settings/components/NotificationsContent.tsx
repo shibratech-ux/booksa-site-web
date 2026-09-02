@@ -105,8 +105,8 @@ export function NotificationsContent() {
   const groups = activeTab === 'offers' ? offerGroups : accountGroups;
 
   return (
-    <div className="mx-auto max-w-[760px]">
-      <h2 className="text-[23.52px] font-semibold tracking-[-0.035em] sm:text-[25.2px]">Notifications</h2>
+    <div className="mx-auto max-w-[836px]">
+      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">Notifications</h2>
 
       <div className="mt-6 flex border-b border-[var(--color-border)]" role="tablist" aria-label="Notification categories">
         {([
@@ -127,7 +127,7 @@ export function NotificationsContent() {
             {activeTab === id ? (
               <motion.span
                 layoutId="notifications-tab-indicator"
-                className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[var(--color-text-primary)]"
+                className="absolute inset-x-0 -bottom-px h-0.5 rounded-sm bg-[var(--color-text-primary)]"
               />
             ) : null}
           </button>
@@ -153,7 +153,7 @@ export function NotificationsContent() {
                 onChange={(event) => setUnsubscribeMarketing(event.target.checked)}
                 className="peer sr-only"
               />
-              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-xs)] border transition ${
+              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-sm border transition ${
                 unsubscribeMarketing
                   ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                   : 'border-[var(--color-text-secondary)]'

@@ -22,6 +22,7 @@ export function ThreeDIcon({
   sourceSize,
   alt = '',
   onError,
+  className,
   ...imageProps
 }: ThreeDIconProps) {
   const [hasFailed, setHasFailed] = useState(false);
@@ -31,6 +32,7 @@ export function ThreeDIcon({
   return (
     <ShimmerImage
       {...imageProps}
+      className={`booksa-icon ${className ?? ''}`.trim()}
       src={getThreeDIconUrl(name, { angle, palette, size: sourceSize })}
       alt={alt}
       aria-hidden={alt ? imageProps['aria-hidden'] : true}

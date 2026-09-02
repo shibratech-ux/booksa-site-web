@@ -16,6 +16,7 @@ Keep every user-visible project map consistent by using `src/components/maps/Boo
 - Use `interactive={false}` and `showControls={false}` for compact read-only previews. Keep controls enabled for maps intended for exploration.
 - Preserve the attribution rendered by `BooksaMap`. Do not cover it with feature overlays.
 - Keep map-specific overlays as children of `BooksaMap` and give interactive controls accessible names.
+- Clip every map image/surface with `rounded-[19px]`. Keep this radius on the shared `BooksaMap` root and do not override it with another rounding utility or a smaller-radius clipping parent.
 
 ## Listing search defaults
 

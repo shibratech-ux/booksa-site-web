@@ -25,7 +25,7 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-[var(--color-surface)] text-gray-900">
       <BooksaHeader />
 
-      <main className="mx-auto max-w-[1400px] space-y-8 overflow-hidden px-4 pb-16 pt-4 sm:space-y-9 sm:px-6 sm:py-8 lg:space-y-10 lg:px-8 lg:py-11">
+      <main className="marketplace-reference-container mx-auto space-y-8 overflow-hidden px-4 pb-16 pt-4 sm:space-y-9 sm:px-6 sm:py-8 lg:space-y-10 lg:px-0 lg:py-11">
         {serviceSections.map((section) => (
           <ExploreRail
             key={section.title}

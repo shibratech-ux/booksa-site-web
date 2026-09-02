@@ -316,7 +316,7 @@ export default function ExperiencesPage() {
     <div className="min-h-screen bg-[var(--color-surface)] text-gray-900">
       <BooksaHeader />
 
-      <main className="mx-auto max-w-[1400px] overflow-hidden px-4 pb-16 pt-4 sm:px-6 sm:py-8 lg:px-8 lg:py-11">
+      <main className="marketplace-reference-container mx-auto overflow-hidden px-4 pb-16 pt-4 sm:px-6 sm:py-8 lg:px-0 lg:py-11">
         <section className="space-y-8 sm:space-y-9 lg:space-y-10">
           <ExperienceRail
             title="Booksa Originals"
@@ -325,7 +325,7 @@ export default function ExperiencesPage() {
           />
 
           <div className="space-y-8 pt-2 sm:space-y-9 lg:space-y-10">
-            <h1 className="max-w-4xl text-[17.64px] font-medium tracking-tight sm:text-[15.12px] lg:text-[20.16px]">
+            <h1 className="max-w-4xl text-[20.74464px] font-medium tracking-tight sm:text-[17.78112px] lg:text-[23.70816px]">
               Populaire auprès des voyageurs de votre région
             </h1>
 

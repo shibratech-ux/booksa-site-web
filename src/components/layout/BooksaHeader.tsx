@@ -10,21 +10,23 @@ import { createPortal } from "react-dom";
 import { useEffect, useId, useRef, useState } from "react";
 import appleLogo from "@/assets/images/appel-logo.png";
 import googleLogo from "@/assets/images/google-logo.png";
+import allIcon from "@/assets/images/all.png";
+import homesIcon from "@/assets/images/homes.png";
+import bedIcon from "@/assets/images/bed.png";
+import restaurantIcon from "@/assets/images/restaurant.png";
 import { useTheme } from "@/theme/useTheme";
 import { ROUTES } from "@/utils/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/language/LanguageSwitcher";
-import { getFirebaseAuthErrorKey } from "@/utils/firebaseErrors";
-import { ThreeDIcon } from "@/components/ui/ThreeDIcon";
-import type { ThreeDIconName } from "@/icons/threeDIcons";
+import { getFirebaseAuthErrorKey, logFirebaseAuthError } from "@/utils/firebaseErrors";
 import { ShimmerImage } from "@/components/ui/ShimmerImage";
 import MarketplaceMobileNav from "@/components/layout/MarketplaceMobileNav";
 
 type NavigationItem = {
   label: string;
   labelKey: "home" | "hotel" | "privateRoom" | "restaurant";
-  icon: ThreeDIconName;
+  iconSrc: string;
   path: string;
   badge?: string;
 };
@@ -33,25 +35,25 @@ const navigationItems: NavigationItem[] = [
   {
     label: "All",
     labelKey: "home",
-    icon: "hotel",
+    iconSrc: allIcon,
     path: ROUTES.home,
   },
   {
     label: "Hotel",
     labelKey: "hotel",
-    icon: "privateRoom",
+    iconSrc: homesIcon,
     path: ROUTES.homes,
   },
   {
-    label: "Private Room",
+    label: "Private room",
     labelKey: "privateRoom",
-    icon: "artStudio",
+    iconSrc: bedIcon,
     path: ROUTES.experiences,
   },
   {
     label: "Restaurant",
     labelKey: "restaurant",
-    icon: "restaurant",
+    iconSrc: restaurantIcon,
     path: ROUTES.services,
   },
 ] as const;
@@ -62,6 +64,10 @@ const activeTabUnderline = {
   damping: 34,
   mass: 0.8,
 } as const;
+
+const DESKTOP_HEADER_EXPANDED_HEIGHT = 203;
+const DESKTOP_HEADER_COLLAPSED_HEIGHT = 96;
+const DESKTOP_HEADER_COLLAPSE_OFFSET = 40;
 
 function isNavigationItemActive(item: NavigationItem, pathname: string) {
   return item.label === "All"
@@ -86,13 +92,13 @@ function SearchField({ collapsed = false }: { collapsed?: boolean }) {
       aria-label={t("searchAll")}
       layout
       animate={{
-        width: isCompact ? "42%" : "100%",
-        maxWidth: isCompact ? 440 : 850,
-        height: isCompact ? 48 : "auto",
+        width: "100%",
+        maxWidth: isCompact ? 376 : 850,
+        height: isCompact ? 46 : 64,
       }}
       transition={{ type: "spring", stiffness: 260, damping: 30, mass: 1 }}
-      className={`search-surface flex items-center text-left transition hover:shadow-[var(--shadow-md)] ${
-        isCompact ? "mx-6 w-full justify-between px-0 lg:mx-10" : "w-full"
+      className={`search-surface flex items-center rounded-full text-left transition hover:shadow-[var(--shadow-md)] ${
+        isCompact ? "w-full justify-between px-0" : "w-full"
       }`}
       style={{
         backgroundColor: theme.colors.surface,
@@ -102,47 +108,79 @@ function SearchField({ collapsed = false }: { collapsed?: boolean }) {
       <div
         className={`flex w-full items-center ${
           isCompact
-            ? "px-1.5 py-1.5 lg:px-2.5 lg:py-2.5"
-            : "px-1.5 py-1.5 sm:px-3 sm:py-3"
+            ? "p-[3px]"
+            : "px-[8px] py-[7px]"
         }`}
       >
-        {searchFieldItems.map((field, index) => (
-          <div key={field.labelKey} className="flex min-w-0 flex-1 items-center">
-            <div
-              className={`min-w-0 ${isCompact ? "px-3 py-1" : "px-5 py-1.5"}`}
-            >
-              <p
-                className={`font-semibold ${isCompact ? "text-[10.92px] lg:text-[10.08px]" : "text-[11.76px] lg:text-[10.92px]"}`}
-                style={{ color: theme.colors.textPrimary }}
-              >
-                {t(field.labelKey)}
-              </p>
-              <p
-                className={`truncate ${isCompact ? "text-[10.92px] lg:text-[10.08px]" : "text-[11.76px] lg:text-[10.92px]"}`}
-                style={{ color: theme.colors.textSecondary }}
-              >
-                {t(field.valueKey)}
-              </p>
-            </div>
+        {isCompact ? (
+          <>
+            {[
+              { label: "Anywhere", icon: true },
+              { label: "Anytime", icon: false },
+              { label: "Add guests", icon: false },
+            ].map((field, index) => (
+              <div key={field.label} className="flex min-w-0 items-center">
+                <span
+                  className="flex min-w-0 items-center gap-2 px-3 text-[12px] font-semibold whitespace-nowrap"
+                  style={{ color: theme.colors.textPrimary }}
+                >
+                  {field.icon ? (
+                    <img
+                      src={homesIcon}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-[24px] w-[24px] shrink-0 object-contain"
+                    />
+                  ) : null}
+                  {field.label}
+                </span>
+                {index < 2 ? (
+                  <span
+                    className="h-[26px] w-px shrink-0"
+                    aria-hidden="true"
+                    style={{ backgroundColor: theme.colors.border }}
+                  />
+                ) : null}
+              </div>
+            ))}
+          </>
+        ) : (
+          searchFieldItems.map((field, index) => (
+            <div key={field.labelKey} className="flex min-w-0 flex-1 items-center">
+              <div className="min-w-0 px-5 py-1.5">
+                <p
+                  className="text-[13.82976px] font-semibold lg:text-[12.84192px]"
+                  style={{ color: theme.colors.textPrimary }}
+                >
+                  {t(field.labelKey)}
+                </p>
+                <p
+                  className="truncate text-[13.82976px] lg:text-[12.84192px]"
+                  style={{ color: theme.colors.textSecondary }}
+                >
+                  {t(field.valueKey)}
+                </p>
+              </div>
 
-            {index < 2 ? (
-              <div
-                className="hidden h-9 w-px sm:block"
-                aria-hidden="true"
-                style={{ backgroundColor: theme.colors.border }}
-              />
-            ) : null}
-          </div>
-        ))}
+              {index < 2 ? (
+                <div
+                  className="hidden h-9 w-px sm:block"
+                  aria-hidden="true"
+                  style={{ backgroundColor: theme.colors.border }}
+                />
+              ) : null}
+            </div>
+          ))
+        )}
 
         <span
           className={`ml-2 inline-flex shrink-0 items-center justify-center rounded-full text-white ${
-            isCompact ? "h-10 w-10" : "h-12 w-12"
+            isCompact ? "h-[38px] w-[38px]" : "h-[48px] w-[48px]"
           }`}
           style={{ backgroundColor: theme.colors.primary[500] }}
         >
           <SearchRegular
-            className={isCompact ? "h-4 w-4" : "h-5 w-5"}
+            className={isCompact ? "h-[15px] w-[15px]" : "h-[18px] w-[18px]"}
             aria-hidden="true"
           />
         </span>
@@ -187,7 +225,7 @@ function LoginSignupDialog({
       await login({ email: identifier.trim(), password });
       onAuthenticated();
     } catch (error) {
-      console.error("Email authentication failed.", error);
+      logFirebaseAuthError("Email authentication failed:", error);
       setEmailError(tErrors(getFirebaseAuthErrorKey(error)));
     } finally {
       setIsEmailLoading(false);
@@ -257,7 +295,7 @@ function LoginSignupDialog({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 18, scale: 0.98 }}
             transition={{ type: "spring", stiffness: 280, damping: 28 }}
-            className="relative w-full max-w-[460px] rounded-3xl px-5 pb-6 pt-5 shadow-[var(--shadow-xl)] sm:px-6 sm:pb-7 sm:pt-6"
+            className="relative w-full max-w-[506px] rounded-lg px-5 pb-6 pt-5 shadow-[var(--shadow-xl)] sm:px-6 sm:pb-7 sm:pt-6"
             style={{
               backgroundColor: theme.colors.surface,
               border: `1px solid ${theme.colors.border}`,
@@ -267,26 +305,26 @@ function LoginSignupDialog({
           type="button"
           onClick={onClose}
           aria-label={tCommon("actions.close")}
-          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full transition"
+          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-md transition"
           style={{ color: theme.colors.textSecondary }}
         >
           <DismissRegular className="h-4 w-4" aria-hidden="true" />
         </button>
 
         <form
-          className="mx-auto flex max-w-[360px] flex-col items-stretch"
+          className="mx-auto flex max-w-[396px] flex-col items-stretch"
           onSubmit={(event) => {
             event.preventDefault();
             void handleEmailLogin();
           }}
         >
           <div className="mb-4 flex justify-center">
-            <BooksaLogo className="h-10 w-[110px]" />
+            <BooksaLogo className="h-10 w-[121px]" />
           </div>
 
           <h2
             id={titleId}
-            className="text-center text-[21px] font-semibold tracking-[-0.02em] sm:text-[23.52px]"
+            className="text-center text-[24.696px] font-semibold tracking-[-0.02em] sm:text-[27.65952px]"
             style={{ color: theme.colors.textPrimary }}
           >
             {t("dialogTitle")}
@@ -299,7 +337,7 @@ function LoginSignupDialog({
               type="email"
               autoComplete="email"
               placeholder={t("email")}
-              className="h-[60px] w-full rounded-2xl border px-4 text-[13.44px] outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-[var(--color-primary-500)]"
+              className="h-[66px] w-full rounded-md border px-4 text-[15.80544px] outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-[var(--color-primary-500)]"
               style={{
                 backgroundColor: theme.colors.background,
                 borderColor: theme.colors.border,
@@ -313,7 +351,7 @@ function LoginSignupDialog({
               type="password"
               autoComplete="current-password"
               placeholder={t("password")}
-              className="mt-3 h-[60px] w-full rounded-2xl border px-4 text-[13.44px] outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-[var(--color-primary-500)]"
+              className="mt-3 h-[66px] w-full rounded-md border px-4 text-[15.80544px] outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-[var(--color-primary-500)]"
               style={{
                 backgroundColor: theme.colors.background,
                 borderColor: theme.colors.border,
@@ -324,7 +362,7 @@ function LoginSignupDialog({
           </div>
 
           <p
-            className="mt-3 text-[10.92px] leading-5"
+            className="mt-3 text-[12.84192px] leading-5"
             style={{ color: theme.colors.textSecondary }}
           >
             {t("privacyLead")}{" "}
@@ -341,7 +379,7 @@ function LoginSignupDialog({
             type="submit"
             disabled={isEmailLoading || isGoogleLoading}
             aria-busy={isEmailLoading}
-            className="mt-4 inline-flex h-12 items-center justify-center rounded-[14px] text-[13.44px] font-semibold text-white transition hover:opacity-95 disabled:cursor-wait disabled:opacity-60"
+            className="mt-4 inline-flex h-12 items-center justify-center rounded-md text-[15.80544px] font-semibold text-white transition hover:opacity-95 disabled:cursor-wait disabled:opacity-60"
             style={{
               backgroundImage: `linear-gradient(90deg, ${theme.colors.primary[500]} 0%, ${theme.colors.secondary} 100%)`,
             }}
@@ -371,7 +409,7 @@ function LoginSignupDialog({
               onClick={handleGoogleLogin}
               disabled={isGoogleLoading}
               aria-busy={isGoogleLoading}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border text-[15.12px] shadow-sm transition hover:opacity-80 disabled:cursor-wait disabled:opacity-50"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md border text-[17.78112px] shadow-sm transition hover:opacity-80 disabled:cursor-wait disabled:opacity-50"
               style={{
                 backgroundColor: theme.colors.surface,
                 borderColor: theme.colors.border,
@@ -388,7 +426,7 @@ function LoginSignupDialog({
             <button
               type="button"
               aria-label={t("continueApple")}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border text-[15.12px] shadow-sm transition"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md border text-[17.78112px] shadow-sm transition"
               style={{
                 backgroundColor: theme.colors.surface,
                 borderColor: theme.colors.border,
@@ -406,13 +444,13 @@ function LoginSignupDialog({
           {googleError ? (
             <p
               role="alert"
-              className="mt-3 text-center text-[10.92px] text-[var(--color-danger)]"
+              className="mt-3 text-center text-[12.84192px] text-[var(--color-danger)]"
             >
               {googleError}
             </p>
           ) : null}
           {emailError ? (
-            <p role="alert" className="mt-3 text-center text-[10.92px] text-[var(--color-danger)]">
+            <p role="alert" className="mt-3 text-center text-[12.84192px] text-[var(--color-danger)]">
               {emailError}
             </p>
           ) : null}
@@ -505,7 +543,7 @@ function HeaderMenu({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.16, ease: "easeOut" }}
-            className="absolute right-0 top-full z-50 mt-3 w-[264px] overflow-hidden rounded-2xl border py-2 text-left shadow-[var(--shadow-lg)]"
+            className="absolute right-0 top-full z-50 mt-3 w-[290.4px] overflow-hidden rounded-sm border py-2 text-left shadow-[var(--shadow-lg)]"
             style={{
               backgroundColor: theme.colors.surface,
               borderColor: theme.colors.border,
@@ -515,9 +553,9 @@ function HeaderMenu({
             <button
               type="button"
               role="menuitem"
-              className="flex w-full items-center gap-3 px-5 py-3 text-[12.6px] transition hover:opacity-70"
+              className="flex w-full items-center gap-3 px-5 py-3 text-[14.8176px] transition hover:opacity-70"
             >
-              <FiHelpCircle className="h-[18px] w-[18px] shrink-0" aria-hidden="true" />
+              <FiHelpCircle className="h-[19.8px] w-[19.8px] shrink-0" aria-hidden="true" />
               <span>{t("helpCenter")}</span>
             </button>
 
@@ -530,15 +568,15 @@ function HeaderMenu({
               className="flex w-full items-center justify-between gap-3 px-5 py-3 text-left transition hover:opacity-75"
             >
               <span className="min-w-0">
-                <span className="block text-[12.6px] font-semibold leading-5">{t("becomeHost")}</span>
+                <span className="block text-[14.8176px] font-semibold leading-5">{t("becomeHost")}</span>
                 <span
-                  className="mt-0.5 block text-[10.08px] leading-4"
+                  className="mt-0.5 block text-[11.85408px] leading-4"
                   style={{ color: theme.colors.textSecondary }}
                 >
                   It&apos;s easy to start hosting and earn extra income.
                 </span>
               </span>
-              <span className="shrink-0 text-[30.24px] leading-none" aria-hidden="true">
+              <span className="shrink-0 text-[35.56224px] leading-none" aria-hidden="true">
                 🧑‍💼
               </span>
             </button>
@@ -550,7 +588,7 @@ function HeaderMenu({
                 key={label}
                 type="button"
                 role="menuitem"
-                className="block w-full px-5 py-2.5 text-left text-[12.6px] transition hover:opacity-70"
+                className="block w-full px-5 py-2.5 text-left text-[14.8176px] transition hover:opacity-70"
               >
                 {label}
               </button>
@@ -562,7 +600,7 @@ function HeaderMenu({
               type="button"
               role="menuitem"
               onClick={openLogin}
-              className="block w-full px-5 py-3 text-left text-[12.6px] transition hover:opacity-70"
+              className="block w-full px-5 py-3 text-left text-[14.8176px] transition hover:opacity-70"
             >
               Log in or sign up
             </button>
@@ -580,12 +618,12 @@ function CompactMobileHeader() {
   const navigate = useNavigate();
 
   return (
-    <div className="mx-auto max-w-[1400px] pb-3 pt-3 lg:hidden">
+    <div className="mx-auto max-w-[1540px] pb-3 pt-3 lg:hidden">
       <div className="px-4">
       <button
         type="button"
         aria-label={t("searchAll")}
-        className="mx-auto flex h-11 w-full max-w-[420px] items-center justify-center gap-2 rounded-full border px-4 text-[12px] font-semibold shadow-[0_3px_14px_rgba(15,23,42,0.12)]"
+        className="mx-auto flex h-11 w-full max-w-[462px] items-center justify-center gap-2 rounded-full border px-4 text-[14.112px] font-semibold shadow-[0_3px_14px_rgba(15,23,42,0.12)]"
         style={{
           backgroundColor: theme.colors.surface,
           borderColor: theme.colors.border,
@@ -593,7 +631,7 @@ function CompactMobileHeader() {
         }}
       >
         <SearchRegular
-          className="h-4 w-4 shrink-0"
+          className="h-2 w-2 shrink-0"
           aria-hidden="true"
           style={{ color: theme.colors.textPrimary }}
         />
@@ -623,13 +661,15 @@ function CompactMobileHeader() {
               }}
             >
               <span className="relative inline-flex items-center justify-center">
-                <ThreeDIcon
-                  name={item.icon}
-                  className="h-[18px] w-[18px] object-contain"
+                <img
+                  src={item.iconSrc}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-[19.8px] w-[19.8px] object-contain"
                 />
                 {item.badge ? (
                   <span
-                    className="absolute -right-5 -top-2 rounded-full px-1.5 py-0.5 text-[6.72px] font-bold tracking-[0.14em] text-white shadow-sm"
+                    className="absolute -right-5 -top-2 rounded-full px-1.5 py-0.5 text-[7.90272px] font-bold tracking-[0.14em] text-white shadow-sm"
                     style={{ backgroundColor: theme.colors.textPrimary }}
                   >
                     {item.badge}
@@ -637,7 +677,7 @@ function CompactMobileHeader() {
                 ) : null}
               </span>
 
-              <span className="text-[10.5px] font-medium leading-none">
+              <span className="text-md font-medium leading-none">
                 {item.label}
               </span>
             </button>
@@ -654,24 +694,26 @@ export default function BooksaHeader() {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(
+    () => typeof window !== "undefined" && window.scrollY > DESKTOP_HEADER_COLLAPSE_OFFSET,
+  );
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [authDestination, setAuthDestination] = useState<string | null>(null);
 
   useEffect(() => {
-    const updateCollapseState = () => {
-      setIsCollapsed(window.scrollY > 24);
+    const updateHeaderState = () => {
+      setIsCollapsed(window.scrollY > DESKTOP_HEADER_COLLAPSE_OFFSET);
     };
 
-    updateCollapseState();
-    window.addEventListener("scroll", updateCollapseState, { passive: true });
+    updateHeaderState();
+    window.addEventListener("scroll", updateHeaderState, { passive: true });
 
-    return () => {
-      window.removeEventListener("scroll", updateCollapseState);
-    };
+    return () => window.removeEventListener("scroll", updateHeaderState);
   }, []);
 
   function handleNavigate(path: string) {
+    setIsCollapsed(false);
+    window.scrollTo({ top: 0, behavior: "auto" });
     navigate(path);
   }
 
@@ -701,89 +743,113 @@ export default function BooksaHeader() {
 
   return (
     <header
-      className="sticky top-0 z-30 border-b"
+      className={`sticky top-0 z-30 border-b transition-shadow duration-300 ${
+        isCollapsed ? "shadow-[0_2px_12px_rgba(15,23,42,0.08)]" : "shadow-none"
+      }`}
       style={{
         backgroundColor: theme.colors.surface,
         borderColor: theme.colors.border,
       }}
     >
       <motion.div
-        className="mx-auto hidden max-w-[1400px] overflow-visible px-4 lg:block lg:px-8"
+        className="marketplace-reference-container mx-auto hidden overflow-visible lg:block"
         animate={{
-          minHeight: isCollapsed ? 68 : 184,
-          paddingTop: isCollapsed ? 8 : 24,
-          paddingBottom: isCollapsed ? 10 : 0,
+          height: isCollapsed
+            ? DESKTOP_HEADER_COLLAPSED_HEIGHT
+            : DESKTOP_HEADER_EXPANDED_HEIGHT,
+          paddingTop: isCollapsed ? 0 : 30,
         }}
-        transition={{ type: "spring", stiffness: 220, damping: 28, mass: 1.05 }}
+        initial={false}
+        transition={{ type: "spring", stiffness: 280, damping: 32, mass: 0.9 }}
       >
         <motion.div
-          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-start gap-4 xl:gap-6"
-          animate={{ alignItems: isCollapsed ? "center" : "flex-start" }}
-          transition={{
-            type: "spring",
-            stiffness: 220,
-            damping: 28,
-            mass: 1.05,
+          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-4 xl:gap-6"
+          animate={{
+            alignItems: isCollapsed ? "center" : "flex-start",
+            height: isCollapsed ? 96 : 40,
           }}
+          transition={{ type: "spring", stiffness: 280, damping: 32, mass: 0.9 }}
         >
-          <BooksaLogo className="h-10 w-[108px] justify-self-start" />
+          <BooksaLogo className="h-10 w-[104px] justify-self-start" />
 
-          <nav
-            aria-label={t("primary")}
-            className="flex items-start justify-center gap-4 pt-1 xl:gap-8"
-          >
-            {navigationItems.map((item) => {
-              const isActive = isNavigationItemActive(item, location.pathname);
+          <AnimatePresence mode="wait" initial={false}>
+            {isCollapsed ? (
+              <motion.div
+                key="compact-search"
+                className="w-[376px]"
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                <SearchField collapsed />
+              </motion.div>
+            ) : (
+              <motion.nav
+                key="category-navigation"
+                aria-label={t("primary")}
+                className="flex items-start justify-center gap-4 pt-1 xl:gap-8"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                {navigationItems.map((item) => {
+                  const isActive = isNavigationItemActive(item, location.pathname);
 
-              return (
-                <button
-                  key={item.label}
-                  type="button"
-                  className="relative flex cursor-pointer flex-col items-center gap-1 transition"
-                  onClick={() => handleNavigate(item.path)}
-                  style={{
-                    color: isActive
-                      ? theme.colors.textPrimary
-                      : theme.colors.textSecondary,
-                  }}
-                >
-                  <span className="flex items-center gap-1.5 text-[11.76px] font-medium">
-                    <ThreeDIcon
-                      name={item.icon}
-                      className="h-7 w-7 object-contain"
-                    />
-                    <span className="relative">
-                      {item.label}
-                      {item.badge ? (
-                        <span
-                          className="absolute -right-8 -top-3 rounded-full px-1.5 py-0.5 text-[7.56px] font-bold tracking-[0.14em] text-white shadow-sm"
-                          style={{ backgroundColor: theme.colors.textPrimary }}
-                        >
-                          {item.badge}
+                  return (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="relative flex cursor-pointer flex-col items-center gap-1 rounded-full transition"
+                      onClick={() => handleNavigate(item.path)}
+                      style={{
+                        color: isActive
+                          ? theme.colors.textPrimary
+                          : theme.colors.textSecondary,
+                      }}
+                    >
+                      <span className="text-md flex items-center gap-1.5 font-medium">
+                        <img
+                          src={item.iconSrc}
+                          alt=""
+                          aria-hidden="true"
+                          className="h-7 w-7 object-contain"
+                        />
+                        <span className="relative">
+                          {item.label}
+                          {item.badge ? (
+                            <span
+                              className="absolute -right-8 -top-3 rounded-full px-1.5 py-0.5 text-[8.89056px] font-bold tracking-[0.14em] text-white shadow-sm"
+                              style={{ backgroundColor: theme.colors.textPrimary }}
+                            >
+                              {item.badge}
+                            </span>
+                          ) : null}
                         </span>
-                      ) : null}
-                    </span>
-                  </span>
+                      </span>
 
-                  {isActive ? (
-                    <motion.span
-                      layoutId="booksa-desktop-active-tab"
-                      transition={activeTabUnderline}
-                      className="mt-2 h-0.5 w-20 rounded-full"
-                      style={{ backgroundColor: theme.colors.textPrimary }}
-                    />
-                  ) : (
-                    <span className="mt-2 h-0.5 w-20 rounded-full bg-transparent" />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
+                      {isActive ? (
+                        <motion.span
+                          layoutId="booksa-desktop-active-tab"
+                          transition={activeTabUnderline}
+                          className="mt-2 h-0.5 w-[66px] rounded-full"
+                          style={{ backgroundColor: theme.colors.textPrimary }}
+                        />
+                      ) : (
+                        <span className="mt-2 h-0.5 w-[66px] rounded-full bg-transparent" />
+                      )}
+                    </button>
+                  );
+                })}
+              </motion.nav>
+            )}
+          </AnimatePresence>
 
-          <div className="flex items-center justify-self-end gap-2 pt-1">
+          <div className={`flex items-center justify-self-end gap-2 ${isCollapsed ? "pt-0" : "pt-1"}`}>
             <button
               type="button"
-              className="rounded-full px-4 py-2 text-[12.6px] font-medium transition hover:opacity-90"
+              className="rounded-full px-4 py-2 text-[14.8176px] font-medium transition hover:opacity-90"
               style={{ color: theme.colors.textPrimary }}
               onClick={handleHostAccess}
             >
@@ -795,27 +861,24 @@ export default function BooksaHeader() {
           </div>
         </motion.div>
 
-        <motion.div
-          className="flex justify-center overflow-hidden"
-          animate={{
-            opacity: isCollapsed ? 0 : 1,
-            height: isCollapsed ? 0 : "auto",
-            marginTop: isCollapsed ? 0 : 20,
-            paddingBottom: isCollapsed ? 0 : 20,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 180,
-            damping: 24,
-            mass: 1.1,
-          }}
-        >
-          <SearchField collapsed={isCollapsed} />
-        </motion.div>
+        <AnimatePresence initial={false}>
+          {!isCollapsed ? (
+            <motion.div
+              key="expanded-search"
+              className="flex h-[64px] justify-center overflow-hidden"
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: 64, marginTop: 35 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 30, mass: 0.95 }}
+            >
+              <SearchField />
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </motion.div>
 
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 max-[611px]:hidden lg:hidden">
-        <BooksaLogo className="h-8 w-[96px]" />
+      <div className="mx-auto flex max-w-[1540px] items-center justify-between gap-4 px-4 py-3 max-[611px]:hidden lg:hidden">
+        <BooksaLogo className="h-8 w-[105.6px]" />
 
         <div className="flex items-center gap-2">
           <LanguageSwitcher compact />
@@ -823,11 +886,11 @@ export default function BooksaHeader() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1400px] px-4 pb-3 max-[611px]:hidden lg:hidden">
+      <div className="mx-auto max-w-[1540px] px-4 pb-3 max-[611px]:hidden lg:hidden">
         <button
           type="button"
           aria-label={t("searchAll")}
-          className="search-surface flex w-full items-center justify-between gap-4 px-4 text-left"
+          className="search-surface flex w-full items-center justify-between gap-4 rounded-full px-4 text-left"
           style={{
             backgroundColor: theme.colors.surface,
             borderColor: theme.colors.border,
@@ -835,23 +898,23 @@ export default function BooksaHeader() {
         >
           <div>
             <p
-              className="text-[10.92px] font-semibold"
+              className="text-[12.84192px] font-semibold"
               style={{ color: theme.colors.textPrimary }}
             >
               {t("whereGoing")}
             </p>
             <p
-              className="text-[10.08px]"
+              className="text-[11.85408px]"
               style={{ color: theme.colors.textSecondary }}
             >
               {t("searchAll")}
             </p>
           </div>
           <span
-            className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white"
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white"
             style={{ backgroundColor: theme.colors.primary[500] }}
           >
-            <SearchRegular className="h-4 w-4" aria-hidden="true" />
+            <SearchRegular className="h-2 w-2" aria-hidden="true" />
           </span>
         </button>
       </div>

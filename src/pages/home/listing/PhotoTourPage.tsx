@@ -178,7 +178,7 @@ function PhotoTourGallery({
   onImageClick: () => void;
 }) {
   const galleryFrameClass =
-    'h-full overflow-hidden rounded-[16px] bg-slate-100 shadow-[0_18px_40px_rgba(15,23,42,0.08)] ring-1 ring-black/5';
+    'h-full overflow-hidden rounded-sm bg-slate-100 shadow-[0_18px_40px_rgba(15,23,42,0.08)] ring-1 ring-black/5';
 
   if (images.length <= 1) {
     return (
@@ -186,7 +186,7 @@ function PhotoTourGallery({
         <button type="button" onClick={onImageClick} className="block w-full cursor-pointer">
           <ShimmerImage
             alt={label}
-            className="h-auto min-h-[260px] w-full object-cover transition duration-700 hover:scale-[1.02] sm:min-h-full lg:h-full lg:min-h-0"
+            className="h-auto min-h-[286px] w-full object-cover transition duration-700 hover:scale-[1.02] sm:min-h-full lg:h-full lg:min-h-0"
             src={images[0]}
           />
         </button>
@@ -199,14 +199,14 @@ function PhotoTourGallery({
       <div className={`${galleryFrameClass} grid gap-1.5 lg:h-full lg:grid-cols-[1.35fr_0.9fr]`}>
         <div className="min-h-0 lg:h-full">
           <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-            <ShimmerImage alt={`${label} vue principale`} className="h-auto min-h-[260px] w-full object-cover sm:min-h-[420px] lg:h-full" src={images[0]} />
+            <ShimmerImage alt={`${label} vue principale`} className="h-auto min-h-[286px] w-full object-cover sm:min-h-[462px] lg:h-full" src={images[0]} />
           </button>
         </div>
         <div className="grid gap-1.5 lg:h-full">
           {images.slice(1).map((image, index) => (
             <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
               <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-                <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[130px] w-full object-cover sm:min-h-[209px] lg:h-full" src={image} />
+                <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[229.9px] lg:h-full" src={image} />
               </button>
             </div>
           ))}
@@ -221,7 +221,7 @@ function PhotoTourGallery({
         {images.map((image, index) => (
           <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
             <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-              <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[130px] w-full object-cover sm:min-h-[240px] lg:h-full" src={image} />
+              <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
             </button>
           </div>
         ))}
@@ -234,7 +234,7 @@ function PhotoTourGallery({
       <div className={`${galleryFrameClass} grid gap-1.5 lg:h-full lg:grid-cols-[1.08fr_0.92fr]`}>
         <div className="min-h-0 lg:h-full">
           <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-            <ShimmerImage alt={`${label} vue principale`} className="h-auto min-h-[260px] w-full object-cover sm:min-h-[485px] lg:h-full" src={images[0]} />
+            <ShimmerImage alt={`${label} vue principale`} className="h-auto min-h-[286px] w-full object-cover sm:min-h-[533.5px] lg:h-full" src={images[0]} />
           </button>
         </div>
         <div className="grid gap-1.5 sm:grid-cols-2 lg:h-full">
@@ -244,7 +244,7 @@ function PhotoTourGallery({
               className={`min-h-0 ${index === 3 ? 'sm:col-span-2 lg:col-span-2' : ''}`}
             >
               <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-                <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[130px] w-full object-cover sm:min-h-[240px] lg:h-full" src={image} />
+                <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
               </button>
             </div>
           ))}
@@ -259,7 +259,7 @@ function PhotoTourGallery({
         {images.slice(0, 6).map((image, index) => (
           <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
             <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-              <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[130px] w-full object-cover sm:min-h-[220px] lg:h-full" src={image} />
+              <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[242px] lg:h-full" src={image} />
             </button>
           </div>
         ))}
@@ -272,7 +272,7 @@ function PhotoTourGallery({
       {images.map((image, index) => (
         <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
           <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-            <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[130px] w-full object-cover sm:min-h-[240px] lg:h-full" src={image} />
+            <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
           </button>
         </div>
       ))}
@@ -355,27 +355,27 @@ function PhotoLightbox({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-1 sm:backdrop-blur-0"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-1 sm:backdrop-blur-0"
           >
             <DismissRegular className="h-5 w-5" />
             <span className="hidden sm:inline">Fermer</span>
           </button>
 
-          <div className="rounded-full bg-white/10 px-3 py-1.5 text-sm font-medium tabular-nums text-white/95 backdrop-blur-sm sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-0">
+          <div className="rounded-sm bg-white/10 px-3 py-1.5 text-sm font-medium tabular-nums text-white/95 backdrop-blur-sm sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-0">
             {currentIndex + 1} / {images.length}
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
-              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
+              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white/10 text-white transition hover:bg-white/15"
               aria-label="Partager"
             >
               <ShareRegular className="h-4 w-4" />
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
+              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white/10 text-white transition hover:bg-white/15"
               aria-label="Enregistrer"
             >
               <HeartRegular className="h-4 w-4" />
@@ -407,7 +407,7 @@ function PhotoLightbox({
           <button
             type="button"
             onClick={() => setCurrentIndex((current) => (current - 1 + images.length) % images.length)}
-            className="absolute left-2 top-1/2 hidden h-10 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:left-6 sm:h-12 sm:w-12"
+            className="absolute left-2 top-1/2 hidden h-10 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-md border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:left-6 sm:h-12 sm:w-12"
             aria-label="Image précédente"
           >
             <ChevronLeftRegular className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -427,7 +427,7 @@ function PhotoLightbox({
           <button
             type="button"
             onClick={() => setCurrentIndex((current) => (current + 1) % images.length)}
-            className="absolute right-2 top-1/2 hidden h-10 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:right-6 sm:h-12 sm:w-12"
+            className="absolute right-2 top-1/2 hidden h-10 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-md border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:right-6 sm:h-12 sm:w-12"
             aria-label="Image suivante"
           >
             <ChevronRightRegular className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -455,16 +455,16 @@ function PhotoTourSectionCard({
       transition={{ duration: 0.55, ease: 'easeOut' }}
     >
       <div className="space-y-3 lg:sticky lg:top-8 lg:self-start">
-        <h2 className="text-[16.8px] font-medium tracking-[-0.03em] text-gray-900 sm:text-[15.12px]">
+        <h2 className="text-[19.7568px] font-medium tracking-[-0.03em] text-gray-900 sm:text-[17.78112px]">
           {section.label}
         </h2>
-        <p className="max-w-md text-[10.08px] font-normal leading-5 text-gray-500 sm:text-[11.76px] sm:leading-6">
+        <p className="max-w-md text-[11.85408px] font-normal leading-5 text-gray-500 sm:text-[13.82976px] sm:leading-6">
           {section.description}
         </p>
       </div>
 
       <motion.div
-        className="group cursor-pointer lg:h-[420px]"
+        className="group cursor-pointer lg:h-[462px]"
         onClick={onActivate}
         whileHover={{ scale: 1.005 }}
       >
@@ -507,7 +507,7 @@ function PhotoTourMobileCard({
     <motion.button
       type="button"
       onClick={() => onActivate(currentImage)}
-      className="group relative overflow-hidden rounded-[14px] bg-slate-100 text-left ring-1 ring-black/5"
+      className="group relative overflow-hidden rounded-md bg-slate-100 text-left ring-1 ring-black/5"
       whileTap={{ scale: 0.98 }}
     >
       <div
@@ -529,12 +529,12 @@ function PhotoTourMobileCard({
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
       <div className="absolute inset-x-0 bottom-0 p-3">
-        <p className="text-[10.92px] font-semibold leading-4 text-white">{section.label}</p>
-        <p className="mt-1 line-clamp-2 text-[9.24px] leading-4 text-white/80">{section.description}</p>
+        <p className="text-[12.84192px] font-semibold leading-4 text-white">{section.label}</p>
+        <p className="mt-1 line-clamp-2 text-[10.86624px] leading-4 text-white/80">{section.description}</p>
       </div>
 
       {section.images.length > 1 ? (
-        <div className="absolute right-3 top-3 rounded-full bg-black/45 px-2.5 py-1 text-[8.4px] font-medium text-white backdrop-blur-sm">
+        <div className="absolute right-3 top-3 rounded-sm bg-black/45 px-2.5 py-1 text-[9.8784px] font-medium text-white backdrop-blur-sm">
           {currentIndex + 1}/{section.images.length}
         </div>
       ) : null}
@@ -602,11 +602,11 @@ export function PhotoTourPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <div className="sticky top-0 z-30 border-b border-transparent bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-3 sm:px-8 sm:py-4 lg:px-14">
+        <div className="mx-auto flex max-w-[1584px] items-center justify-between px-4 py-3 sm:px-8 sm:py-4 lg:px-14">
           <button
             type="button"
             onClick={handleBack}
-            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100 sm:h-11 sm:w-11"
+            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-gray-900 transition hover:bg-slate-100 sm:h-11 sm:w-11"
             aria-label="Retour"
           >
             <ArrowLeftRegular className="h-5 w-5" />
@@ -615,14 +615,14 @@ export function PhotoTourPage() {
           <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 sm:gap-3">
             <button
               type="button"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
             >
               <ShareRegular className="h-4 w-4" />
               <span className="hidden sm:inline">Partager</span>
             </button>
             <button
               type="button"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
             >
               <HeartRegular className="h-4 w-4" />
               <span className="hidden sm:inline">Enregistrer</span>
@@ -631,17 +631,17 @@ export function PhotoTourPage() {
         </div>
       </div>
 
-      <main className="mx-auto max-w-[1440px] px-4 pb-16 pt-4 sm:px-8 sm:pb-20 sm:pt-8 lg:px-14">
+      <main className="mx-auto max-w-[1584px] px-4 pb-16 pt-4 sm:px-8 sm:pb-20 sm:pt-8 lg:px-14">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}
           className="mb-5 sm:mb-8"
         >
-          <h1 className="text-[16.8px] font-medium tracking-[-0.04em] text-gray-900 sm:text-[18.48px]">
+          <h1 className="text-[19.7568px] font-medium tracking-[-0.04em] text-gray-900 sm:text-[21.73248px]">
             Visite photo
           </h1>
-          <p className="mt-1 max-w-xl text-[10.08px] leading-5 text-gray-500 sm:mt-3 sm:max-w-2xl sm:text-[10.92px] sm:leading-4">
+          <p className="mt-1 max-w-xl text-[11.85408px] leading-5 text-gray-500 sm:mt-3 sm:max-w-2xl sm:text-[12.84192px] sm:leading-4">
             {galleryTitle}
             <span className="mx-2 text-gray-300">•</span>
             {subtitle}
@@ -649,7 +649,7 @@ export function PhotoTourPage() {
         </motion.div>
 
         <motion.div
-          className="mb-8 grid grid-flow-col auto-cols-[92px] gap-2.5 overflow-x-auto pb-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mb-10 sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:auto-cols-auto lg:grid-cols-4 xl:grid-cols-8"
+          className="mb-8 grid grid-flow-col auto-cols-[101.2px] gap-2.5 overflow-x-auto pb-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mb-10 sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:auto-cols-auto lg:grid-cols-4 xl:grid-cols-8"
           initial="hidden"
           animate="show"
           variants={{
@@ -673,14 +673,14 @@ export function PhotoTourPage() {
               }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
-              <div className="overflow-hidden rounded-[14px] bg-slate-100 ring-1 ring-black/5">
+              <div className="overflow-hidden rounded-sm bg-slate-100 ring-1 ring-black/5">
                 <ShimmerImage
                   alt={section.label}
                   className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                   src={section.images[0]}
                 />
               </div>
-              <p className="mt-1.5 text-[9.24px] font-normal text-gray-900 sm:mt-2 sm:text-[10.92px]">{section.label}</p>
+              <p className="mt-1.5 text-[10.86624px] font-normal text-gray-900 sm:mt-2 sm:text-[12.84192px]">{section.label}</p>
             </motion.button>
           ))}
         </motion.div>

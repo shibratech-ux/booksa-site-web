@@ -139,10 +139,10 @@ export function ListingBasicsStep({
       className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
       aria-labelledby="listing-basics-title"
     >
-      <div className="mx-auto w-full max-w-[640px]">
+      <div className="mx-auto w-full max-w-[704px]">
         <h1
           id="listing-basics-title"
-          className="text-[28px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           {content.title}
         </h1>
@@ -155,7 +155,7 @@ export function ListingBasicsStep({
             const value = values[id] ?? initialValue;
 
             return (
-              <div key={id} className="flex min-h-[72px] items-center justify-between gap-3 py-3 sm:min-h-[82px] sm:gap-6 sm:py-4">
+              <div key={id} className="flex min-h-[79.2px] items-center justify-between gap-3 py-3 sm:min-h-[90.2px] sm:gap-6 sm:py-4">
                 <span className="text-lg font-medium text-[var(--color-text-primary)]">{label}</span>
                 <div className="flex shrink-0 items-center gap-4">
                   <button
@@ -163,7 +163,7 @@ export function ListingBasicsStep({
                     onClick={() => onChange(id, Math.max(minimum, value - 1))}
                     disabled={value <= minimum}
                     aria-label={`Decrease ${label}`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:border-[var(--color-text-primary)] disabled:opacity-35"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:border-[var(--color-text-primary)] disabled:opacity-35"
                   >
                     <FiMinus className="h-4 w-4" aria-hidden="true" />
                   </button>
@@ -175,7 +175,7 @@ export function ListingBasicsStep({
                     onClick={() => onChange(id, Math.min(maximum, value + 1))}
                     disabled={value >= maximum}
                     aria-label={`Increase ${label}`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:border-[var(--color-text-primary)] disabled:opacity-35"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:border-[var(--color-text-primary)] disabled:opacity-35"
                   >
                     <FiPlus className="h-4 w-4" aria-hidden="true" />
                   </button>

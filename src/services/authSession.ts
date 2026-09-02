@@ -2,24 +2,13 @@ import {
   browserLocalPersistence,
   onIdTokenChanged,
   setPersistence,
-  type Unsubscribe,
-  type User
+  type Unsubscribe
 } from 'firebase/auth';
 import { firebaseAuth } from '@/services/firebase';
+import { createAuthResponse } from '@/services/auth-user';
 import { useAuthStore } from '@/store/auth.store';
-import type { AuthUser } from '@/types/auth.types';
 
 let unsubscribeFromTokenChanges: Unsubscribe | null = null;
-
-function toAuthUser(user: User): AuthUser {
-  return {
-    id: user.uid,
-    name: user.displayName ?? 'Utilisateur Booksa',
-    email: user.email ?? '',
-    role: 'admin',
-    avatarUrl: user.photoURL ?? undefined
-  };
-}
 
 export function startAuthSessionPersistence(): void {
   if (!firebaseAuth || unsubscribeFromTokenChanges) return;
@@ -38,8 +27,8 @@ export function startAuthSessionPersistence(): void {
     }
 
     try {
-      const token = await user.getIdToken();
-      useAuthStore.getState().setUser(toAuthUser(user), token);
+      const response = await createAuthResponse(user);
+      useAuthStore.getState().setUser(response.user, response.token);
     } catch {
       useAuthStore.getState().clearUser();
     }

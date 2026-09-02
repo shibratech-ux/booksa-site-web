@@ -180,8 +180,8 @@ function getReservationPrice(basePrice: string, nights: number) {
 
 function DetailStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-      <p className="text-[9.24px] font-semibold uppercase tracking-[0.12em] text-gray-500">{label}</p>
+    <div className="rounded-sm border border-slate-200 bg-white px-4 py-3">
+      <p className="text-[10.86624px] font-semibold uppercase tracking-[0.12em] text-gray-500">{label}</p>
       <p className="mt-1 text-sm font-semibold text-gray-900">{value}</p>
     </div>
   );
@@ -190,7 +190,7 @@ function DetailStat({ label, value }: { label: string; value: string }) {
 function SectionHeading({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div className="space-y-1">
-      <h2 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-[18.48px]">{title}</h2>
+      <h2 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-[21.73248px]">{title}</h2>
       {subtitle ? <p className="text-sm leading-6 text-gray-600">{subtitle}</p> : null}
     </div>
   );
@@ -231,7 +231,7 @@ function MobileGalleryHero({
               <ShimmerImage
                 src={image}
                 alt={`${listing.location} - photo ${index + 1}`}
-                className="h-[352px] w-full object-cover"
+                className="h-[387.2px] w-full object-cover"
               />
             </button>
           ))}
@@ -241,7 +241,7 @@ function MobileGalleryHero({
           <button
             type="button"
             onClick={onBack}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
             aria-label="Retour"
           >
             <ArrowLeftRegular className="h-5 w-5" />
@@ -250,14 +250,14 @@ function MobileGalleryHero({
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
               aria-label="Partager"
             >
               <ShareRegular className="h-4 w-4" />
             </button>
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
               aria-label="Enregistrer"
             >
               <HeartRegular className="h-4 w-4" />
@@ -265,17 +265,17 @@ function MobileGalleryHero({
           </div>
         </div>
 
-        <div className="absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1.5 text-xs font-medium text-white">
+        <div className="absolute bottom-4 right-4 rounded-sm bg-black/70 px-3 py-1.5 text-xs font-medium text-white">
           {activeIndex + 1} / {images.length}
         </div>
       </div>
 
-      <div className="-mt-5 rounded-t-3xl bg-white px-5 pt-10 text-center shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
-        <h1 className="text-[18.48px] font-medium tracking-tight text-gray-900">
+      <div className="-mt-5 rounded-sm bg-white px-5 pt-10 text-center shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
+        <h1 className="text-[21.73248px] font-medium tracking-tight text-gray-900">
           {listing.title ?? 'Hôtel à Goma, RD.congo'}
         </h1>
-        <p className="mt-2 text-[10.92px] leading-5 text-gray-500">{listing.location}</p>
-        <p className="mt-1 text-[10.92px] leading-5 text-gray-500">
+        <p className="mt-2 text-[12.84192px] leading-5 text-gray-500">{listing.location}</p>
+        <p className="mt-1 text-[12.84192px] leading-5 text-gray-500">
           2 voyageurs · 1 chambre · 1 lit · 1 salle de bain
         </p>
       </div>
@@ -311,7 +311,7 @@ function MobileBookingBar({
           <button
             type="button"
             onClick={onReserve}
-            className="min-h-12 min-w-[128px] rounded-lg bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-[var(--color-primary-600)] active:scale-95"
+            className="min-h-12 min-w-[140.8px] rounded-md bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-[var(--color-primary-600)] active:scale-95"
           >
             {t('reserve')}
           </button>
@@ -491,10 +491,10 @@ function DateRangePicker({
         <div className="px-0 sm:px-0">
           <div className="mb-6 flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-[15.12px] font-medium tracking-[-0.03em] text-gray-900 sm:text-[15.12px]">
+              <h3 className="text-[17.78112px] font-medium tracking-[-0.03em] text-gray-900 sm:text-[17.78112px]">
                 {headingText}
               </h3>
-              <p className="mt-1 text-[10.92px] text-gray-500 sm:text-[10.08px]">
+              <p className="mt-1 text-[12.84192px] text-gray-500 sm:text-[11.85408px]">
                 {range.start && range.end
                   ? `${range.start.format('MMM D, YYYY')} - ${range.end.format('MMM D, YYYY')}`
                 : 'Sélectionnez vos dates'}
@@ -507,7 +507,7 @@ function DateRangePicker({
               type="button"
               aria-label="Mois précédent"
               onClick={() => setLeftMonth((current) => current.subtract(1, 'month'))}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
             >
               <ChevronLeftRegular className="h-5 w-5" />
             </button>
@@ -516,7 +516,7 @@ function DateRangePicker({
               {months.map((month, index) => (
                 <h4
                   key={`${month.format('YYYY-MM')}-label`}
-                  className={`text-center text-[10.92px] font-semibold tracking-tight text-gray-900 sm:text-[11.76px] ${index === 1 ? 'hidden lg:block' : ''}`}
+                  className={`text-center text-[12.84192px] font-semibold tracking-tight text-gray-900 sm:text-[13.82976px] ${index === 1 ? 'hidden lg:block' : ''}`}
                 >
                   {month.format('MMMM YYYY')}
                 </h4>
@@ -527,7 +527,7 @@ function DateRangePicker({
               type="button"
               aria-label="Mois suivant"
               onClick={() => setLeftMonth((current) => current.add(1, 'month'))}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
             >
               <ChevronRightRegular className="h-4 w-4" />
             </button>
@@ -541,7 +541,7 @@ function DateRangePicker({
                 <div key={month.format('YYYY-MM')} className={`space-y-5 ${index === 1 ? 'hidden lg:block' : ''}`}>
                   <div className="grid grid-cols-7 gap-y-1 text-center">
                     {calendarWeekdays.map((weekday) => (
-                      <div key={`${month.format('YYYY-MM')}-${weekday}`} className="pb-3 text-[8.4px] font-medium text-gray-500">
+                      <div key={`${month.format('YYYY-MM')}-${weekday}`} className="pb-3 text-[9.8784px] font-medium text-gray-500">
                         {weekday}
                       </div>
                     ))}
@@ -565,7 +565,7 @@ function DateRangePicker({
                           disabled={disabled}
                           onClick={() => handleDaySelect(date)}
                           className={[
-                            'relative flex h-10 w-10 items-center justify-center text-[9.24px] font-medium transition',
+                            'relative flex h-10 w-10 items-center justify-center text-[10.86624px] font-medium transition',
                             isSelected
                               ? 'z-10 text-white'
                               : inRange
@@ -582,7 +582,7 @@ function DateRangePicker({
                             <span className="absolute inset-y-1 left-0 right-0 bg-slate-100" />
                           ) : null}
                           {isStart || isEnd ? (
-                            <span className="absolute inset-0 rounded-full bg-gray-900" />
+                            <span className="absolute inset-0 rounded-sm bg-gray-900" />
                           ) : null}
                           <span className="relative z-10">{date.date()}</span>
                         </button>
@@ -597,7 +597,7 @@ function DateRangePicker({
           <div className="mt-7 flex items-center justify-between">
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-gray-700 transition hover:bg-slate-100"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 text-gray-700 transition hover:bg-slate-100"
               aria-label="Ouvrir les raccourcis clavier"
             >
               <CalendarRegular className="h-4 w-4" />
@@ -606,7 +606,7 @@ function DateRangePicker({
             <button
               type="button"
               onClick={() => onRangeChange({ start: null, end: null })}
-              className="text-[10.92px] font-medium text-gray-900 underline underline-offset-4 transition hover:text-gray-600"
+              className="text-[12.84192px] font-medium text-gray-900 underline underline-offset-4 transition hover:text-gray-600"
             >
               Effacer les dates
             </button>
@@ -640,11 +640,11 @@ function GuestCounter({
   return (
     <div className="flex items-start justify-between gap-4">
       <div className="min-w-0 pr-2">
-        <p className="text-[10.92px] font-medium text-gray-900">{title}</p>
-        <p className={`text-[9.24px] leading-5 ${note ? 'underline underline-offset-2' : 'text-gray-600'}`}>
+        <p className="text-[12.84192px] font-medium text-gray-900">{title}</p>
+        <p className={`text-[10.86624px] leading-5 ${note ? 'underline underline-offset-2' : 'text-gray-600'}`}>
           {subtitle}
         </p>
-        {note ? <p className="mt-1 text-[6.72px] leading-5 text-gray-600">{note}</p> : null}
+        {note ? <p className="mt-1 text-[7.90272px] leading-5 text-gray-600">{note}</p> : null}
       </div>
 
       <div className="flex items-center gap-4 pt-1">
@@ -653,17 +653,17 @@ function GuestCounter({
           aria-label={`Diminuer ${title}`}
           disabled={disabledDecrease}
           onClick={onDecrease}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="text-xl leading-none">−</span>
         </button>
-        <span className="min-w-4 text-center text-[10.92px] font-medium text-gray-900">{value}</span>
+        <span className="min-w-4 text-center text-[12.84192px] font-medium text-gray-900">{value}</span>
         <button
           type="button"
           aria-label={`Augmenter ${title}`}
           disabled={disabledIncrease}
           onClick={onIncrease}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="text-xl leading-none">+</span>
         </button>
@@ -704,10 +704,10 @@ function GuestPickerDialog({
 
   return (
     <div className="absolute left-1/2 top-full z-40 mt-2 w-[min(100vw-2rem,360px)] -translate-x-1/2">
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-[var(--shadow-lg)]">
+      <div className="rounded-lg border border-slate-200 bg-white shadow-[var(--shadow-lg)]">
         <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
           <div>
-            <p className="text-[9.24px] font-semibold uppercase tracking-[0.12em] text-gray-500">Voyageurs</p>
+            <p className="text-[10.86624px] font-semibold uppercase tracking-[0.12em] text-gray-500">Voyageurs</p>
             <p className="mt-1 text-sm font-medium text-gray-900">
               {Object.values(counts).reduce((sum, value) => sum + value, 0) || 1} voyageur
             </p>
@@ -715,7 +715,7 @@ function GuestPickerDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-1 text-gray-500 transition hover:bg-slate-100 hover:text-gray-900"
+            className="rounded-md p-1 text-gray-500 transition hover:bg-slate-100 hover:text-gray-900"
             aria-label="Fermer le sélecteur de voyageurs"
           >
           <ChevronUpRegular className="h-5 w-5" />
@@ -780,13 +780,13 @@ function AmenitiesDialog({ open, onClose }: { open: boolean; onClose: () => void
         onClick={onClose}
       />
 
-      <div className="modal-animation relative z-10 w-full max-w-[760px] overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
+      <div className="modal-animation relative z-10 w-full max-w-[836px] overflow-hidden rounded-lg bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
         <div className="flex items-start justify-between px-6 pb-2 pt-5 sm:px-8 sm:pt-6">
           <button
             type="button"
             onClick={onClose}
             aria-label="Fermer la fenêtre des équipements"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-900 transition hover:bg-slate-100"
           >
             <DismissRegular className="h-5 w-5" />
           </button>
@@ -794,14 +794,14 @@ function AmenitiesDialog({ open, onClose }: { open: boolean; onClose: () => void
         </div>
 
         <div className="max-h-[74vh] overflow-y-auto px-6 pb-8 pt-4 sm:px-8">
-          <h2 className="text-[17.64px] font-medium tracking-[-0.03em] text-gray-900">
+          <h2 className="text-[20.74464px] font-medium tracking-[-0.03em] text-gray-900">
             Ce que propose ce logement
           </h2>
 
           <div className="mt-8 space-y-9">
             {amenityGroups.map((group, groupIndex) => (
               <section key={group.title} className="space-y-4">
-                <h3 className="text-[15.12px] font-semibold tracking-tight text-gray-900">{group.title}</h3>
+                <h3 className="text-[17.78112px] font-semibold tracking-tight text-gray-900">{group.title}</h3>
 
                 <div className="bg-white">
                   {group.items.map((item, itemIndex) => {
@@ -814,7 +814,7 @@ function AmenitiesDialog({ open, onClose }: { open: boolean; onClose: () => void
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center">
                           <AmenityIcon icon={item.icon} />
                         </div>
-                        <p className="text-[13.44px] font-medium text-gray-800">{item.label}</p>
+                        <p className="text-[15.80544px] font-medium text-gray-800">{item.label}</p>
                       </div>
                     );
                   })}
@@ -867,10 +867,10 @@ function GuestReviewsDialog({
         onClick={onClose}
       />
 
-      <div className="relative z-10 mt-2 flex h-[min(88vh,820px)] w-full max-w-[820px] flex-col overflow-hidden rounded-3xl bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
+      <div className="relative z-10 mt-2 flex h-[min(88vh,820px)] w-full max-w-[902px] flex-col overflow-hidden rounded-lg bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
         <div className="flex items-start justify-between px-6 pb-2 pt-6 sm:px-8">
           <div className="space-y-2">
-            <h2 className="text-[17.64px] font-medium tracking-[-0.04em] text-gray-900">113 avis de voyageurs</h2>
+            <h2 className="text-[20.74464px] font-medium tracking-[-0.04em] text-gray-900">113 avis de voyageurs</h2>
             <button type="button" className="text-sm text-gray-500 underline underline-offset-4 hover:text-gray-700">
               Comment fonctionnent les avis
             </button>
@@ -880,7 +880,7 @@ function GuestReviewsDialog({
             type="button"
             onClick={onClose}
             aria-label="Fermer la fenêtre des avis"
-            className="inline-flex cursor-pointer h-10 w-10 items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100"
+            className="inline-flex cursor-pointer h-10 w-10 items-center justify-center rounded-md text-gray-900 transition hover:bg-slate-100"
           >
             <DismissRegular className="h-5 w-5" />
           </button>
@@ -892,7 +892,7 @@ function GuestReviewsDialog({
               <button
                 key={tag.label}
                 type="button"
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
+                className="inline-flex shrink-0 items-center gap-2 rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
               >
                 <span>{tag.label}</span>
                 <span className="text-gray-500">{tag.count}</span>
@@ -900,7 +900,7 @@ function GuestReviewsDialog({
             ))}
             <button
               type="button"
-              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
+              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-white text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
               aria-label="Afficher plus de tags d’avis"
             >
               <ChevronRightRegular className="h-4 w-4" />
@@ -912,15 +912,15 @@ function GuestReviewsDialog({
           <div className="flex items-center justify-between gap-4">
             <button
               type="button"
-              className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-slate-200 bg-white text-gray-700 transition hover:bg-slate-50"
+              className="inline-flex h-14 w-14 items-center justify-center rounded-sm border border-slate-200 bg-white text-gray-700 transition hover:bg-slate-50"
               aria-label="Rechercher dans les avis"
             >
-              <SearchRegular className="h-5 w-5" />
+              <SearchRegular className="h-2.5 w-2.5" />
             </button>
 
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-gray-700 transition hover:bg-slate-50"
+              className="inline-flex items-center gap-2 rounded-sm border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-gray-700 transition hover:bg-slate-50"
             >
               <span>Les plus pertinents</span>
               <ChevronDownRegular className="h-4 w-4" />
@@ -935,11 +935,11 @@ function GuestReviewsDialog({
                 <div className="flex items-start gap-4">
                   <ShimmerImage
                     alt={review.name}
-                    className="h-12 w-12 rounded-full object-cover ring-1 ring-slate-200"
+                    className="h-12 w-12 rounded-sm object-cover ring-1 ring-slate-200"
                     src={review.avatarUrl}
                   />
                   <div className="min-w-0">
-                    <h3 className="text-[14.28px] font-semibold text-gray-900">{review.name}</h3>
+                    <h3 className="text-[16.79328px] font-semibold text-gray-900">{review.name}</h3>
                     <p className="text-sm text-gray-500">{review.location}</p>
                   </div>
                 </div>
@@ -954,7 +954,7 @@ function GuestReviewsDialog({
                   <span>{review.meta}</span>
                 </div>
 
-                <p className="mt-4 max-w-3xl text-[12.6px] leading-7 text-gray-700">{review.text}</p>
+                <p className="mt-4 max-w-3xl text-[14.8176px] leading-7 text-gray-700">{review.text}</p>
               </article>
             ))}
           </div>
@@ -1003,22 +1003,22 @@ function BookingCard({
   };
 
   return (
-    <div className="relative mt-10 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+    <div className="relative mt-10 rounded-sm border border-slate-200 bg-white p-5 sm:p-6">
       <div className="mt-4">
-        <p className="text-[15.12px] font-semibold tracking-tight text-gray-900">
+        <p className="text-[17.78112px] font-semibold tracking-tight text-gray-900">
           <span>{getReservationPrice(price, nights)}</span>
           <span className="px-2 text-sm font-normal text-gray-600">{t('forNights', { count: nights })}</span>
         </p>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-[18px] border border-slate-300">
+      <div className="mt-4 overflow-hidden rounded-sm border border-slate-300">
         <div className="grid grid-cols-2 divide-x divide-slate-300 border-b border-slate-300">
           <div className="px-4 py-3">
-            <p className="text-[8.4px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkIn')}</p>
+            <p className="text-[9.8784px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkIn')}</p>
             <p className="mt-1 text-xs font-medium text-gray-900">{checkInLabel}</p>
           </div>
           <div className="px-4 py-3">
-            <p className="text-[9.24px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkOut')}</p>
+            <p className="text-[10.86624px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkOut')}</p>
             <p className="mt-1 text-xs font-medium text-gray-900">{checkOutLabel}</p>
           </div>
         </div>
@@ -1028,7 +1028,7 @@ function BookingCard({
           className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-slate-50"
         >
           <div>
-            <p className="text-[8.4px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('guests')}</p>
+            <p className="text-[9.8784px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('guests')}</p>
             <p className="mt-1 text-xs font-medium text-gray-900">
               {t('guests', { count: guestTotal })}
             </p>
@@ -1046,7 +1046,7 @@ function BookingCard({
         />
       </div>
 
-      <div className="mt-3 rounded-full bg-slate-100 px-4 py-2 text-center text-[10.08px] font-medium text-gray-700">
+      <div className="mt-3 rounded-sm bg-slate-100 px-4 py-2 text-center text-[11.85408px] font-medium text-gray-700">
         Annulation gratuite
       </div>
 
@@ -1082,9 +1082,9 @@ function RoomCard({ listing, nights }: { listing: Listing; nights: number }) {
   const roomImage = listing.gallery?.[0] ?? listing.image;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white md:flex-row">
-      <div className="md:w-[240px]">
-        <ShimmerImage alt={listing.location} className="h-full w-full object-cover md:min-h-[170px]" src={roomImage} />
+    <div className="flex flex-col overflow-hidden rounded-sm border border-slate-200 bg-white md:flex-row">
+      <div className="md:w-[264px]">
+        <ShimmerImage alt={listing.location} className="h-full w-full object-cover md:min-h-[187px]" src={roomImage} />
       </div>
       <div className="flex flex-1 flex-col justify-center gap-1 p-5">
         <h3 className="text-lg font-semibold tracking-tight text-gray-900">Chambre simple</h3>
@@ -1103,11 +1103,11 @@ function HostHighlightsCard({ hostName = 'Pamela' }: { hostName?: string }) {
     <section className="pt-8">
       <div className="py-6">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-rose-100 text-base font-medium text-rose-700">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-rose-100 text-base font-medium text-rose-700">
             {hostName.charAt(0).toUpperCase()}
           </div>
           <div>
-            <h3 className="text-[13.44px] font-medium tracking-tight text-gray-900">Hébergé par {hostName}</h3>
+            <h3 className="text-[15.80544px] font-medium tracking-tight text-gray-900">Hébergé par {hostName}</h3>
             <p className="mt-1 text-xs text-gray-500">2 ans d’hébergement</p>
           </div>
         </div>
@@ -1121,8 +1121,8 @@ function HostHighlightsCard({ hostName = 'Pamela' }: { hostName?: string }) {
                 <Icon className="h-5 w-5" strokeWidth={1.8} />
               </div>
               <div className="min-w-0">
-                <h4 className="text-[11.76px] font-medium tracking-tight text-gray-900">{title}</h4>
-                <p className="mt-1 text-[11.76px] font-normal leading-4 text-gray-500">{description}</p>
+                <h4 className="text-[13.82976px] font-medium tracking-tight text-gray-900">{title}</h4>
+                <p className="mt-1 text-[13.82976px] font-normal leading-4 text-gray-500">{description}</p>
               </div>
             </div>
           ))}
@@ -1175,12 +1175,12 @@ export default function ListingDetailPage() {
         <BooksaHeader />
       </div>
 
-      <main className="mx-auto max-w-[1500px] px-0 py-5 sm:px-6 sm:py-8 lg:px-44">
+      <main className="mx-auto max-w-[1650px] px-0 py-5 sm:px-6 sm:py-8 lg:px-44">
 
         <div id="photos" className="space-y-5">
           <div className="hidden items-start justify-between gap-4 lg:flex">
             <div>
-              <h1 className="text-[18.48px] font-medium tracking-tight text-gray-900 sm:text-[20.16px]">
+              <h1 className="text-[21.73248px] font-medium tracking-tight text-gray-900 sm:text-[23.70816px]">
                 {listing.location}
               </h1>
 
@@ -1197,7 +1197,7 @@ export default function ListingDetailPage() {
             }}
           />
 
-          <div className="hidden gap-1.5 overflow-hidden rounded-2xl md:grid">
+          <div className="hidden gap-1.5 overflow-hidden rounded-sm md:grid">
             <div className="grid gap-1.5 lg:grid-cols-[2fr_1fr_1fr]">
               <button
               onClick={() => {
@@ -1205,7 +1205,7 @@ export default function ListingDetailPage() {
                 navigate(ROUTES.photoTour, { state: { listing } });
               }}
               type="button" className="group cursor-pointer relative overflow-hidden">
-                <ShimmerImage alt={listing.location} className="h-full min-h-[390px] w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={heroImage} />
+                <ShimmerImage alt={listing.location} className="h-full min-h-[429px] w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={heroImage} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/12 via-transparent to-transparent" />
               </button>
 
@@ -1222,7 +1222,7 @@ export default function ListingDetailPage() {
                   >
                     <ShimmerImage
                       alt={`Vue ${index + 2} de ${listing.location}`}
-                      className="h-full min-h-[188px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      className="h-full min-h-[206.8px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                       src={image}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/12 via-transparent to-transparent" />
@@ -1243,12 +1243,12 @@ export default function ListingDetailPage() {
                   >
                     <ShimmerImage
                       alt={`Vue ${index + 4} de ${listing.location}`}
-                      className="h-full min-h-[188px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      className="h-full min-h-[206.8px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                       src={image}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/12 via-transparent to-transparent" />
                     {index === 1 ? (
-                      <span className="absolute bottom-4 right-4 rounded-lg bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[var(--shadow-sm)] transition group-hover:-translate-y-0.5 group-hover:shadow-[var(--shadow-md)]">
+                      <span className="absolute bottom-4 right-4 rounded-sm bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[var(--shadow-sm)] transition group-hover:-translate-y-0.5 group-hover:shadow-[var(--shadow-md)]">
                         Voir toutes les photos
                       </span>
                     ) : null}
@@ -1267,7 +1267,7 @@ export default function ListingDetailPage() {
                   title={listing.title ?? 'Hôtel à Goma, RD.congo'}
                 />
 
-                <p className="max-w-3xl text-sm sm:text-[13.44px] font-normal leading-6 text-gray-600">
+                <p className="max-w-3xl text-sm sm:text-[15.80544px] font-normal leading-6 text-gray-600">
                   Un séjour lumineux et raffiné, avec des finitions soignées, une arrivée simple et le calme
                   nécessaire pour une courte escapade ou un séjour plus long. L’ensemble est présenté dans un style
                   clair et apaisant pour que le prix, la note et les détails pratiques se lisent d’un coup d’œil.
@@ -1283,7 +1283,7 @@ export default function ListingDetailPage() {
               <RoomCard listing={listing} nights={nights} />
               <button
                 type="button"
-                className="w-full rounded-[18px] bg-slate-100 px-5 py-4 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
+                className="w-full rounded-md bg-slate-100 px-5 py-4 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
               >
                 Voir les 2 chambres
               </button>
@@ -1295,7 +1295,7 @@ export default function ListingDetailPage() {
               <SectionHeading title="Ce que propose ce logement" />
               <div className="grid gap-4 sm:grid-cols-2">
                 {amenityIcons.map(({ label, icon: Icon }) => (
-                  <div key={label} className="flex items-center gap-3 rounded-[20px] px-4 py-4">
+                  <div key={label} className="flex items-center gap-3 rounded-sm px-4 py-4">
                     <Icon className="h-5 w-5 text-gray-500" />
                     <span className="text-sm font-medium text-gray-700">{label}</span>
                   </div>
@@ -1304,7 +1304,7 @@ export default function ListingDetailPage() {
               <button
                   type="button"
                   onClick={() => setAmenitiesOpen(true)}
-                  className="rounded-full bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
+                  className="rounded-md bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
                 >
                   Voir les 20 équipements
                 </button>
@@ -1315,7 +1315,7 @@ export default function ListingDetailPage() {
             <section id="reviews" className="space-y-5 border-t border-slate-200 pt-8">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <h2 className="text-[17.64px] font-medium tracking-tight text-gray-900">
+                  <h2 className="text-[20.74464px] font-medium tracking-tight text-gray-900">
                     <span className="inline-flex items-center gap-2">
                       <StarFilled className="h-5 w-5 text-slate-900" />
                       {listing.rating} - 113 avis
@@ -1336,7 +1336,7 @@ export default function ListingDetailPage() {
                     <div className="flex items-center gap-3">
                       <ShimmerImage
                         alt={review.name}
-                        className="h-12 w-12 rounded-full object-cover ring-1 ring-slate-200"
+                        className="h-12 w-12 rounded-sm object-cover ring-1 ring-slate-200"
                         src={review.avatarUrl}
                       />
                       <div>
@@ -1354,7 +1354,7 @@ export default function ListingDetailPage() {
                 <button
                   type="button"
                   onClick={() => setReviewsOpen(true)}
-                  className="rounded-full bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
+                  className="rounded-md bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
                 >
                   Voir les 113 avis
                 </button>
@@ -1369,10 +1369,10 @@ export default function ListingDetailPage() {
 
             <section id="location" className="space-y-5 border-t border-slate-200 pt-8">
               <SectionHeading title="Où vous serez" subtitle="Kinshasa, France" />
-              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                <div className="relative h-[280px] bg-[radial-gradient(circle_at_20%_20%,rgba(246,199,105,0.35),transparent_20%),radial-gradient(circle_at_70%_30%,rgba(244,114,182,0.22),transparent_18%),linear-gradient(180deg,#f8fafc,#eef2ff)]">
+              <div className="overflow-hidden rounded-sm border border-slate-200 bg-white">
+                <div className="relative h-[308px] bg-[radial-gradient(circle_at_20%_20%,rgba(246,199,105,0.35),transparent_20%),radial-gradient(circle_at_70%_30%,rgba(244,114,182,0.22),transparent_18%),linear-gradient(180deg,#f8fafc,#eef2ff)]">
                   <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
-                  <div className="absolute left-6 top-6 rounded-full bg-white/95 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
+                  <div className="absolute left-6 top-6 rounded-sm bg-white/95 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
                     Aperçu de la carte
                   </div>
                 </div>
@@ -1383,7 +1383,7 @@ export default function ListingDetailPage() {
               <SectionHeading title="À savoir" />
               <div className="grid gap-5 xl:grid-cols-3">
                 {thingsToKnow.map(({ title, icon: Icon, description }) => (
-                  <div key={title} className="rounded-[24px] p-5 ">
+                  <div key={title} className="rounded-sm p-5 ">
                     <Icon className="h-6 w-6 text-gray-700" />
                     <h3 className="mt-4 text-sm font-semibold text-gray-900">{title}</h3>
                     <ul className="mt-3 space-y-1 text-sm leading-5 text-gray-600">
@@ -1400,7 +1400,7 @@ export default function ListingDetailPage() {
           <aside className="hidden space-y-4 lg:sticky lg:top-24 lg:block lg:self-start">
             <BookingCard listing={listing} price={listing.price} nights={nights} range={range} />
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-gray-600 sm:p-6">
+            <div className="rounded-sm border border-slate-200 bg-white p-5 text-sm text-gray-600 sm:p-6">
               <p className="font-medium text-gray-900">Signaler ce logement</p>
               <p className="mt-2 leading-6">
                 Nous pouvons afficher cela comme action d’assistance plus tard si vous voulez un parcours Booksa
@@ -1418,7 +1418,7 @@ export default function ListingDetailPage() {
         onReserve={handleMobileReserve}
       />
 
-<div className="mx-auto max-w-[1500px] px-10 py-8 lg:px-44">
+<div className="mx-auto max-w-[1650px] px-10 py-8 lg:px-44">
 
       <MeetYourHost />
     </div>
@@ -1434,19 +1434,19 @@ export default function ListingDetailPage() {
 export  function MeetYourHost() {
   return (
     <section className="w-full border-t border-gray-200 bg-white px-6 py-10">
-        <h2 className="mb-6 text-[17.64px] font-medium text-neutral-900">
+        <h2 className="mb-6 text-[20.74464px] font-medium text-neutral-900">
         Rencontrez votre hôte
       </h2>
 
       <div className="grid gap-10 md:grid-cols-[420px_1fr]">
         {/* Host Card */}
-        <div className="rounded-3xl bg-white/12 p-8 shadow-2xl shadow-gray-300/90 ring-1 ring-gray-100">
+        <div className="rounded-sm bg-white/12 p-8 shadow-2xl shadow-gray-300/90 ring-1 ring-gray-100">
           <div className="flex items-center justify-between gap-8">
             <div className="flex flex-1 flex-col items-center">
-              <div className="relative mb-3 flex h-24 w-24 items-center justify-center rounded-full bg-pink-100">
+              <div className="relative mb-3 flex h-24 w-24 items-center justify-center rounded-sm bg-pink-100">
                 <span className="text-3xl font-bold text-rose-700">P</span>
 
-                <div className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full bg-rose-600 text-white shadow-md">
+                <div className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-sm bg-rose-600 text-white shadow-md">
                   <CheckmarkCircleRegular className="h-5 w-5 text-white" />
                 </div>
               </div>
@@ -1476,7 +1476,7 @@ export  function MeetYourHost() {
               Répond en moins d’une heure
             </p>
 
-            <button className="mt-8 rounded-xl bg-neutral-100 px-7 py-4 text-base font-semibold text-neutral-900 transition hover:bg-neutral-200">
+            <button className="mt-8 rounded-md bg-neutral-100 px-7 py-4 text-base font-semibold text-neutral-900 transition hover:bg-neutral-200">
               Envoyer un message à l’hôte
             </button>
           </div>

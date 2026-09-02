@@ -96,8 +96,8 @@ export function LanguagesCurrencyContent({
   };
 
   return (
-    <div className="mx-auto max-w-[760px]">
-      <h2 className="text-[23.52px] font-semibold tracking-[-0.035em] sm:text-[25.2px]">
+    <div className="mx-auto max-w-[836px]">
+      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">
         {t('languagesCurrency')}
       </h2>
 
@@ -199,7 +199,7 @@ export function LanguagesCurrencyContent({
                     aria-label={settingLabels[key]}
                     disabled={isSaving}
                     tabIndex={isEditing ? 0 : -1}
-                    className="h-[58px] text-base focus:border-2 focus:border-[var(--color-text-primary)]"
+                    className="h-[63.8px] text-base focus:border-2 focus:border-[var(--color-text-primary)]"
                   >
                     {!settings[key] ? <option value="">Select {settingLabels[key].toLowerCase()}</option> : null}
                     {settingOptions[key].map((option) => (
@@ -211,7 +211,7 @@ export function LanguagesCurrencyContent({
                     onClick={() => void saveSetting(key)}
                     disabled={isSaving || draft === settings[key]}
                     tabIndex={isEditing ? 0 : -1}
-                    className="mt-4 min-h-12 rounded-[var(--radius-md)] bg-[var(--color-text-primary)] px-8 font-semibold text-[var(--color-surface)] disabled:cursor-default disabled:opacity-35"
+                    className="mt-4 min-h-12 rounded-md bg-[var(--color-text-primary)] px-8 font-semibold text-[var(--color-surface)] disabled:cursor-default disabled:opacity-35"
                   >
                     {isSaving ? tCommon('actions.saving') : tCommon('actions.save')}
                   </button>

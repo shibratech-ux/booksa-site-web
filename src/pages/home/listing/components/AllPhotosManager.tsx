@@ -69,13 +69,13 @@ function TrashActionsDialog({
             exit={{ opacity: 0, scale: 0.98, y: 22 }}
             transition={{ type: 'spring', stiffness: 360, damping: 28, mass: 0.8 }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="w-full max-w-[265px] overflow-hidden rounded-2xl bg-[var(--color-surface)] px-5 py-5 shadow-[0_14px_45px_rgba(0,0,0,0.24)]"
+            className="w-full max-w-[291.5px] overflow-hidden rounded-lg bg-[var(--color-surface)] px-5 py-5 shadow-[0_14px_45px_rgba(0,0,0,0.24)]"
           >
             <button
               type="button"
               disabled={busy}
               onClick={onRemoveFromRoom}
-              className="flex min-h-[52px] w-full items-center justify-between gap-4 rounded-xl px-1 text-left text-base font-medium hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
+              className="flex min-h-[57.2px] w-full items-center justify-between gap-4 rounded-md px-1 text-left text-base font-medium hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
             >
               <span>Remove from room or space</span>
               <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -84,7 +84,7 @@ function TrashActionsDialog({
               type="button"
               disabled={busy}
               onClick={onDelete}
-              className="mt-1 flex min-h-[52px] w-full items-center justify-between gap-4 rounded-xl px-1 text-left text-base font-medium hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
+              className="mt-1 flex min-h-[57.2px] w-full items-center justify-between gap-4 rounded-md px-1 text-left text-base font-medium hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
             >
               <span>{busy ? 'Working…' : 'Delete from listing'}</span>
               <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -336,12 +336,12 @@ export function AllPhotosManager({
         className="flex min-h-[calc(100vh-95px)] flex-col bg-[var(--color-surface)]"
       >
         <div className="flex flex-1 flex-col px-5 pb-10 pt-6 sm:px-10 lg:px-20">
-          <div className="mx-auto flex w-full max-w-[1240px] items-center justify-between">
+          <div className="mx-auto flex w-full max-w-[1364px] items-center justify-between">
             <button
               type="button"
               onClick={closePhotoEditor}
               aria-label="Close photo editor"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -350,7 +350,7 @@ export function AllPhotosManager({
                 type="button"
                 disabled={isCoverPhoto}
                 onClick={() => setCoverUrl(selectedPhotoUrl)}
-                className="h-11 rounded-full bg-[var(--color-surface-muted)] px-5 text-sm font-semibold transition hover:brightness-95 disabled:text-[var(--color-text-secondary)]"
+                className="h-11 rounded-md bg-[var(--color-surface-muted)] px-5 text-sm font-semibold transition hover:brightness-95 disabled:text-[var(--color-text-secondary)]"
               >
                 {isCoverPhoto ? 'Cover photo' : 'Make cover photo'}
               </button>
@@ -359,15 +359,15 @@ export function AllPhotosManager({
                 onClick={() => setIsTrashDialogOpen(true)}
                 disabled={isTrashActionBusy}
                 aria-label="Delete photo"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95 disabled:opacity-60"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95 disabled:opacity-60"
               >
                 <Trash2 className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>
 
-          <main className="mx-auto mt-7 w-full max-w-[610px] flex-1 sm:mt-2">
-            <div className="relative overflow-hidden rounded-[22px] bg-[var(--color-surface-muted)]">
+          <main className="mx-auto mt-7 w-full max-w-[671px] flex-1 sm:mt-2">
+            <div className="relative overflow-hidden rounded-sm bg-[var(--color-surface-muted)]">
               <ShimmerImage
                 src={selectedPhotoUrl}
                 alt={`Listing photo ${selectedPhotoIndex + 1}`}
@@ -376,7 +376,7 @@ export function AllPhotosManager({
               <button
                 type="button"
                 onClick={() => descriptionInputRef.current?.focus()}
-                className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-black/60 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm"
+                className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-md bg-black/60 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm"
               >
                 <Plus className="h-5 w-5" aria-hidden="true" />
                 Add a visual description
@@ -405,7 +405,7 @@ export function AllPhotosManager({
                   ));
                 }}
                 placeholder="Add a description for this room or space."
-                className="min-h-[92px] w-full resize-none rounded-2xl border-2 border-[var(--color-text-primary)] bg-transparent px-4 py-3 text-base outline-none placeholder:text-[var(--color-text-secondary)] focus:ring-2 focus:ring-[var(--color-primary-500)]"
+                className="min-h-[101.2px] w-full resize-none rounded-md border-2 border-[var(--color-text-primary)] bg-transparent px-4 py-3 text-base outline-none placeholder:text-[var(--color-text-secondary)] focus:ring-2 focus:ring-[var(--color-primary-500)]"
               />
               <span className="mt-2 block text-sm text-[var(--color-text-secondary)]">
                 {250 - selectedPhotoDescription.length} characters available
@@ -419,7 +419,7 @@ export function AllPhotosManager({
             type="button"
             onClick={() => void saveSelectedPhoto()}
             disabled={!hasPendingChanges || isSavingPhoto}
-            className="h-12 min-w-[92px] rounded-xl bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:opacity-50"
+            className="h-12 min-w-[101.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:opacity-50"
           >
             {isSavingPhoto ? 'Saving…' : 'Save'}
           </button>
@@ -452,14 +452,14 @@ export function AllPhotosManager({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.97, y: 12 }}
                 onMouseDown={(event) => event.stopPropagation()}
-                className="flex max-h-[min(82vh,665px)] w-full max-w-[570px] flex-col overflow-hidden rounded-[30px] bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
+                className="flex max-h-[min(82vh,665px)] w-full max-w-[627px] flex-col overflow-hidden rounded-lg bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
               >
                 <header className="relative flex h-20 shrink-0 items-center justify-center px-16">
                   <button
                     type="button"
                     onClick={closeMoveDialog}
                     aria-label="Close move photo dialog"
-                    className="absolute left-4 inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-[var(--color-surface-muted)]"
+                    className="absolute left-4 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-[var(--color-surface-muted)]"
                   >
                     <X className="h-5 w-5" aria-hidden="true" />
                   </button>
@@ -485,14 +485,14 @@ export function AllPhotosManager({
                           aria-pressed={isActive}
                           className="min-w-0 text-left"
                         >
-                          <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
+                          <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
                             {previewUrl ? (
                               <ShimmerImage src={previewUrl} alt="" className="h-full w-full object-cover" />
                             ) : (
                               <Image className="h-10 w-10 text-[var(--color-text-secondary)]" aria-hidden="true" />
                             )}
                             {isActive ? (
-                              <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+                              <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
                                 <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
                               </span>
                             ) : null}
@@ -512,7 +512,7 @@ export function AllPhotosManager({
                     type="button"
                     disabled={!selectedDestination || isMovingPhotos}
                     onClick={() => void moveSelectedPhotos()}
-                    className="h-12 min-w-[112px] rounded-xl bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)]"
+                    className="h-12 min-w-[123.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)]"
                   >
                     {isMovingPhotos ? 'Moving…' : 'Move'}
                   </button>
@@ -531,7 +531,7 @@ export function AllPhotosManager({
       animate={{ opacity: 1 }}
       className="relative min-h-[calc(100vh-95px)] bg-[var(--color-surface)] px-6 py-10 sm:px-10 lg:px-20"
     >
-      <div className="mx-auto max-w-[1240px]">
+      <div className="mx-auto max-w-[1364px]">
         {isManagingPhotos ? (
           <div className="grid min-h-11 grid-cols-[1fr_auto_1fr] items-center gap-4">
             <div className="justify-self-start">
@@ -539,7 +539,7 @@ export function AllPhotosManager({
                 <button
                   type="button"
                   onClick={() => setSelectedPhotoIndexes(new Set())}
-                  className="h-11 rounded-full bg-[var(--color-surface-muted)] px-5 text-sm font-semibold"
+                  className="h-11 rounded-md bg-[var(--color-surface-muted)] px-5 text-sm font-semibold"
                 >
                   Deselect
                 </button>
@@ -548,7 +548,7 @@ export function AllPhotosManager({
                   type="button"
                   onClick={closePhotoSelection}
                   aria-label="Close photo selection"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)]"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
@@ -565,7 +565,7 @@ export function AllPhotosManager({
                   <button
                     type="button"
                     onClick={() => setIsMoveDialogOpen(true)}
-                    className="h-11 rounded-full bg-[var(--color-surface-muted)] px-6 text-sm font-semibold"
+                    className="h-11 rounded-md bg-[var(--color-surface-muted)] px-6 text-sm font-semibold"
                   >
                     Move
                   </button>
@@ -573,7 +573,7 @@ export function AllPhotosManager({
                     type="button"
                     onClick={() => setIsTrashDialogOpen(true)}
                     aria-label={`Delete ${selectedCount} selected ${selectedCount === 1 ? 'photo' : 'photos'}`}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)]"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
                   >
                     <Trash2 className="h-5 w-5" aria-hidden="true" />
                   </button>
@@ -587,7 +587,7 @@ export function AllPhotosManager({
               type="button"
               onClick={onBack}
               aria-label="Back to photo tour"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
               <ArrowLeft className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -595,7 +595,7 @@ export function AllPhotosManager({
               <button
                 type="button"
                 onClick={openPhotoSelection}
-                className="h-11 rounded-full bg-[var(--color-surface-muted)] px-6 text-sm font-semibold"
+                className="h-11 rounded-md bg-[var(--color-surface-muted)] px-6 text-sm font-semibold"
               >
                 Manage photos
               </button>
@@ -603,7 +603,7 @@ export function AllPhotosManager({
                 type="button"
                 onClick={() => setIsUploadDialogOpen(true)}
                 aria-label="Add photos"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
               >
                 <Plus className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -617,23 +617,23 @@ export function AllPhotosManager({
             const photo = (
               <figure
               key={`${photoUrl}-${index}`}
-              className={`relative aspect-square overflow-hidden rounded-2xl bg-[var(--color-surface-muted)] transition ${
+              className={`relative aspect-square overflow-hidden rounded-sm bg-[var(--color-surface-muted)] transition ${
                 isSelected ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''
               }`}
             >
               <ShimmerImage src={photoUrl} alt={`Listing photo ${index + 1}`} className="h-full w-full object-cover" />
               {photoUrl === coverUrl ? (
-                <figcaption className="absolute left-4 top-4 rounded-full bg-[var(--color-surface)]/90 px-4 py-2 text-sm font-medium shadow-[var(--shadow-sm)] backdrop-blur-sm">
+                <figcaption className="absolute left-4 top-4 rounded-sm bg-[var(--color-surface)]/90 px-4 py-2 text-sm font-medium shadow-[var(--shadow-sm)] backdrop-blur-sm">
                   Cover photo
                 </figcaption>
               ) : null}
               {isManagingPhotos && photoAssignments[index] && photoAssignments[index] !== 'Unassigned' ? (
-                <span className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] truncate rounded-full bg-[var(--color-surface)]/95 px-4 py-2 text-sm font-medium shadow-[var(--shadow-sm)]">
+                <span className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] truncate rounded-sm bg-[var(--color-surface)]/95 px-4 py-2 text-sm font-medium shadow-[var(--shadow-sm)]">
                   {photoAssignments[index]}
                 </span>
               ) : null}
               {isManagingPhotos && isSelected ? (
-                <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+                <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
                   <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
                 </span>
               ) : null}
@@ -647,7 +647,7 @@ export function AllPhotosManager({
                 onClick={() => togglePhotoSelection(index)}
                 aria-pressed={isSelected}
                 aria-label={`${isSelected ? 'Deselect' : 'Select'} listing photo ${index + 1}`}
-                className="block rounded-2xl text-left"
+                className="block rounded-md text-left"
               >
                 {photo}
               </button>
@@ -657,14 +657,14 @@ export function AllPhotosManager({
                 type="button"
                 onClick={() => openPhotoEditor(index)}
                 aria-label={`Edit listing photo ${index + 1}`}
-                className="block rounded-2xl text-left"
+                className="block rounded-md text-left"
               >
                 {photo}
               </button>
             );
           })}
           {photos.length === 0 ? (
-            <div className="col-span-full flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-[var(--color-border)] text-[var(--color-text-secondary)]">
+            <div className="col-span-full flex min-h-[352px] items-center justify-center rounded-sm border border-dashed border-[var(--color-border)] text-[var(--color-text-secondary)]">
               <span className="flex flex-col items-center gap-3">
                 <Image className="h-10 w-10" aria-hidden="true" />
                 No photos available
@@ -692,24 +692,24 @@ export function AllPhotosManager({
               exit={{ opacity: 0, scale: 0.97, y: 10 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               onMouseDown={(event) => event.stopPropagation()}
-              className="relative flex min-h-[448px] w-full max-w-[378px] flex-col items-center rounded-[30px] bg-[var(--color-surface)] px-6 pb-7 pt-16 text-center shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
+              className="relative flex min-h-[492.8px] w-full max-w-[415.8px] flex-col items-center rounded-lg bg-[var(--color-surface)] px-6 pb-7 pt-16 text-center shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
             >
               <button
                 type="button"
                 onClick={() => setShowArrangeDialog(false)}
                 aria-label="Close photo arrangement dialog"
-                className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-[var(--color-surface-muted)]"
+                className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-[var(--color-surface-muted)]"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
               </button>
 
-              <div className="relative h-[120px] w-[270px] max-w-full">
+              <div className="relative h-[132px] w-[297px] max-w-full">
                 {photos.slice(0, 3).map((photoUrl, index) => (
                   <ShimmerImage
                     key={`${photoUrl}-preview`}
                     src={photoUrl}
                     alt=""
-                    className="absolute left-1/2 top-1/2 h-[96px] w-[122px] rounded-lg object-cover shadow-[var(--shadow-md)]"
+                    className="absolute left-1/2 top-1/2 h-[105.6px] w-[134.2px] rounded-sm object-cover shadow-[var(--shadow-md)]"
                     style={{
                       transform: `translate(-50%, -50%) translateX(${(index - 1) * 50}px) rotate(${(index - 1) * 5}deg)`,
                       zIndex: index === 1 ? 3 : index + 1
@@ -717,7 +717,7 @@ export function AllPhotosManager({
                   />
                 ))}
                 {photos.length === 0 ? (
-                  <span className="absolute inset-0 flex items-center justify-center rounded-xl bg-[var(--color-surface-muted)]">
+                  <span className="absolute inset-0 flex items-center justify-center rounded-sm bg-[var(--color-surface-muted)]">
                     <Image className="h-9 w-9 text-[var(--color-text-secondary)]" aria-hidden="true" />
                   </span>
                 ) : null}
@@ -726,20 +726,20 @@ export function AllPhotosManager({
               <h2 id="arrange-photos-title" className="mt-6 text-2xl font-semibold tracking-tight">
                 Lead with your best photos
               </h2>
-              <p className="mt-3 max-w-[310px] text-sm leading-snug text-[var(--color-text-secondary)]">
+              <p className="mt-3 max-w-[341px] text-sm leading-snug text-[var(--color-text-secondary)]">
                 Instantly sort your photos so the best ones show up first.
               </p>
               <button
                 type="button"
                 onClick={() => setShowArrangeDialog(false)}
-                className="mt-10 h-12 w-full rounded-[14px] bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)]"
+                className="mt-10 h-12 w-full rounded-md bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)]"
               >
                 Arrange photos
               </button>
               <button
                 type="button"
                 onClick={() => setShowArrangeDialog(false)}
-                className="mt-4 min-h-11 rounded-lg px-5 text-base font-semibold hover:bg-[var(--color-surface-muted)]"
+                className="mt-4 min-h-11 rounded-md px-5 text-base font-semibold hover:bg-[var(--color-surface-muted)]"
               >
                 No thanks
               </button>
@@ -766,14 +766,14 @@ export function AllPhotosManager({
               exit={{ opacity: 0, scale: 0.97, y: 12 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
               onMouseDown={(event) => event.stopPropagation()}
-              className="flex max-h-[min(82vh,665px)] w-full max-w-[570px] flex-col overflow-hidden rounded-[30px] bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
+              className="flex max-h-[min(82vh,665px)] w-full max-w-[627px] flex-col overflow-hidden rounded-lg bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
             >
               <header className="relative flex h-20 shrink-0 items-center justify-center px-16">
                 <button
                   type="button"
                   onClick={closeMoveDialog}
                   aria-label="Close move photos dialog"
-                  className="absolute left-4 inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-[var(--color-surface-muted)]"
+                  className="absolute left-4 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-[var(--color-surface-muted)]"
                 >
                   <X className="h-5 w-5" aria-hidden="true" />
                 </button>
@@ -796,14 +796,14 @@ export function AllPhotosManager({
                             aria-pressed={isActive}
                             className="min-w-0 text-left"
                           >
-                            <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
+                            <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
                               {photoUrls[photoIndex] ? (
                                 <ShimmerImage src={photoUrls[photoIndex]} alt="" className="h-full w-full object-cover" />
                               ) : (
                                 <Image className="h-10 w-10 text-[var(--color-text-secondary)]" aria-hidden="true" />
                               )}
                               {isActive ? (
-                                <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+                                <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
                                   <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
                                 </span>
                               ) : null}
@@ -832,7 +832,7 @@ export function AllPhotosManager({
                           aria-pressed={isActive}
                           className="min-w-0 text-left"
                         >
-                          <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
+                          <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
                             {failedDestinationImages.has(imageName) ? (
                               <Image
                                 className="h-10 w-10 text-[var(--color-text-secondary)]"
@@ -855,7 +855,7 @@ export function AllPhotosManager({
                               />
                             )}
                             {isActive ? (
-                              <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+                              <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
                                 <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
                               </span>
                             ) : null}
@@ -876,7 +876,7 @@ export function AllPhotosManager({
                   type="button"
                   disabled={!selectedDestination || isMovingPhotos}
                   onClick={() => void moveSelectedPhotos()}
-                  className="h-12 min-w-[112px] rounded-xl bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:cursor-not-allowed disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)]"
+                  className="h-12 min-w-[123.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:cursor-not-allowed disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)]"
                 >
                   {isMovingPhotos ? 'Moving…' : 'Move'}
                 </button>

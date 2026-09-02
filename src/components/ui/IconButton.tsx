@@ -20,7 +20,7 @@ export function IconButton({ icon, label, size = 'md', className, ...props }: Ic
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.96 }}
       className={cn(
-        'inline-flex items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] transition hover:border-[var(--color-primary-500)] hover:text-[var(--color-primary-500)]',
+        'inline-flex items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] transition hover:border-[var(--color-primary-500)] hover:text-[var(--color-primary-500)]',
         sizeStyles[size],
         className
       )}

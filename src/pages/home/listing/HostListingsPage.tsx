@@ -188,7 +188,7 @@ function ListingCover({
 
   if (!imageUrl || hasImageError) {
     if (layout === 'mobile') {
-      return <span className="inline-flex h-14 w-14 shrink-0 rounded-[11px] bg-[var(--color-border)]" aria-label="No listing cover available" />;
+      return <span className="inline-flex h-14 w-14 shrink-0 rounded-sm bg-[var(--color-border)]" aria-label="No listing cover available" />;
     }
 
     if (layout === 'grid') {
@@ -204,7 +204,7 @@ function ListingCover({
     }
 
     return (
-      <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]">
+      <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-sm bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]">
         <FiHome className="h-6 w-6" aria-label="No listing cover available" />
       </span>
     );
@@ -237,7 +237,7 @@ function ListingCover({
 
   if (layout === 'mobile') {
     return (
-      <span className="inline-flex h-14 w-14 shrink-0 overflow-hidden rounded-[11px] bg-[var(--color-border)]">
+      <span className="inline-flex h-14 w-14 shrink-0 overflow-hidden rounded-sm bg-[var(--color-border)]">
         <ShimmerImage
           src={imageUrl}
           alt=""
@@ -250,7 +250,7 @@ function ListingCover({
   }
 
   return (
-    <span className="inline-flex h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-[var(--color-border)]">
+    <span className="inline-flex h-16 w-16 shrink-0 overflow-hidden rounded-sm bg-[var(--color-border)]">
       <ShimmerImage
         src={imageUrl}
         alt=""
@@ -267,14 +267,14 @@ function MobileAttentionCard({ onClick, className = '' }: { onClick: () => void;
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-[68px] items-center gap-3 rounded-t-[24px] border-t border-[var(--color-border)] bg-[var(--color-surface)] px-5 text-left shadow-[0_-8px_24px_rgba(15,23,42,0.06)] ${className}`}
+      className={`flex h-[74.8px] items-center gap-3 rounded-md border-t border-[var(--color-border)] bg-[var(--color-surface)] px-5 text-left shadow-[0_-8px_24px_rgba(15,23,42,0.06)] ${className}`}
     >
       <span className="relative flex h-10 w-10 shrink-0 items-center justify-center">
         <span className="text-2xl" aria-hidden="true">📅</span>
         <ThreeDIcon name="attentionCalendar" sourceSize={60} className="absolute inset-0 h-full w-full object-contain" />
-        <span className="absolute -left-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-neutral-900 px-1 text-[9px] font-bold text-white">4</span>
+        <span className="absolute -left-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-neutral-900 px-1 text-[10.584px] font-bold text-white">4</span>
       </span>
-      <span className="min-w-0 flex-1 truncate text-[13px] font-semibold">Actions need your attention</span>
+      <span className="min-w-0 flex-1 truncate text-[15.288px] font-semibold">Actions need your attention</span>
       <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
     </button>
   );
@@ -361,12 +361,12 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
             void openListing(listing.id);
           }
         }}
-        className={`flex min-w-0 gap-3 rounded-xl text-left transition ${layout === 'grid' ? 'flex-col items-start border border-[var(--color-border)] p-3' : 'items-center py-1'} ${interactive ? 'cursor-pointer active:bg-[var(--color-surface-muted)]' : ''} ${openingListingId === listing.id ? 'animate-pulse' : ''}`}
+        className={`flex min-w-0 gap-3 rounded-sm text-left transition ${layout === 'grid' ? 'flex-col items-start border border-[var(--color-border)] p-3' : 'items-center py-1'} ${interactive ? 'cursor-pointer active:bg-[var(--color-surface-muted)]' : ''} ${openingListingId === listing.id ? 'animate-pulse' : ''}`}
       >
         <ListingCover listing={listing} layout="mobile" />
         <span className="min-w-0 flex-1">
-          <span className="block text-[11px] font-semibold leading-4">{getMobileListingTitle(listing)}</span>
-          <span className="mt-0.5 line-clamp-2 block text-[10.5px] leading-[1.45] text-[var(--color-text-secondary)]">{summary.location}</span>
+          <span className="block text-[12.936px] font-semibold leading-4">{getMobileListingTitle(listing)}</span>
+          <span className="mt-0.5 line-clamp-2 block text-[12.348px] leading-[1.45] text-[var(--color-text-secondary)]">{summary.location}</span>
         </span>
         {isManageMode ? <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" /> : null}
       </article>
@@ -467,22 +467,22 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
       <div className="md:hidden">
         <div className="sticky top-0 z-20 bg-[var(--color-surface)] px-4 pb-4 pt-6">
           <div className="flex items-start justify-between gap-3">
-            <h1 className="text-[24px] font-semibold leading-[1.05] tracking-[-0.04em]">Your<br />listings</h1>
+            <h1 className="text-[28.224px] font-semibold leading-[1.05] tracking-[-0.04em]">Your<br />listings</h1>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setIsSearchOpen((current) => !current)}
                 aria-label="Search listings"
                 aria-expanded={isSearchOpen}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[var(--color-surface-muted)] active:scale-95"
               >
-                <FiSearch className="h-4 w-4" aria-hidden="true" />
+                <FiSearch className="h-2 w-2" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={() => setLayout((current) => (current === 'list' ? 'grid' : 'list'))}
                 aria-label={layout === 'list' ? 'Use grid layout' : 'Use list layout'}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[var(--color-surface-muted)] active:scale-95"
               >
                 {layout === 'list' ? <FiGrid className="h-4 w-4" /> : <FiList className="h-4 w-4" />}
               </button>
@@ -490,16 +490,16 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                 type="button"
                 onClick={() => navigate(ROUTES.hostListingSetup)}
                 aria-label="Create another listing"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[var(--color-surface-muted)] active:scale-95"
               >
-                <FiPlus className="h-[18px] w-[18px]" aria-hidden="true" />
+                <FiPlus className="h-[19.8px] w-[19.8px]" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 aria-label={isManageMode ? 'Finish managing listings' : 'Manage listings'}
                 aria-pressed={isManageMode}
                 onClick={() => setIsManageMode((current) => !current)}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full active:scale-95 ${isManageMode ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]' : 'bg-[var(--color-surface-muted)]'}`}
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-md active:scale-95 ${isManageMode ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]' : 'bg-[var(--color-surface-muted)]'}`}
               >
                 <FiEdit3 className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -507,15 +507,15 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
           </div>
 
           {isSearchOpen ? (
-            <label className="mt-4 flex h-10 items-center gap-2 rounded-full border border-[var(--color-border)] px-4">
-              <FiSearch className="h-4 w-4 text-[var(--color-text-secondary)]" aria-hidden="true" />
+            <label className="mt-4 flex h-10 items-center gap-2 rounded-md border border-[var(--color-border)] px-4">
+              <FiSearch className="h-2 w-2 text-[var(--color-text-secondary)]" aria-hidden="true" />
               <span className="sr-only">Search your listings</span>
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 autoFocus
                 placeholder="Search listings"
-                className="min-w-0 flex-1 bg-transparent text-[12px] outline-none"
+                className="min-w-0 flex-1 bg-transparent text-[14.112px] outline-none"
               />
             </label>
           ) : null}
@@ -524,32 +524,32 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
         <div className="px-4 pb-[calc(168px+env(safe-area-inset-bottom))] pt-8">
           {isLoading ? (
             <div className="grid gap-3">
-              {[0, 1, 2].map((item) => <div key={item} className="h-16 animate-pulse rounded-xl bg-[var(--color-surface-muted)]" />)}
+              {[0, 1, 2].map((item) => <div key={item} className="h-16 animate-pulse rounded-sm bg-[var(--color-surface-muted)]" />)}
             </div>
           ) : visibleListings.length === 0 ? (
             <div className="py-20 text-center">
               <h2 className="text-base font-semibold">No listings found</h2>
-              <p className="mx-auto mt-2 max-w-[260px] text-[12px] leading-5 text-[var(--color-text-secondary)]">Create a listing or change your search to see results here.</p>
+              <p className="mx-auto mt-2 max-w-[286px] text-[14.112px] leading-5 text-[var(--color-text-secondary)]">Create a listing or change your search to see results here.</p>
             </div>
           ) : (
             <div className="space-y-9">
               {actionRequiredListings.length ? (
                 <div ref={mobileActionRequiredRef}>
-                  <h2 className="mb-4 text-[16px] font-semibold tracking-[-0.02em]">Action required</h2>
+                  <h2 className="mb-4 text-[18.816px] font-semibold tracking-[-0.02em]">Action required</h2>
                   <div className={layout === 'grid' ? 'grid grid-cols-2 gap-3' : 'grid gap-2.5'}>{actionRequiredListings.map(renderMobileListing)}</div>
                 </div>
               ) : null}
 
               {inProgressListings.length ? (
                 <div>
-                  <h2 className="mb-4 text-[16px] font-semibold tracking-[-0.02em]">In progress</h2>
+                  <h2 className="mb-4 text-[18.816px] font-semibold tracking-[-0.02em]">In progress</h2>
                   <div className={layout === 'grid' ? 'grid grid-cols-2 gap-3' : 'grid gap-2.5'}>{inProgressListings.map(renderMobileListing)}</div>
                 </div>
               ) : null}
 
               {activeListings.length ? (
                 <div>
-                  <h2 className="mb-4 text-[16px] font-semibold tracking-[-0.02em]">Published</h2>
+                  <h2 className="mb-4 text-[18.816px] font-semibold tracking-[-0.02em]">Published</h2>
                   <div className={layout === 'grid' ? 'grid grid-cols-2 gap-3' : 'grid gap-2.5'}>{activeListings.map(renderMobileListing)}</div>
                 </div>
               ) : null}
@@ -559,11 +559,11 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
 
         <MobileAttentionCard
           onClick={() => mobileActionRequiredRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-          className="fixed inset-x-0 bottom-[66px] z-30"
+          className="fixed inset-x-0 bottom-[72.6px] z-30"
         />
       </div>
 
-      <div className="mx-auto hidden w-full max-w-[1280px] px-8 py-8 md:block lg:px-12">
+      <div className="mx-auto hidden w-full max-w-[1408px] px-8 py-8 md:block lg:px-12">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-3xl font-semibold tracking-tight">Your listings</h1>
           <div className="flex items-center gap-2">
@@ -572,15 +572,15 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
               onClick={() => setIsSearchOpen((current) => !current)}
               aria-label="Search listings"
               aria-expanded={isSearchOpen}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
-              <FiSearch className="h-5 w-5" aria-hidden="true" />
+              <FiSearch className="h-2.5 w-2.5" aria-hidden="true" />
             </button>
             <button
               type="button"
               onClick={() => setLayout((current) => (current === 'list' ? 'grid' : 'list'))}
               aria-label={layout === 'list' ? 'Use grid layout' : 'Use list layout'}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
               {layout === 'list' ? <FiGrid className="h-5 w-5" /> : <FiList className="h-5 w-5" />}
             </button>
@@ -588,7 +588,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
               type="button"
               onClick={() => navigate(ROUTES.hostListingSetup)}
               aria-label="Create another listing"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
               <FiPlus className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -596,8 +596,8 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
         </div>
 
         {isSearchOpen ? (
-          <label className="mt-5 flex h-11 max-w-md items-center gap-2 rounded-full border border-[var(--color-border)] px-4">
-            <FiSearch className="h-4 w-4 text-[var(--color-text-secondary)]" aria-hidden="true" />
+          <label className="mt-5 flex h-11 max-w-md items-center gap-2 rounded-md border border-[var(--color-border)] px-4">
+            <FiSearch className="h-2 w-2 text-[var(--color-text-secondary)]" aria-hidden="true" />
             <span className="sr-only">Search your listings</span>
             <input
               value={search}
@@ -610,9 +610,9 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
         ) : null}
 
         {isLoading ? (
-          <div className="mt-10 h-24 animate-pulse rounded-2xl bg-[var(--color-surface-muted)]" />
+          <div className="mt-10 h-24 animate-pulse rounded-sm bg-[var(--color-surface-muted)]" />
         ) : visibleListings.length === 0 ? (
-          <div className="mt-12 rounded-2xl border border-dashed border-[var(--color-border)] p-10 text-center">
+          <div className="mt-12 rounded-sm border border-dashed border-[var(--color-border)] p-10 text-center">
             <h2 className="text-lg font-semibold">No listings found</h2>
             <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
               Create a listing or change your search to see results here.
@@ -636,7 +636,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                       void openListing(listing.id);
                     }
                   }}
-                  className={`overflow-hidden rounded-2xl border bg-[var(--color-surface)] shadow-[var(--shadow-sm)] ${
+                  className={`overflow-hidden rounded-sm border bg-[var(--color-surface)] shadow-[var(--shadow-sm)] ${
                     listing.id === createdListingId
                       ? 'border-[var(--color-text-primary)]'
                       : 'border-[var(--color-border)]'
@@ -647,7 +647,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                     <h2 className="font-semibold">{summary.title}</h2>
                     <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{summary.location}</p>
                     <span className="mt-4 flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
-                      <span className={`h-3 w-3 rounded-full ${status.color}`} />
+                      <span className={`h-3 w-3 rounded-sm ${status.color}`} />
                       {status.label}
                     </span>
                   </div>
@@ -657,7 +657,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
           </div>
         ) : (
           <div className="mt-8 min-w-0 overflow-x-auto">
-            <div className="min-w-[880px]">
+            <div className="min-w-[968px]">
               <div className="grid grid-cols-[minmax(280px,1.4fr)_160px_minmax(260px,1fr)_190px_24px] gap-4 px-4 py-4 text-sm font-semibold">
                 <span>Listing</span><span>Type</span><span>Location</span><span>Status</span><span />
               </div>
@@ -678,7 +678,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                           void openListing(listing.id);
                         }
                       }}
-                      className={`grid min-h-[88px] grid-cols-[minmax(280px,1.4fr)_160px_minmax(260px,1fr)_190px_24px] items-center gap-4 rounded-xl px-4 transition ${
+                      className={`grid min-h-[96.8px] grid-cols-[minmax(280px,1.4fr)_160px_minmax(260px,1fr)_190px_24px] items-center gap-4 rounded-sm px-4 transition ${
                         listing.id === createdListingId ? 'bg-[var(--color-surface-muted)]' : ''
                       } ${isListingInteractive(listing) ? 'cursor-pointer hover:bg-[var(--color-surface-muted)]' : ''} ${openingListingId === listing.id ? 'animate-pulse' : ''}`}
                     >
@@ -689,7 +689,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                       <span className="text-sm text-[var(--color-text-secondary)]">{summary.type}</span>
                       <span className="truncate text-sm text-[var(--color-text-secondary)]">{summary.location}</span>
                       <span className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
-                        <span className={`h-3 w-3 rounded-full ${status.color}`} />
+                        <span className={`h-3 w-3 rounded-sm ${status.color}`} />
                         {status.label}
                       </span>
                       {isListingInteractive(listing) ? <FiChevronRight className="h-5 w-5" aria-hidden="true" /> : <span />}
@@ -742,21 +742,21 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
     >
       <div className="min-h-[calc(100dvh-66px)] px-4 pb-[calc(150px+env(safe-area-inset-bottom))] pt-7 md:hidden">
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-[24px] font-semibold tracking-[-0.035em]">{t('messages.title')}</h1>
+          <h1 className="text-[28.224px] font-semibold tracking-[-0.035em]">{t('messages.title')}</h1>
           <div className="flex items-center gap-2">
             <button
               type="button"
               aria-label={t('messages.search')}
               aria-expanded={isSearchOpen}
               onClick={() => setIsSearchOpen((open) => !open)}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-text-primary)] active:scale-95"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-text-primary)] active:scale-95"
             >
-              <FiSearch className="h-4 w-4" aria-hidden="true" />
+              <FiSearch className="h-2 w-2" aria-hidden="true" />
             </button>
             <button
               type="button"
               aria-label={t('messages.settings')}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-text-primary)] active:scale-95"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-text-primary)] active:scale-95"
             >
               <FiSettings className="h-4 w-4" aria-hidden="true" />
             </button>
@@ -764,15 +764,15 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
         </div>
 
         {isSearchOpen ? (
-          <label className="mt-4 flex h-10 items-center gap-2 rounded-full border border-[var(--color-border)] px-4">
-            <FiSearch className="h-4 w-4 text-[var(--color-text-secondary)]" aria-hidden="true" />
+          <label className="mt-4 flex h-10 items-center gap-2 rounded-md border border-[var(--color-border)] px-4">
+            <FiSearch className="h-2 w-2 text-[var(--color-text-secondary)]" aria-hidden="true" />
             <span className="sr-only">{tCommon('actions.search')}</span>
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               autoFocus
               placeholder={tCommon('actions.search')}
-              className="min-w-0 flex-1 bg-transparent text-[12px] outline-none placeholder:text-[var(--color-text-secondary)]"
+              className="min-w-0 flex-1 bg-transparent text-[14.112px] outline-none placeholder:text-[var(--color-text-secondary)]"
             />
           </label>
         ) : null}
@@ -790,7 +790,7 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
                 type="button"
                 onClick={() => setFilter(value)}
                 aria-pressed={filter === value}
-                className={`h-9 rounded-full border px-4 text-[10px] font-semibold transition active:scale-95 ${
+                className={`h-9 rounded-md border px-4 text-[11.76px] font-semibold transition active:scale-95 ${
                   filter === value
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                     : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
@@ -802,24 +802,24 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
           </div>
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-[280px] flex-col items-center text-center">
+        <div className="mx-auto mt-10 flex max-w-[308px] flex-col items-center text-center">
           <span className="relative inline-flex h-10 w-10 items-center justify-center" aria-hidden="true">
             <FiMessageSquare className="absolute left-1 top-1 h-7 w-7" />
             <FiMessageSquare className="absolute bottom-0 right-0 h-6 w-6 fill-[var(--color-surface)]" />
           </span>
-          <h2 className="mt-5 text-[13px] font-semibold">You don&apos;t have any messages</h2>
-          <p className="mt-2 text-[11px] leading-[1.5] text-[var(--color-text-secondary)]">
+          <h2 className="mt-5 text-[15.288px] font-semibold">You don&apos;t have any messages</h2>
+          <p className="mt-2 text-[12.936px] leading-[1.5] text-[var(--color-text-secondary)]">
             When you receive a new message, it will appear here.
           </p>
         </div>
 
-        <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[66px] z-30" />
+        <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[72.6px] z-30" />
       </div>
 
       <div className="hidden md:block">
         <div className="h-32 border-b border-[var(--color-border)] bg-[var(--color-surface-muted)]" />
         <div className="flex min-h-[calc(100vh-223px)] bg-[var(--color-surface)]">
-        <aside className="w-full border-r border-[var(--color-border)] px-5 py-7 sm:px-8 lg:w-[420px] lg:px-12">
+        <aside className="w-full border-r border-[var(--color-border)] px-5 py-7 sm:px-8 lg:w-[462px] lg:px-12">
           <div className="flex items-center justify-between gap-4">
             <h1 className="text-2xl font-semibold tracking-tight">{t('messages.title')}</h1>
             <div className="flex gap-2">
@@ -828,14 +828,14 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
                 aria-label={t('messages.search')}
                 aria-expanded={isSearchOpen}
                 onClick={() => setIsSearchOpen((open) => !open)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
-                <FiSearch className="h-5 w-5" aria-hidden="true" />
+                <FiSearch className="h-2.5 w-2.5" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 aria-label={t('messages.settings')}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
                 <FiSettings className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -843,8 +843,8 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
           </div>
 
           {isSearchOpen ? (
-            <label className="mt-4 flex h-11 items-center gap-2 rounded-full border border-[var(--color-border)] px-4">
-              <FiSearch className="h-4 w-4 text-[var(--color-text-secondary)]" aria-hidden="true" />
+            <label className="mt-4 flex h-11 items-center gap-2 rounded-md border border-[var(--color-border)] px-4">
+              <FiSearch className="h-2 w-2 text-[var(--color-text-secondary)]" aria-hidden="true" />
               <span className="sr-only">{tCommon('actions.search')}</span>
               <input
                 value={search}
@@ -860,7 +860,7 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
             <button
               type="button"
               onClick={() => setFilter('all')}
-              className={`inline-flex h-10 items-center gap-2 rounded-full px-5 text-sm font-semibold transition ${
+              className={`inline-flex h-10 items-center gap-2 rounded-md px-5 text-sm font-semibold transition ${
                 filter === 'all'
                   ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                   : 'border border-[var(--color-text-primary)]'
@@ -872,7 +872,7 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
             <button
               type="button"
               onClick={() => setFilter('unread')}
-              className={`h-10 rounded-full px-5 text-sm font-semibold transition ${
+              className={`h-10 rounded-md px-5 text-sm font-semibold transition ${
                 filter === 'unread'
                   ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                   : 'border border-[var(--color-text-primary)]'
@@ -891,7 +891,7 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-6 rounded-lg border border-[var(--color-text-primary)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
+              className="mt-6 rounded-md border border-[var(--color-text-primary)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
             >
               {t('messages.clearFilters')}
             </button>
@@ -940,7 +940,7 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
           type="button"
           aria-label="Notifications"
           onClick={() => toast('You have no new notifications.')}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[var(--color-surface-muted)] active:scale-95"
         >
           <FiBell className="h-4 w-4" aria-hidden="true" />
         </button>
@@ -948,16 +948,16 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
           type="button"
           aria-label={`Profile for ${user?.name ?? 'Booksa'}`}
           onClick={() => navigate(ROUTES.hostProfile)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-pink-100 text-[12px] font-semibold text-pink-700 active:scale-95"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-pink-100 text-[14.112px] font-semibold text-pink-700 active:scale-95"
         >
           {initial}
         </button>
       </div>
 
-      <h1 className="mt-5 text-[28px] font-semibold tracking-[-0.045em]">{t('drawer.title')}</h1>
+      <h1 className="mt-5 text-[32.928px] font-semibold tracking-[-0.045em]">{t('drawer.title')}</h1>
 
-      <section className="mt-7 rounded-[20px] bg-[var(--color-surface-muted)] px-5 pb-5 pt-4 text-center">
-        <div className="relative mx-auto h-[126px] max-w-[260px]" aria-hidden="true">
+      <section className="mt-7 rounded-sm bg-[var(--color-surface-muted)] px-5 pb-5 pt-4 text-center">
+        <div className="relative mx-auto h-[138.6px] max-w-[286px]" aria-hidden="true">
           {hostOnboardingImages.map((image, index) => {
             const positions = [
               { left: '8%', top: '38px', rotate: '-8deg', zIndex: 1 },
@@ -971,20 +971,20 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
                 src={image}
                 alt=""
                 aria-hidden="true"
-                className="absolute h-[82px] w-[98px] rounded-[13px] border-[3px] border-[var(--color-surface-muted)] object-cover shadow-md"
+                className="absolute h-[90.2px] w-[107.8px] rounded-sm border-[3px] border-[var(--color-surface-muted)] object-cover shadow-md"
                 style={{ left: position.left, top: position.top, rotate: position.rotate, zIndex: position.zIndex }}
               />
             );
           })}
         </div>
-        <h2 className="text-[15px] font-semibold">{t('drawer.newToBooksa')}</h2>
-        <p className="mx-auto mt-1 max-w-[240px] text-[11px] leading-[1.45] text-[var(--color-text-secondary)]">
+        <h2 className="text-[17.64px] font-semibold">{t('drawer.newToBooksa')}</h2>
+        <p className="mx-auto mt-1 max-w-[264px] text-[12.936px] leading-[1.45] text-[var(--color-text-secondary)]">
           {t('drawer.onboarding')}
         </p>
         <button
           type="button"
           onClick={() => navigate(ROUTES.hostListingSetup)}
-          className="mt-5 h-10 w-full rounded-lg border border-[var(--color-text-primary)] bg-[var(--color-surface)] text-[11px] font-semibold active:scale-[0.99]"
+          className="mt-5 h-10 w-full rounded-md border border-[var(--color-text-primary)] bg-[var(--color-surface)] text-[12.936px] font-semibold active:scale-[0.99]"
         >
           Get started
         </button>
@@ -996,10 +996,10 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
             key={item.label}
             type="button"
             onClick={() => openMenuItem(item)}
-            className="flex min-h-12 w-full items-center gap-4 rounded-xl py-2 text-left active:bg-[var(--color-surface-muted)]"
+            className="flex min-h-12 w-full items-center gap-4 rounded-md py-2 text-left active:bg-[var(--color-surface-muted)]"
           >
             <item.Icon className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
-            <span className="min-w-0 flex-1 text-[13px]">{item.label}</span>
+            <span className="min-w-0 flex-1 text-[15.288px]">{item.label}</span>
             <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
           </button>
         ))}
@@ -1009,10 +1009,10 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
         <button
           type="button"
           onClick={() => void logout()}
-          className="flex min-h-12 w-full items-center gap-4 rounded-xl py-2 text-left active:bg-[var(--color-surface-muted)]"
+          className="flex min-h-12 w-full items-center gap-4 rounded-md py-2 text-left active:bg-[var(--color-surface-muted)]"
         >
           <FiLogOut className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
-          <span className="min-w-0 flex-1 text-[13px]">Log out</span>
+          <span className="min-w-0 flex-1 text-[15.288px]">Log out</span>
           <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
         </button>
       </div>
@@ -1020,12 +1020,12 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
       <button
         type="button"
         onClick={() => toast('The Booksa app download is coming soon.')}
-        className="mt-7 h-11 w-full rounded-lg border border-[var(--color-text-primary)] text-[13px] font-semibold active:scale-[0.99]"
+        className="mt-7 h-11 w-full rounded-md border border-[var(--color-text-primary)] text-[15.288px] font-semibold active:scale-[0.99]"
       >
         Download the app
       </button>
 
-      <div className="mt-8 text-center text-[9px] text-[var(--color-text-secondary)]">
+      <div className="mt-8 text-center text-[10.584px] text-[var(--color-text-secondary)]">
         <p>
           <button type="button" className="underline underline-offset-2">Terms of Service</button>
           <span aria-hidden="true"> · </span>
@@ -1038,14 +1038,14 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
         <button
           type="button"
           onClick={() => navigate(ROUTES.home)}
-          className="inline-flex h-12 items-center gap-2 rounded-full bg-neutral-900 px-7 text-[13px] font-semibold text-white active:scale-95"
+          className="inline-flex h-12 items-center gap-2 rounded-md bg-neutral-900 px-7 text-[15.288px] font-semibold text-white active:scale-95"
         >
           <FiRefreshCw className="h-4 w-4" aria-hidden="true" />
           Switch to traveling
         </button>
       </div>
 
-      <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[66px] z-30" />
+      <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[72.6px] z-30" />
     </motion.section>
   );
 }
@@ -1078,13 +1078,13 @@ export default function HostListingsPage() {
   return (
     <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
       <header className="hidden border-b border-[var(--color-border)] bg-[var(--color-surface)] md:block">
-        <div className="mx-auto flex min-h-[94px] max-w-[1400px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto flex min-h-[103.4px] max-w-[1540px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
           <button
             type="button"
             onClick={() => setActiveSection('today')}
             aria-label={t('accessibility.hostHome')}
           >
-            <BooksaLogo className="h-10 w-[108px]" />
+            <BooksaLogo className="h-10 w-[118.8px]" />
           </button>
 
           <nav aria-label={t('nav.host')} className="hidden items-center gap-8 md:flex">
@@ -1117,7 +1117,7 @@ export default function HostListingsPage() {
             <button
               type="button"
               onClick={() => navigate(ROUTES.hostProfile)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
               aria-label={t('accessibility.hostAccount', { name: user?.name ?? 'Booksa' })}
             >
               {initial}
@@ -1130,7 +1130,7 @@ export default function HostListingsPage() {
                 aria-label={t('accessibility.accountMenu')}
                 aria-expanded={isMenuOpen}
                 onClick={() => setIsMenuOpen((open) => !open)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:opacity-75"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:opacity-75"
               >
                 <FiMenu className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -1175,7 +1175,7 @@ export default function HostListingsPage() {
               <button
                 type="button"
                 onClick={() => setReservationView('today')}
-                className={`h-7 rounded-full border px-3 text-[11px] font-semibold transition ${
+                className={`h-7 rounded-md border px-3 text-[12.936px] font-semibold transition ${
                   reservationView === 'today'
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-sm'
                     : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
@@ -1186,7 +1186,7 @@ export default function HostListingsPage() {
               <button
                 type="button"
                 onClick={() => setReservationView('upcoming')}
-                className={`h-7 rounded-full border px-3 text-[11px] font-semibold transition ${
+                className={`h-7 rounded-md border px-3 text-[12.936px] font-semibold transition ${
                   reservationView === 'upcoming'
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-sm'
                     : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
@@ -1198,23 +1198,23 @@ export default function HostListingsPage() {
 
             <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-8 pb-5">
               <div className="relative flex h-32 w-40 items-center justify-center">
-                <span className="select-none text-[92px] leading-none" aria-hidden="true">📖</span>
+                <span className="select-none text-[108.192px] leading-none" aria-hidden="true">📖</span>
                 <ThreeDIcon
                   name="reservationNotebook"
                   sourceSize={200}
                   className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_10px_12px_rgba(15,23,42,0.15)]"
                 />
               </div>
-              <h1 className="mt-5 max-w-[250px] text-[20px] font-semibold leading-[1.12] tracking-[-0.035em]">
+              <h1 className="mt-5 max-w-[275px] text-[23.52px] font-semibold leading-[1.12] tracking-[-0.035em]">
                 {t('reservations.empty')}
               </h1>
-              <p className="mt-3 max-w-[270px] text-[13px] leading-[1.45] text-[var(--color-text-secondary)]">
+              <p className="mt-3 max-w-[297px] text-[15.288px] leading-[1.45] text-[var(--color-text-secondary)]">
                 {t('reservations.emptyHelp')}
               </p>
               <button
                 type="button"
                 onClick={() => navigate(ROUTES.hostListingSetup)}
-                className="mt-7 rounded-[10px] border border-[var(--color-text-primary)] px-3 py-2 text-[12px] font-semibold transition active:scale-95"
+                className="mt-7 rounded-md border border-[var(--color-text-primary)] px-3 py-2 text-[14.112px] font-semibold transition active:scale-95"
               >
                 {t('reservations.finishListing')}
               </button>
@@ -1229,19 +1229,19 @@ export default function HostListingsPage() {
             transition={{ duration: 0.35, ease: 'easeOut' }}
             className="mx-auto hidden min-h-[calc(100vh-95px)] max-w-3xl flex-col items-center px-5 pb-16 pt-6 text-center md:flex"
           >
-            <div className="inline-flex rounded-full bg-[var(--color-surface-muted)] p-1.5">
-              <button type="button" onClick={() => setReservationView('today')} className={`rounded-full px-6 py-3 text-sm font-semibold transition ${reservationView === 'today' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
+            <div className="inline-flex rounded-sm bg-[var(--color-surface-muted)] p-1.5">
+              <button type="button" onClick={() => setReservationView('today')} className={`rounded-md px-6 py-3 text-sm font-semibold transition ${reservationView === 'today' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
                 {t('nav.today')}
               </button>
-              <button type="button" onClick={() => setReservationView('upcoming')} className={`rounded-full px-6 py-3 text-sm font-semibold transition ${reservationView === 'upcoming' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
+              <button type="button" onClick={() => setReservationView('upcoming')} className={`rounded-md px-6 py-3 text-sm font-semibold transition ${reservationView === 'upcoming' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
                 {t('reservations.upcoming')}
               </button>
             </div>
             <div className="mt-14 flex max-w-md flex-col items-center sm:mt-16">
-              <span className="select-none text-[97.44px] leading-none drop-shadow-sm" role="img" aria-label={t('reservations.calendarImage')}>📖</span>
-              <h1 className="mt-8 text-[25.2px] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-[28.56px]">{t('reservations.empty')}</h1>
+              <span className="select-none text-[114.58944px] leading-none drop-shadow-sm" role="img" aria-label={t('reservations.calendarImage')}>📖</span>
+              <h1 className="mt-8 text-[29.6352px] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-[33.58656px]">{t('reservations.empty')}</h1>
               <p className="mt-5 max-w-sm text-base leading-6 text-[var(--color-text-secondary)] sm:text-lg">{t('reservations.emptyHelp')}</p>
-              <button type="button" onClick={() => navigate(ROUTES.hostListingSetup)} className="mt-8 rounded-xl bg-[var(--color-surface-muted)] px-7 py-3.5 text-base font-semibold transition hover:brightness-95">{t('reservations.finishListing')}</button>
+              <button type="button" onClick={() => navigate(ROUTES.hostListingSetup)} className="mt-8 rounded-md bg-[var(--color-surface-muted)] px-7 py-3.5 text-base font-semibold transition hover:brightness-95">{t('reservations.finishListing')}</button>
             </div>
           </motion.section>
         </>
@@ -1249,7 +1249,7 @@ export default function HostListingsPage() {
 
       <nav
         aria-label={t('nav.hostMobile')}
-        className="fixed inset-x-0 bottom-0 z-40 grid h-[66px] grid-cols-5 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-1 pb-[env(safe-area-inset-bottom)] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 grid h-[72.6px] grid-cols-5 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-1 pb-[env(safe-area-inset-bottom)] md:hidden"
       >
         {mobileHostNavigation.map(({ id, labelKey, Icon }) => {
           const isActive = activeSection === id;
@@ -1259,7 +1259,7 @@ export default function HostListingsPage() {
               type="button"
               onClick={() => handleNavigation(hostNavigation.find((item) => item.id === id)!)}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${isActive ? 'font-semibold text-[#e9145f]' : 'text-[var(--color-text-secondary)]'}`}
+              className={`flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium ${isActive ? 'font-semibold text-[#e9145f]' : 'text-[var(--color-text-secondary)]'}`}
             >
               <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.3]' : 'stroke-[1.7]'}`} aria-hidden="true" />
               <span>{t(labelKey)}</span>
@@ -1270,7 +1270,7 @@ export default function HostListingsPage() {
           type="button"
           onClick={() => setActiveSection('menu')}
           aria-current={activeSection === 'menu' ? 'page' : undefined}
-          className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${activeSection === 'menu' ? 'font-semibold text-[#e9145f]' : 'text-[var(--color-text-secondary)]'}`}
+          className={`flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium ${activeSection === 'menu' ? 'font-semibold text-[#e9145f]' : 'text-[var(--color-text-secondary)]'}`}
         >
           <FiMenu className={`h-5 w-5 ${activeSection === 'menu' ? 'stroke-[2.3]' : 'stroke-[1.7]'}`} aria-hidden="true" />
           <span>Menu</span>

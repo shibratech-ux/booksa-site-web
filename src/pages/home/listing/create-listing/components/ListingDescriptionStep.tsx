@@ -97,10 +97,10 @@ export function ListingDescriptionStep({
       className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
       aria-labelledby="listing-description-heading"
     >
-      <div className="mx-auto flex min-h-full w-full max-w-[640px] flex-col justify-start py-2 sm:justify-center sm:py-6">
+      <div className="mx-auto flex min-h-full w-full max-w-[704px] flex-col justify-start py-2 sm:justify-center sm:py-6">
         <h1
           id="listing-description-heading"
-          className="text-[28px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           Create your description
         </h1>
@@ -118,7 +118,7 @@ export function ListingDescriptionStep({
           autoFocus
           onChange={(event) => onChange(event.target.value)}
           aria-describedby="listing-description-count"
-          className="mt-6 min-h-[220px] w-full resize-none rounded-[var(--radius-md)] border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] p-4 text-base leading-relaxed text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[344px] sm:p-6 sm:text-lg"
+          className="mt-6 min-h-[242px] w-full resize-none rounded-md border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] p-4 text-base leading-relaxed text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[378.4px] sm:p-6 sm:text-lg"
         />
         <p
           id="listing-description-count"

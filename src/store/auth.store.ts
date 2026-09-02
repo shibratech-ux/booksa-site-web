@@ -50,15 +50,10 @@ export const useAuthStore = create<AuthStore>()(
 
         return {
           ...currentState,
-          ...persisted,
           lastUser: persisted.lastUser ?? persisted.user ?? null
         };
       },
       partialize: (state) => ({
-        user: state.user,
-        token: state.token,
-        isAuthenticated: state.isAuthenticated,
-        status: state.status,
         lastUser: state.lastUser
       })
     }

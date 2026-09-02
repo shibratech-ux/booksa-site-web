@@ -12,10 +12,10 @@ import {
 } from '@/utils/validators';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/utils/constants';
-import { getFirebaseAuthErrorKey } from '@/utils/firebaseErrors';
+import { getFirebaseAuthErrorKey, logFirebaseAuthError } from '@/utils/firebaseErrors';
 
 // React Hook Form + Zod keeps the auth form strict and easy to extend.
-export function LoginForm({ defaultEmail = 'jordan.wells@booksa.io' }: { defaultEmail?: string }) {
+export function LoginForm({ defaultEmail = '' }: { defaultEmail?: string }) {
   const { t } = useTranslation('auth');
   const { t: tErrors } = useTranslation('errors');
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export function LoginForm({ defaultEmail = 'jordan.wells@booksa.io' }: { default
     resolver: loginResolver,
     defaultValues: {
       email: defaultEmail,
-      password: 'password123'
+      password: ''
     }
   });
 
@@ -45,7 +45,7 @@ export function LoginForm({ defaultEmail = 'jordan.wells@booksa.io' }: { default
         ?.pathname;
       navigate(requestedPath ?? ROUTES.home, { replace: true });
     } catch (error) {
-      console.error('Authentication failed.', error);
+      logFirebaseAuthError('Email authentication failed:', error);
       toast.error(tErrors(getFirebaseAuthErrorKey(error)));
     }
   };

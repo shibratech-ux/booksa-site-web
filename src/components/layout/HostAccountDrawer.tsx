@@ -106,13 +106,13 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 330, damping: 34 }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="absolute right-0 top-0 flex h-full w-full max-w-[480px] flex-col overflow-hidden rounded-l-[30px] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xl)]"
+            className="absolute right-0 top-0 flex h-full w-full max-w-[528px] flex-col overflow-hidden rounded-lg bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xl)]"
           >
             <div className="flex items-center justify-end gap-3 px-6 pb-2 pt-7 sm:px-10">
               <button
                 type="button"
                 aria-label={tNavigation('notifications')}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
                 <FiBell className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -120,19 +120,19 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                 type="button"
                 onClick={onClose}
                 aria-label={tNavigation('closeMenu')}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
                 <FiX className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 pb-8 sm:px-12">
-              <h2 id="host-menu-title" className="mt-7 text-[31.92px] font-semibold tracking-[-0.04em]">
+              <h2 id="host-menu-title" className="mt-7 text-[37.53792px] font-semibold tracking-[-0.04em]">
                 {t('drawer.title')}
               </h2>
 
-              <section className="mt-10 rounded-3xl bg-[var(--color-surface-muted)] p-5 text-center">
-                <div className="relative mx-auto h-36 max-w-[285px]" aria-hidden="true">
+              <section className="mt-10 rounded-sm bg-[var(--color-surface-muted)] p-5 text-center">
+                <div className="relative mx-auto h-36 max-w-[313.5px]" aria-hidden="true">
                   {hostOnboardingImages.map((image, index) => {
                     const offset = (index - 1) * 68;
                     const rotation = (index - 1) * 9;
@@ -142,7 +142,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                         key={image}
                         src={image}
                         alt=""
-                        className="absolute left-1/2 top-1/2 -ml-14 -mt-12 h-24 w-28 rounded-2xl border-4 border-[var(--color-surface-muted)] object-cover shadow-[var(--shadow-sm)]"
+                        className="absolute left-1/2 top-1/2 -ml-14 -mt-12 h-24 w-28 rounded-sm border-4 border-[var(--color-surface-muted)] object-cover shadow-[var(--shadow-sm)]"
                         initial={
                           shouldReduceMotion ? false : { x: 0, y: 0, rotate: 0, scale: 0.82, opacity: 0 }
                         }
@@ -190,7 +190,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                 <button
                   type="button"
                   onClick={() => openPath(ROUTES.hostListingSetup)}
-                  className="mt-6 w-full rounded-xl bg-[var(--color-surface)] px-5 py-3 text-sm font-semibold shadow-[var(--shadow-sm)] transition hover:brightness-95"
+                  className="mt-6 w-full rounded-md bg-[var(--color-surface)] px-5 py-3 text-sm font-semibold shadow-[var(--shadow-sm)] transition hover:brightness-95"
                 >
                   {tCommon('actions.start')}
                 </button>
@@ -202,7 +202,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                     key={labelKey}
                     type="button"
                     onClick={() => openPath(path, section)}
-                    className="flex w-full items-center gap-5 rounded-xl px-1 py-3.5 text-left transition hover:bg-[var(--color-surface-muted)]"
+                    className="flex w-full items-center gap-5 rounded-md px-1 py-3.5 text-left transition hover:bg-[var(--color-surface-muted)]"
                   >
                     <Icon className="h-6 w-6 shrink-0" aria-hidden="true" />
                     <span className="text-base">{t(labelKey)}</span>
@@ -214,7 +214,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex w-full items-center gap-5 rounded-xl px-1 py-3.5 text-left transition hover:bg-[var(--color-surface-muted)]"
+                  className="flex w-full items-center gap-5 rounded-md px-1 py-3.5 text-left transition hover:bg-[var(--color-surface-muted)]"
                 >
                   <FiLogOut className="h-6 w-6" aria-hidden="true" />
                   <span className="text-base">{tNavigation('logout')}</span>

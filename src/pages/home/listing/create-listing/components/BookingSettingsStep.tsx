@@ -78,10 +78,10 @@ export function BookingSettingsStep({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -24 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-0 w-full max-w-[720px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-10"
+      className="mx-auto flex min-h-0 w-full max-w-[792px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-10"
     >
       <div className="mb-10">
-        <h1 className="text-[28px] font-semibold leading-tight tracking-tight sm:text-4xl">{content.title}</h1>
+        <h1 className="text-[32.928px] font-semibold leading-tight tracking-tight sm:text-4xl">{content.title}</h1>
         <p className="mt-2 text-base text-[var(--color-text-secondary)] sm:text-lg">
           {content.subtitle}{' '}
           <button type="button" className="font-medium underline underline-offset-2">
@@ -102,7 +102,7 @@ export function BookingSettingsStep({
               role="radio"
               aria-checked={isSelected}
               onClick={() => onChange(option.id)}
-              className={`grid min-h-[92px] grid-cols-[1fr_auto] items-center gap-3 rounded-[var(--radius-lg)] border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[100px] sm:gap-6 sm:px-6 sm:py-5 ${
+              className={`grid min-h-[101.2px] grid-cols-[1fr_auto] items-center gap-3 rounded-md border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-6 sm:px-6 sm:py-5 ${
                 isSelected
                   ? 'border-[var(--color-text-primary)] ring-1 ring-[var(--color-text-primary)]'
                   : 'border-[var(--color-border)]'
@@ -113,7 +113,7 @@ export function BookingSettingsStep({
                 {option.recommended ? (
                   <span className="mt-1 block text-sm font-medium text-green-600">Recommended</span>
                 ) : null}
-                <span className="mt-1 block max-w-[520px] text-sm leading-snug text-[var(--color-text-secondary)]">
+                <span className="mt-1 block max-w-[572px] text-sm leading-snug text-[var(--color-text-secondary)]">
                   {option.description}
                 </span>
               </span>

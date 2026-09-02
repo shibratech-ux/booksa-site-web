@@ -32,7 +32,7 @@ export function Modal({ open, title, children, onClose }: ModalProps) {
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.96, y: 18, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8"
+            className="glass-panel w-full max-w-2xl rounded-lg p-6 sm:p-8"
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}

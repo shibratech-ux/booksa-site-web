@@ -351,12 +351,12 @@ export default function ListingSectionPage() {
   };
 
   return (
-    <main className="flex h-[100dvh] min-h-[520px] flex-col overflow-hidden bg-[var(--color-surface)] text-[var(--color-text-primary)] sm:min-h-[640px]">
-      <header className="mx-auto flex h-16 w-full max-w-[1440px] shrink-0 items-center justify-between border-b border-[var(--color-border)] px-4 sm:h-24 sm:border-b-0 sm:px-10 lg:px-14">
-        <BooksaLogo className="h-8 w-[96px] sm:h-9 sm:w-[112px]" />
+    <main className="flex h-[100dvh] min-h-[572px] flex-col overflow-hidden bg-[var(--color-surface)] text-[var(--color-text-primary)] sm:min-h-[704px]">
+      <header className="mx-auto flex h-16 w-full max-w-[1584px] shrink-0 items-center justify-between border-b border-[var(--color-border)] px-4 sm:h-24 sm:border-b-0 sm:px-10 lg:px-14">
+        <BooksaLogo className="h-8 w-[105.6px] sm:h-9 sm:w-[123.2px]" />
         <div className="flex items-center gap-2 sm:gap-3">
           {!isIntroductionPage || section.step > 1 ? (
-            <Button variant="secondary" size="sm" className="hidden rounded-full px-5 sm:inline-flex">
+            <Button variant="secondary" size="sm" className="hidden rounded-md px-5 sm:inline-flex">
               Questions?
             </Button>
           ) : null}
@@ -365,7 +365,7 @@ export default function ListingSectionPage() {
             size="sm"
             onClick={handleSaveAndExit}
             loading={isSavingDraft}
-            className="rounded-full px-3 sm:px-5"
+            className="rounded-md px-3 sm:px-5"
           >
             {isSafetyDetailsPage ? 'Exit' : 'Save & exit'}
           </Button>
@@ -535,30 +535,30 @@ export default function ListingSectionPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, x: -24 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="mx-auto grid min-h-0 w-full max-w-[1120px] flex-1 content-start items-center gap-5 overflow-y-auto px-5 py-6 sm:gap-10 sm:px-10 sm:py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(400px,0.92fr)] lg:content-center lg:px-6 lg:py-6"
+            className="mx-auto grid min-h-0 w-full max-w-[1232px] flex-1 content-start items-center gap-5 overflow-y-auto px-5 py-6 sm:gap-10 sm:px-10 sm:py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(400px,0.92fr)] lg:content-center lg:px-6 lg:py-6"
           >
-            <div className="max-w-[560px] lg:pb-4">
+            <div className="max-w-[616px] lg:pb-4">
               <p className="text-sm font-semibold text-[var(--color-text-secondary)] sm:text-xl">
                 Step {section.step}
               </p>
               <h1 className="mt-2 text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:mt-4 sm:text-5xl">
                 {section.title}
               </h1>
-              <p className="mt-3 max-w-[555px] text-sm leading-relaxed text-[var(--color-text-secondary)] sm:mt-6 sm:text-xl">
+              <p className="mt-3 max-w-[610.5px] text-sm leading-relaxed text-[var(--color-text-secondary)] sm:mt-6 sm:text-xl">
                 {section.description}
               </p>
             </div>
 
-            <div className="flex min-h-[180px] items-center justify-center sm:min-h-[320px] lg:min-h-[480px]">
+            <div className="flex min-h-[198px] items-center justify-center sm:min-h-[352px] lg:min-h-[528px]">
               {section.image ? (
                 <ShimmerImage
                   src={section.image}
                   alt={section.imageAlt ?? ''}
-                  className="max-h-[32dvh] w-full max-w-[520px] object-contain mix-blend-multiply sm:max-h-none"
+                  className="max-h-[32dvh] w-full max-w-[572px] object-contain mix-blend-multiply sm:max-h-none"
                 />
               ) : (
                 <div
-                  className="flex aspect-square w-full max-w-[420px] items-center justify-center rounded-full bg-[var(--color-surface-muted)] text-8xl font-semibold text-[var(--color-text-secondary)]"
+                  className="flex aspect-square w-full max-w-[462px] items-center justify-center rounded-sm bg-[var(--color-surface-muted)] text-8xl font-semibold text-[var(--color-text-secondary)]"
                   aria-hidden="true"
                 >
                   {section.step}
@@ -613,7 +613,7 @@ export default function ListingSectionPage() {
             </span>
           ))}
         </div>
-        <div className="flex h-[60px] items-center justify-between px-4 sm:h-[76px] sm:items-end sm:px-10 lg:px-12">
+        <div className="flex h-[66px] items-center justify-between px-4 sm:h-[83.6px] sm:items-end sm:px-10 lg:px-12">
           {!isIntroductionPage || section.step > 1 ? (
             <button
               type="button"
@@ -880,7 +880,7 @@ export default function ListingSectionPage() {
                 setCurrentPage('safety-details');
               }
             }}
-            className="min-w-[112px] rounded-[var(--radius-md)] bg-[var(--color-text-primary)] px-7 text-[var(--color-surface)]"
+            className="min-w-[123.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-[var(--color-surface)]"
           >
             {isSafetyDetailsPage ? 'Create listing' : 'Next'}
           </Button>

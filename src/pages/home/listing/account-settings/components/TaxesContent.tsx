@@ -17,8 +17,8 @@ export function TaxesContent() {
   const [activeTab, setActiveTab] = useState<TaxesTab>('taxpayers');
 
   return (
-    <div className="mx-auto max-w-[760px]">
-      <h2 className="text-[23.52px] font-semibold tracking-[-0.035em] sm:text-[25.2px]">Taxes</h2>
+    <div className="mx-auto max-w-[836px]">
+      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">Taxes</h2>
 
       <div className="mt-7 flex border-b border-[var(--color-border)]" role="tablist" aria-label="Tax settings">
         {([
@@ -39,7 +39,7 @@ export function TaxesContent() {
             {activeTab === id ? (
               <motion.span
                 layoutId="taxes-tab-indicator"
-                className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-[var(--color-text-primary)]"
+                className="absolute inset-x-0 -bottom-px h-0.5 rounded-sm bg-[var(--color-text-primary)]"
               />
             ) : null}
           </button>
@@ -61,7 +61,7 @@ export function TaxesContent() {
               </p>
               <button
                 type="button"
-                className="mt-8 min-h-12 rounded-[var(--radius-md)] bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
+                className="mt-8 min-h-12 rounded-md bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
               >
                 Add tax info
               </button>
@@ -74,7 +74,7 @@ export function TaxesContent() {
               </p>
               <button
                 type="button"
-                className="mt-8 min-h-12 rounded-[var(--radius-md)] bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
+                className="mt-8 min-h-12 rounded-md bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
               >
                 Add VAT ID number
               </button>

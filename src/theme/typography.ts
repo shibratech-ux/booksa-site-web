@@ -12,24 +12,24 @@ export const typography = {
     plusJakartaSans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif']
   },
   display: {
-    large: { fontSize: '2.52rem', fontWeight: 700, lineHeight: 1.17 },
-    medium: { fontSize: '2.1rem', fontWeight: 700, lineHeight: 1.15 },
-    small: { fontSize: '1.68rem', fontWeight: 700, lineHeight: 1.125 }
+    large: { fontSize: '2.370816rem', fontWeight: 700, lineHeight: 1.17 },
+    medium: { fontSize: '1.97568rem', fontWeight: 700, lineHeight: 1.15 },
+    small: { fontSize: '1.580544rem', fontWeight: 700, lineHeight: 1.125 }
   },
   headings: {
-    h1: '2.52rem',
-    h2: '2.1rem',
-    h3: '1.68rem',
-    h4: '1.47rem',
-    h5: '1.155rem',
-    h6: '1.05rem'
+    h1: '2.370816rem',
+    h2: '1.97568rem',
+    h3: '1.580544rem',
+    h4: '1.382976rem',
+    h5: '1.086624rem',
+    h6: '0.98784rem'
   },
   body: {
-    caption: '0.63rem',
-    small: '0.6825rem',
-    secondary: '0.735rem',
-    medium: '0.84rem',
-    large: '1.05rem'
+    caption: '0.592704rem',
+    small: '0.642096rem',
+    secondary: '0.691488rem',
+    medium: '0.790272rem',
+    large: '0.98784rem'
   },
   weights: {
     regular: 400,

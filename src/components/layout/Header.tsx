@@ -30,7 +30,7 @@ export function Header() {
             {t('menu')}
           </Button>
           <div className="search-surface hidden px-4 md:flex md:items-center md:gap-3">
-            <SearchRegular className="h-5 w-5 text-[var(--color-text-secondary)]" />
+            <SearchRegular className="h-2.5 w-2.5 text-[var(--color-text-secondary)]" />
             <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher des rapports, des utilisateurs, des transactions..."
@@ -42,8 +42,8 @@ export function Header() {
         <div className="flex items-center gap-3">
           <LanguageSwitcher compact />
           <IconButton icon={<AlertRegular className="h-4 w-4" />} label={t('notifications')} />
-          <div className="flex items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-500)] text-sm font-bold text-white">
+          <div className="flex items-center gap-3 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[var(--color-primary-500)] text-sm font-bold text-white">
               {initials}
             </div>
             <div className="hidden sm:block">
@@ -56,7 +56,7 @@ export function Header() {
 
       <div className="px-4 pb-4 md:hidden">
         <div className="search-surface flex items-center gap-3 px-4">
-          <SearchRegular className="h-5 w-5 text-[var(--color-text-secondary)]" />
+          <SearchRegular className="h-2.5 w-2.5 text-[var(--color-text-secondary)]" />
           <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher..."

@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 import { forwardRef } from 'react';
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion';
 import { ArrowSyncRegular } from '@fluentui/react-icons';
 import { cn } from '@/utils/helpers';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
-type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
-interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
+export interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
@@ -17,16 +17,20 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'primary-button',
-  secondary: 'secondary-button',
-  ghost: 'ghost-button',
-  danger: 'danger-button'
+  primary:
+    'border-transparent bg-[var(--color-primary-500)] text-white shadow-none hover:bg-[var(--color-primary-600)] focus-visible:ring-[var(--color-primary-500)]',
+  secondary:
+    'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)] hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-primary-500)]',
+  ghost:
+    'border-transparent bg-transparent text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-primary-500)]',
+  danger:
+    'border-transparent bg-[var(--color-danger)] text-white shadow-none hover:brightness-95 focus-visible:ring-[var(--color-danger)]'
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'h-9 min-h-9 px-4 text-sm',
-  md: 'h-12 min-h-12 px-6 text-base',
-  lg: 'h-14 min-h-14 px-6 text-base'
+  sm: 'min-h-[var(--control-compact)] px-[var(--space-lg)] text-lg',
+  md: 'min-h-[var(--control-standard)] px-[var(--space-2xl)] text-lg',
+  lg: 'min-h-[var(--control-large)] px-[var(--space-2xl)] text-lg'
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
@@ -44,23 +48,28 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   },
   ref
 ) {
+  const prefersReducedMotion = useReducedMotion();
+  const isDisabled = disabled || loading;
+
   return (
     <motion.button
       ref={ref}
       type={type ?? 'button'}
-      whileHover={{ y: -1, scale: disabled || loading ? 1 : 1.01 }}
-      whileTap={{ scale: disabled || loading ? 1 : 0.98 }}
-      transition={{ duration: 0.18 }}
+      whileHover={isDisabled || prefersReducedMotion ? undefined : { y: -1, scale: 1.01 }}
+      whileTap={isDisabled || prefersReducedMotion ? undefined : { scale: 0.98 }}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
       className={cn(
-        'inline-flex items-center justify-center gap-2 whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60',
+        'inline-flex items-center justify-center gap-[var(--space-sm)] whitespace-nowrap rounded-md border font-semibold transition-[background-color,border-color,color,box-shadow,filter,opacity] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] disabled:cursor-not-allowed disabled:opacity-55',
         variantStyles[variant],
         sizeStyles[size],
         className
       )}
-      disabled={disabled || loading}
+      disabled={isDisabled}
+      aria-busy={loading || undefined}
+      data-loading={loading || undefined}
       {...props}
     >
-      {loading ? <ArrowSyncRegular className="h-4 w-4 animate-spin" /> : leftIcon}
+      {loading ? <ArrowSyncRegular className="h-4 w-4 animate-spin" aria-hidden="true" /> : leftIcon}
       <span>{children}</span>
       {!loading ? rightIcon : null}
     </motion.button>

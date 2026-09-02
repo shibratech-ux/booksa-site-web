@@ -42,7 +42,7 @@ export function MobileNav({ variant = 'fixed', hideHome = false }: MobileNavProp
               end={item.path === '/'}
               className={({ isActive }) =>
                 cn(
-                  'flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl py-2 text-[9.24px] font-semibold transition',
+                  'flex min-h-12 flex-col items-center justify-center gap-1 rounded-sm py-2 text-[10.86624px] font-semibold transition',
                   isActive
                     ? 'bg-[color-mix(in_srgb,var(--color-primary-500)_14%,transparent)] text-[var(--color-primary-500)]'
                     : 'text-[var(--color-text-secondary)]'

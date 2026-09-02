@@ -105,9 +105,9 @@ export default function HostProfilePage() {
             key={item.label}
             type="button"
             onClick={() => handleMobileMenuItem(item)}
-            className="flex min-h-[42px] w-full items-center gap-4 text-left text-[12px] text-slate-800"
+            className="flex min-h-[46.2px] w-full items-center gap-4 text-left text-[14.112px] text-slate-800"
           >
-            <Icon className="h-[18px] w-[18px] shrink-0 stroke-[1.6]" aria-hidden="true" />
+            <Icon className="h-[19.8px] w-[19.8px] shrink-0 stroke-[1.6]" aria-hidden="true" />
             <span className="flex-1">{item.label}</span>
             {item.action !== 'logout' ? (
               <ChevronRight className="h-4 w-4 text-slate-400" aria-hidden="true" />
@@ -121,48 +121,48 @@ export default function HostProfilePage() {
   return (
     <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
       <section className="min-h-screen bg-white px-5 pb-36 pt-7 text-slate-900 lg:hidden">
-        <div className="mx-auto max-w-[390px]">
+        <div className="mx-auto max-w-[429px]">
           <div className="flex items-center justify-between">
-            <h1 className="text-[24px] font-semibold tracking-[-0.035em]">Profile</h1>
+            <h1 className="text-[28.224px] font-semibold tracking-[-0.035em]">Profile</h1>
             <button
               type="button"
               aria-label="Notifications"
-              className="grid h-9 w-9 place-items-center rounded-full bg-slate-50 text-slate-700"
+              className="grid h-9 w-9 place-items-center rounded-md bg-slate-50 text-slate-700"
             >
               <Bell className="h-4 w-4 stroke-[1.7]" />
             </button>
           </div>
 
-          <article className="mt-4 flex min-h-[174px] flex-col items-center justify-center rounded-[20px] bg-white px-5 py-6 text-center shadow-[0_8px_28px_rgba(15,23,42,0.10)]">
-            <div className="grid h-20 w-20 place-items-center rounded-full bg-[#f8e0f2] text-[28px] font-semibold text-[#9c187c]">
+          <article className="mt-4 flex min-h-[191.4px] flex-col items-center justify-center rounded-sm bg-white px-5 py-6 text-center shadow-[0_8px_28px_rgba(15,23,42,0.10)]">
+            <div className="grid h-20 w-20 place-items-center rounded-sm bg-[#f8e0f2] text-[32.928px] font-semibold text-[#9c187c]">
               {initial}
             </div>
-            <h2 className="mt-2 text-[23px] font-semibold leading-none tracking-[-0.035em]">{displayName.split(' ')[0]}</h2>
-            <p className="mt-1 text-[9px] text-slate-500">Guest</p>
+            <h2 className="mt-2 text-[27.048px] font-semibold leading-none tracking-[-0.035em]">{displayName.split(' ')[0]}</h2>
+            <p className="mt-1 text-[10.584px] text-slate-500">Guest</p>
           </article>
 
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <button type="button" className="relative flex min-h-[124px] flex-col items-center justify-center rounded-xl bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded bg-slate-600 px-1.5 py-0.5 text-[6px] font-semibold text-white">NEW</span>
+            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-md bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
+              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-[7.056px] font-semibold text-white">NEW</span>
               <ThreeDIcon name="pastTrips" sourceSize={100} className="h-14 w-14 object-contain" />
-              <span className="mt-2 text-[11px] font-medium">Past trips</span>
+              <span className="mt-2 text-[12.936px] font-medium">Past trips</span>
             </button>
-            <button type="button" className="relative flex min-h-[124px] flex-col items-center justify-center rounded-xl bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded bg-slate-600 px-1.5 py-0.5 text-[6px] font-semibold text-white">NEW</span>
+            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-md bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
+              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-[7.056px] font-semibold text-white">NEW</span>
               <ThreeDIcon name="connectionPerson" sourceSize={100} className="h-14 w-14 object-contain" />
-              <span className="mt-2 text-[11px] font-medium">Connections</span>
+              <span className="mt-2 text-[12.936px] font-medium">Connections</span>
             </button>
           </div>
 
           <button
             type="button"
             onClick={() => navigate(ROUTES.hostListingSetup)}
-            className="mt-3 flex min-h-[72px] w-full items-center gap-4 rounded-xl bg-white px-5 text-left shadow-[0_7px_22px_rgba(15,23,42,0.09)]"
+            className="mt-3 flex min-h-[79.2px] w-full items-center gap-4 rounded-md bg-white px-5 text-left shadow-[0_7px_22px_rgba(15,23,42,0.09)]"
           >
             <ThreeDIcon name="hostPerson" sourceSize={100} className="h-12 w-12 shrink-0 object-contain" />
             <span>
-              <span className="block text-[12px] font-semibold">Become a host</span>
-              <span className="mt-0.5 block text-[8px] leading-3 text-slate-500">It&apos;s easy to start hosting and earn extra income.</span>
+              <span className="block text-[14.112px] font-semibold">Become a host</span>
+              <span className="mt-0.5 block text-[9.408px] leading-3 text-slate-500">It&apos;s easy to start hosting and earn extra income.</span>
             </span>
           </button>
 
@@ -177,7 +177,7 @@ export default function HostProfilePage() {
         <button
           type="button"
           onClick={() => navigate(ROUTES.hostListings)}
-          className="fixed bottom-[78px] left-1/2 z-30 flex h-11 -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-slate-900 px-7 text-[11px] font-medium text-white shadow-lg"
+          className="fixed bottom-[85.8px] left-1/2 z-30 flex h-11 -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-md bg-slate-900 px-7 text-[12.936px] font-medium text-white shadow-lg"
         >
           <Repeat2 className="h-4 w-4" aria-hidden="true" />
           Switch to hosting
@@ -186,9 +186,9 @@ export default function HostProfilePage() {
       </section>
 
       <header className="hidden border-b border-[var(--color-border)] bg-[var(--color-surface)] lg:block">
-        <div className="mx-auto flex min-h-[94px] max-w-[1400px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto flex min-h-[103.4px] max-w-[1540px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
           <button type="button" onClick={() => navigate(ROUTES.hostListings)} aria-label="Accueil hôte Booksa">
-            <BooksaLogo className="h-10 w-[108px]" />
+            <BooksaLogo className="h-10 w-[118.8px]" />
           </button>
 
           <nav aria-label="Navigation hôte" className="hidden items-center gap-8 md:flex">
@@ -215,7 +215,7 @@ export default function HostProfilePage() {
             <button
               type="button"
               aria-label={`Profil de ${displayName}`}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
             >
               {initial}
             </button>
@@ -225,7 +225,7 @@ export default function HostProfilePage() {
                 aria-label="Menu du compte"
                 aria-expanded={isMenuOpen}
                 onClick={() => setIsMenuOpen((open) => !open)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
               >
                 <FiMenu className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -235,20 +235,20 @@ export default function HostProfilePage() {
       </header>
       <HostAccountDrawer open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <div className="mx-auto hidden min-h-[calc(100vh-95px)] max-w-[1240px] lg:grid lg:grid-cols-[390px_1fr]">
+      <div className="mx-auto hidden min-h-[calc(100vh-95px)] max-w-[1364px] lg:grid lg:grid-cols-[390px_1fr]">
         <aside className="border-b border-[var(--color-border)] px-5 py-8 sm:px-8 lg:border-b-0 lg:border-r lg:px-12 lg:py-10">
-          <h1 className="text-[26.88px] font-semibold tracking-tight">Profil</h1>
+          <h1 className="text-[31.61088px] font-semibold tracking-tight">Profil</h1>
           <nav aria-label="Sections du profil" className="mt-6 flex gap-2 overflow-x-auto lg:flex-col">
             {profileNavigation.map((item, index) => (
               <button
                 key={item.label}
                 type="button"
-                className={`flex min-w-fit items-center gap-4 rounded-2xl px-5 py-4 text-left font-semibold transition lg:w-full ${
+                className={`flex min-w-fit items-center gap-4 rounded-md px-5 py-4 text-left font-semibold transition lg:w-full ${
                   index === 0 ? 'bg-[var(--color-surface-muted)]' : 'hover:bg-[var(--color-surface-muted)]'
                 }`}
               >
                 <span
-                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-lg ${
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-sm text-lg ${
                     index === 0
                       ? 'bg-[var(--color-primary-100)] text-sm text-[var(--color-primary-700)]'
                       : ''
@@ -270,40 +270,40 @@ export default function HostProfilePage() {
           className="px-5 py-8 sm:px-10 lg:px-16 lg:py-10"
         >
           <div className="flex items-center gap-5">
-            <h2 className="text-[26.88px] font-semibold tracking-tight">À propos de moi</h2>
+            <h2 className="text-[31.61088px] font-semibold tracking-tight">À propos de moi</h2>
             <button
               type="button"
               onClick={() => setIsEditing((editing) => !editing)}
-              className="rounded-lg bg-[var(--color-surface-muted)] px-4 py-2 text-sm font-semibold"
+              className="rounded-md bg-[var(--color-surface-muted)] px-4 py-2 text-sm font-semibold"
             >
               {isEditing ? 'Annuler' : 'Modifier'}
             </button>
           </div>
 
           <div className="mt-6 grid gap-8 xl:grid-cols-[minmax(280px,345px)_1fr] xl:items-center">
-            <article className="flex min-h-[230px] flex-col items-center justify-center rounded-3xl bg-[var(--color-surface)] p-6 text-center shadow-[var(--shadow-lg)]">
-              <span className="inline-flex h-28 w-28 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-4xl font-semibold text-[var(--color-primary-700)]">
+            <article className="flex min-h-[253px] flex-col items-center justify-center rounded-sm bg-[var(--color-surface)] p-6 text-center shadow-[var(--shadow-lg)]">
+              <span className="inline-flex h-28 w-28 items-center justify-center rounded-sm bg-[var(--color-primary-100)] text-4xl font-semibold text-[var(--color-primary-700)]">
                 {initial}
               </span>
               {isEditing ? (
-                <div className="mt-4 flex w-full max-w-[240px] gap-2">
+                <div className="mt-4 flex w-full max-w-[264px] gap-2">
                   <input
                     value={draftName}
                     onChange={(event) => setDraftName(event.target.value)}
                     aria-label="Nom affiché"
-                    className="min-w-0 flex-1 rounded-lg border border-[var(--color-border)] bg-transparent px-3 py-2 text-center font-semibold outline-none"
+                    className="min-w-0 flex-1 rounded-md border border-[var(--color-border)] bg-transparent px-3 py-2 text-center font-semibold outline-none"
                   />
                   <button
                     type="button"
                     onClick={saveProfile}
-                    className="rounded-lg bg-[var(--color-primary-500)] px-3 py-2 text-sm font-semibold text-white hover:bg-[var(--color-primary-600)]"
+                    className="rounded-md bg-[var(--color-primary-500)] px-3 py-2 text-sm font-semibold text-white hover:bg-[var(--color-primary-600)]"
                   >
                     Enregistrer
                   </button>
                 </div>
               ) : (
                 <>
-                  <h3 className="mt-4 text-[25.2px] font-semibold leading-none">{displayName}</h3>
+                  <h3 className="mt-4 text-[29.6352px] font-semibold leading-none">{displayName}</h3>
                   <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Hôte</p>
                 </>
               )}
@@ -317,7 +317,7 @@ export default function HostProfilePage() {
               <button
                 type="button"
                 onClick={() => setIsEditing(true)}
-                className="mt-6 rounded-xl bg-[var(--color-primary-500)] px-6 py-3.5 font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
+                className="mt-6 rounded-md bg-[var(--color-primary-500)] px-6 py-3.5 font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
               >
                 Commencer
               </button>

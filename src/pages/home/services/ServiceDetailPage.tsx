@@ -99,7 +99,7 @@ function CloseButton({ onClick }: { onClick: () => void }) {
       type="button"
       aria-label="Fermer la fenêtre"
       onClick={onClick}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
     >
       <DismissRegular className="h-5 w-5" />
     </button>
@@ -110,7 +110,7 @@ function TimePill({ label }: { label: string }) {
   return (
     <button
       type="button"
-      className="inline-flex h-10 items-center justify-center rounded-xl border border-neutral-200 px-4 text-[10.92px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
+      className="inline-flex h-10 items-center justify-center rounded-md border border-neutral-200 px-4 text-[12.84192px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
     >
       {label}
     </button>
@@ -165,57 +165,57 @@ function ScheduleContent({
   visibleMonth: dayjs.Dayjs;
 }) {
   const contentShellClassName = compact
-    ? 'fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col overflow-hidden rounded-t-3xl bg-white px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-4 shadow-[0_-12px_40px_rgba(0,0,0,0.16)]'
-    : 'relative flex max-h-[90vh] w-full max-w-[680px] flex-col overflow-hidden rounded-3xl bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8';
+    ? 'fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col overflow-hidden rounded-lg bg-white px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-4 shadow-[0_-12px_40px_rgba(0,0,0,0.16)]'
+    : 'relative flex max-h-[90vh] w-full max-w-[748px] flex-col overflow-hidden rounded-lg bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8';
 
   return (
     <div
       className={contentShellClassName}
       onClick={(event) => event.stopPropagation()}
     >
-      <div className={compact ? 'mx-auto h-1.5 w-12 rounded-full bg-neutral-300' : 'absolute right-4 top-4 sm:right-5 sm:top-5'}>
+      <div className={compact ? 'mx-auto h-1.5 w-12 rounded-sm bg-neutral-300' : 'absolute right-4 top-4 sm:right-5 sm:top-5'}>
         {compact ? null : <CloseButton onClick={onClose} />}
       </div>
 
       {compact ? (
         <div className="mt-4 flex items-start justify-between gap-4">
           <div className="min-w-0 pr-12">
-            <h2 className="text-[16.8px] font-medium tracking-tight text-neutral-900">
+            <h2 className="text-[19.7568px] font-medium tracking-tight text-neutral-900">
               Planifiez votre séance photo
             </h2>
-            <p className="mt-1 text-[10.92px] text-neutral-500">Choisissez vos dates et horaires ci-dessous.</p>
+            <p className="mt-1 text-[12.84192px] text-neutral-500">Choisissez vos dates et horaires ci-dessous.</p>
           </div>
           <button
             type="button"
             aria-label="Fermer la fenêtre"
             onClick={onClose}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
           >
             <DismissRegular className="h-5 w-5" />
           </button>
         </div>
       ) : (
         <div className="pr-12 sm:pr-16">
-          <h2 className="text-[17.64px] font-medium tracking-tight text-neutral-900 sm:text-[16.8px]">
+          <h2 className="text-[20.74464px] font-medium tracking-tight text-neutral-900 sm:text-[19.7568px]">
             Planifiez votre séance photo
           </h2>
         </div>
       )}
 
       <div className={`mt-6 flex items-center justify-between border-b border-neutral-200 pb-5 ${compact ? 'mt-5' : ''}`}>
-        <p className="text-[11.76px] font-medium leading-none text-neutral-900">1 invité</p>
+        <p className="text-[13.82976px] font-medium leading-none text-neutral-900">1 invité</p>
 
         <div className="flex items-center gap-3 text-neutral-900">
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-2xl leading-none text-neutral-300 transition hover:text-neutral-500"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-2xl leading-none text-neutral-300 transition hover:text-neutral-500"
           >
             −
           </button>
-          <span className="min-w-5 text-center text-[8.4px] font-medium leading-none">1</span>
+          <span className="min-w-5 text-center text-[9.8784px] font-medium leading-none">1</span>
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-md leading-none transition hover:text-neutral-500"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-md leading-none transition hover:text-neutral-500"
           >
             +
           </button>
@@ -231,7 +231,7 @@ function ScheduleContent({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="text-[11.76px] font-medium text-neutral-900"
+              className="text-[13.82976px] font-medium text-neutral-900"
             >
               {formatDate(visibleMonth.toDate(), undefined, { month: 'long', year: 'numeric' })}
             </motion.h3>
@@ -258,10 +258,10 @@ function ScheduleContent({
                   ref={(element) => {
                     monthSectionRefs.current[index] = element;
                   }}
-                  className="shrink-0 snap-start rounded-xl border border-slate-200 bg-white px-4 py-4"
+                  className="shrink-0 snap-start rounded-sm border border-slate-200 bg-white px-4 py-4"
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <h4 className="text-[11.76px] font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
+                    <h4 className="text-[13.82976px] font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
                     <CalendarRegular className="h-5 w-5 text-neutral-700" />
                   </div>
 
@@ -277,7 +277,7 @@ function ScheduleContent({
                           ref={isSelected ? selectedButtonRef : null}
                           onClick={() => setSelectedDate(item.date.toDate())}
                           className={[
-                            'flex min-w-[56px] shrink-0 flex-col items-center rounded-xl px-3 py-3 text-center transition',
+                            'flex min-w-[61.6px] shrink-0 flex-col items-center rounded-md px-3 py-3 text-center transition',
                             isSelected
                               ? 'text-neutral-900'
                               : isPast
@@ -285,12 +285,12 @@ function ScheduleContent({
                                 : 'text-neutral-900 hover:bg-neutral-100'
                           ].join(' ')}
                         >
-                          <span className="text-[9.24px] font-medium uppercase leading-none tracking-[0.08em] text-inherit">
+                          <span className="text-[10.86624px] font-medium uppercase leading-none tracking-[0.08em] text-inherit">
                             {item.dayLabel}
                           </span>
                           <span
                             className={[
-                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-[10.92px] font-semibold leading-none transition',
+                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-sm text-[12.84192px] font-semibold leading-none transition',
                               isSelected ? 'bg-neutral-900 text-white' : 'text-inherit'
                             ].join(' ')}
                           >
@@ -314,11 +314,11 @@ function ScheduleContent({
               <ShimmerImage
                 src={experience.image}
                 alt={experience.title}
-                className="h-16 w-16 shrink-0 rounded-[16px] object-cover"
+                className="h-16 w-16 shrink-0 rounded-sm object-cover"
               />
               <div className="min-w-0">
-                <h3 className="text-[12.6px] font-semibold leading-5 text-neutral-900">{experience.title}</h3>
-                <p className="mt-1 text-[11.76px] text-neutral-600">
+                <h3 className="text-[14.8176px] font-semibold leading-5 text-neutral-900">{experience.title}</h3>
+                <p className="mt-1 text-[13.82976px] text-neutral-600">
                   <span className="font-semibold text-neutral-900">{experience.price}</span> · {experience.meta}
                 </p>
               </div>
@@ -495,22 +495,22 @@ function ExperienceList() {
         {experiences.map((item) => (
           <article
             key={item.id}
-            className="flex min-h-[150px] items-center gap-5 rounded-2xl border border-gray-100 bg-white p-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
+            className="flex min-h-[165px] items-center gap-5 rounded-sm border border-gray-100 bg-white p-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
           >
             <ShimmerImage
               src={item.image}
               alt={item.title}
-              className="h-[136px] w-[144px] shrink-0 rounded-[14px] object-cover"
+              className="h-[149.6px] w-[158.4px] shrink-0 rounded-sm object-cover"
             />
 
             <div className="min-w-0 flex-1 pr-3">
-              <h3 className="mb-1 text-[10.92px] font-semibold text-neutral-900 max-[611px]:text-[10.08px]">{item.title}</h3>
+              <h3 className="mb-1 text-[12.84192px] font-semibold text-neutral-900 max-[611px]:text-[11.85408px]">{item.title}</h3>
 
-              <p className="line-clamp-2 text-[10.08px] leading-4 text-neutral-600 max-[611px]:text-[9.24px] max-[611px]:leading-4">
+              <p className="line-clamp-2 text-[11.85408px] leading-4 text-neutral-600 max-[611px]:text-[10.86624px] max-[611px]:leading-4">
                 {item.description}
               </p>
 
-              <div className="mt-4 flex items-center gap-1 text-[9.24px] text-neutral-500 max-[611px]:text-[8.4px]">
+              <div className="mt-4 flex items-center gap-1 text-[10.86624px] text-neutral-500 max-[611px]:text-[9.8784px]">
                 <span className="font-bold text-neutral-900">{formatExperiencePriceInCdf(item.price)}</span>
                 <span>/ invité</span>
                 <span className="mx-1">·</span>
@@ -534,17 +534,17 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">Mon portfolio</h2>
+        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">Mon portfolio</h2>
 
         <div className="mt-5 grid gap-1.5 sm:grid-cols-[minmax(0,1.85fr)_minmax(0,1fr)]">
           <button
             type="button"
-            className="group relative overflow-hidden rounded-2xl bg-slate-100"
+            className="group relative overflow-hidden rounded-md bg-slate-100"
           >
             <ShimmerImage
               src={portfolioImages[0]}
               alt="Portfolio highlight"
-              className="h-full min-h-[430px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+              className="h-full min-h-[473px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
             />
           </button>
 
@@ -553,16 +553,16 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
               <button
                 key={`${image}-${index}`}
                 type="button"
-                className="group relative overflow-hidden rounded-[14px] bg-slate-100"
+                className="group relative overflow-hidden rounded-md bg-slate-100"
               >
                 <ShimmerImage
                   src={image}
                   alt={`Détail du portfolio ${index + 1}`}
-                  className="h-full min-h-[199px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                  className="h-full min-h-[218.9px] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                 />
 
                 {index === 1 ? (
-                  <span className="absolute bottom-4 right-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#d8c2a0] text-gray-900 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
+                  <span className="absolute bottom-4 right-4 inline-flex h-14 w-14 items-center justify-center rounded-sm bg-[#d8c2a0] text-gray-900 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
                     <CopyRegular className="h-5 w-5" />
                   </span>
                 ) : null}
@@ -579,8 +579,8 @@ function WhereYoullGoBlock({ city, placeLabel }: { city: string; placeLabel: str
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">Où vous irez</h2>
-        <p className="mt-2 text-[11.76px] text-neutral-500">{city}</p>
+        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">Où vous irez</h2>
+        <p className="mt-2 text-[13.82976px] text-neutral-500">{city}</p>
 
         <BooksaMap
           center={DEFAULT_MAP_VIEW.center}
@@ -589,13 +589,13 @@ function WhereYoullGoBlock({ city, placeLabel }: { city: string; placeLabel: str
           minZoom={DEFAULT_MAP_VIEW.minZoom}
           maxZoom={DEFAULT_MAP_VIEW.maxZoom}
           title={`Carte de ${placeLabel}`}
-          className="mt-6 h-[350px] rounded-2xl border border-slate-200"
+          className="mt-6 h-[385px] rounded-[19px] border border-slate-200"
         >
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-neutral-900 shadow-[0_12px_24px_rgba(15,23,42,0.18)]">
-              <span className="h-3 w-3 rounded-full bg-white" />
+            <span className="inline-flex h-14 w-14 items-center justify-center rounded-sm bg-neutral-900 shadow-[0_12px_24px_rgba(15,23,42,0.18)]">
+              <span className="h-3 w-3 rounded-sm bg-white" />
             </span>
-            <span className="mt-2 rounded-full bg-white/90 px-4 py-1.5 text-sm font-medium text-neutral-900 shadow-sm">
+            <span className="mt-2 rounded-sm bg-white/90 px-4 py-1.5 text-sm font-medium text-neutral-900 shadow-sm">
               {placeLabel}
             </span>
           </div>
@@ -653,7 +653,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
   return (
     <section className="w-full px-3 py-6 pt-10">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">
+        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">
           ★ 5.0 · 14 avis
         </h2>
 
@@ -667,18 +667,18 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
                 <ShimmerImage
                   src={review.avatar}
                   alt={review.name}
-                  className="h-10 w-10 shrink-0 rounded-full object-cover"
+                  className="h-10 w-10 shrink-0 rounded-sm object-cover"
                 />
                 <div className="min-w-0">
-                  <h3 className="text-[11.76px] font-normal leading-5 text-neutral-900">{review.name}</h3>
-                  <p className="text-[10.92px] text-neutral-500">{review.location}</p>
+                  <h3 className="text-[13.82976px] font-normal leading-5 text-neutral-900">{review.name}</h3>
+                  <p className="text-[12.84192px] text-neutral-500">{review.location}</p>
                 </div>
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[10.92px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
-                <p className="text-[10.08px] leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
-                <button type="button" className="text-[10.08px] font-semibold text-neutral-900 underline underline-offset-2">
+                <p className="text-[12.84192px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
+                <p className="text-[11.85408px] leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
+                <button type="button" className="text-[11.85408px] font-semibold text-neutral-900 underline underline-offset-2">
                   Voir plus
                 </button>
               </div>
@@ -690,7 +690,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
           <button
             type="button"
             onClick={onShowReviews}
-            className="w-full rounded-full bg-gray-100 px-6 py-3 text-[12.6px] font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[640px]"
+            className="w-full rounded-md bg-gray-100 px-6 py-3 text-[14.8176px] font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[704px]"
           >
             Voir les avis
           </button>
@@ -714,38 +714,38 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[900px] rounded-3xl bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8"
+        className="relative w-full max-w-[990px] rounded-lg bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           aria-label="Fermer les avis"
           onClick={onClose}
-          className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100"
+          className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-700 transition hover:bg-gray-100"
         >
           <DismissRegular className="h-5 w-5" />
         </button>
 
         <div className="flex items-start justify-between gap-4 pr-12">
-          <h2 className="text-[15.12px] font-medium tracking-tight text-neutral-900">
+          <h2 className="text-[17.78112px] font-medium tracking-tight text-neutral-900">
             ★ 5.0 · 14 avis
           </h2>
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-[11.76px] font-medium text-gray-800 shadow-sm"
+            className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-[13.82976px] font-medium text-gray-800 shadow-sm"
           >
             Plus récents
             <ChevronDownRegular className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="mt-6 flex items-center gap-3 rounded-full border border-gray-200 px-4 py-3">
-          <SearchRegular className="h-5 w-5 text-gray-500" />
+        <div className="mt-6 flex items-center gap-3 rounded-sm border border-gray-200 px-4 py-3">
+          <SearchRegular className="h-2.5 w-2.5 text-gray-500" />
           <input
             type="text"
             placeholder="Rechercher dans tous les avis"
-            className="w-full bg-transparent text-[12.6px] text-gray-900 outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-[14.8176px] text-gray-900 outline-none placeholder:text-gray-500"
           />
         </div>
 
@@ -756,25 +756,25 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
                 <ShimmerImage
                   src={review.avatar}
                   alt={review.name}
-                  className="h-11 w-11 shrink-0 rounded-full object-cover"
+                  className="h-11 w-11 shrink-0 rounded-sm object-cover"
                 />
                 <div>
-                  <h3 className="text-[13.44px] font-semibold leading-5 text-neutral-900">{review.name}</h3>
-                  <p className="text-[10.92px] text-neutral-500">{review.location}</p>
+                  <h3 className="text-[15.80544px] font-semibold leading-5 text-neutral-900">{review.name}</h3>
+                  <p className="text-[12.84192px] text-neutral-500">{review.location}</p>
                 </div>
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[10.92px] text-neutral-800">★★★★★ · 3 weeks ago</p>
-                <p className="text-[11.76px] leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
+                <p className="text-[12.84192px] text-neutral-800">★★★★★ · 3 weeks ago</p>
+                <p className="text-[13.82976px] leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
                 <button
                   type="button"
-                  className="text-[10.92px] font-semibold text-neutral-900 underline underline-offset-2"
+                  className="text-[12.84192px] font-semibold text-neutral-900 underline underline-offset-2"
                 >
                   Voir plus
                 </button>
                 {review.id === 2 ? (
-                  <p className="pt-2 text-[10.92px] text-neutral-500">
+                  <p className="pt-2 text-[12.84192px] text-neutral-500">
                     Traduit de l’italien.{' '}
                     <button type="button" className="underline underline-offset-2">
                       Voir l’original
@@ -794,19 +794,19 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
+        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
-          <div className="rounded-2xl border border-slate-200 bg-white px-8 py-10 text-center">
-            <div className="mx-auto h-24 w-24 overflow-hidden rounded-full">
+          <div className="rounded-sm border border-slate-200 bg-white px-8 py-10 text-center">
+            <div className="mx-auto h-24 w-24 overflow-hidden rounded-sm">
               <ShimmerImage
                 src={avatarImage}
                 alt="Victor"
                 className="h-full w-full object-cover"
               />
             </div>
-              <h3 className="mt-6 text-[20.16px] font-semibold leading-none text-neutral-900">Victor</h3>
-            <p className="mt-2 text-[10.08px] font-normal text-neutral-500">Photographe</p>
+              <h3 className="mt-6 text-[23.70816px] font-semibold leading-none text-neutral-900">Victor</h3>
+            <p className="mt-2 text-[11.85408px] font-normal text-neutral-500">Photographe</p>
           </div>
 
           <div className="space-y-6">
@@ -833,8 +833,8 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
                 <div key={item.title} className="flex items-start gap-4">
                   <Icon className="mt-1 h-6 w-6 shrink-0 text-neutral-900" />
                   <div>
-                    <h4 className="text-[11.76px] font-medium text-neutral-900">{item.title}</h4>
-                    <p className="mt-1 text-[10.92px] leading-5 text-neutral-600">{item.text}</p>
+                    <h4 className="text-[13.82976px] font-medium text-neutral-900">{item.title}</h4>
+                    <p className="mt-1 text-[12.84192px] leading-5 text-neutral-600">{item.text}</p>
                   </div>
                 </div>
               );
@@ -845,13 +845,13 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
         <div className="mt-8 flex justify-center">
           <button
             type="button"
-            className="w-full rounded-full bg-[#f1f1f1] px-6 py-3 text-[10.08px] font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[640px]"
+            className="w-full rounded-md bg-[#f1f1f1] px-6 py-3 text-[11.85408px] font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[704px]"
           >
             Envoyer un message à Victor
           </button>
         </div>
 
-        <p className="mx-auto mt-6 max-w-xl text-center text-[11.76px] leading-6 text-neutral-500">
+        <p className="mx-auto mt-6 max-w-xl text-center text-[13.82976px] leading-6 text-neutral-500">
           Pour mieux protéger votre paiement, utilisez toujours Booksa pour envoyer de l’argent et communiquer avec les hôtes.
         </p>
       </div>
@@ -882,17 +882,17 @@ function ThingsToKnowBlock() {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[17.64px] font-semibold tracking-tight text-neutral-900">À savoir</h2>
+        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">À savoir</h2>
 
         <div className="mt-8 grid gap-x-16 gap-y-12 sm:grid-cols-2">
           {items.map((item) => {
             const Icon = item.icon;
 
             return (
-              <article key={item.title} className="max-w-[260px]">
+              <article key={item.title} className="max-w-[286px]">
                 <Icon className="h-7 w-7 text-neutral-900" />
-                <h3 className="mt-4 text-[11.76px] font-semibold text-neutral-900">{item.title}</h3>
-                <p className="mt-1 text-[10.92px] leading-5 text-neutral-600">
+                <h3 className="mt-4 text-[13.82976px] font-semibold text-neutral-900">{item.title}</h3>
+                <p className="mt-1 text-[12.84192px] leading-5 text-neutral-600">
                   {item.text}{' '}
                   {'linkLabel' in item ? (
                     <button type="button" className="underline underline-offset-2">
@@ -913,18 +913,18 @@ function QualityTrustBlock() {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl">
-        <div className="rounded-[32px] bg-[#f5f2ec] px-6 py-16 text-center shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:px-10">
-          <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-[#f2c14f] shadow-[0_14px_24px_rgba(15,23,42,0.16)] ring-8 ring-[#e2b43f]/25">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-[#a66f11] bg-[#f6cf63] text-[#8a5b09] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
+        <div className="rounded-sm bg-[#f5f2ec] px-6 py-16 text-center shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:px-10">
+          <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-sm bg-[#f2c14f] shadow-[0_14px_24px_rgba(15,23,42,0.16)] ring-8 ring-[#e2b43f]/25">
+            <div className="flex h-16 w-16 items-center justify-center rounded-sm border-[3px] border-[#a66f11] bg-[#f6cf63] text-[#8a5b09] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
               <StarFilled className="h-7 w-7" />
             </div>
           </div>
 
-          <h2 className="mx-auto mt-8 max-w-2xl text-[24.36px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-[27.72px]">
+          <h2 className="mx-auto mt-8 max-w-2xl text-[28.64736px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-[32.59872px]">
             Les photographes sur Booksa sont sélectionnés pour leur qualité
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-[12.6px] leading-7 text-neutral-600">
+          <p className="mx-auto mt-4 max-w-xl text-[14.8176px] leading-7 text-neutral-600">
             Les photographes sont évalués selon leur expérience professionnelle, la qualité de leur portfolio et leur
             réputation d’excellence.{' '}
             <button type="button" className="underline underline-offset-2">
@@ -933,7 +933,7 @@ function QualityTrustBlock() {
           </p>
         </div>
 
-        <p className="mt-8 text-center text-[10.92px] text-neutral-500">
+        <p className="mt-8 text-center text-[12.84192px] text-neutral-500">
           Un problème ?{' '}
           <button type="button" className="underline underline-offset-2">
             Signaler cette annonce
@@ -949,7 +949,7 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
 
   return (
     <div
-      className="flex w-full max-w-[420px] flex-row overflow-hidden rounded-[30px] max-[611px]:rounded-[100px] border shadow-[0_18px_42px_rgba(15,23,42,0.10)] sm:flex-row max-[611px]:w-full max-[611px]:max-w-[460px] max-[611px]:items-stretch max-[611px]:rounded-[26px] xl:ml-[12%]"
+      className="flex w-full max-w-[462px] flex-row overflow-hidden rounded-sm max-[611px]:rounded-sm border shadow-[0_18px_42px_rgba(15,23,42,0.10)] sm:flex-row max-[611px]:w-full max-[611px]:max-w-[506px] max-[611px]:items-stretch max-[611px]:rounded-sm xl:ml-[12%]"
       style={{
         backgroundColor: theme.colors.surface,
         borderColor: theme.colors.border
@@ -960,10 +960,10 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
         style={{ borderColor: theme.colors.border }}
       >
         <div className="space-y-1">
-          <p className="text-base font-medium leading-none max-[611px]:text-[10.92px] sm:text-sm" style={{ color: theme.colors.textPrimary }}>
+          <p className="text-base font-medium leading-none max-[611px]:text-[12.84192px] sm:text-sm" style={{ color: theme.colors.textPrimary }}>
             {price}
           </p>
-          <p className="text-[8.4px] font-medium leading-none max-[611px]:text-[7.56px]" style={{ color: theme.colors.primary[500] }}>
+          <p className="text-[9.8784px] font-medium leading-none max-[611px]:text-[8.89056px]" style={{ color: theme.colors.primary[500] }}>
             Annulation gratuite
           </p>
         </div>
@@ -971,7 +971,7 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
       <div className="flex items-center justify-center bg-[color-mix(in_srgb,var(--color-primary-500)_8%,transparent)] px-5 py-4 max-[611px]:px-4 max-[611px]:py-2.5 sm:px-6 sm:py-0">
         <button
           type="button"
-          className="w-full rounded-full px-5 py-5 text-sm font-semibold leading-none text-white shadow-[0_10px_22px_rgba(15,23,42,0.14)] transition hover:opacity-90 sm:w-auto max-[611px]:min-w-[96px] max-[611px]:px-4 max-[611px]:py-4 max-[611px]:text-md"
+          className="w-full rounded-md px-5 py-5 text-sm font-semibold leading-none text-white shadow-[0_10px_22px_rgba(15,23,42,0.14)] transition hover:opacity-90 sm:w-auto max-[611px]:min-w-[105.6px] max-[611px]:px-4 max-[611px]:py-4 max-[611px]:text-md"
           style={{ backgroundColor: theme.colors.primary[500] }}
           onClick={onShowDates}
         >
@@ -1004,28 +1004,28 @@ function ServiceHeroPanel({
   return (
     <>
       <div className="relative overflow-visible max-[611px]:mx-0 max-[611px]:w-full max-[611px]:max-w-none">
-        <div className="overflow-hidden sm:rounded-[34px] max-[611px]:rounded-none shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
-          <ShimmerImage src={service.heroImage} alt={title} className="h-[198px] w-full object-cover max-[611px]:h-[210px]" />
+        <div className="overflow-hidden sm:rounded-sm max-[611px]:rounded-sm shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
+          <ShimmerImage src={service.heroImage} alt={title} className="h-[217.8px] w-full object-cover max-[611px]:h-[231px]" />
         </div>
 
-        <div className="absolute left-1/2 top-full z-10 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-[0_10px_24px_rgba(15,23,42,0.12)] max-[611px]:border-0 max-[611px]:shadow-none">
+        <div className="absolute left-1/2 top-full z-10 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-sm border-4 border-white shadow-[0_10px_24px_rgba(15,23,42,0.12)] max-[611px]:border-0 max-[611px]:shadow-none">
           <ShimmerImage src={hostAvatarImage} alt={hostName} className="h-full w-full object-cover" />
         </div>
       </div>
 
-      <div className="mx-auto max-w-[380px] space-y-5 px-6 pt-8 text-center max-[611px]:pt-12 sm:px-0">
+      <div className="mx-auto max-w-[418px] space-y-5 px-6 pt-8 text-center max-[611px]:pt-12 sm:px-0">
         <div className="space-y-3">
           <h1 className="text-3xl px-2 font-semibold tracking-tight text-gray-900 sm:text-3xl">{title}</h1>
-          <p className="mx-auto max-w-lg text-[11.76px] leading-5 text-gray-500 sm:text-[12.6px] sm:leading-6">
+          <p className="mx-auto max-w-lg text-[13.82976px] leading-5 text-gray-500 sm:text-[14.8176px] sm:leading-6">
             {description}
           </p>
         </div>
 
-        <div className="space-y-1 text-[10.08px] text-gray-700">
+        <div className="space-y-1 text-[11.85408px] text-gray-700">
           <p>
             ★ {rating} • {reviewCount} • {service.hostRole} à {service.city}
           </p>
-          <p className="text-gray-500 text-[10.08px]">{summary}</p>
+          <p className="text-gray-500 text-[11.85408px]">{summary}</p>
         </div>
       </div>
     </>
@@ -1066,7 +1066,7 @@ function DesktopServiceDetailLayout({
   return (
     <div className="hidden lg:block">
       <div className="grid gap-8 lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
-        <section className="relative space-y-6 lg:sticky lg:top-8 lg:flex lg:min-h-[calc(51vh-4rem)] lg:flex-col lg:pb-[96px] lg:self-start">
+        <section className="relative space-y-6 lg:sticky lg:top-8 lg:flex lg:min-h-[calc(51vh-4rem)] lg:flex-col lg:pb-[105.6px] lg:self-start">
           <ServiceHeroPanel
             description={service.description}
             hostAvatarImage={service.hostAvatarImage}
@@ -1117,8 +1117,8 @@ function MobileServiceDetailLayout({
         <ServiceSections hostAvatarImage={service.hostAvatarImage} heroImage={service.heroImage} onShowReviews={onShowReviews} />
       </div>
 
-      <div className="pointer-events-none fixed bottom-[10px] left-4 right-4 z-50">
-        <div className="pointer-events-auto mx-auto w-full max-w-[420px] rounded-[24px] p-2">
+      <div className="pointer-events-none fixed bottom-[11px] left-4 right-4 z-50">
+        <div className="pointer-events-auto mx-auto w-full max-w-[462px] rounded-sm p-2">
           <BookingSummaryCard price={service.price} onShowDates={onShowDates} />
         </div>
       </div>
@@ -1136,8 +1136,8 @@ export default function ServiceDetailPage() {
     <div className="min-h-screen bg-white text-gray-900">
       <BooksaHeader />
 
-      <main className="relative px-32 py-6 max-[611px]:px-0 max-[611px]:py-0 max-[611px]:pb-[170px]">
-        <div className="mx-auto max-w-[1500px] px-4 max-[611px]:px-0 sm:px-6 lg:px-8">
+      <main className="relative px-32 py-6 max-[611px]:px-0 max-[611px]:py-0 max-[611px]:pb-[187px]">
+        <div className="mx-auto max-w-[1650px] px-4 max-[611px]:px-0 sm:px-6 lg:px-8">
           <MobileServiceDetailLayout
             service={service}
             onShowDates={() => setShowScheduleDialog(true)}

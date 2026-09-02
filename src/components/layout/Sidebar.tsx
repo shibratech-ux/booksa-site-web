@@ -24,7 +24,7 @@ export function Sidebar() {
   const sidebarContent = (
     <div className="flex h-full flex-col">
       <div className="mb-8 flex items-center gap-3 px-2">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary-500)] text-white">
+        <div className="flex h-12 w-12 items-center justify-center rounded-sm bg-[var(--color-primary-500)] text-white">
           <span className="text-lg font-black">ED</span>
         </div>
         <div>
@@ -45,7 +45,7 @@ export function Sidebar() {
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  'group flex min-h-12 items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition',
+                  'group flex min-h-12 items-center gap-3 rounded-sm px-4 py-3 text-sm font-semibold transition',
                   isActive
                     ? 'bg-[color-mix(in_srgb,var(--color-primary-500)_14%,transparent)] text-[var(--color-primary-500)] ring-1 ring-[color-mix(in_srgb,var(--color-primary-500)_24%,transparent)]'
                     : 'text-[var(--color-text-secondary)] hover:bg-white/5 hover:text-[var(--color-text-primary)]'
@@ -59,7 +59,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mt-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+      <div className="mt-6 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">Connecté en tant que</p>
         <p className="mt-1 text-sm font-semibold text-[var(--color-text-primary)]">{user?.name ?? tCommon('brand.defaultUser')}</p>
         <p className="text-xs text-[var(--color-text-secondary)]">{user?.email ?? 'utilisateur@booksa.io'}</p>

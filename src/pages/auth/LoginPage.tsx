@@ -10,6 +10,7 @@ import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BooksaLogo from '@/components/layout/BooksaLogo';
 import { LoginForm } from '@/components/forms/LoginForm';
+import { RememberedUserLogin } from '@/components/auth/RememberedUserLogin';
 import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/store/auth.store';
 import { useAuth } from '@/hooks/useAuth';
@@ -52,24 +53,24 @@ function maskEmail(email: string) {
 function MobileLoginNavigation() {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 grid h-[66px] grid-cols-3 border-t border-slate-200 bg-white/95 px-8 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl sm:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 grid h-[72.6px] grid-cols-3 border-t border-slate-200 bg-white/95 px-8 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl sm:hidden"
       aria-label="Mobile navigation"
     >
       <Link
         to={ROUTES.home}
-        className="flex flex-col items-center justify-center gap-1 text-[9px] font-medium text-slate-500"
+        className="flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium text-slate-500"
       >
-        <SearchRegular className="h-5 w-5" />
+        <SearchRegular className="h-2.5 w-2.5" />
         <span>Explore</span>
       </Link>
       <button
         type="button"
-        className="flex flex-col items-center justify-center gap-1 text-[9px] font-medium text-slate-500"
+        className="flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium text-slate-500"
       >
         <HeartRegular className="h-5 w-5" />
         <span>Wishlists</span>
       </button>
-      <div className="flex flex-col items-center justify-center gap-1 text-[9px] font-medium text-[#e9145f]">
+      <div className="flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium text-[#e9145f]">
         <PersonFilled className="h-5 w-5" />
         <span>Log in</span>
       </div>
@@ -91,30 +92,30 @@ function MobileGoogleLogin({
   onTryAnotherWay: () => void;
 }) {
   return (
-    <section className="mx-auto flex w-full max-w-[390px] flex-col px-5 pb-24 pt-5 sm:hidden">
+    <section className="mx-auto flex w-full max-w-[429px] flex-col px-5 pb-24 pt-5 sm:hidden">
       <button
         type="button"
         aria-label="Go back"
         onClick={onBack}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
+        className="inline-flex h-10 w-10 items-center justify-center rounded-md transition active:scale-95"
       >
         <ChevronLeftRegular className="h-5 w-5" aria-hidden="true" />
       </button>
 
       <div className="flex flex-col items-center text-center">
         <img src={googleLogo} alt="Google" className="mt-2 h-9 w-9 object-contain" />
-        <h1 className="mt-3 text-[23px] font-semibold tracking-[-0.035em]">Log in with Google</h1>
-        <p className="mt-1 max-w-[260px] text-[13px] leading-[1.45] text-slate-500">
+        <h1 className="mt-3 text-[27.048px] font-semibold tracking-[-0.035em]">Log in with Google</h1>
+        <p className="mt-1 max-w-[286px] text-[15.288px] leading-[1.45] text-slate-500">
           You logged in to Booksa this way in the past.
         </p>
       </div>
 
-      <div className="mt-[104px] grid gap-3">
+      <div className="mt-[114.4px] grid gap-3">
         <button
           type="button"
           disabled={isLoading}
           onClick={onContinue}
-          className="inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-[10px] bg-neutral-900 text-[13px] font-semibold text-white transition active:scale-[0.99] disabled:cursor-wait disabled:opacity-60"
+          className="inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-neutral-900 text-[15.288px] font-semibold text-white transition active:scale-[0.99] disabled:cursor-wait disabled:opacity-60"
         >
           <img src={googleLogo} alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
           {isLoading ? 'Connecting…' : 'Continue with Google'}
@@ -123,13 +124,13 @@ function MobileGoogleLogin({
           type="button"
           disabled={isLoading}
           onClick={onTryAnotherWay}
-          className="h-11 w-full rounded-[10px] bg-slate-100 text-[13px] font-semibold transition active:scale-[0.99] disabled:opacity-60"
+          className="h-11 w-full rounded-md bg-slate-100 text-[15.288px] font-semibold transition active:scale-[0.99] disabled:opacity-60"
         >
           Try another way
         </button>
       </div>
 
-      {error ? <p className="mt-3 text-center text-[11px] text-red-600" role="alert">{error}</p> : null}
+      {error ? <p className="mt-3 text-center text-[12.936px] text-red-600" role="alert">{error}</p> : null}
     </section>
   );
 }
@@ -151,33 +152,35 @@ function MobileRememberedLogin({
   const initial = name.trim().charAt(0).toUpperCase() || 'B';
 
   return (
-    <section className="mx-auto flex w-full max-w-[390px] flex-col items-center px-5 pb-24 pt-[92px] text-center sm:hidden">
+    <section className="mx-auto flex w-full max-w-[429px] flex-col items-center px-5 pb-24 pt-[101.2px] text-center sm:hidden">
       {avatarUrl ? (
         <img src={avatarUrl} alt="" className="h-16 w-16 rounded-full object-cover" />
       ) : (
-        <div className="grid h-16 w-16 place-items-center rounded-full bg-[#fae4f3] text-[20px] font-semibold text-[#a51472]">
+        <div className="grid h-16 w-16 place-items-center rounded-sm bg-[#fae4f3] text-[23.52px] font-semibold text-[#a51472]">
           {initial}
         </div>
       )}
 
-      <h1 className="mt-4 text-[23px] font-semibold tracking-[-0.04em]">Welcome back, {firstName}</h1>
-      <p className="mt-6 flex items-center justify-center gap-2 text-[13px] text-slate-800">
-        <MailRegular className="h-[18px] w-[18px]" aria-hidden="true" />
+      <h1 className="mt-4 text-[27.048px] font-semibold tracking-[-0.04em]">Welcome back, {firstName}</h1>
+      <p className="mt-6 flex items-center justify-center gap-2 text-[15.288px] text-slate-800">
+        <MailRegular className="h-[19.8px] w-[19.8px]" aria-hidden="true" />
         <span>{email ? maskEmail(email) : 'Email unavailable'}</span>
       </p>
 
-      <p className="mt-10 text-[10px] text-slate-400">We may email or text you a code to log you in.</p>
-      <button
+      <p className="mt-10 text-[11.76px] text-slate-400">We may email or text you a code to log you in.</p>
+      <Button
         type="button"
         onClick={onLogin}
-        className="mt-3 h-11 w-full rounded-[10px] bg-gradient-to-r from-[#ef174f] to-[#df0b70] text-[13px] font-semibold text-white shadow-sm transition active:scale-[0.99]"
+        whileHover={{}}
+        whileTap={{ scale: 0.99 }}
+        className="mt-3 h-11 w-full rounded-md bg-gradient-to-r from-[#ef174f] to-[#df0b70] text-[15.288px] font-semibold text-white shadow-sm transition active:scale-[0.99]"
       >
         Log in
-      </button>
+      </Button>
       <button
         type="button"
         onClick={onNotYou}
-        className="mt-7 text-[13px] font-semibold text-slate-800 active:opacity-60"
+        className="mt-7 text-[15.288px] font-semibold text-slate-800 active:opacity-60"
       >
         Not you?
       </button>
@@ -205,9 +208,9 @@ function MobileLoginOptions({
   onApple: () => void;
 }) {
   return (
-    <section className="mx-auto flex w-full max-w-[390px] flex-col items-center px-5 pb-24 pt-20 sm:hidden">
-      <BooksaLogo className="h-9 w-[100px]" />
-      <h1 className="mt-4 text-center text-[23px] font-semibold tracking-[-0.035em]">Log in or sign up</h1>
+    <section className="mx-auto flex w-full max-w-[429px] flex-col items-center px-5 pb-24 pt-20 sm:hidden">
+      <BooksaLogo className="h-9 w-[110px]" />
+      <h1 className="mt-4 text-center text-[27.048px] font-semibold tracking-[-0.035em]">Log in or sign up</h1>
 
       <form
         className="mt-7 w-full"
@@ -227,44 +230,50 @@ function MobileLoginOptions({
           placeholder="Phone number or email"
           aria-invalid={Boolean(formError)}
           aria-describedby={formError ? 'mobile-login-identifier-error' : undefined}
-          className="h-[54px] w-full rounded-xl border border-slate-400 bg-white px-4 text-[13px] text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+          className="h-[59.4px] w-full rounded-md border border-slate-400 bg-white px-4 text-[15.288px] text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
         />
-        {formError ? <p id="mobile-login-identifier-error" className="mt-1.5 text-[10px] text-red-600">{formError}</p> : null}
-        <button
+        {formError ? <p id="mobile-login-identifier-error" className="mt-1.5 text-[11.76px] text-red-600">{formError}</p> : null}
+        <Button
           type="submit"
-          className="mt-3 h-11 w-full rounded-[10px] bg-gradient-to-r from-[#ef174f] to-[#df0b70] text-[13px] font-semibold text-white shadow-sm transition active:scale-[0.99]"
+          whileHover={{}}
+          whileTap={{ scale: 0.99 }}
+          className="mt-3 h-11 w-full rounded-md bg-gradient-to-r from-[#ef174f] to-[#df0b70] text-[15.288px] font-semibold text-white shadow-sm transition active:scale-[0.99]"
         >
           Continue
-        </button>
+        </Button>
       </form>
 
-      <div className="my-4 flex w-full items-center gap-3 text-[11px] text-slate-600">
+      <div className="my-4 flex w-full items-center gap-3 text-[12.936px] text-slate-600">
         <span className="h-px flex-1 bg-slate-200" />
         <span>or</span>
         <span className="h-px flex-1 bg-slate-200" />
       </div>
 
       <div className="flex items-center justify-center gap-3">
-        <button
+        <Button
           type="button"
+          variant="secondary"
+          size="sm"
           disabled={isSocialLoading}
           onClick={onGoogle}
           aria-label="Continue with Google"
-          className="grid h-[54px] w-[54px] place-items-center rounded-xl border border-slate-200 bg-white transition active:scale-95 disabled:opacity-50"
+          className="h-[59.4px] min-h-[59.4px] w-[59.4px] shrink-0 p-0"
         >
-          <img src={googleLogo} alt="" aria-hidden="true" className="h-[18px] w-[18px] object-contain" />
-        </button>
+          <img src={googleLogo} alt="" aria-hidden="true" className="h-[19.8px] w-[19.8px] object-contain" />
+        </Button>
+
+
         <button
           type="button"
           onClick={onApple}
           aria-label="Continue with Apple"
-          className="grid h-[54px] w-[54px] place-items-center rounded-xl border border-slate-200 bg-white transition active:scale-95"
+          className="grid h-[59.4px] w-[59.4px] place-items-center rounded-md border border-slate-200 bg-white transition active:scale-95"
         >
-          <img src={appleLogo} alt="" aria-hidden="true" className="h-[18px] w-[18px] object-contain" />
+          <img src={appleLogo} alt="" aria-hidden="true" className="h-[19.8px] w-[19.8px] object-contain" />
         </button>
       </div>
 
-      {socialError ? <p className="mt-3 text-center text-[10px] text-red-600" role="alert">{socialError}</p> : null}
+      {socialError ? <p className="mt-3 text-center text-[11.76px] text-red-600" role="alert">{socialError}</p> : null}
     </section>
   );
 }
@@ -378,8 +387,6 @@ export default function LoginPage() {
   };
 
   if (rememberedUser && !showFullLogin) {
-    const initial = rememberedUser.name.trim().charAt(0).toUpperCase() || 'B';
-
     return (
       <main className="relative min-h-screen bg-white px-0 pb-24 text-slate-900 sm:px-6">
         {showGoogleLogin ? (
@@ -413,61 +420,29 @@ export default function LoginPage() {
           />
         )}
 
-        <section className="mx-auto hidden w-full max-w-[250px] flex-col items-center pt-[84px] text-center sm:flex sm:max-w-[350px] sm:pt-28">
-          {rememberedUser.avatarUrl ? (
-            <img
-              src={rememberedUser.avatarUrl}
-              alt=""
-              className="h-[52px] w-[52px] rounded-full object-cover"
-            />
-          ) : (
-            <div className="grid h-[52px] w-[52px] place-items-center rounded-full bg-[#fae4f3] text-lg font-semibold text-[#a51472]">
-              {initial}
-            </div>
-          )}
+        <RememberedUserLogin
+          name={rememberedUser.name}
+          email={rememberedUser.email}
+          avatarUrl={rememberedUser.avatarUrl}
+          loginLabel="Log in"
+          notYouLabel="Not you?"
+          loginNotice="We may email or text you a code to log you in."
+          onLogin={() => {
+            if (hasActiveSession) {
+              navigate(requestedPath ?? ROUTES.home, { replace: true });
+              return;
+            }
 
-          <h1 className="mt-3 text-[19px] font-semibold tracking-[-0.025em]">
-            Welcome back, {rememberedUser.name.split(' ')[0]}
-          </h1>
-
-          <p className="mt-3 flex items-center justify-center gap-2 text-[11px] text-slate-600">
-            <MailRegular className="h-4 w-4" aria-hidden="true" />
-            <span>{maskEmail(rememberedUser.email)}</span>
-          </p>
-
-          <p className="mt-8 text-[8px] text-slate-400">
-            We may email or text you a code to log you in.
-          </p>
-
-          <button
-            type="button"
-            onClick={() => {
-              if (hasActiveSession) {
-                navigate(requestedPath ?? ROUTES.home, { replace: true });
-                return;
-              }
-
-              setShowFullLogin(true);
-              setIdentifier(rememberedUser.email);
-              setShowCredentials(true);
-            }}
-            className="mt-3 h-8 w-full rounded-lg bg-gradient-to-r from-[#ef174f] to-[#dd0970] text-[11px] font-semibold text-white shadow-sm transition hover:brightness-95 sm:h-11"
-          >
-            Log in
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              forgetLastUser();
-              setShowFullLogin(true);
-              setShowCredentials(false);
-            }}
-            className="mt-5 text-[11px] font-medium text-slate-800 underline-offset-4 hover:underline"
-          >
-            Not you?
-          </button>
-        </section>
+            setShowFullLogin(true);
+            setIdentifier(rememberedUser.email);
+            setShowCredentials(true);
+          }}
+          onNotYou={() => {
+            forgetLastUser();
+            setShowFullLogin(true);
+            setShowCredentials(false);
+          }}
+        />
 
         <MobileLoginNavigation />
       </main>
@@ -477,20 +452,20 @@ export default function LoginPage() {
   if (showCredentials) {
     return (
       <main className="relative min-h-screen bg-white px-6 pb-24 pt-16 text-slate-900">
-        <section className="mx-auto w-full max-w-[250px] sm:max-w-[350px]">
+        <section className="mx-auto w-full max-w-[275px] sm:max-w-[385px]">
           <div className="flex justify-center">
-            <BooksaLogo className="h-10 w-[92px]" />
+            <BooksaLogo className="h-10 w-[101.2px]" />
           </div>
           <h1 className="mt-5 text-center text-xl font-semibold tracking-[-0.025em]">
             Log in to continue
           </h1>
-          <div className="mt-7 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="mt-7 rounded-sm border border-slate-200 bg-white p-5 shadow-sm">
             <LoginForm defaultEmail={identifier} />
           </div>
           <button
             type="button"
             onClick={() => setShowCredentials(false)}
-            className="mx-auto mt-5 block text-[11px] font-medium text-slate-600 hover:text-slate-900"
+            className="mx-auto mt-5 block text-[12.936px] font-medium text-slate-600 hover:text-slate-900"
           >
             Use another method
           </button>
@@ -516,10 +491,10 @@ export default function LoginPage() {
         onApple={() => setSocialError('Apple sign-in is not available yet.')}
       />
 
-      <section className="mx-auto hidden w-full max-w-[250px] flex-col items-center pt-[84px] sm:flex sm:max-w-[350px] sm:pt-28">
-        <BooksaLogo className="h-8 w-[68px]" />
+      <section className="mx-auto hidden w-full max-w-[275px] flex-col items-center pt-[92.4px] sm:flex sm:max-w-[385px] sm:pt-28">
+        <BooksaLogo className="h-8 w-[74.8px]" />
 
-        <h1 className="mt-4 text-center text-[19px] font-semibold tracking-[-0.025em]">
+        <h1 className="mt-4 text-center text-[22.344px] font-semibold tracking-[-0.025em]">
           Log in or sign up
         </h1>
 
@@ -546,24 +521,24 @@ export default function LoginPage() {
             placeholder="Phone number or email"
             aria-invalid={Boolean(formError)}
             aria-describedby={formError ? 'login-identifier-error' : undefined}
-            className="h-10 w-full rounded-sm border border-slate-400 bg-white px-3 text-[10.5px] text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 sm:h-12"
+            className="h-10 w-full rounded-md border border-slate-400 bg-white px-3 text-[12.348px] text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 sm:h-12"
           />
           {formError ? (
-            <p id="login-identifier-error" className="mt-1.5 text-[10px] text-red-600">
+            <p id="login-identifier-error" className="mt-1.5 text-[11.76px] text-red-600">
               {formError}
             </p>
           ) : null}
 
           <Button
             type="submit"
-            size="sm"
-            className="mt-3 w-full rounded-sm"
+            size="lg"
+            className="mt-3 w-full rounded-md"
           >
             Continue
           </Button>
         </form>
 
-        <div className="my-3 flex w-full items-center gap-3 text-[10px] text-slate-600">
+        <div className="my-3 flex w-full items-center gap-3 text-[11.76px] text-slate-600">
           <span className="h-px flex-1 bg-slate-200" />
           <span>or</span>
           <span className="h-px flex-1 bg-slate-200" />
@@ -575,7 +550,7 @@ export default function LoginPage() {
             disabled={isSocialLoading}
             onClick={() => void handleGoogleLogin()}
             aria-label="Continue with Google"
-            className="grid h-11 w-11 place-items-center rounded-lg border border-slate-200 bg-white transition hover:bg-slate-50 disabled:opacity-50"
+            className="grid h-11 w-11 place-items-center rounded-md border border-slate-200 bg-white transition hover:bg-slate-50 disabled:opacity-50"
           >
             <img src={googleLogo} alt="" className="h-4 w-4 object-contain" />
           </button>
@@ -583,14 +558,14 @@ export default function LoginPage() {
             type="button"
             onClick={() => setSocialError('Apple sign-in is not available yet.')}
             aria-label="Continue with Apple"
-            className="grid h-11 w-11 place-items-center rounded-lg border border-slate-200 bg-white transition hover:bg-slate-50"
+            className="grid h-11 w-11 place-items-center rounded-md border border-slate-200 bg-white transition hover:bg-slate-50"
           >
             <img src={appleLogo} alt="" className="h-4 w-4 object-contain" />
           </button>
         </div>
 
         {socialError ? (
-          <p className="mt-3 text-center text-[10px] text-red-600" role="alert">
+          <p className="mt-3 text-center text-[11.76px] text-red-600" role="alert">
             {socialError}
           </p>
         ) : null}

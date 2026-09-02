@@ -24,17 +24,18 @@ import {
   Settings2
 } from 'lucide-react';
 import BooksaLogo from '@/components/layout/BooksaLogo';
+import { LanguageSwitcher } from '@/components/language/LanguageSwitcher';
 import MarketplaceMobileNav from '@/components/layout/MarketplaceMobileNav';
 import { BooksaMap, type BooksaMapMarker } from '@/components/maps/BooksaMap';
+import { Button } from '@/components/ui/Button';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import { useAuth } from '@/hooks/useAuth';
-import { getUserProfileById } from '@/services/user.service';
 import type { Listing } from './listing.types';
 import { useTheme } from '@/theme/useTheme';
 import { ROUTES } from '@/utils/constants';
 import { formatCurrency } from '@/utils/formatters';
-import { createAvatarFallback } from '@/utils/helpers';
 import { persistListingContext } from '@/utils/navigationPersistence';
+import homesIcon from '@/assets/images/homes.png';
 import {
   DEFAULT_MAP_VALUES,
   DEFAULT_MAP_VIEW,
@@ -44,18 +45,26 @@ import {
 } from './seeAllMapDefaults';
 
 const filters = [
-  'Free parking',
   'Self check-in',
-  'Wifi',
+  'Instant Book',
+  'Free parking',
   '1+ bathrooms',
   'Air conditioning',
+  'Wifi',
   'TV',
   'Allows pets',
-  'Instant Book',
   'Kitchen'
 ] as const;
 
 type FilterName = (typeof filters)[number];
+
+const quickFilters: FilterName[] = [
+  'Self check-in',
+  'Instant Book',
+  'Free parking',
+  '1+ bathrooms',
+  'Air conditioning'
+];
 
 type Stay = {
   badge?: string;
@@ -105,8 +114,8 @@ const photos = [
 const baseStays: Stay[] = [
   {
     gallery: photos[0],
-    title: 'Home in Morningside',
-    area: 'West Manor',
+    title: 'Apartment in Gombe',
+    area: 'Riverside city view',
     details: '4 bedrooms · 4 beds · 4.5 baths',
     dates: 'Sep 11 – 13',
     price: 418,
@@ -118,8 +127,8 @@ const baseStays: Stay[] = [
   {
     badge: '🏆  Guest favorite',
     gallery: photos[1],
-    title: 'Home in Sandton',
-    area: '76b on Atholl',
+    title: 'Home in Ngaliema',
+    area: 'Garden residence',
     details: '6 bedrooms · 6 beds · 4 baths',
     dates: 'Oct 16 – 18',
     price: 954,
@@ -130,8 +139,8 @@ const baseStays: Stay[] = [
   {
     badge: 'Superhost',
     gallery: photos[2],
-    title: 'Villa in Morningside',
-    area: 'Sandton Garden Villa',
+    title: 'Villa in Ma Campagne',
+    area: 'Private garden villa',
     details: '5 bedrooms · 6 beds · 5 baths',
     dates: 'Nov 7 – 9',
     price: 643,
@@ -141,7 +150,7 @@ const baseStays: Stay[] = [
   },
   {
     gallery: photos[3],
-    title: 'Apartment in Sandown',
+    title: 'Apartment in Lingwala',
     area: 'Modern central retreat',
     details: '3 bedrooms · 3 beds · 2 baths',
     dates: 'Sep 26 – 28',
@@ -178,52 +187,14 @@ function SeeAllHeader({
   onClearFilters: () => void;
 }) {
   const { theme } = useTheme();
-  const { user, status, logout } = useAuth();
+  const { status, logout } = useAuth();
   const navigate = useNavigate();
-  const [firebaseProfile, setFirebaseProfile] = useState<Record<string, unknown> | null>(null);
-  const [failedPhotoURL, setFailedPhotoURL] = useState<string | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const activeFilterCount = selectedFilters.length;
-  const firebaseProfileName =
-    typeof firebaseProfile?.name === 'string' ? firebaseProfile.name.trim() : '';
-  const firebasePhotoURL =
-    typeof firebaseProfile?.photoURL === 'string' && firebaseProfile.photoURL.trim()
-      ? firebaseProfile.photoURL.trim()
-      : undefined;
-  const profileName = firebaseProfileName || user?.name?.trim() || 'Booksa';
-  const photoURL = firebasePhotoURL || user?.avatarUrl?.trim() || undefined;
-  const profileAvatarUrl = photoURL === failedPhotoURL ? undefined : photoURL;
-  const profileInitials = createAvatarFallback(profileName) || 'B';
-
-  useEffect(() => {
-    let isActive = true;
-
-    if (status !== 'authenticated' || !user?.id) {
-      setFirebaseProfile(null);
-      setFailedPhotoURL(null);
-      return () => {
-        isActive = false;
-      };
-    }
-
-    setFirebaseProfile(null);
-    setFailedPhotoURL(null);
-    getUserProfileById(user.id)
-      .then((profile) => {
-        if (isActive) setFirebaseProfile(profile);
-      })
-      .catch((error) => {
-        console.error('Unable to retrieve the connected user profile.', error);
-      });
-
-    return () => {
-      isActive = false;
-    };
-  }, [status, user?.id]);
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -283,55 +254,40 @@ function SeeAllHeader({
       className="relative z-30 hidden border-b sm:block"
       style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
     >
-      <div className="mx-auto flex h-[98px] max-w-[1376px] items-center justify-between gap-6 px-4">
-        <BooksaLogo className="h-9 w-[103px] shrink-0" />
+      <div className="marketplace-reference-container mx-auto flex h-[86px] items-center justify-between gap-6 px-4 lg:px-0">
+        <BooksaLogo className="h-9 w-[104px] shrink-0" />
 
         <button
           type="button"
           aria-label="Change search"
-          className="hidden h-[46px] min-w-0 items-center rounded-full border pl-4 pr-1.5 shadow-[0_3px_12px_rgba(15,23,42,0.13)] transition hover:shadow-[0_5px_16px_rgba(15,23,42,0.16)] md:flex"
+          className="hidden h-[46px] w-[445px] min-w-0 items-center rounded-full border pl-3 pr-1 shadow-[0_3px_12px_rgba(15,23,42,0.13)] transition hover:shadow-[0_5px_16px_rgba(15,23,42,0.16)] md:flex"
           style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
         >
-          <span className="mr-3 text-xl" aria-hidden="true">🏡</span>
-          <span className="whitespace-nowrap text-[13px] font-semibold">Homes in Sandton</span>
-          <span className="mx-4 h-7 w-px" style={{ backgroundColor: theme.colors.border }} />
+          <img src={homesIcon} alt="" aria-hidden="true" className="mr-2 h-6 w-6 shrink-0 object-contain" />
+          <span className="whitespace-nowrap text-[13px] font-semibold">Homes in Kinshasa</span>
+          <span className="mx-3 h-[26px] w-px" style={{ backgroundColor: theme.colors.border }} />
           <span className="whitespace-nowrap text-[12px] font-medium">Any weekend</span>
-          <span className="mx-4 h-7 w-px" style={{ backgroundColor: theme.colors.border }} />
+          <span className="mx-3 h-[26px] w-px" style={{ backgroundColor: theme.colors.border }} />
           <span className="whitespace-nowrap text-[12px] font-medium">Add guests</span>
           <span
-            className="ml-3 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white"
+            className="ml-auto inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-white"
             style={{ backgroundColor: theme.colors.primary[500] }}
           >
-            <SearchRegular className="h-4 w-4" />
+            <SearchRegular className="h-[15px] w-[15px]" />
           </span>
         </button>
 
-        <div className="flex shrink-0 items-center gap-5">
-          <button type="button" className="hidden text-[12px] font-semibold sm:block">Switch to hosting</button>
-          
+        <div className="flex shrink-0 items-center gap-3">
           <button
             type="button"
-            aria-label={`Profile for ${profileName}`}
-            onClick={() => navigate(ROUTES.hostProfile)}
-            className="inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-sm font-semibold"
-            style={{ backgroundColor: `${theme.colors.primary[500]}18`, color: theme.colors.primary[500] }}
+            onClick={() => navigate(ROUTES.hostListings)}
+            className="hidden text-[13px] font-semibold lg:block"
           >
-            {profileAvatarUrl ? (
-              <ShimmerImage
-                src={profileAvatarUrl}
-                alt=""
-                aria-hidden="true"
-                referrerPolicy="no-referrer"
-                className="block h-full w-full object-cover"
-                onError={() => setFailedPhotoURL(profileAvatarUrl)}
-              />
-            ) : (
-              profileInitials
-            )}
+            Become a host
           </button>
-          
-          
-          
+
+          <LanguageSwitcher compact />
+
           <div ref={menuRef} className="relative">
             <button
               ref={menuButtonRef}
@@ -344,7 +300,7 @@ function SeeAllHeader({
               className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:opacity-80"
               style={{ backgroundColor: theme.colors.surfaceMuted }}
             >
-              <FiMenu className="h-[18px] w-[18px]" aria-hidden="true" />
+              <FiMenu className="h-[19.8px] w-[19.8px]" aria-hidden="true" />
             </button>
 
             <AnimatePresence>
@@ -358,7 +314,7 @@ function SeeAllHeader({
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.98, y: 14 }}
                   transition={{ type: 'spring', stiffness: 360, damping: 28, mass: 0.8 }}
-                  className="absolute right-0 top-full z-50 mt-4 w-[266px] overflow-hidden rounded-[14px] border py-2.5 text-left shadow-[0_16px_42px_rgba(15,23,42,0.18)]"
+                  className="absolute right-0 top-full z-50 mt-4 w-[292.6px] overflow-hidden rounded-sm border py-2.5 text-left shadow-[0_16px_42px_rgba(15,23,42,0.18)]"
                   style={{
                     backgroundColor: theme.colors.surface,
                     borderColor: theme.colors.border,
@@ -371,8 +327,8 @@ function SeeAllHeader({
                     { label: 'Messages', Icon: MessageSquare, action: () => navigateFromMenu(ROUTES.messages) },
                     { label: 'Profile', Icon: CircleUserRound, action: () => navigateFromMenu(ROUTES.hostProfile) }
                   ].map(({ label, Icon, action }) => (
-                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-[12px] font-medium transition hover:bg-[var(--color-surface-muted)]">
-                      <Icon className="h-[17px] w-[17px] shrink-0" aria-hidden="true" />
+                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-[14.112px] font-medium transition hover:bg-[var(--color-surface-muted)]">
+                      <Icon className="h-[18.7px] w-[18.7px] shrink-0" aria-hidden="true" />
                       {label}
                     </button>
                   ))}
@@ -385,8 +341,8 @@ function SeeAllHeader({
                     { label: 'Languages & currency', Icon: Globe2, action: closeMenu },
                     { label: 'Help Center', Icon: CircleHelp, action: closeMenu }
                   ].map(({ label, Icon, action }) => (
-                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-[12px] transition hover:bg-[var(--color-surface-muted)]">
-                      <Icon className="h-[17px] w-[17px] shrink-0" aria-hidden="true" />
+                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-[14.112px] transition hover:bg-[var(--color-surface-muted)]">
+                      <Icon className="h-[18.7px] w-[18.7px] shrink-0" aria-hidden="true" />
                       {label}
                     </button>
                   ))}
@@ -395,28 +351,29 @@ function SeeAllHeader({
 
                   <button type="button" role="menuitem" onClick={() => navigateFromMenu(ROUTES.hostListings)} className="flex w-full items-center justify-between gap-3 px-5 py-2 text-left transition hover:bg-[var(--color-surface-muted)]">
                     <span className="min-w-0">
-                      <span className="block text-[12px] font-semibold">Become a host</span>
-                      <span className="mt-0.5 block text-[10px] leading-4" style={{ color: theme.colors.textSecondary }}>
+                      <span className="block text-[14.112px] font-semibold">Become a host</span>
+                      <span className="mt-0.5 block text-[11.76px] leading-4" style={{ color: theme.colors.textSecondary }}>
                         It&apos;s easy to start hosting and earn extra income.
                       </span>
                     </span>
-                    <span className="shrink-0 text-[28px]" aria-hidden="true">🧑‍💼</span>
+                    <span className="shrink-0 text-[32.928px]" aria-hidden="true">🧑‍💼</span>
                   </button>
 
                   <div className="mx-5 my-2 h-px" style={{ backgroundColor: theme.colors.border }} />
 
                   {['Refer a Host', 'Find a co-host', 'Gift cards'].map((label) => (
-                    <button key={label} type="button" role="menuitem" onClick={closeMenu} className="block w-full px-5 py-2.5 text-left text-[12px] transition hover:bg-[var(--color-surface-muted)]">
+                    <button key={label} type="button" role="menuitem" onClick={closeMenu} className="block w-full px-5 py-2.5 text-left text-[14.112px] transition hover:bg-[var(--color-surface-muted)]">
                       {label}
                     </button>
                   ))}
 
                   <div className="mx-5 my-2 h-px" style={{ backgroundColor: theme.colors.border }} />
 
-                  <button
-                    type="button"
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     role="menuitem"
-                    disabled={isLoggingOut}
+                    loading={isLoggingOut}
                     onClick={() => {
                       if (status === 'authenticated') {
                         void handleLogout();
@@ -424,10 +381,12 @@ function SeeAllHeader({
                         navigateFromMenu(ROUTES.login);
                       }
                     }}
-                    className="block w-full px-5 py-2.5 text-left text-[12px] transition hover:bg-[var(--color-surface-muted)] disabled:cursor-wait disabled:opacity-50"
+                    whileHover={{}}
+                    whileTap={{}}
+                    className="h-auto min-h-0 w-full justify-start rounded-none px-5 py-2.5 text-left text-[14.112px] font-normal hover:translate-y-0 hover:bg-[var(--color-surface-muted)] hover:shadow-none disabled:cursor-wait disabled:opacity-50"
                   >
                     {isLoggingOut ? 'Logging out…' : status === 'authenticated' ? 'Log out' : 'Log in or sign up'}
-                  </button>
+                  </Button>
                 </motion.div>
               ) : null}
             </AnimatePresence>
@@ -435,13 +394,13 @@ function SeeAllHeader({
         </div>
       </div>
 
-      <div className="mx-auto h-[53px] max-w-[1376px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="marketplace-reference-container mx-auto h-[65px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="mx-auto flex h-full w-max min-w-full items-center justify-center gap-2 px-4">
           <button
             type="button"
             aria-label={activeFilterCount ? `Clear ${activeFilterCount} selected filters` : 'Filters'}
             onClick={activeFilterCount ? onClearFilters : undefined}
-            className="inline-flex h-[34px] shrink-0 items-center gap-2 rounded-full border px-3 text-[11px] font-medium transition"
+            className="inline-flex h-[34px] shrink-0 items-center gap-2 rounded-full border px-3 text-[12px] font-medium transition"
             style={{
               borderColor: activeFilterCount ? theme.colors.primary[500] : theme.colors.border,
               backgroundColor: activeFilterCount ? `${theme.colors.primary[500]}12` : theme.colors.surface,
@@ -450,13 +409,13 @@ function SeeAllHeader({
           >
             <FilterRegular className="h-4 w-4" /> Filters
             {activeFilterCount ? (
-              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--color-primary-500)] px-1 text-[9px] font-bold text-white">
+              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-[10.584px] font-bold text-white">
                 {activeFilterCount}
               </span>
             ) : null}
           </button>
           <span className="mx-1 h-6 w-px shrink-0" style={{ backgroundColor: theme.colors.border }} />
-          {filters.map((filter) => {
+          {quickFilters.map((filter) => {
             const isSelected = selectedFilters.includes(filter);
             return (
               <button
@@ -464,7 +423,7 @@ function SeeAllHeader({
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => onToggleFilter(filter)}
-                className="h-[34px] shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[10.5px] font-medium transition hover:-translate-y-px"
+                className="h-[34px] shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[12px] font-medium transition hover:-translate-y-px"
                 style={{
                   borderColor: isSelected ? theme.colors.primary[500] : theme.colors.border,
                   backgroundColor: isSelected ? theme.colors.primary[500] : theme.colors.surface,
@@ -500,12 +459,12 @@ function SeeAllMobileHeader({
       className="relative z-30 border-b sm:hidden"
       style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
     >
-      <div className="grid h-[72px] grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-2 px-3">
+      <div className="grid h-[79.2px] grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-2 px-3">
         <button
           type="button"
           aria-label="Go back"
           onClick={() => navigate(-1)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md transition active:scale-95"
         >
           <ChevronLeftRegular className="h-5 w-5" />
         </button>
@@ -513,11 +472,11 @@ function SeeAllMobileHeader({
         <button
           type="button"
           aria-label="Change search"
-          className="mx-auto flex h-[52px] w-full max-w-[250px] min-w-0 flex-col items-center justify-center rounded-full border px-4 text-center shadow-[0_5px_16px_rgba(15,23,42,0.10)]"
+          className="mx-auto flex h-[57.2px] w-full max-w-[275px] min-w-0 flex-col items-center justify-center rounded-md border px-4 text-center shadow-[0_5px_16px_rgba(15,23,42,0.10)]"
           style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
         >
-          <span className="w-full truncate text-[13px] font-semibold leading-5">Homes in Sandton</span>
-          <span className="w-full truncate text-[10px] leading-4" style={{ color: theme.colors.textSecondary }}>
+          <span className="w-full truncate text-[15.288px] font-semibold leading-5">Homes in Kinshasa</span>
+          <span className="w-full truncate text-[11.76px] leading-4" style={{ color: theme.colors.textSecondary }}>
             Any weekend · Add guests
           </span>
         </button>
@@ -526,12 +485,12 @@ function SeeAllMobileHeader({
           type="button"
           aria-label={activeFilterCount ? `Clear ${activeFilterCount} selected filters` : 'Filters'}
           onClick={activeFilterCount ? onClearFilters : undefined}
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
+          className="relative inline-flex h-10 w-10 items-center justify-center rounded-md transition active:scale-95"
           style={{ color: activeFilterCount ? theme.colors.primary[500] : theme.colors.textPrimary }}
         >
           <FilterRegular className="h-5 w-5" />
           {activeFilterCount ? (
-            <span className="absolute right-0.5 top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--color-primary-500)] px-1 text-[8px] font-bold text-white">
+            <span className="absolute right-0.5 top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-[9.408px] font-bold text-white">
               {activeFilterCount}
             </span>
           ) : null}
@@ -540,7 +499,7 @@ function SeeAllMobileHeader({
 
       <div className="overflow-x-auto px-3 pb-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex w-max gap-2">
-          {filters.map((filter) => {
+          {quickFilters.map((filter) => {
             const isSelected = selectedFilters.includes(filter);
             return (
               <button
@@ -548,7 +507,7 @@ function SeeAllMobileHeader({
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => onToggleFilter(filter)}
-                className="h-[34px] shrink-0 whitespace-nowrap rounded-full border px-3.5 text-[10.5px] font-medium transition active:scale-95"
+                className="h-[37.4px] shrink-0 whitespace-nowrap rounded-md border px-3.5 text-[12.348px] font-medium transition active:scale-95"
                 style={{
                   borderColor: isSelected ? theme.colors.primary[500] : theme.colors.border,
                   backgroundColor: isSelected ? theme.colors.primary[500] : theme.colors.surface,
@@ -614,7 +573,7 @@ function StayCard({ stay }: { stay: Stay }) {
 
   return (
     <article className="group min-w-0 cursor-pointer" onClick={openListing} onKeyDown={handleKeyDown} role="button" tabIndex={0}>
-      <div className="relative aspect-[1.325] overflow-hidden rounded-[16px]" style={{ backgroundColor: theme.colors.surfaceMuted }}>
+      <div className="relative aspect-[1.325] overflow-hidden rounded-[18px]" style={{ backgroundColor: theme.colors.surfaceMuted }}>
         <div ref={galleryRef} className="flex h-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {stay.gallery.map((image, index) => (
             <ShimmerImage
@@ -628,7 +587,7 @@ function StayCard({ stay }: { stay: Stay }) {
         </div>
 
         {stay.badge ? (
-          <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-semibold text-neutral-900 shadow-sm">
+          <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-[12px] font-semibold text-neutral-900 shadow-sm">
             {stay.badge}
           </span>
         ) : null}
@@ -669,7 +628,7 @@ function StayCard({ stay }: { stay: Stay }) {
         </div>
       </div>
 
-      <div className="px-1 pt-3 text-[12px] leading-[1.45]">
+      <div className="px-1 pt-3 text-[14.112px] leading-[1.45]">
         <div className="flex items-start justify-between gap-2">
           <h2 className="truncate font-semibold">{stay.title}</h2>
           <span className="flex shrink-0 items-center gap-1">
@@ -680,7 +639,7 @@ function StayCard({ stay }: { stay: Stay }) {
         <p style={{ color: theme.colors.textSecondary }}>{stay.details}</p>
         <p style={{ color: theme.colors.textSecondary }}>{stay.dates}</p>
         <p className="mt-1.5"><span className="font-semibold underline underline-offset-2">{formatTwoNightPriceInCdf(stay.price)}</span> <span style={{ color: theme.colors.textSecondary }}>for {stay.nights} nights</span></p>
-        <span className="mt-1 inline-flex rounded bg-neutral-100 px-1.5 py-0.5 text-[9px] font-medium text-neutral-600">Free cancellation</span>
+        <span className="mt-1 inline-flex rounded-sm bg-neutral-100 px-1.5 py-0.5 text-[10.584px] font-medium text-neutral-600">Free cancellation</span>
       </div>
     </article>
   );
@@ -700,7 +659,7 @@ function MapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }
   const markers = createMapMarkers(values);
 
   return (
-    <aside className="relative mb-6 mt-10 hidden min-h-0 overflow-hidden rounded-[18px] bg-[#e9e7e2] lg:block">
+    <aside className="relative mb-[24px] mt-[40px] hidden min-h-0 overflow-hidden rounded-[19px] bg-[#e9e7e2] lg:block">
       <BooksaMap
         title={`Map of stays in ${DEFAULT_MAP_VIEW.label}`}
         center={DEFAULT_MAP_VIEW.center}
@@ -709,17 +668,18 @@ function MapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }
         maxZoom={DEFAULT_MAP_VIEW.maxZoom}
         initialBounds={DEFAULT_MAP_VIEW.bounds}
         markers={markers}
+        controlLayout="split"
         className="h-full w-full"
         renderMarker={(marker) => (
-          <button type="button" aria-label={marker.ariaLabel} title={marker.ariaLabel} className="rounded-full border border-neutral-200 bg-white px-2.5 py-1.5 text-[11px] font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)] transition hover:scale-105">
+          <button type="button" aria-label={marker.ariaLabel} title={marker.ariaLabel} className="rounded-full border border-neutral-200 bg-white px-2.5 py-1.5 text-[12px] font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)] transition hover:scale-105">
             {marker.label}
           </button>
         )}
       >
-        <button type="button" className="absolute bottom-[30%] right-[19%] z-20 flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-[11px] font-semibold text-neutral-800 shadow-md">
+        <button type="button" className="absolute bottom-[18%] right-[18%] z-20 flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-[12px] font-semibold text-neutral-800 shadow-md">
           <LocationFilled className="h-3.5 w-3.5" /> Kinshasa
         </button>
-        <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-900 shadow-md">
+        <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-white text-neutral-900 shadow-md">
           <NavigationRegular className="h-4 w-4" />
         </button>
       </BooksaMap>
@@ -757,13 +717,13 @@ function MobileMapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapVal
           <span
             aria-label={marker.ariaLabel}
             title={marker.ariaLabel}
-            className="block whitespace-nowrap rounded-full border border-neutral-200 bg-white px-2.5 py-1.5 text-[10px] font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.22)]"
+            className="block whitespace-nowrap rounded-sm border border-neutral-200 bg-white px-2.5 py-1.5 text-[11.76px] font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.22)]"
           >
             {marker.label}
           </span>
         )}
       >
-        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full bg-white px-2.5 py-1.5 text-[10px] font-semibold text-neutral-800 shadow-md">
+        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-sm bg-white px-2.5 py-1.5 text-[11.76px] font-semibold text-neutral-800 shadow-md">
           <LocationFilled className="h-3 w-3" /> Kinshasa
         </span>
       </BooksaMap>
@@ -788,10 +748,10 @@ export default function SeeAllPage() {
     ? Math.round((filteredStays.length / stays.length) * 1_000)
     : 1_000;
   const resultsTitle = selectedFilters.length === 0
-    ? 'Over 1,000 homes in Sandton'
+    ? 'Over 1,000 homes'
     : estimatedResultCount === 0
-      ? 'No homes in Sandton'
-      : `${estimatedResultCount.toLocaleString('en-US')} homes in Sandton`;
+      ? 'No homes in Kinshasa'
+      : `${estimatedResultCount.toLocaleString('en-US')} homes in Kinshasa`;
 
   const toggleFilter = (filter: FilterName) => {
     setSelectedFilters((current) =>
@@ -807,7 +767,7 @@ export default function SeeAllPage() {
   }, [selectedFilters]);
 
   return (
-    <div className="h-[100dvh] overflow-hidden sm:h-screen sm:min-h-[640px]" style={{ backgroundColor: theme.colors.background, color: theme.colors.textPrimary }}>
+    <div className="h-[100dvh] overflow-hidden sm:h-screen sm:min-h-[704px]" style={{ backgroundColor: theme.colors.surface, color: theme.colors.textPrimary }}>
       <SeeAllHeader
         selectedFilters={selectedFilters}
         onToggleFilter={toggleFilter}
@@ -830,13 +790,13 @@ export default function SeeAllPage() {
           <div className="h-[clamp(160px,28dvh,224px)] pointer-events-none" aria-hidden="true" />
 
           <section
-            className="min-h-full rounded-t-[28px] px-4 pb-[calc(90px+env(safe-area-inset-bottom))] pt-4 shadow-[0_-6px_22px_rgba(15,23,42,0.12)]"
+            className="min-h-full rounded-sm px-4 pb-[calc(90px+env(safe-area-inset-bottom))] pt-4 shadow-[0_-6px_22px_rgba(15,23,42,0.12)]"
             style={{ backgroundColor: theme.colors.surface }}
           >
-            <div className="mx-auto mb-3 h-1 w-10 rounded-full" style={{ backgroundColor: theme.colors.border }} />
+            <div className="mx-auto mb-3 h-1 w-10 rounded-sm" style={{ backgroundColor: theme.colors.border }} />
             <h1 className="sr-only" aria-live="polite">{resultsTitle}</h1>
-            <div className="mb-5 flex items-center justify-center gap-2 text-[11px] font-semibold">
-              <span className="text-[21px]" aria-hidden="true">🏷️</span>
+            <div className="mb-5 flex items-center justify-center gap-2 text-[12.936px] font-semibold">
+              <span className="text-[24.696px]" aria-hidden="true">🏷️</span>
               Prices include all fees
             </div>
 
@@ -845,7 +805,7 @@ export default function SeeAllPage() {
                 {filteredStays.map((stay, index) => <StayCard key={`mobile-${stay.title}-${index}`} stay={stay} />)}
               </div>
             ) : (
-              <div className="flex min-h-[260px] flex-col items-center justify-center px-5 text-center">
+              <div className="flex min-h-[286px] flex-col items-center justify-center px-5 text-center">
                 <span className="text-4xl" aria-hidden="true">🏠</span>
                 <h2 className="mt-4 text-base font-semibold">No homes match every selected filter</h2>
                 <p className="mt-2 text-xs" style={{ color: theme.colors.textSecondary }}>
@@ -854,7 +814,7 @@ export default function SeeAllPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedFilters([])}
-                  className="mt-5 rounded-full px-5 py-2.5 text-xs font-semibold text-white"
+                  className="mt-5 rounded-md px-5 py-2.5 text-xs font-semibold text-white"
                   style={{ backgroundColor: theme.colors.primary[500] }}
                 >
                   Clear all filters
@@ -867,22 +827,22 @@ export default function SeeAllPage() {
 
       <MarketplaceMobileNav />
 
-      <main className="mx-auto hidden h-[calc(100vh-151px)] max-w-[1376px] px-4 sm:block">
-        <div className="grid h-full gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(440px,1.03fr)] xl:grid-cols-[638px_minmax(0,1fr)] xl:gap-12">
+      <main className="marketplace-reference-container mx-auto hidden h-[calc(100vh-151px)] px-4 sm:block lg:px-0">
+        <div className="grid h-full gap-[48px] lg:grid-cols-[minmax(0,1fr)_minmax(440px,1.03fr)] xl:grid-cols-[638px_minmax(0,1fr)]">
           <section ref={resultsRef} className="min-h-0 overflow-y-auto pb-10 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex h-[88px] items-center justify-between gap-4">
-              <h1 aria-live="polite" className="text-[18px] font-semibold tracking-[-0.025em]">{resultsTitle}</h1>
-              <span className="flex shrink-0 items-center gap-2 text-[12px] font-medium">
-                <span className="text-[22px]" aria-hidden="true">🏷️</span> Prices include all fees
+            <div className="flex h-[89px] items-center justify-between gap-4">
+              <h1 aria-live="polite" className="text-[20px] font-semibold tracking-[-0.025em]">{resultsTitle}</h1>
+              <span className="flex shrink-0 items-center gap-2 text-[13px] font-medium">
+                <span className="text-[24px]" aria-hidden="true">🏷️</span> Prices include all fees
               </span>
             </div>
 
             {filteredStays.length ? (
-              <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-x-[24px] gap-y-[40px] sm:grid-cols-2">
                 {filteredStays.map((stay, index) => <StayCard key={`${stay.title}-${index}`} stay={stay} />)}
               </div>
             ) : (
-              <div className="flex min-h-[340px] flex-col items-center justify-center px-6 text-center">
+              <div className="flex min-h-[374px] flex-col items-center justify-center px-6 text-center">
                 <span className="text-4xl" aria-hidden="true">🏠</span>
                 <h2 className="mt-4 text-base font-semibold">No homes match every selected filter</h2>
                 <p className="mt-2 max-w-sm text-xs" style={{ color: theme.colors.textSecondary }}>
@@ -891,7 +851,7 @@ export default function SeeAllPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedFilters([])}
-                  className="mt-5 rounded-full px-5 py-2.5 text-xs font-semibold text-white"
+                  className="mt-5 rounded-md px-5 py-2.5 text-xs font-semibold text-white"
                   style={{ backgroundColor: theme.colors.primary[500] }}
                 >
                   Clear all filters

@@ -172,10 +172,10 @@ function AddressDetailsForm({
   };
 
   const fieldClassName =
-    'h-[60px] w-full bg-transparent px-4 pb-2 pt-6 text-base outline-none placeholder:text-transparent';
+    'h-[66px] w-full bg-transparent px-4 pb-2 pt-6 text-base outline-none placeholder:text-transparent';
   const invalidFieldClassName = 'z-10 ring-2 ring-inset ring-[var(--color-danger)]';
   const errorMessageClassName =
-    'pointer-events-none absolute right-3 top-2 max-w-[48%] text-right text-[10px] font-medium leading-3 text-[var(--color-danger)]';
+    'pointer-events-none absolute right-3 top-2 max-w-[48%] text-right text-[11.76px] font-medium leading-3 text-[var(--color-danger)]';
 
   return (
     <motion.div
@@ -189,7 +189,7 @@ function AddressDetailsForm({
         type="button"
         onClick={onBack}
         aria-label="Back to address search"
-        className="absolute left-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+        className="absolute left-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
       >
         <FiArrowLeft className="h-5 w-5" aria-hidden="true" />
       </button>
@@ -197,7 +197,7 @@ function AddressDetailsForm({
       <form noValidate onSubmit={handleSubmit}>
         <div className="relative mt-11">
           <label
-            className={`relative block h-[60px] overflow-hidden rounded-[14px] border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)] ${
+            className={`relative block h-[66px] overflow-hidden rounded-md border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)] ${
               errors.country ? invalidFieldClassName : ''
             }`}
           >
@@ -239,7 +239,7 @@ function AddressDetailsForm({
             ) : null}
           </label>
 
-          <div className="mt-4 overflow-hidden rounded-[14px] border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)]">
+          <div className="mt-4 overflow-hidden rounded-md border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)]">
             <label
               className={`relative block border-b border-[var(--color-border)] ${
                 errors.streetAddress ? invalidFieldClassName : ''
@@ -278,7 +278,7 @@ function AddressDetailsForm({
                 aria-invalid={Boolean(errors.apartment)}
                 aria-describedby={errors.apartment ? `${errorIdPrefix}-apartment-error` : undefined}
                 placeholder="Apt, floor, bldg (if applicable)"
-                className="h-[60px] w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]"
+                className="h-[66px] w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]"
               />
               {errors.apartment ? (
                 <span id={`${errorIdPrefix}-apartment-error`} className={errorMessageClassName} role="alert">
@@ -343,7 +343,7 @@ function AddressDetailsForm({
                 aria-invalid={Boolean(errors.postalCode)}
                 aria-describedby={errors.postalCode ? `${errorIdPrefix}-postalCode-error` : undefined}
                 placeholder="Postal code (if applicable)"
-                className="h-[60px] w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]"
+                className="h-[66px] w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]"
               />
               {errors.postalCode ? (
                 <span id={`${errorIdPrefix}-postalCode-error`} className={errorMessageClassName} role="alert">
@@ -356,7 +356,7 @@ function AddressDetailsForm({
 
         <button
           type="submit"
-          className="mt-[76px] h-12 w-full rounded-[12px] bg-[var(--color-text-primary)] text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
+          className="mt-[83.6px] h-12 w-full rounded-md bg-[var(--color-text-primary)] text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
         >
           Next
         </button>
@@ -447,18 +447,18 @@ export function AddressSearchDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="relative h-[92dvh] max-h-[720px] w-full max-w-[720px] overflow-y-auto rounded-t-[28px] bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-14 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:h-[664px] sm:max-h-[calc(100vh-48px)] sm:rounded-[32px] sm:px-7 sm:pb-6"
+            className="relative h-[92dvh] max-h-[792px] w-full max-w-[792px] overflow-y-auto rounded-lg bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-14 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:h-[730.4px] sm:max-h-[calc(100vh-48px)] sm:rounded-lg sm:px-7 sm:pb-6"
           >
             <button
               type="button"
               onClick={onClose}
               aria-label="Close address dialog"
-              className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+              className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
             >
               <FiX className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <h2 id={titleId} className="text-center text-[26px] font-semibold tracking-[-0.035em]">
+            <h2 id={titleId} className="text-center text-[30.576px] font-semibold tracking-[-0.035em]">
               {selectedLocation ? 'Confirm your address' : 'Enter your address'}
             </h2>
 
@@ -485,7 +485,7 @@ export function AddressSearchDialog({
                   transition={{ duration: 0.18 }}
                 >
                   <div className="relative mt-6">
-                    <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2" aria-hidden="true" />
+                    <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2" aria-hidden="true" />
                     <input
                       ref={inputRef}
                       type="text"
@@ -515,7 +515,7 @@ export function AddressSearchDialog({
                       aria-expanded={filteredSuggestions.length > 0}
                       aria-autocomplete="list"
                       aria-activedescendant={activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined}
-                      className="h-14 w-full rounded-full border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] pl-12 pr-12 outline-none"
+                      className="h-14 w-full rounded-md border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] pl-12 pr-12 outline-none"
                     />
                     {query ? (
                       <button
@@ -525,7 +525,7 @@ export function AddressSearchDialog({
                           inputRef.current?.focus();
                         }}
                         aria-label="Clear address search"
-                        className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full"
+                        className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md"
                       >
                         <FiX className="h-4 w-4" aria-hidden="true" />
                       </button>
@@ -548,11 +548,11 @@ export function AddressSearchDialog({
                               aria-selected={activeIndex === index}
                               onMouseEnter={() => setActiveIndex(index)}
                               onClick={() => selectLocation(location)}
-                              className={`flex w-full items-center gap-4 rounded-[var(--radius-md)] px-4 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus:bg-[var(--color-surface-muted)] ${
+                              className={`flex w-full items-center gap-4 rounded-md px-4 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus:bg-[var(--color-surface-muted)] ${
                                 activeIndex === index ? 'bg-[var(--color-surface-muted)]' : ''
                               }`}
                             >
-                              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-surface-muted)]">
+                              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[var(--color-surface-muted)]">
                                 <FiMapPin className="h-6 w-6" aria-hidden="true" />
                               </span>
                               <span className="min-w-0">

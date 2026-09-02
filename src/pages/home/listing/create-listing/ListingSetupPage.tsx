@@ -210,14 +210,14 @@ export default function ListingSetupPage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
-      <header className="mx-auto flex w-full max-w-[1360px] items-center justify-between border-b border-[var(--color-border)] px-5 py-4 sm:border-b-0 sm:px-8 sm:py-7 lg:px-10">
+      <header className="mx-auto flex w-full max-w-[1496px] items-center justify-between border-b border-[var(--color-border)] px-5 py-4 sm:border-b-0 sm:px-8 sm:py-7 lg:px-10">
         <button type="button" onClick={() => navigate(ROUTES.home)} aria-label={tCommon('accessibility.goHome')}>
-          <BooksaLogo className="h-8 w-[96px] sm:h-10 sm:w-[108px]" />
+          <BooksaLogo className="h-8 w-[105.6px] sm:h-10 sm:w-[118.8px]" />
         </button>
         <button
           type="button"
           onClick={() => navigate(ROUTES.hostListings)}
-          className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
+          className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
         >
           {tAuth('exit')}
         </button>
@@ -227,20 +227,20 @@ export default function ListingSetupPage() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
-        className="mx-auto w-full max-w-[670px] px-5 pb-12 pt-6 sm:px-6 sm:pb-16 sm:pt-10"
+        className="mx-auto w-full max-w-[737px] px-5 pb-12 pt-6 sm:px-6 sm:pb-16 sm:pt-10"
       >
-        <h1 className="text-[25.2px] font-semibold tracking-[-0.035em] sm:text-[28.56px]">
+        <h1 className="text-[29.6352px] font-semibold tracking-[-0.035em] sm:text-[33.58656px]">
           {t('listingSetup.welcomeBack', { name: firstName })}
         </h1>
         
 
         <section className="mt-7" aria-labelledby="finish-listing-heading">
-          <h2 id="finish-listing-heading" className="text-xl font-semibold sm:text-[18.48px]">
+          <h2 id="finish-listing-heading" className="text-xl font-semibold sm:text-[21.73248px]">
             {t('listingSetup.finish')}
           </h2>
           <div className="mt-4 space-y-3" aria-busy={isLoadingDrafts}>
             {isLoadingDrafts ? (
-              <div className="h-[94px] animate-pulse rounded-2xl bg-[var(--color-surface-muted)]" />
+              <div className="h-[103.4px] animate-pulse rounded-sm bg-[var(--color-surface-muted)]" />
             ) : null}
             {draftListings.map((listing) => {
               const coverImage = getListingCoverImage(listing);
@@ -250,16 +250,16 @@ export default function ListingSetupPage() {
                   key={listing.id}
                   type="button"
                   onClick={() => handleResumeListing(listing)}
-                  className="group flex min-h-[82px] w-full items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-left transition hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[94px] sm:gap-4 sm:px-6"
+                  className="group flex min-h-[90.2px] w-full items-center gap-3 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-left transition hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[103.4px] sm:gap-4 sm:px-6"
                 >
-                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[var(--color-surface-muted)] sm:h-11 sm:w-11 sm:rounded-md">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] sm:h-11 sm:w-11 sm:rounded-sm">
                   {coverImage ? (
                     <ShimmerImage src={coverImage} alt="" className="h-full w-full object-cover" />
                   ) : (
                     <FiHome className="h-5 w-5" aria-hidden="true" />
                   )}
                 </span>
-                <span className="min-w-0 flex-1 text-[12.6px] font-semibold leading-6 sm:text-base">
+                <span className="min-w-0 flex-1 text-[14.8176px] font-semibold leading-6 sm:text-base">
                   {t('listingSetup.startedOn', {
                     listing:
                       typeof listing.flowDraft?.listingTitle === 'string' && listing.flowDraft.listingTitle.trim()
@@ -279,7 +279,7 @@ export default function ListingSetupPage() {
         </section>
 
         <section className="mt-12 sm:mt-16" aria-labelledby="new-listing-heading">
-          <h2 id="new-listing-heading" className="text-xl font-semibold sm:text-[18.48px]">
+          <h2 id="new-listing-heading" className="text-xl font-semibold sm:text-[21.73248px]">
             {t('listingSetup.create')}
           </h2>
           <div className="mt-5 divide-y divide-[var(--color-border)] border-b border-[var(--color-border)]">
@@ -295,7 +295,7 @@ export default function ListingSetupPage() {
                   aria-busy={createsNewListing && isCreatingListing}
                   className="group flex w-full items-center gap-4 py-5 text-left transition hover:opacity-70 disabled:cursor-wait disabled:opacity-50"
                 >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-[var(--color-text-primary)]">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-[var(--color-text-primary)]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <span className="flex-1 text-base">{t(labelKey)}</span>

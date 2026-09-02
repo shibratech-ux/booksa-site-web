@@ -66,7 +66,7 @@ export function LanguageSwitcher({
         containerClassName={
           compact ? 'inline-block w-auto min-w-36' : fullWidth ? 'w-full' : 'max-w-sm'
         }
-        className={`${compact ? 'h-10 rounded-full pl-3 pr-10 text-sm' : 'font-medium'} focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)]`}
+        className={`${compact ? 'h-10 rounded-md pl-3 pr-10 text-sm' : 'font-medium'} focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)]`}
       >
         {SUPPORTED_LANGUAGES.map(({ code, label }) => (
           <option key={code} value={code}>{label}</option>

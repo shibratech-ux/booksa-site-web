@@ -1,4 +1,4 @@
-type FirebaseLikeError = { code?: unknown };
+type FirebaseLikeError = { code?: unknown; message?: unknown };
 
 const AUTH_ERROR_KEYS = {
   'auth/invalid-credential': 'auth.invalidCredential',
@@ -20,4 +20,18 @@ export function getFirebaseAuthErrorKey(error: unknown): FirebaseAuthErrorKey {
   return typeof code === 'string' && code in AUTH_ERROR_KEYS
     ? AUTH_ERROR_KEYS[code as keyof typeof AUTH_ERROR_KEYS]
     : 'auth.generic';
+}
+
+export function logFirebaseAuthError(context: string, error: unknown): void {
+  if (!import.meta.env.DEV) return;
+
+  const firebaseError =
+    error && typeof error === 'object' ? (error as FirebaseLikeError) : null;
+  const code = typeof firebaseError?.code === 'string' ? firebaseError.code : 'unknown';
+  const message =
+    typeof firebaseError?.message === 'string'
+      ? firebaseError.message
+      : 'No Firebase error message was provided.';
+
+  console.error(context, code, message);
 }

@@ -29,7 +29,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(funct
           id={selectId}
           name={name}
           className={cn(
-            'h-12 w-full appearance-none rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] py-2 pl-3 pr-11 text-sm text-[var(--color-text-primary)] outline-none transition',
+            'h-12 w-full appearance-none rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] py-2 pl-3 pr-11 text-sm text-[var(--color-text-primary)] outline-none transition',
             'focus:border-[var(--color-text-secondary)] focus:ring-1 focus:ring-[var(--color-border)]',
             'disabled:cursor-not-allowed disabled:opacity-55',
             error

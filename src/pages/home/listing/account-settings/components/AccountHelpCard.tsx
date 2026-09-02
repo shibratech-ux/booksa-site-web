@@ -22,13 +22,13 @@ const helpItems = [
 
 export function AccountHelpCard() {
   return (
-    <section aria-label="Personal information help" className="mt-12 rounded-2xl border border-[var(--color-border)] px-6 sm:px-7">
+    <section aria-label="Personal information help" className="mt-12 rounded-sm border border-[var(--color-border)] px-6 sm:px-7">
       {helpItems.map(({ icon: Icon, title, description }, index) => (
         <article
           key={title}
           className={`flex gap-5 py-6 ${index < helpItems.length - 1 ? 'border-b border-[var(--color-border)]' : ''}`}
         >
-          <span className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-pink-500 text-pink-500">
+          <span className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-pink-500 text-pink-500">
             <Icon className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>

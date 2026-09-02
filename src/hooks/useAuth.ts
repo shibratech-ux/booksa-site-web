@@ -6,6 +6,7 @@ import {
 import { useAuthStore } from '@/store/auth.store';
 import type { AuthCredentials } from '@/types/auth.types';
 import { ROUTES } from '@/utils/constants';
+import { logFirebaseAuthError } from '@/utils/firebaseErrors';
 import { useNavigate } from 'react-router-dom';
 
 export function useAuth() {
@@ -41,6 +42,7 @@ export function useAuth() {
       return response;
     } catch (error) {
       auth.setStatus('anonymous');
+      logFirebaseAuthError('Google sign-in failed:', error);
       throw error;
     }
   };

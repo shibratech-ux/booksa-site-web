@@ -40,7 +40,7 @@ export default function MarketplaceMobileNav() {
 
   return (
     <nav
-      className={`fixed inset-x-0 bottom-0 z-40 grid h-[66px] border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl transition-transform duration-300 sm:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 grid h-[72.6px] border-t border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_95%,transparent)] pb-[env(safe-area-inset-bottom)] backdrop-blur-xl transition-transform duration-300 sm:hidden ${
         isAuthenticated ? 'grid-cols-5 px-2' : 'grid-cols-3 px-8'
       } ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}
       aria-label="Mobile marketplace navigation"
@@ -48,18 +48,18 @@ export default function MarketplaceMobileNav() {
     >
       <Link
         to={ROUTES.home}
-        className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-          isExplore ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
+        className={`flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium ${
+          isExplore ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'
         }`}
         aria-current={isExplore ? 'page' : undefined}
       >
-        <SearchRegular className="h-5 w-5" />
+        <SearchRegular className="h-2.5 w-2.5" />
         <span>Explore</span>
       </Link>
 
       <button
         type="button"
-        className="flex flex-col items-center justify-center gap-1 text-[9px] font-medium text-slate-500"
+        className="flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium text-[var(--color-text-secondary)]"
       >
         <HeartRegular className="h-5 w-5" />
         <span>Wishlists</span>
@@ -69,8 +69,8 @@ export default function MarketplaceMobileNav() {
         <>
           <Link
             to={ROUTES.trips}
-            className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-              isTrips ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
+            className={`flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium ${
+              isTrips ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'
             }`}
             aria-current={isTrips ? 'page' : undefined}
           >
@@ -79,8 +79,8 @@ export default function MarketplaceMobileNav() {
           </Link>
           <Link
             to={ROUTES.messages}
-            className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-              isMessages ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
+            className={`flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium ${
+              isMessages ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'
             }`}
             aria-current={isMessages ? 'page' : undefined}
           >
@@ -89,8 +89,8 @@ export default function MarketplaceMobileNav() {
           </Link>
           <Link
             to={ROUTES.hostProfile}
-            className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-              isProfile ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
+            className={`flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium ${
+              isProfile ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'
             }`}
             aria-current={isProfile ? 'page' : undefined}
           >
@@ -101,7 +101,7 @@ export default function MarketplaceMobileNav() {
       ) : (
         <Link
           to={ROUTES.login}
-          className="flex flex-col items-center justify-center gap-1 text-[9px] font-medium text-slate-500"
+          className="flex flex-col items-center justify-center gap-1 text-[10.584px] font-medium text-[var(--color-text-secondary)]"
         >
           <PersonRegular className="h-5 w-5" />
           <span>Log in</span>

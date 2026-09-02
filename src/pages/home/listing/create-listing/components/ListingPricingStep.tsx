@@ -33,13 +33,13 @@ export function ListingPricingStep({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -24 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-0 w-full max-w-[660px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-8"
+      className="mx-auto flex min-h-0 w-full max-w-[726px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-8"
     >
       <div className="mb-6 sm:mb-10">
-        <h1 className="text-[28px] font-bold leading-tight tracking-tight sm:text-4xl">
+        <h1 className="text-[32.928px] font-bold leading-tight tracking-tight sm:text-4xl">
           Now, set your prices
         </h1>
-        <p className="mt-2 max-w-[620px] text-sm leading-snug text-[var(--color-text-secondary)] sm:text-lg">
+        <p className="mt-2 max-w-[682px] text-sm leading-snug text-[var(--color-text-secondary)] sm:text-lg">
           These suggestions are based on guest demand for similar {isRestaurant ? 'restaurants' : 'listings'}.{' '}
           <button type="button" className="font-medium underline underline-offset-2">
             Learn more
@@ -52,7 +52,7 @@ export function ListingPricingStep({
           type="button"
           onClick={() => setIsBasePriceDialogOpen(true)}
           aria-haspopup="dialog"
-          className="min-h-[88px] rounded-[var(--radius-lg)] border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:px-6"
+          className="min-h-[96.8px] rounded-md border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:px-6"
         >
           <span className="block text-sm font-medium">Base price</span>
           <span className="mt-1 flex items-center text-3xl font-bold tracking-tight">
@@ -64,7 +64,7 @@ export function ListingPricingStep({
           type="button"
           onClick={() => setIsWeekendDialogOpen(true)}
           aria-haspopup="dialog"
-          className="grid min-h-[100px] grid-cols-1 items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:grid-cols-[1fr_auto] sm:gap-5 sm:px-6"
+          className="grid min-h-[110px] grid-cols-1 items-center gap-2 rounded-md border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:grid-cols-[1fr_auto] sm:gap-5 sm:px-6"
         >
           <span>
             <span className="block text-sm font-medium">Weekend adjustment</span>

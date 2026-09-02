@@ -86,5 +86,5 @@ export function RevenueAmChart() {
     };
   }, []);
 
-  return <div ref={chartRef} className="h-[320px] w-full" />;
+  return <div ref={chartRef} className="h-[352px] w-full" />;
 }
