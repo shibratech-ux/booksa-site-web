@@ -84,15 +84,24 @@ export function BooksaMap({
   renderMarker
 }: BooksaMapProps) {
   const [zoom, setZoom] = useState<number>(initialZoom);
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim();
   const baseBounds = useMemo(
     () => initialBounds ?? defaultBounds(center, initialZoom),
     [center.latitude, center.longitude, initialBounds, initialZoom]
   );
   const bounds = boundsAtZoom(baseBounds, center, initialZoom, zoom);
   const mapUrl = useMemo(() => {
-    const bbox = [bounds.west, bounds.south, bounds.east, bounds.north].join(',');
-    return `https://www.openstreetmap.org/export/embed.html?${new URLSearchParams({ bbox, layer: 'mapnik' }).toString()}`;
-  }, [bounds.east, bounds.north, bounds.south, bounds.west]);
+    if (!googleMapsApiKey) return null;
+
+    const query = new URLSearchParams({
+      key: googleMapsApiKey,
+      center: `${center.latitude},${center.longitude}`,
+      zoom: String(zoom),
+      maptype: 'roadmap'
+    });
+
+    return `https://www.google.com/maps/embed/v1/view?${query.toString()}`;
+  }, [center.latitude, center.longitude, googleMapsApiKey, zoom]);
   const visibleMarkers = markers.filter((marker) =>
     marker.latitude <= bounds.north &&
     marker.latitude >= bounds.south &&
@@ -101,8 +110,16 @@ export function BooksaMap({
   );
 
   const openExpandedMap = () => {
+    const query = new URLSearchParams({
+      api: '1',
+      map_action: 'map',
+      center: `${center.latitude},${center.longitude}`,
+      zoom: String(zoom),
+      basemap: 'roadmap'
+    });
+
     window.open(
-      `https://www.openstreetmap.org/#map=${zoom}/${center.latitude}/${center.longitude}`,
+      `https://www.google.com/maps/@?${query.toString()}`,
       '_blank',
       'noopener,noreferrer'
     );
@@ -110,16 +127,38 @@ export function BooksaMap({
 
   return (
     <div className={`relative overflow-hidden bg-[#e9e7e2] ${className}`.trim()}>
-      <iframe
-        key={mapUrl}
-        title={title}
-        src={mapUrl}
-        className={`absolute inset-0 h-full w-full border-0 ${interactive ? '' : 'pointer-events-none'}`}
-        loading="eager"
-        referrerPolicy="strict-origin-when-cross-origin"
-      />
+      {mapUrl ? (
+        <iframe
+          key={mapUrl}
+          title={title}
+          src={mapUrl}
+          className={`absolute inset-0 h-full w-full border-0 ${interactive ? '' : 'pointer-events-none'}`}
+          loading="eager"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      ) : (
+        <div
+          role="status"
+          className="absolute inset-0 flex items-center justify-center bg-neutral-100 px-6 text-center text-neutral-700"
+        >
+          <div className="max-w-sm rounded-2xl bg-white/95 p-5 shadow-sm ring-1 ring-black/5">
+            <p className="text-sm font-semibold text-neutral-900">Google Maps is not configured</p>
+            <p className="mt-2 text-xs leading-5">
+              Add a Maps Embed API key to display this map.
+            </p>
+            <button
+              type="button"
+              onClick={openExpandedMap}
+              className="mt-4 text-xs font-semibold text-[var(--color-primary-500)] underline underline-offset-2"
+            >
+              Open location in Google Maps
+            </button>
+          </div>
+        </div>
+      )}
 
-      {visibleMarkers.map((marker) => (
+      {mapUrl ? visibleMarkers.map((marker) => (
         <div
           key={marker.id}
           className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
@@ -136,11 +175,11 @@ export function BooksaMap({
             </span>
           )}
         </div>
-      ))}
+      )) : null}
 
-      {children}
+      {mapUrl ? children : null}
 
-      {showControls ? (
+      {showControls && mapUrl ? (
         <div className="absolute right-4 top-4 z-20 flex flex-col overflow-hidden rounded-full bg-white text-neutral-900 shadow-md">
           {showExpandControl ? (
             <button type="button" aria-label="Expand map" onClick={openExpandedMap} className="inline-flex h-12 w-12 items-center justify-center border-b border-neutral-200">
@@ -155,10 +194,6 @@ export function BooksaMap({
           </button>
         </div>
       ) : null}
-
-      <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="absolute bottom-1 left-2 z-20 rounded bg-white/90 px-1.5 py-0.5 text-[9px] text-neutral-700">
-        © OpenStreetMap contributors
-      </a>
     </div>
   );
 }

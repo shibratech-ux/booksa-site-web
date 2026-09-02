@@ -2,20 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import MarketplaceMobileNav from '@/components/layout/MarketplaceMobileNav';
 import { BooksaMap } from '@/components/maps/BooksaMap';
 import { ThreeDIcon } from '@/components/ui/ThreeDIcon';
+import { DEFAULT_MAP_VIEW } from '@/pages/home/listing/seeAllMapDefaults';
 import { ROUTES } from '@/utils/constants';
-
-const TRIPS_MAP_VIEW = {
-  center: { latitude: 50.2, longitude: 9.5 },
-  bounds: {
-    north: 73,
-    east: 52,
-    south: 29,
-    west: -35
-  },
-  zoom: 3,
-  minZoom: 2,
-  maxZoom: 7
-} as const;
 
 function TripEmptyState() {
   const navigate = useNavigate();
@@ -52,11 +40,11 @@ export default function TripsPage() {
         <div className="absolute inset-x-0 top-0 h-[310px]">
           <BooksaMap
             title="Map for planning your next Booksa trip"
-            center={TRIPS_MAP_VIEW.center}
-            initialBounds={TRIPS_MAP_VIEW.bounds}
-            initialZoom={TRIPS_MAP_VIEW.zoom}
-            minZoom={TRIPS_MAP_VIEW.minZoom}
-            maxZoom={TRIPS_MAP_VIEW.maxZoom}
+            center={DEFAULT_MAP_VIEW.center}
+            initialBounds={DEFAULT_MAP_VIEW.bounds}
+            initialZoom={DEFAULT_MAP_VIEW.zoom}
+            minZoom={DEFAULT_MAP_VIEW.minZoom}
+            maxZoom={DEFAULT_MAP_VIEW.maxZoom}
             showExpandControl={false}
             className="h-full w-full"
           />
@@ -71,11 +59,11 @@ export default function TripsPage() {
       <div className="hidden min-h-screen grid-cols-2 sm:grid">
         <BooksaMap
           title="Map for planning your next Booksa trip"
-          center={TRIPS_MAP_VIEW.center}
-          initialBounds={TRIPS_MAP_VIEW.bounds}
-          initialZoom={TRIPS_MAP_VIEW.zoom}
-          minZoom={TRIPS_MAP_VIEW.minZoom}
-          maxZoom={TRIPS_MAP_VIEW.maxZoom}
+          center={DEFAULT_MAP_VIEW.center}
+          initialBounds={DEFAULT_MAP_VIEW.bounds}
+          initialZoom={DEFAULT_MAP_VIEW.zoom}
+          minZoom={DEFAULT_MAP_VIEW.minZoom}
+          maxZoom={DEFAULT_MAP_VIEW.maxZoom}
           showExpandControl={false}
           className="h-screen w-full"
         />

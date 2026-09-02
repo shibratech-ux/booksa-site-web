@@ -44,35 +44,3 @@ export const DEFAULT_MAP_VALUES: SeeAllMapValue[] = [
   { id: 'kasa-vubu-flat', listingTitle: 'Kasa-Vubu city flat', priceUsd: 385, latitude: -4.338, longitude: 15.302 },
   { id: 'masina-cottage', listingTitle: 'Masina guest cottage', priceUsd: 284, latitude: -4.388, longitude: 15.391 }
 ];
-
-export const SANDTON_MAP_VIEW = {
-  label: 'Sandton, South Africa',
-  center: {
-    latitude: -26.095,
-    longitude: 28.055
-  },
-  zoom: 13,
-  minZoom: 11,
-  maxZoom: 16,
-  bounds: {
-    north: -26.035,
-    east: 28.105,
-    south: -26.145,
-    west: 27.99
-  }
-} as const;
-
-/** Demo search results positioned around Sandton until live listing coordinates are available. */
-export const SANDTON_MAP_VALUES: SeeAllMapValue[] = [
-  { id: 'morningside-home', listingTitle: 'Home in Morningside', priceUsd: 418, latitude: -26.0863, longitude: 28.0577 },
-  { id: 'atholl-home', listingTitle: 'Home in Atholl', priceUsd: 954, latitude: -26.118, longitude: 28.072 },
-  { id: 'sandown-villa', listingTitle: 'Villa in Sandown', priceUsd: 643, latitude: -26.103, longitude: 28.073 },
-  { id: 'benmore-apartment', listingTitle: 'Apartment in Benmore Gardens', priceUsd: 365, latitude: -26.098, longitude: 28.044 },
-  { id: 'bryanston-retreat', listingTitle: 'Bryanston garden retreat', priceUsd: 752, latitude: -26.056, longitude: 28.022 },
-  { id: 'rivonia-suite', listingTitle: 'Rivonia private suite', priceUsd: 510, latitude: -26.057, longitude: 28.061 },
-  { id: 'sandton-loft', listingTitle: 'Sandton designer loft', priceUsd: 269, latitude: -26.108, longitude: 28.056 },
-  { id: 'hyde-park-house', listingTitle: 'Hyde Park family house', priceUsd: 1_127, latitude: -26.124, longitude: 28.035 },
-  { id: 'illovo-studio', listingTitle: 'Illovo modern studio', priceUsd: 206, latitude: -26.127, longitude: 28.051 },
-  { id: 'river-club-flat', listingTitle: 'River Club city flat', priceUsd: 385, latitude: -26.074, longitude: 28.031 },
-  { id: 'paulshof-cottage', listingTitle: 'Paulshof guest cottage', priceUsd: 284, latitude: -26.038, longitude: 28.052 }
-];

@@ -21,6 +21,7 @@ import BooksaHeader from '@/components/layout/BooksaHeader';
 import Footer from '@/components/layout/Footer';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import { BooksaMap } from '@/components/maps/BooksaMap';
+import { DEFAULT_MAP_VIEW } from '@/pages/home/listing/seeAllMapDefaults';
 import { useTheme } from '@/theme/useTheme';
 import { getServiceDetailBySlug } from './serviceData';
 import { formatCurrency, formatDate } from '@/utils/formatters';
@@ -582,8 +583,11 @@ function WhereYoullGoBlock({ city, placeLabel }: { city: string; placeLabel: str
         <p className="mt-2 text-[11.76px] text-neutral-500">{city}</p>
 
         <BooksaMap
-          center={{ latitude: 45.4642, longitude: 9.19 }}
-          initialZoom={11}
+          center={DEFAULT_MAP_VIEW.center}
+          initialBounds={DEFAULT_MAP_VIEW.bounds}
+          initialZoom={DEFAULT_MAP_VIEW.zoom}
+          minZoom={DEFAULT_MAP_VIEW.minZoom}
+          maxZoom={DEFAULT_MAP_VIEW.maxZoom}
           title={`Carte de ${placeLabel}`}
           className="mt-6 h-[350px] rounded-2xl border border-slate-200"
         >

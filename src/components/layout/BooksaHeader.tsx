@@ -23,7 +23,7 @@ import MarketplaceMobileNav from "@/components/layout/MarketplaceMobileNav";
 
 type NavigationItem = {
   label: string;
-  labelKey: "home" | "experiences" | "services";
+  labelKey: "home" | "hotel" | "privateRoom" | "restaurant";
   icon: ThreeDIconName;
   path: string;
   badge?: string;
@@ -37,20 +37,20 @@ const navigationItems: NavigationItem[] = [
     path: ROUTES.home,
   },
   {
-    label: "Homes",
-    labelKey: "home",
+    label: "Hotel",
+    labelKey: "hotel",
     icon: "privateRoom",
     path: ROUTES.homes,
   },
   {
-    label: "Experiences",
-    labelKey: "experiences",
+    label: "Private Room",
+    labelKey: "privateRoom",
     icon: "artStudio",
     path: ROUTES.experiences,
   },
   {
-    label: "Services",
-    labelKey: "services",
+    label: "Restaurant",
+    labelKey: "restaurant",
     icon: "restaurant",
     path: ROUTES.services,
   },

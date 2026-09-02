@@ -36,9 +36,9 @@ import { formatCurrency } from '@/utils/formatters';
 import { createAvatarFallback } from '@/utils/helpers';
 import { persistListingContext } from '@/utils/navigationPersistence';
 import {
+  DEFAULT_MAP_VALUES,
+  DEFAULT_MAP_VIEW,
   DEFAULT_STAY_NIGHTS,
-  SANDTON_MAP_VALUES,
-  SANDTON_MAP_VIEW,
   type SeeAllMapValue,
   usdToCdf
 } from './seeAllMapDefaults';
@@ -696,18 +696,18 @@ function createMapMarkers(values: SeeAllMapValue[]): BooksaMapMarker[] {
   }));
 }
 
-function MapPanel({ values = SANDTON_MAP_VALUES }: { values?: SeeAllMapValue[] }) {
+function MapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }) {
   const markers = createMapMarkers(values);
 
   return (
     <aside className="relative mb-6 mt-10 hidden min-h-0 overflow-hidden rounded-[18px] bg-[#e9e7e2] lg:block">
       <BooksaMap
-        title={`Map of stays in ${SANDTON_MAP_VIEW.label}`}
-        center={SANDTON_MAP_VIEW.center}
-        initialZoom={SANDTON_MAP_VIEW.zoom}
-        minZoom={SANDTON_MAP_VIEW.minZoom}
-        maxZoom={SANDTON_MAP_VIEW.maxZoom}
-        initialBounds={SANDTON_MAP_VIEW.bounds}
+        title={`Map of stays in ${DEFAULT_MAP_VIEW.label}`}
+        center={DEFAULT_MAP_VIEW.center}
+        initialZoom={DEFAULT_MAP_VIEW.zoom}
+        minZoom={DEFAULT_MAP_VIEW.minZoom}
+        maxZoom={DEFAULT_MAP_VIEW.maxZoom}
+        initialBounds={DEFAULT_MAP_VIEW.bounds}
         markers={markers}
         className="h-full w-full"
         renderMarker={(marker) => (
@@ -717,7 +717,7 @@ function MapPanel({ values = SANDTON_MAP_VALUES }: { values?: SeeAllMapValue[] }
         )}
       >
         <button type="button" className="absolute bottom-[30%] right-[19%] z-20 flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-[11px] font-semibold text-neutral-800 shadow-md">
-          <LocationFilled className="h-3.5 w-3.5" /> Sandton
+          <LocationFilled className="h-3.5 w-3.5" /> Kinshasa
         </button>
         <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-900 shadow-md">
           <NavigationRegular className="h-4 w-4" />
@@ -727,7 +727,7 @@ function MapPanel({ values = SANDTON_MAP_VALUES }: { values?: SeeAllMapValue[] }
   );
 }
 
-function MobileMapPanel({ values = SANDTON_MAP_VALUES }: { values?: SeeAllMapValue[] }) {
+function MobileMapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }) {
   const compactCdf = new Intl.NumberFormat('en', {
     notation: 'compact',
     maximumFractionDigits: 1
@@ -743,12 +743,12 @@ function MobileMapPanel({ values = SANDTON_MAP_VALUES }: { values?: SeeAllMapVal
   return (
     <div className="absolute inset-x-0 top-0 z-0 h-[clamp(160px,28dvh,224px)]">
       <BooksaMap
-        title={`Map of stays in ${SANDTON_MAP_VIEW.label}`}
-        center={SANDTON_MAP_VIEW.center}
-        initialZoom={SANDTON_MAP_VIEW.zoom}
-        minZoom={SANDTON_MAP_VIEW.minZoom}
-        maxZoom={SANDTON_MAP_VIEW.maxZoom}
-        initialBounds={SANDTON_MAP_VIEW.bounds}
+        title={`Map of stays in ${DEFAULT_MAP_VIEW.label}`}
+        center={DEFAULT_MAP_VIEW.center}
+        initialZoom={DEFAULT_MAP_VIEW.zoom}
+        minZoom={DEFAULT_MAP_VIEW.minZoom}
+        maxZoom={DEFAULT_MAP_VIEW.maxZoom}
+        initialBounds={DEFAULT_MAP_VIEW.bounds}
         markers={markers}
         interactive={false}
         showControls={false}
@@ -764,7 +764,7 @@ function MobileMapPanel({ values = SANDTON_MAP_VALUES }: { values?: SeeAllMapVal
         )}
       >
         <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full bg-white px-2.5 py-1.5 text-[10px] font-semibold text-neutral-800 shadow-md">
-          <LocationFilled className="h-3 w-3" /> Sandton
+          <LocationFilled className="h-3 w-3" /> Kinshasa
         </span>
       </BooksaMap>
     </div>
@@ -781,7 +781,7 @@ export default function SeeAllPage() {
     [selectedFilters]
   );
   const filteredMapValues = useMemo(
-    () => SANDTON_MAP_VALUES.filter((_, index) => matchesFilters(baseStays[index % baseStays.length], selectedFilters)),
+    () => DEFAULT_MAP_VALUES.filter((_, index) => matchesFilters(baseStays[index % baseStays.length], selectedFilters)),
     [selectedFilters]
   );
   const estimatedResultCount = selectedFilters.length

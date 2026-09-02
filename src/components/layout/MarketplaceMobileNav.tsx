@@ -49,7 +49,7 @@ export default function MarketplaceMobileNav() {
       <Link
         to={ROUTES.home}
         className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-          isExplore ? 'font-semibold text-[#e9145f]' : 'text-slate-500'
+          isExplore ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
         }`}
         aria-current={isExplore ? 'page' : undefined}
       >
@@ -70,7 +70,7 @@ export default function MarketplaceMobileNav() {
           <Link
             to={ROUTES.trips}
             className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-              isTrips ? 'font-semibold text-[#e9145f]' : 'text-slate-500'
+              isTrips ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
             }`}
             aria-current={isTrips ? 'page' : undefined}
           >
@@ -80,7 +80,7 @@ export default function MarketplaceMobileNav() {
           <Link
             to={ROUTES.messages}
             className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-              isMessages ? 'font-semibold text-[#e9145f]' : 'text-slate-500'
+              isMessages ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
             }`}
             aria-current={isMessages ? 'page' : undefined}
           >
@@ -90,7 +90,7 @@ export default function MarketplaceMobileNav() {
           <Link
             to={ROUTES.hostProfile}
             className={`flex flex-col items-center justify-center gap-1 text-[9px] font-medium ${
-              isProfile ? 'font-semibold text-[#e9145f]' : 'text-slate-500'
+              isProfile ? 'font-semibold text-[var(--color-primary-500)]' : 'text-slate-500'
             }`}
             aria-current={isProfile ? 'page' : undefined}
           >

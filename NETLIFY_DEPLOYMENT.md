@@ -21,6 +21,7 @@ Copy `.env.example` into your Netlify environment and set the matching `VITE_*` 
 Set these in Netlify if you want the corresponding features to work:
 
 - `VITE_API_BASE_URL`: your backend API base URL. If you leave it empty, the app falls back to mock data for some views and `/api` for the shared Axios client.
+- `VITE_GOOGLE_MAPS_API_KEY`: a browser-restricted key with the Google Maps Embed API enabled.
 - `VITE_FIREBASE_API_KEY`
 - `VITE_FIREBASE_AUTH_DOMAIN`
 - `VITE_FIREBASE_PROJECT_ID`
