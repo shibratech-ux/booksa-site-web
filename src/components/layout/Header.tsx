@@ -30,7 +30,7 @@ export function Header() {
             {t('menu')}
           </Button>
           <div className="search-surface hidden px-4 md:flex md:items-center md:gap-3">
-            <SearchRegular className="h-2.5 w-2.5 text-[var(--color-text-secondary)]" />
+            <SearchRegular className="h-5 w-5 text-[var(--color-text-secondary)]" />
             <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher des rapports, des utilisateurs, des transactions..."
@@ -56,7 +56,7 @@ export function Header() {
 
       <div className="px-4 pb-4 md:hidden">
         <div className="search-surface flex items-center gap-3 px-4">
-          <SearchRegular className="h-2.5 w-2.5 text-[var(--color-text-secondary)]" />
+          <SearchRegular className="h-5 w-5 text-[var(--color-text-secondary)]" />
           <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher..."

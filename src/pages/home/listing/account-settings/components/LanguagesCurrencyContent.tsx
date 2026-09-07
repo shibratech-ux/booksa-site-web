@@ -97,7 +97,7 @@ export function LanguagesCurrencyContent({
 
   return (
     <div className="mx-auto max-w-[836px]">
-      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">
+      <h2 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-[28px]">
         {t('languagesCurrency')}
       </h2>
 

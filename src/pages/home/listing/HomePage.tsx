@@ -416,7 +416,7 @@ function ListingCard({ listing }: { listing: Listing }) {
         onClick={() => persistListingContext(listing)}
         className="block outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
-        <div className="relative aspect-[1.04/1] overflow-hidden rounded-[19px] bg-slate-100 ring-1 ring-black/5">
+        <div className="relative aspect-[1.04/1] overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-black/5">
           <ShimmerImage
             src={listing.image}
             alt={listing.title ?? listing.location}
@@ -438,7 +438,7 @@ function ListingCard({ listing }: { listing: Listing }) {
           <div className="mt-1 text-slate-500">
             <p className="flex min-w-0 items-center text-[12px] font-semibold leading-[15px]">
               <span className="min-w-0 truncate">
-                <span>{listing.price}</span> pour 2 nuits
+                <span className="text-[var(--color-text-primary)]">{listing.price}</span> pour 2 nuits
               </span>
               <span className="shrink-0" aria-label={`Note ${listing.rating} sur 5`}>
                 <span aria-hidden="true"> · ★ {listing.rating}</span>
@@ -453,12 +453,12 @@ function ListingCard({ listing }: { listing: Listing }) {
         aria-label={`Enregistrer ${listing.title ?? listing.location}`}
         aria-pressed={isSaved}
         onClick={() => setIsSaved((saved) => !saved)}
-        className="absolute right-2.5 top-2.5 inline-flex h-9 w-9 items-center justify-center rounded-full text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)] transition hover:scale-105"
+        className="absolute right-1 top-1 inline-flex h-11 w-11 items-center justify-center rounded-full text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)] transition hover:scale-105"
       >
         {isSaved ? (
-          <HeartFilled className="h-[24.2px] w-[24.2px] text-[var(--color-primary-500)]" />
+          <HeartFilled className="h-6 w-6 text-[var(--color-primary-500)]" />
         ) : (
-          <HeartRegular className="h-[24.2px] w-[24.2px]" />
+          <HeartRegular className="h-6 w-6" />
         )}
       </button>
     </article>
@@ -554,7 +554,7 @@ function PropertyRail({
         <button
           type="button"
           onClick={() => onSeeAll(title)}
-          className="marketplace-reference-card group flex aspect-[1.04/1] shrink-0 flex-col items-center justify-center rounded-[18px] border border-slate-200 bg-white text-gray-900 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
+          className="marketplace-reference-card group flex aspect-[1.04/1] shrink-0 flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white text-gray-900 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
         >
           <div className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-slate-300 text-gray-900 transition group-hover:bg-[var(--color-primary-500)] group-hover:text-white">
             <ArrowRightRegular className="h-5 w-5" />
@@ -573,7 +573,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-[var(--color-surface)]">
       <BooksaHeader />
 
-      <main className="marketplace-reference-container mx-auto space-y-8 overflow-hidden px-4 pb-24 pt-4 sm:space-y-9 sm:px-6 sm:py-8 lg:space-y-10 lg:px-0 lg:pb-11 lg:pt-[58px]">
+      <main className="marketplace-reference-container mx-auto space-y-8 overflow-hidden px-4 pb-24 pt-4 sm:space-y-9 sm:px-6 sm:py-8 lg:space-y-10 lg:px-0 lg:pb-11 lg:pt-10">
         <PropertyRail
           title={HOME_SECTION_TITLES.popularHomesKinshasa}
           listings={popularHomes}

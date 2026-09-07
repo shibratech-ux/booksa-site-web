@@ -56,9 +56,9 @@ export function AccountSettingsSidebar({
   const { t } = useTranslation('settings');
 
   return (
-    <aside className="border-b border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-7 sm:px-8 lg:min-h-[calc(100vh-96px)] lg:border-b-0 lg:border-r lg:px-10 lg:py-10 xl:px-16">
+    <aside className="border-b border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-7 sm:px-8 lg:min-h-[calc(100vh-96px)] lg:border-b-0 lg:border-r lg:px-5 lg:py-10 xl:px-6">
       <div className="lg:sticky lg:top-10">
-        <h1 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">{t('title')}</h1>
+        <h1 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-[28px]">{t('title')}</h1>
 
         <nav
           aria-label={t('sectionsLabel')}
@@ -70,13 +70,13 @@ export function AccountSettingsSidebar({
               type="button"
               onClick={() => id && onSectionChange(id)}
               aria-current={id === activeSection ? 'page' : undefined}
-              className={`flex min-w-max items-center gap-4 rounded-md px-4 py-3 text-left text-[17.1696px] transition lg:w-full ${
+              className={`flex min-w-0 items-center gap-4 rounded-md px-4 py-3 text-left text-base transition lg:w-full ${
                 id === activeSection
                   ? 'bg-[var(--color-surface-muted)] font-semibold'
                   : 'hover:bg-[var(--color-surface-muted)]'
               }`}
             >
-              <Icon className="h-[24.2px] w-[24.2px] shrink-0" aria-hidden="true" />
+              <Icon className="h-6 w-6 shrink-0" aria-hidden="true" />
               <span>{t(labelKey)}</span>
             </button>
           ))}

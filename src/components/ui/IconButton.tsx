@@ -9,7 +9,7 @@ interface IconButtonProps extends HTMLMotionProps<'button'> {
 }
 
 const sizeStyles = {
-  sm: 'h-10 w-10 [&_svg]:h-4 [&_svg]:w-4',
+  sm: 'h-11 w-11 [&_svg]:h-4 [&_svg]:w-4',
   md: 'h-11 w-11 [&_svg]:h-5 [&_svg]:w-5',
   lg: 'h-12 w-12 [&_svg]:h-6 [&_svg]:w-6'
 } as const;
@@ -20,7 +20,7 @@ export function IconButton({ icon, label, size = 'md', className, ...props }: Ic
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.96 }}
       className={cn(
-        'inline-flex items-center justify-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] transition hover:border-[var(--color-primary-500)] hover:text-[var(--color-primary-500)]',
+        'inline-flex shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] transition hover:bg-[var(--color-surface-muted)] focus-visible:outline-2 disabled:pointer-events-none disabled:opacity-50',
         sizeStyles[size],
         className
       )}

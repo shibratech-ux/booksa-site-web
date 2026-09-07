@@ -71,43 +71,43 @@ export interface ThemeColorTokens {
 
 export const colors: ThemeColorTokens = {
   primary: {
-    50: '#EBEEFF',
-    100: '#D7DEFF',
-    200: '#B0BCFF',
-    300: '#899BFF',
-    400: '#6179FF',
-    500: '#385CFF',
-    600: '#2E4ADC',
-    700: '#2440B8',
-    800: '#1B2F8F',
-    900: '#122064'
+    50: '#fff1f5',
+    100: '#ffe4ec',
+    200: '#ffc9da',
+    300: '#ff9abb',
+    400: '#f66795',
+    500: '#e00b55',
+    600: '#ce1052',
+    700: '#ad1048',
+    800: '#8f123f',
+    900: '#761538'
   },
-  secondary: '#3A5BFF',
-  success: '#22C55E',
+  secondary: '#e00b55',
+  success: '#008A05',
   warning: '#F59E0B',
-  danger: '#EF4444',
+  danger: '#C13515',
   info: '#0EA5E9',
   gradient: {
     light: {
-      topLeft: 'rgba(56, 92, 255, 0.10)',
-      topRight: 'rgba(56, 92, 255, 0.06)',
-      base: '#F8FAFC'
+      topLeft: 'rgba(233, 20, 95, 0.10)',
+      topRight: 'rgba(233, 20, 95, 0.06)',
+      base: '#FFFFFF'
     },
     dark: {
-      topLeft: 'rgba(56, 92, 255, 0.16)',
+      topLeft: 'rgba(233, 20, 95, 0.16)',
       topRight: 'rgba(12, 170, 220, 0.10)',
       base: '#0F172A'
     }
   },
   light: {
-    background: '#F8FAFC',
+    background: '#FFFFFF',
     surface: '#FFFFFF',
     card: '#FFFFFF',
     sidebar: '#FFFFFF',
-    textPrimary: '#0F172A',
-    textSecondary: '#64748B',
-    border: '#E2E8F0',
-    borderSubtle: '#EDF0F3',
+    textPrimary: '#222222',
+    textSecondary: '#717171',
+    border: '#DDDDDD',
+    borderSubtle: '#EBEBEB',
     surfaceMuted: '#F7F7F7',
     surfaceRaised: '#FFFFFF'
   },
@@ -124,10 +124,10 @@ export const colors: ThemeColorTokens = {
     surfaceRaised: '#253349'
   },
   chart: {
-    blue: ['#385CFF', '#5B8CFF', '#3A5BFF', '#6179FF', '#8AB4FF'],
+    blue: ['#e00b55', '#5B8CFF', '#e00b55', '#f66795', '#8AB4FF'],
     green: ['#DCFCE7', '#86EFAC', '#4ADE80', '#22C55E', '#15803D'],
     amber: ['#FEF3C7', '#FDE68A', '#FCD34D', '#F59E0B', '#B45309'],
-    red: ['#FEE2E2', '#FCA5A5', '#F87171', '#EF4444', '#B91C1C']
+    red: ['#FEE2E2', '#FCA5A5', '#F87171', '#C13515', '#B91C1C']
   },
   enterprise: {
     white: '#FFFFFF',

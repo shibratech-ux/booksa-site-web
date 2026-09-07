@@ -113,7 +113,7 @@ export function WeekendAdjustmentDialog({
 
             <div className="flex min-h-0 flex-1 flex-col items-center pt-8">
               <div className="flex items-center justify-center gap-2">
-                <label className="flex items-center text-[51.744px] font-bold leading-none tracking-[-0.05em]">
+                <label className="flex items-center text-5xl font-bold leading-none tracking-[-0.05em]">
                   <input
                     ref={inputRef}
                     type="text"

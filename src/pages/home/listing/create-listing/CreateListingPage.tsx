@@ -33,7 +33,7 @@ export default function CreateListingPage() {
   if (isCreatingFromExisting) {
     return (
       <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
-        <header className="mx-auto flex w-full max-w-[1496px] items-center justify-between px-5 py-7 sm:px-8 lg:px-10">
+        <header className="mx-auto flex w-full max-w-[1280px] items-center justify-between px-5 py-7 sm:px-8 lg:px-10">
           <BooksaLogo className="h-10 w-[118.8px]" />
           <button
             type="button"
@@ -48,7 +48,7 @@ export default function CreateListingPage() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
-          className="mx-auto w-full max-w-[737px] px-5 pb-16 pt-8 sm:px-6 sm:pt-14"
+          className="mx-auto w-full max-w-3xl px-5 pb-16 pt-8 sm:px-6 sm:pt-14"
         >
           <button
             type="button"
@@ -62,7 +62,7 @@ export default function CreateListingPage() {
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-[var(--color-surface-muted)]">
               <FiCopy className="h-6 w-6" aria-hidden="true" />
             </span>
-            <h1 className="text-[32.928px] font-semibold tracking-[-0.035em] sm:text-[39.984px]">
+            <h1 className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">
               {t('listingSetup.fromExisting')}
             </h1>
           </div>
@@ -85,7 +85,7 @@ export default function CreateListingPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[var(--color-surface)] text-[var(--color-text-primary)]">
-      <header className="mx-auto flex h-16 w-full max-w-[1584px] items-center border-b border-[var(--color-border)] px-5 sm:h-[110px] sm:border-b-0 sm:px-10 lg:px-14">
+      <header className="mx-auto flex h-16 w-full max-w-[1280px] items-center border-b border-[var(--color-border)] px-5 sm:h-20 sm:border-b-0 sm:px-10 lg:px-14">
         <BooksaLogo className="h-8 w-[105.6px] sm:h-9 sm:w-[123.2px]" />
       </header>
 
@@ -93,7 +93,7 @@ export default function CreateListingPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="mx-auto grid min-h-[calc(100dvh-64px)] w-full max-w-[1584px] content-start items-center gap-8 px-5 pb-10 pt-10 sm:min-h-[calc(100vh-100px)] sm:content-center sm:gap-12 sm:px-10 sm:pt-0 lg:grid-cols-[minmax(420px,0.9fr)_minmax(500px,1.1fr)] lg:px-14"
+        className="mx-auto grid min-h-[calc(100dvh-64px)] w-full max-w-[1280px] content-start items-center gap-8 px-5 pb-10 pt-10 sm:min-h-[calc(100vh-100px)] sm:content-center sm:gap-12 sm:px-10 sm:pt-0 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:px-14"
       >
         <motion.div
           initial={{ opacity: 0, y: 18 }}
@@ -101,7 +101,7 @@ export default function CreateListingPage() {
           transition={{ duration: 0.45, delay: 0.08, ease: 'easeOut' }}
           className="mx-auto w-full max-w-[572px] text-left sm:text-center"
         >
-          <h1 className="text-[39.984px] font-semibold leading-[1.02] tracking-[-0.045em] sm:text-[49.392px] lg:text-[75.264px]">
+          <h1 className="text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl lg:text-5xl">
             Set up your
             <br />
             Booksa listing
@@ -119,7 +119,7 @@ export default function CreateListingPage() {
             role="search"
           >
             <FiSearch
-              className="pointer-events-none absolute left-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2"
+              className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2"
               aria-hidden="true"
             />
             <input
@@ -153,7 +153,7 @@ export default function CreateListingPage() {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.16, ease: 'easeOut' }}
-          className="mx-auto flex aspect-[1.05] w-full max-w-[649px] items-end justify-center overflow-hidden rounded-sm bg-[linear-gradient(135deg,#eefbf1_0%,#e4f2e4_100%)] px-7 pt-10 sm:rounded-sm sm:px-16 sm:pt-16 lg:px-20"
+          className="mx-auto flex aspect-[1.05] w-full max-w-[649px] items-end justify-center overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#eefbf1_0%,#e4f2e4_100%)] px-7 pt-10 sm:rounded-2xl sm:px-16 sm:pt-16 lg:px-20"
           aria-label="Example Booksa listing preview"
         >
           <article className="w-full max-w-[385px] translate-y-12 rounded-sm bg-white p-5 text-[#222] shadow-[0_16px_48px_rgba(15,23,42,0.12)] sm:p-6">
@@ -162,7 +162,7 @@ export default function CreateListingPage() {
               alt="Villa with a swimming pool"
               className="aspect-[1.1] w-full rounded-sm object-cover"
             />
-            <h2 className="mt-6 text-[29.4px] font-semibold leading-7 tracking-[-0.035em]">
+            <h2 className="mt-6 text-[28px] font-semibold leading-7 tracking-[-0.035em]">
               Entire villa in
               <br />
               Kinshasa, DR Congo

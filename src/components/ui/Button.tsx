@@ -4,7 +4,7 @@ import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion';
 import { ArrowSyncRegular } from '@fluentui/react-icons';
 import { cn } from '@/utils/helpers';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
@@ -20,7 +20,9 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary:
     'border-transparent bg-[var(--color-primary-500)] text-white shadow-none hover:bg-[var(--color-primary-600)] focus-visible:ring-[var(--color-primary-500)]',
   secondary:
-    'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)] hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-primary-500)]',
+    'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-text-primary)]',
+  outline:
+    'border-[var(--color-text-primary)] bg-transparent text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-text-primary)]',
   ghost:
     'border-transparent bg-transparent text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-primary-500)]',
   danger:
@@ -28,9 +30,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'min-h-[var(--control-compact)] px-[var(--space-lg)] text-lg',
-  md: 'min-h-[var(--control-standard)] px-[var(--space-2xl)] text-lg',
-  lg: 'min-h-[var(--control-large)] px-[var(--space-2xl)] text-lg'
+  sm: 'min-h-[var(--control-compact)] px-[var(--space-lg)] text-sm',
+  md: 'min-h-[var(--control-standard)] px-[var(--space-2xl)] text-base',
+  lg: 'min-h-[var(--control-large)] px-[var(--space-2xl)] text-base'
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
@@ -55,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <motion.button
       ref={ref}
       type={type ?? 'button'}
-      whileHover={isDisabled || prefersReducedMotion ? undefined : { y: -1, scale: 1.01 }}
+      whileHover={isDisabled || prefersReducedMotion ? undefined : { scale: 1 }}
       whileTap={isDisabled || prefersReducedMotion ? undefined : { scale: 0.98 }}
       transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
       className={cn(

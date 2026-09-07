@@ -82,8 +82,8 @@ function PaymentChoice({
       ].join(' ')}
     >
       <span className="min-w-0 flex-1">
-        <span className="block text-[13.82976px] font-normal">{title}</span>
-        {description ? <span className="mt-1 block text-[13.82976px] leading-4 text-[var(--color-text-secondary)]">{description}</span> : null}
+        <span className="block text-sm font-normal">{title}</span>
+        {description ? <span className="mt-1 block text-sm leading-4 text-[var(--color-text-secondary)]">{description}</span> : null}
       </span>
       <span
         className={[
@@ -107,7 +107,7 @@ function SectionCard({
   subtitle?: string;
 }) {
   return (
-    <div className="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 sm:px-6 sm:py-6">
+    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 sm:px-6 sm:py-6">
       <div className="mb-5">
         <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]">{title}</h2>
         {subtitle ? <p className="mt-1 text-xs leading-6 text-[var(--color-text-secondary)]">{subtitle}</p> : null}
@@ -169,7 +169,7 @@ export default function ConfirmPayPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1232px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+      <main className="detail-container py-8 lg:py-12">
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -180,7 +180,7 @@ export default function ConfirmPayPage() {
             <ArrowLeftRegular className="h-5 w-5" />
           </button>
           <div>
-            <h1 className="text-[27.65952px] font-bold tracking-tight text-[var(--color-text-primary)] sm:text-[31.61088px]">Confirmer et payer</h1>
+            <h1 className="text-[28px] font-bold tracking-tight text-[var(--color-text-primary)] sm:text-3xl">Confirmer et payer</h1>
           </div>
         </div>
 
@@ -218,11 +218,11 @@ export default function ConfirmPayPage() {
           </section>
 
           <aside className="space-y-4 lg:sticky lg:top-8 lg:self-start">
-            <div className="rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] sm:p-6">
+            <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] sm:p-6">
               <div className="flex gap-4">
-                <ShimmerImage alt={listing.location} src={roomImage} className="h-[105.6px] w-[105.6px] rounded-sm object-cover" />
+                <ShimmerImage alt={listing.location} src={roomImage} className="h-24 w-24 shrink-0 rounded-xl object-cover" />
                 <div className="min-w-0">
-                  <h2 className="text-[17.78112px] font-semibold leading-6 text-[var(--color-text-primary)]">
+                  <h2 className="text-lg font-semibold leading-6 text-[var(--color-text-primary)]">
                     {listing.title ?? listing.location}
                   </h2>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-secondary)]">
@@ -286,7 +286,7 @@ export default function ConfirmPayPage() {
                     </span>
                     <span>{bookingSummary.total}</span>
                   </div>
-                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-4 text-[14.8176px] font-semibold text-[var(--color-text-primary)]">
+                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-[var(--color-border)] pt-4 text-md font-semibold text-[var(--color-text-primary)]">
                     <span>{t('total')}</span>
                     <span>{bookingSummary.total}</span>
                   </div>

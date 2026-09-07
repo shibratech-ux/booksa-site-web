@@ -1,5 +1,5 @@
-import { forwardRef, type ReactNode, type SelectHTMLAttributes } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import { forwardRef, useId, type ReactNode, type SelectHTMLAttributes } from 'react';
+import { ChevronDownRegular } from '@fluentui/react-icons';
 import { cn } from '@/utils/helpers';
 
 export interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -13,7 +13,9 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(funct
   { label, helperText, error, className, containerClassName, id, name, children, ...props },
   ref
 ) {
-  const selectId = id ?? name;
+  const generatedId = useId();
+  const selectId = id ?? name ?? generatedId;
+  const descriptionId = `${selectId}-description`;
 
   return (
     <div className={cn('w-full', containerClassName)}>
@@ -37,20 +39,21 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(funct
               : null,
             className
           )}
-          aria-invalid={error ? true : props['aria-invalid']}
           {...props}
+          aria-invalid={error ? true : props['aria-invalid']}
+          aria-describedby={[props['aria-describedby'], error || helperText ? descriptionId : undefined].filter(Boolean).join(' ') || undefined}
         >
           {children}
         </select>
-        <FiChevronDown
+        <ChevronDownRegular
           className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-primary)]"
           aria-hidden="true"
         />
       </div>
 
-      {error ? <p className="mt-2 text-xs text-[var(--color-danger)]" role="alert">{error}</p> : null}
+      {error ? <p id={descriptionId} className="mt-2 text-xs text-[var(--color-danger)]" role="alert">{error}</p> : null}
       {!error && helperText ? (
-        <p className="mt-2 text-xs text-[var(--color-text-secondary)]">{helperText}</p>
+        <p id={descriptionId} className="mt-2 text-xs text-[var(--color-text-secondary)]">{helperText}</p>
       ) : null}
     </div>
   );

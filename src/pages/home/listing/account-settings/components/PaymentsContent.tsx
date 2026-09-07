@@ -82,7 +82,7 @@ function PayoutsTabContent() {
   return (
     <div>
       <section className="pt-8">
-        <h3 className="text-[27.65952px] font-semibold tracking-[-0.035em]">How you’ll get paid</h3>
+        <h3 className="text-[28px] font-semibold tracking-[-0.035em]">How you’ll get paid</h3>
         <p className="mt-1 text-lg">Add at least one payout method so we know where to send your money.</p>
         <PrimaryButton>Set up payouts</PrimaryButton>
       </section>
@@ -130,7 +130,7 @@ function ServiceFeeTabContent({ initialFee, onSaved }: { initialFee: ServiceFee;
         <label className="flex cursor-pointer items-start gap-4">
           <input type="radio" name="service-fee" value="single" checked={selectedFee === 'single'} onChange={() => setSelectedFee('single')} className="mt-1 h-6 w-6 accent-[var(--color-text-primary)]" />
           <span>
-            <span className="font-semibold">Single fee <span className="ml-1 rounded-sm bg-[var(--color-surface-muted)] px-2 py-1 text-[10.86624px]">RECOMMENDED</span></span>
+            <span className="font-semibold">Single fee <span className="ml-1 rounded-sm bg-[var(--color-surface-muted)] px-2 py-1 text-xs">RECOMMENDED</span></span>
             <span className="mt-1 block text-sm leading-5 text-[var(--color-text-secondary)]">Booksa deducts 15.5% from your earnings, and guests will not pay a service fee.</span>
           </span>
         </label>
@@ -171,7 +171,7 @@ function DonationsTabContent() {
       </article>
 
       <section className="pt-10">
-        <h3 className="text-[29.6352px] font-semibold tracking-[-0.04em]">Donate to Booksa.org</h3>
+        <h3 className="text-[28px] font-semibold tracking-[-0.04em]">Donate to Booksa.org</h3>
         <p className="mt-2 text-[var(--color-text-secondary)]">Give a percentage of each payout to Booksa.org, a nonprofit that gives free emergency housing to people affected by disasters.</p>
         <h4 className="mt-8 font-semibold">Choose a percentage to donate</h4>
         <p className="mt-1 text-sm text-[var(--color-text-secondary)]">For example, a 3% donation of a $500 payout would be $15.</p>
@@ -213,7 +213,7 @@ export function PaymentsContent({ initialServiceFee, onServiceFeeSaved }: { init
 
   return (
     <div className="mx-auto max-w-[836px]">
-      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">Payments</h2>
+      <h2 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-[28px]">Payments</h2>
       <div className="mt-6 flex overflow-x-auto border-b border-[var(--color-border)]" role="tablist" aria-label="Payment settings">
         {tabs.map(({ id, label }) => (
           <button key={id} type="button" role="tab" aria-selected={activeTab === id} onClick={() => setActiveTab(id)} className={`relative min-w-max px-4 pb-3 text-sm font-medium first:pl-0 ${activeTab === id ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'}`}>

@@ -68,7 +68,7 @@ export function ListingDiscountsStep({
       className="mx-auto flex min-h-0 w-full max-w-[781px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
     >
       <div className="mb-8">
-        <h1 className="text-[32.928px] font-semibold leading-tight tracking-tight sm:text-4xl">Add discounts</h1>
+        <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Add discounts</h1>
         <p className="mt-2 text-base text-[var(--color-text-secondary)] sm:text-lg">
           Help your place stand out to get booked faster and earn your first reviews.
         </p>
@@ -103,7 +103,7 @@ export function ListingDiscountsStep({
                 </span>
               </span>
               <span
-                className={`inline-flex h-[24.2px] w-[24.2px] items-center justify-center rounded-sm border transition ${
+                className={`inline-flex h-6 w-6 items-center justify-center rounded-sm border transition ${
                   selected
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                     : 'border-[var(--color-text-secondary)] bg-[var(--color-surface)]'

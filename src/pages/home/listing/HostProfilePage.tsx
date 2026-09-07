@@ -105,9 +105,9 @@ export default function HostProfilePage() {
             key={item.label}
             type="button"
             onClick={() => handleMobileMenuItem(item)}
-            className="flex min-h-[46.2px] w-full items-center gap-4 text-left text-[14.112px] text-slate-800"
+            className="flex min-h-[46.2px] w-full items-center gap-4 text-left text-sm text-slate-800"
           >
-            <Icon className="h-[19.8px] w-[19.8px] shrink-0 stroke-[1.6]" aria-hidden="true" />
+            <Icon className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
             <span className="flex-1">{item.label}</span>
             {item.action !== 'logout' ? (
               <ChevronRight className="h-4 w-4 text-slate-400" aria-hidden="true" />
@@ -123,7 +123,7 @@ export default function HostProfilePage() {
       <section className="min-h-screen bg-white px-5 pb-36 pt-7 text-slate-900 lg:hidden">
         <div className="mx-auto max-w-[429px]">
           <div className="flex items-center justify-between">
-            <h1 className="text-[28.224px] font-semibold tracking-[-0.035em]">Profile</h1>
+            <h1 className="text-[28px] font-semibold tracking-[-0.035em]">Profile</h1>
             <button
               type="button"
               aria-label="Notifications"
@@ -134,23 +134,23 @@ export default function HostProfilePage() {
           </div>
 
           <article className="mt-4 flex min-h-[191.4px] flex-col items-center justify-center rounded-sm bg-white px-5 py-6 text-center shadow-[0_8px_28px_rgba(15,23,42,0.10)]">
-            <div className="grid h-20 w-20 place-items-center rounded-sm bg-[#f8e0f2] text-[32.928px] font-semibold text-[#9c187c]">
+            <div className="grid h-20 w-20 place-items-center rounded-sm bg-[#f8e0f2] text-3xl font-semibold text-[#9c187c]">
               {initial}
             </div>
-            <h2 className="mt-2 text-[27.048px] font-semibold leading-none tracking-[-0.035em]">{displayName.split(' ')[0]}</h2>
-            <p className="mt-1 text-[10.584px] text-slate-500">Guest</p>
+            <h2 className="mt-2 text-[28px] font-semibold leading-none tracking-[-0.035em]">{displayName.split(' ')[0]}</h2>
+            <p className="mt-1 text-xs text-slate-500">Guest</p>
           </article>
 
           <div className="mt-3 grid grid-cols-2 gap-3">
             <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-md bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-[7.056px] font-semibold text-white">NEW</span>
+              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
               <ThreeDIcon name="pastTrips" sourceSize={100} className="h-14 w-14 object-contain" />
-              <span className="mt-2 text-[12.936px] font-medium">Past trips</span>
+              <span className="mt-2 text-[13px] font-medium">Past trips</span>
             </button>
             <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-md bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-[7.056px] font-semibold text-white">NEW</span>
+              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
               <ThreeDIcon name="connectionPerson" sourceSize={100} className="h-14 w-14 object-contain" />
-              <span className="mt-2 text-[12.936px] font-medium">Connections</span>
+              <span className="mt-2 text-[13px] font-medium">Connections</span>
             </button>
           </div>
 
@@ -161,8 +161,8 @@ export default function HostProfilePage() {
           >
             <ThreeDIcon name="hostPerson" sourceSize={100} className="h-12 w-12 shrink-0 object-contain" />
             <span>
-              <span className="block text-[14.112px] font-semibold">Become a host</span>
-              <span className="mt-0.5 block text-[9.408px] leading-3 text-slate-500">It&apos;s easy to start hosting and earn extra income.</span>
+              <span className="block text-sm font-semibold">Become a host</span>
+              <span className="mt-0.5 block text-xs leading-3 text-slate-500">It&apos;s easy to start hosting and earn extra income.</span>
             </span>
           </button>
 
@@ -177,7 +177,7 @@ export default function HostProfilePage() {
         <button
           type="button"
           onClick={() => navigate(ROUTES.hostListings)}
-          className="fixed bottom-[85.8px] left-1/2 z-30 flex h-11 -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-md bg-slate-900 px-7 text-[12.936px] font-medium text-white shadow-lg"
+          className="fixed bottom-[85.8px] left-1/2 z-30 flex h-11 -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-md bg-slate-900 px-7 text-[13px] font-medium text-white shadow-lg"
         >
           <Repeat2 className="h-4 w-4" aria-hidden="true" />
           Switch to hosting
@@ -186,7 +186,7 @@ export default function HostProfilePage() {
       </section>
 
       <header className="hidden border-b border-[var(--color-border)] bg-[var(--color-surface)] lg:block">
-        <div className="mx-auto flex min-h-[103.4px] max-w-[1540px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto flex min-h-20 max-w-[1280px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
           <button type="button" onClick={() => navigate(ROUTES.hostListings)} aria-label="Accueil hôte Booksa">
             <BooksaLogo className="h-10 w-[118.8px]" />
           </button>
@@ -235,9 +235,9 @@ export default function HostProfilePage() {
       </header>
       <HostAccountDrawer open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <div className="mx-auto hidden min-h-[calc(100vh-95px)] max-w-[1364px] lg:grid lg:grid-cols-[390px_1fr]">
+      <div className="mx-auto hidden min-h-[calc(100vh-95px)] max-w-[1280px] lg:grid lg:grid-cols-[300px_minmax(0,1fr)]">
         <aside className="border-b border-[var(--color-border)] px-5 py-8 sm:px-8 lg:border-b-0 lg:border-r lg:px-12 lg:py-10">
-          <h1 className="text-[31.61088px] font-semibold tracking-tight">Profil</h1>
+          <h1 className="text-3xl font-semibold tracking-tight">Profil</h1>
           <nav aria-label="Sections du profil" className="mt-6 flex gap-2 overflow-x-auto lg:flex-col">
             {profileNavigation.map((item, index) => (
               <button
@@ -270,7 +270,7 @@ export default function HostProfilePage() {
           className="px-5 py-8 sm:px-10 lg:px-16 lg:py-10"
         >
           <div className="flex items-center gap-5">
-            <h2 className="text-[31.61088px] font-semibold tracking-tight">À propos de moi</h2>
+            <h2 className="text-3xl font-semibold tracking-tight">À propos de moi</h2>
             <button
               type="button"
               onClick={() => setIsEditing((editing) => !editing)}
@@ -303,7 +303,7 @@ export default function HostProfilePage() {
                 </div>
               ) : (
                 <>
-                  <h3 className="mt-4 text-[29.6352px] font-semibold leading-none">{displayName}</h3>
+                  <h3 className="mt-4 text-[28px] font-semibold leading-none">{displayName}</h3>
                   <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Hôte</p>
                 </>
               )}

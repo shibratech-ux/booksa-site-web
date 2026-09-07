@@ -51,7 +51,7 @@ export function TravelForWorkContent({
 
   return (
     <div className="mx-auto max-w-[836px]">
-      <h2 className="text-[32.928px] font-semibold tracking-[-0.035em] sm:text-[35.28px]">Travel for work</h2>
+      <h2 className="text-3xl font-semibold tracking-[-0.035em] sm:text-3xl">Travel for work</h2>
       <section className="pt-6">
         <h3 className="text-2xl font-semibold tracking-[-0.03em]">Join Booksa for Work</h3>
         <p className="mt-4 text-lg leading-7">Add your work email to get seamless expensing and exclusive offers on work trips.</p>

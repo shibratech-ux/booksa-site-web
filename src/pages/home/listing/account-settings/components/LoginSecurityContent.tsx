@@ -103,7 +103,7 @@ export function LoginSecurityContent() {
 
   return (
     <div className="mx-auto max-w-[836px]">
-      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">Login &amp; security</h2>
+      <h2 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-[28px]">Login &amp; security</h2>
 
       <div className="mt-6 flex border-b border-[var(--color-border)]" role="tablist" aria-label="Login and security settings">
         {([
@@ -250,7 +250,7 @@ export function LoginSecurityContent() {
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <h4 className="font-semibold">{currentDevice}</h4>
-                      <span className="rounded-sm bg-[var(--color-surface-muted)] px-2 py-1 text-[9.8784px] font-semibold uppercase">
+                      <span className="rounded-sm bg-[var(--color-surface-muted)] px-2 py-1 text-xs font-semibold uppercase">
                         Current session
                       </span>
                     </div>

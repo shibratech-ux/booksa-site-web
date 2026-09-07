@@ -41,7 +41,7 @@ export function ListingSafetyDetailsStep({
       transition={{ duration: 0.35, ease: 'easeOut' }}
       className="mx-auto flex min-h-0 w-full max-w-[781px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
     >
-      <h1 className="text-[32.928px] font-semibold leading-tight tracking-tight sm:text-4xl">Share safety details</h1>
+      <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Share safety details</h1>
 
       <fieldset className="mt-8">
         <legend className="flex items-center gap-2 text-lg font-semibold">

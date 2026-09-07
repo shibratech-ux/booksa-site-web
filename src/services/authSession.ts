@@ -20,7 +20,9 @@ export function startAuthSessionPersistence(): void {
     // Firebase retains its available persistence fallback in restricted browsers.
   });
 
+  let sessionRevision = 0;
   unsubscribeFromTokenChanges = onIdTokenChanged(auth, async (user) => {
+    const revision = ++sessionRevision;
     if (!user) {
       useAuthStore.getState().clearUser();
       return;
@@ -28,8 +30,10 @@ export function startAuthSessionPersistence(): void {
 
     try {
       const response = await createAuthResponse(user);
+      if (revision !== sessionRevision || auth.currentUser?.uid !== user.uid) return;
       useAuthStore.getState().setUser(response.user, response.token);
     } catch {
+      if (revision !== sessionRevision) return;
       useAuthStore.getState().clearUser();
     }
   });

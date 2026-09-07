@@ -127,7 +127,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
             </div>
 
             <div className="flex-1 overflow-y-auto px-6 pb-8 sm:px-12">
-              <h2 id="host-menu-title" className="mt-7 text-[37.53792px] font-semibold tracking-[-0.04em]">
+              <h2 id="host-menu-title" className="mt-7 text-4xl font-semibold tracking-[-0.04em]">
                 {t('drawer.title')}
               </h2>
 

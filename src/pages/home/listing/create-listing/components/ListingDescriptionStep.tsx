@@ -100,7 +100,7 @@ export function ListingDescriptionStep({
       <div className="mx-auto flex min-h-full w-full max-w-[704px] flex-col justify-start py-2 sm:justify-center sm:py-6">
         <h1
           id="listing-description-heading"
-          className="text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           Create your description
         </h1>

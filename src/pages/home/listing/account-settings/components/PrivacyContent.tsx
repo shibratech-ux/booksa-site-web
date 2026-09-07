@@ -141,7 +141,7 @@ export function PrivacyContent({
 
   return (
     <div className="mx-auto max-w-[836px]">
-      <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">Privacy</h2>
+      <h2 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-[28px]">Privacy</h2>
 
       {saveError ? (
         <p role="alert" className="mt-5 rounded-sm bg-red-50 px-4 py-3 text-sm font-medium text-[var(--color-danger)] dark:bg-red-950/20">

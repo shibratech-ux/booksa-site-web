@@ -181,7 +181,7 @@ function getReservationPrice(basePrice: string, nights: number) {
 function DetailStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-sm border border-slate-200 bg-white px-4 py-3">
-      <p className="text-[10.86624px] font-semibold uppercase tracking-[0.12em] text-gray-500">{label}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">{label}</p>
       <p className="mt-1 text-sm font-semibold text-gray-900">{value}</p>
     </div>
   );
@@ -190,7 +190,7 @@ function DetailStat({ label, value }: { label: string; value: string }) {
 function SectionHeading({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <div className="space-y-1">
-      <h2 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-[21.73248px]">{title}</h2>
+      <h2 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-xl">{title}</h2>
       {subtitle ? <p className="text-sm leading-6 text-gray-600">{subtitle}</p> : null}
     </div>
   );
@@ -271,11 +271,11 @@ function MobileGalleryHero({
       </div>
 
       <div className="-mt-5 rounded-sm bg-white px-5 pt-10 text-center shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
-        <h1 className="text-[21.73248px] font-medium tracking-tight text-gray-900">
+        <h1 className="text-xl font-medium tracking-tight text-gray-900">
           {listing.title ?? 'Hôtel à Goma, RD.congo'}
         </h1>
-        <p className="mt-2 text-[12.84192px] leading-5 text-gray-500">{listing.location}</p>
-        <p className="mt-1 text-[12.84192px] leading-5 text-gray-500">
+        <p className="mt-2 text-[13px] leading-5 text-gray-500">{listing.location}</p>
+        <p className="mt-1 text-[13px] leading-5 text-gray-500">
           2 voyageurs · 1 chambre · 1 lit · 1 salle de bain
         </p>
       </div>
@@ -491,10 +491,10 @@ function DateRangePicker({
         <div className="px-0 sm:px-0">
           <div className="mb-6 flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-[17.78112px] font-medium tracking-[-0.03em] text-gray-900 sm:text-[17.78112px]">
+              <h3 className="text-lg font-medium tracking-[-0.03em] text-gray-900 sm:text-lg">
                 {headingText}
               </h3>
-              <p className="mt-1 text-[12.84192px] text-gray-500 sm:text-[11.85408px]">
+              <p className="mt-1 text-[13px] text-gray-500 sm:text-xs">
                 {range.start && range.end
                   ? `${range.start.format('MMM D, YYYY')} - ${range.end.format('MMM D, YYYY')}`
                 : 'Sélectionnez vos dates'}
@@ -516,7 +516,7 @@ function DateRangePicker({
               {months.map((month, index) => (
                 <h4
                   key={`${month.format('YYYY-MM')}-label`}
-                  className={`text-center text-[12.84192px] font-semibold tracking-tight text-gray-900 sm:text-[13.82976px] ${index === 1 ? 'hidden lg:block' : ''}`}
+                  className={`text-center text-[13px] font-semibold tracking-tight text-gray-900 sm:text-sm ${index === 1 ? 'hidden lg:block' : ''}`}
                 >
                   {month.format('MMMM YYYY')}
                 </h4>
@@ -541,7 +541,7 @@ function DateRangePicker({
                 <div key={month.format('YYYY-MM')} className={`space-y-5 ${index === 1 ? 'hidden lg:block' : ''}`}>
                   <div className="grid grid-cols-7 gap-y-1 text-center">
                     {calendarWeekdays.map((weekday) => (
-                      <div key={`${month.format('YYYY-MM')}-${weekday}`} className="pb-3 text-[9.8784px] font-medium text-gray-500">
+                      <div key={`${month.format('YYYY-MM')}-${weekday}`} className="pb-3 text-xs font-medium text-gray-500">
                         {weekday}
                       </div>
                     ))}
@@ -565,7 +565,7 @@ function DateRangePicker({
                           disabled={disabled}
                           onClick={() => handleDaySelect(date)}
                           className={[
-                            'relative flex h-10 w-10 items-center justify-center text-[10.86624px] font-medium transition',
+                            'relative flex h-10 w-10 items-center justify-center text-xs font-medium transition',
                             isSelected
                               ? 'z-10 text-white'
                               : inRange
@@ -606,7 +606,7 @@ function DateRangePicker({
             <button
               type="button"
               onClick={() => onRangeChange({ start: null, end: null })}
-              className="text-[12.84192px] font-medium text-gray-900 underline underline-offset-4 transition hover:text-gray-600"
+              className="text-[13px] font-medium text-gray-900 underline underline-offset-4 transition hover:text-gray-600"
             >
               Effacer les dates
             </button>
@@ -640,11 +640,11 @@ function GuestCounter({
   return (
     <div className="flex items-start justify-between gap-4">
       <div className="min-w-0 pr-2">
-        <p className="text-[12.84192px] font-medium text-gray-900">{title}</p>
-        <p className={`text-[10.86624px] leading-5 ${note ? 'underline underline-offset-2' : 'text-gray-600'}`}>
+        <p className="text-[13px] font-medium text-gray-900">{title}</p>
+        <p className={`text-xs leading-5 ${note ? 'underline underline-offset-2' : 'text-gray-600'}`}>
           {subtitle}
         </p>
-        {note ? <p className="mt-1 text-[7.90272px] leading-5 text-gray-600">{note}</p> : null}
+        {note ? <p className="mt-1 text-xs leading-5 text-gray-600">{note}</p> : null}
       </div>
 
       <div className="flex items-center gap-4 pt-1">
@@ -657,7 +657,7 @@ function GuestCounter({
         >
           <span className="text-xl leading-none">−</span>
         </button>
-        <span className="min-w-4 text-center text-[12.84192px] font-medium text-gray-900">{value}</span>
+        <span className="min-w-4 text-center text-[13px] font-medium text-gray-900">{value}</span>
         <button
           type="button"
           aria-label={`Augmenter ${title}`}
@@ -707,7 +707,7 @@ function GuestPickerDialog({
       <div className="rounded-lg border border-slate-200 bg-white shadow-[var(--shadow-lg)]">
         <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
           <div>
-            <p className="text-[10.86624px] font-semibold uppercase tracking-[0.12em] text-gray-500">Voyageurs</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">Voyageurs</p>
             <p className="mt-1 text-sm font-medium text-gray-900">
               {Object.values(counts).reduce((sum, value) => sum + value, 0) || 1} voyageur
             </p>
@@ -794,14 +794,14 @@ function AmenitiesDialog({ open, onClose }: { open: boolean; onClose: () => void
         </div>
 
         <div className="max-h-[74vh] overflow-y-auto px-6 pb-8 pt-4 sm:px-8">
-          <h2 className="text-[20.74464px] font-medium tracking-[-0.03em] text-gray-900">
+          <h2 className="text-xl font-medium tracking-[-0.03em] text-gray-900">
             Ce que propose ce logement
           </h2>
 
           <div className="mt-8 space-y-9">
             {amenityGroups.map((group, groupIndex) => (
               <section key={group.title} className="space-y-4">
-                <h3 className="text-[17.78112px] font-semibold tracking-tight text-gray-900">{group.title}</h3>
+                <h3 className="text-lg font-semibold tracking-tight text-gray-900">{group.title}</h3>
 
                 <div className="bg-white">
                   {group.items.map((item, itemIndex) => {
@@ -814,7 +814,7 @@ function AmenitiesDialog({ open, onClose }: { open: boolean; onClose: () => void
                         <div className="flex h-11 w-11 shrink-0 items-center justify-center">
                           <AmenityIcon icon={item.icon} />
                         </div>
-                        <p className="text-[15.80544px] font-medium text-gray-800">{item.label}</p>
+                        <p className="text-base font-medium text-gray-800">{item.label}</p>
                       </div>
                     );
                   })}
@@ -870,7 +870,7 @@ function GuestReviewsDialog({
       <div className="relative z-10 mt-2 flex h-[min(88vh,820px)] w-full max-w-[902px] flex-col overflow-hidden rounded-lg bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
         <div className="flex items-start justify-between px-6 pb-2 pt-6 sm:px-8">
           <div className="space-y-2">
-            <h2 className="text-[20.74464px] font-medium tracking-[-0.04em] text-gray-900">113 avis de voyageurs</h2>
+            <h2 className="text-xl font-medium tracking-[-0.04em] text-gray-900">113 avis de voyageurs</h2>
             <button type="button" className="text-sm text-gray-500 underline underline-offset-4 hover:text-gray-700">
               Comment fonctionnent les avis
             </button>
@@ -915,7 +915,7 @@ function GuestReviewsDialog({
               className="inline-flex h-14 w-14 items-center justify-center rounded-sm border border-slate-200 bg-white text-gray-700 transition hover:bg-slate-50"
               aria-label="Rechercher dans les avis"
             >
-              <SearchRegular className="h-2.5 w-2.5" />
+              <SearchRegular className="h-5 w-5" />
             </button>
 
             <button
@@ -939,7 +939,7 @@ function GuestReviewsDialog({
                     src={review.avatarUrl}
                   />
                   <div className="min-w-0">
-                    <h3 className="text-[16.79328px] font-semibold text-gray-900">{review.name}</h3>
+                    <h3 className="text-base font-semibold text-gray-900">{review.name}</h3>
                     <p className="text-sm text-gray-500">{review.location}</p>
                   </div>
                 </div>
@@ -954,7 +954,7 @@ function GuestReviewsDialog({
                   <span>{review.meta}</span>
                 </div>
 
-                <p className="mt-4 max-w-3xl text-[14.8176px] leading-7 text-gray-700">{review.text}</p>
+                <p className="mt-4 max-w-3xl text-md leading-7 text-gray-700">{review.text}</p>
               </article>
             ))}
           </div>
@@ -1005,7 +1005,7 @@ function BookingCard({
   return (
     <div className="relative mt-10 rounded-sm border border-slate-200 bg-white p-5 sm:p-6">
       <div className="mt-4">
-        <p className="text-[17.78112px] font-semibold tracking-tight text-gray-900">
+        <p className="text-lg font-semibold tracking-tight text-gray-900">
           <span>{getReservationPrice(price, nights)}</span>
           <span className="px-2 text-sm font-normal text-gray-600">{t('forNights', { count: nights })}</span>
         </p>
@@ -1014,11 +1014,11 @@ function BookingCard({
       <div className="mt-4 overflow-hidden rounded-sm border border-slate-300">
         <div className="grid grid-cols-2 divide-x divide-slate-300 border-b border-slate-300">
           <div className="px-4 py-3">
-            <p className="text-[9.8784px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkIn')}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkIn')}</p>
             <p className="mt-1 text-xs font-medium text-gray-900">{checkInLabel}</p>
           </div>
           <div className="px-4 py-3">
-            <p className="text-[10.86624px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkOut')}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkOut')}</p>
             <p className="mt-1 text-xs font-medium text-gray-900">{checkOutLabel}</p>
           </div>
         </div>
@@ -1028,7 +1028,7 @@ function BookingCard({
           className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-slate-50"
         >
           <div>
-            <p className="text-[9.8784px] font-semibold uppercase tracking-[0.12em] text-gray-500">{t('guests')}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">{t('guests')}</p>
             <p className="mt-1 text-xs font-medium text-gray-900">
               {t('guests', { count: guestTotal })}
             </p>
@@ -1046,7 +1046,7 @@ function BookingCard({
         />
       </div>
 
-      <div className="mt-3 rounded-sm bg-slate-100 px-4 py-2 text-center text-[11.85408px] font-medium text-gray-700">
+      <div className="mt-3 rounded-sm bg-slate-100 px-4 py-2 text-center text-xs font-medium text-gray-700">
         Annulation gratuite
       </div>
 
@@ -1107,7 +1107,7 @@ function HostHighlightsCard({ hostName = 'Pamela' }: { hostName?: string }) {
             {hostName.charAt(0).toUpperCase()}
           </div>
           <div>
-            <h3 className="text-[15.80544px] font-medium tracking-tight text-gray-900">Hébergé par {hostName}</h3>
+            <h3 className="text-base font-medium tracking-tight text-gray-900">Hébergé par {hostName}</h3>
             <p className="mt-1 text-xs text-gray-500">2 ans d’hébergement</p>
           </div>
         </div>
@@ -1121,8 +1121,8 @@ function HostHighlightsCard({ hostName = 'Pamela' }: { hostName?: string }) {
                 <Icon className="h-5 w-5" strokeWidth={1.8} />
               </div>
               <div className="min-w-0">
-                <h4 className="text-[13.82976px] font-medium tracking-tight text-gray-900">{title}</h4>
-                <p className="mt-1 text-[13.82976px] font-normal leading-4 text-gray-500">{description}</p>
+                <h4 className="text-sm font-medium tracking-tight text-gray-900">{title}</h4>
+                <p className="mt-1 text-sm font-normal leading-4 text-gray-500">{description}</p>
               </div>
             </div>
           ))}
@@ -1175,12 +1175,12 @@ export default function ListingDetailPage() {
         <BooksaHeader />
       </div>
 
-      <main className="mx-auto max-w-[1650px] px-0 py-5 sm:px-6 sm:py-8 lg:px-44">
+      <main className="detail-container py-6 sm:py-8">
 
         <div id="photos" className="space-y-5">
           <div className="hidden items-start justify-between gap-4 lg:flex">
             <div>
-              <h1 className="text-[21.73248px] font-medium tracking-tight text-gray-900 sm:text-[23.70816px]">
+              <h1 className="text-xl font-medium tracking-tight text-gray-900 sm:text-2xl">
                 {listing.location}
               </h1>
 
@@ -1259,7 +1259,7 @@ export default function ListingDetailPage() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
           <section className="space-y-8">
             <div className="hidden gap-6 md:grid xl:grid-cols-[minmax(0,1fr)_105px]">
               <div className="w-full space-y-5">
@@ -1267,7 +1267,7 @@ export default function ListingDetailPage() {
                   title={listing.title ?? 'Hôtel à Goma, RD.congo'}
                 />
 
-                <p className="max-w-3xl text-sm sm:text-[15.80544px] font-normal leading-6 text-gray-600">
+                <p className="max-w-3xl text-sm sm:text-base font-normal leading-6 text-gray-600">
                   Un séjour lumineux et raffiné, avec des finitions soignées, une arrivée simple et le calme
                   nécessaire pour une courte escapade ou un séjour plus long. L’ensemble est présenté dans un style
                   clair et apaisant pour que le prix, la note et les détails pratiques se lisent d’un coup d’œil.
@@ -1315,7 +1315,7 @@ export default function ListingDetailPage() {
             <section id="reviews" className="space-y-5 border-t border-slate-200 pt-8">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <h2 className="text-[20.74464px] font-medium tracking-tight text-gray-900">
+                  <h2 className="text-xl font-medium tracking-tight text-gray-900">
                     <span className="inline-flex items-center gap-2">
                       <StarFilled className="h-5 w-5 text-slate-900" />
                       {listing.rating} - 113 avis
@@ -1327,11 +1327,11 @@ export default function ListingDetailPage() {
                 </div>
               </div>
 
-              <div className="-mx-4 flex w-screen gap-0 overflow-x-auto pb-2 [scrollbar-width:none] md:mx-0 md:grid md:w-auto md:grid-cols-2 md:gap-5 md:overflow-visible [&::-webkit-scrollbar]:hidden">
+              <div className="flex w-full gap-4 overflow-x-auto pb-2 [scrollbar-width:none] md:mx-0 md:grid md:w-auto md:grid-cols-2 md:gap-5 md:overflow-visible [&::-webkit-scrollbar]:hidden">
                 {reviews.map((review) => (
                   <article
                     key={`${review.name}-${review.location}`}
-                    className="w-screen shrink-0 border-r border-slate-200 px-4 pr-6 md:w-auto md:shrink md:border-r-0 md:px-0 md:pr-0"
+                    className="w-full shrink-0 border-r border-slate-200 px-4 pr-6 md:w-auto md:shrink md:border-r-0 md:px-0 md:pr-0"
                   >
                     <div className="flex items-center gap-3">
                       <ShimmerImage
@@ -1418,7 +1418,7 @@ export default function ListingDetailPage() {
         onReserve={handleMobileReserve}
       />
 
-<div className="mx-auto max-w-[1650px] px-10 py-8 lg:px-44">
+<div className="detail-container py-8">
 
       <MeetYourHost />
     </div>
@@ -1434,7 +1434,7 @@ export default function ListingDetailPage() {
 export  function MeetYourHost() {
   return (
     <section className="w-full border-t border-gray-200 bg-white px-6 py-10">
-        <h2 className="mb-6 text-[20.74464px] font-medium text-neutral-900">
+        <h2 className="mb-6 text-xl font-medium text-neutral-900">
         Rencontrez votre hôte
       </h2>
 

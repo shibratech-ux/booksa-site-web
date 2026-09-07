@@ -231,7 +231,7 @@ export function AmenitiesStep({
       <div className="mx-auto w-full max-w-[704px]">
         <h1
           id="amenities-title"
-          className="max-w-[682px] text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="max-w-[682px] text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           Tell guests which amenities they&apos;ll find at your place
         </h1>

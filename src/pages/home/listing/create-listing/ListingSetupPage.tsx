@@ -210,7 +210,7 @@ export default function ListingSetupPage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
-      <header className="mx-auto flex w-full max-w-[1496px] items-center justify-between border-b border-[var(--color-border)] px-5 py-4 sm:border-b-0 sm:px-8 sm:py-7 lg:px-10">
+      <header className="mx-auto flex w-full max-w-[1280px] items-center justify-between border-b border-[var(--color-border)] px-5 py-4 sm:border-b-0 sm:px-8 sm:py-7 lg:px-10">
         <button type="button" onClick={() => navigate(ROUTES.home)} aria-label={tCommon('accessibility.goHome')}>
           <BooksaLogo className="h-8 w-[105.6px] sm:h-10 sm:w-[118.8px]" />
         </button>
@@ -227,15 +227,15 @@ export default function ListingSetupPage() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
-        className="mx-auto w-full max-w-[737px] px-5 pb-12 pt-6 sm:px-6 sm:pb-16 sm:pt-10"
+        className="mx-auto w-full max-w-3xl px-5 pb-12 pt-6 sm:px-6 sm:pb-16 sm:pt-10"
       >
-        <h1 className="text-[29.6352px] font-semibold tracking-[-0.035em] sm:text-[33.58656px]">
+        <h1 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-3xl">
           {t('listingSetup.welcomeBack', { name: firstName })}
         </h1>
         
 
         <section className="mt-7" aria-labelledby="finish-listing-heading">
-          <h2 id="finish-listing-heading" className="text-xl font-semibold sm:text-[21.73248px]">
+          <h2 id="finish-listing-heading" className="text-xl font-semibold sm:text-xl">
             {t('listingSetup.finish')}
           </h2>
           <div className="mt-4 space-y-3" aria-busy={isLoadingDrafts}>
@@ -259,7 +259,7 @@ export default function ListingSetupPage() {
                     <FiHome className="h-5 w-5" aria-hidden="true" />
                   )}
                 </span>
-                <span className="min-w-0 flex-1 text-[14.8176px] font-semibold leading-6 sm:text-base">
+                <span className="min-w-0 flex-1 text-md font-semibold leading-6 sm:text-base">
                   {t('listingSetup.startedOn', {
                     listing:
                       typeof listing.flowDraft?.listingTitle === 'string' && listing.flowDraft.listingTitle.trim()
@@ -279,7 +279,7 @@ export default function ListingSetupPage() {
         </section>
 
         <section className="mt-12 sm:mt-16" aria-labelledby="new-listing-heading">
-          <h2 id="new-listing-heading" className="text-xl font-semibold sm:text-[21.73248px]">
+          <h2 id="new-listing-heading" className="text-xl font-semibold sm:text-xl">
             {t('listingSetup.create')}
           </h2>
           <div className="mt-5 divide-y divide-[var(--color-border)] border-b border-[var(--color-border)]">

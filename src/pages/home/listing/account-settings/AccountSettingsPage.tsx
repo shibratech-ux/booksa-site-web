@@ -235,12 +235,12 @@ export default function AccountSettingsPage() {
         key={item.label}
         type="button"
         onClick={() => openMobileSetting(item)}
-        className="flex min-h-[47.3px] w-full items-center gap-4 text-left text-[14.112px] text-slate-800"
+        className="flex min-h-[47.3px] w-full items-center gap-4 text-left text-sm text-slate-800"
       >
-        <Icon className="h-[19.8px] w-[19.8px] shrink-0 stroke-[1.6]" aria-hidden="true" />
+        <Icon className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
         <span className="flex-1">{item.label}</span>
         {item.badge ? (
-          <span className="rounded-sm bg-pink-50 px-2 py-1 text-[9.408px] font-medium text-pink-600">
+          <span className="rounded-sm bg-pink-50 px-2 py-1 text-xs font-medium text-pink-600">
             {item.badge}
           </span>
         ) : null}
@@ -252,7 +252,7 @@ export default function AccountSettingsPage() {
   return (
     <main className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text-primary)]">
       <header className="hidden border-b border-[var(--color-border)] bg-[var(--color-surface)] lg:block">
-        <div className="mx-auto flex min-h-24 max-w-[1584px] items-center justify-between px-5 sm:px-8 lg:px-16">
+        <div className="mx-auto flex min-h-20 max-w-[1280px] items-center justify-between px-5 sm:px-8 lg:px-16">
           <BooksaLogo className="h-9 w-[123.2px]" />
           <button
             type="button"
@@ -284,12 +284,12 @@ export default function AccountSettingsPage() {
             aria-label="Back"
             className="grid h-8 w-8 place-items-center rounded-md bg-slate-50 text-slate-700"
           >
-            <ArrowLeft className="h-[18.7px] w-[18.7px] stroke-[1.7]" />
+            <ArrowLeft className="h-5 w-5 stroke-[1.7]" />
           </button>
 
           {!isMobileSectionOpen ? (
             <>
-              <h1 className="mt-4 px-2 text-[24.696px] font-semibold tracking-[-0.035em]">Account settings</h1>
+              <h1 className="mt-4 px-2 text-2xl font-semibold tracking-[-0.035em]">Account settings</h1>
               <div className="mt-4 px-2">
                 {mobileSettingsItems.map(renderMobileSettingRow)}
               </div>
@@ -302,7 +302,7 @@ export default function AccountSettingsPage() {
       </section>
 
       <div
-        className={`mx-auto max-w-[1584px] lg:grid lg:grid-cols-[minmax(320px,440px)_1fr] lg:[&>aside]:block ${
+        className={`mx-auto max-w-[1280px] lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:[&>aside]:block ${
           isMobileSectionOpen ? 'block [&>aside]:hidden' : 'hidden'
         }`}
       >
@@ -318,7 +318,7 @@ export default function AccountSettingsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-[var(--color-surface)] px-5 py-8 sm:px-10 lg:px-14 lg:py-10 xl:px-[9.35rem]"
+          className="bg-[var(--color-surface)] px-5 py-8 sm:px-10 lg:px-10 lg:py-10 xl:px-12"
         >
           {activeSection === 'login-security' ? (
             <LoginSecurityContent />
@@ -396,7 +396,7 @@ export default function AccountSettingsPage() {
             />
           ) : (
           <div className="mx-auto max-w-[836px]">
-            <h2 className="text-[27.65952px] font-semibold tracking-[-0.035em] sm:text-[29.6352px]">{t('personalInformation')}</h2>
+            <h2 className="text-[28px] font-semibold tracking-[-0.035em] sm:text-[28px]">{t('personalInformation')}</h2>
 
             {profileError ? (
               <div role="alert" className="mt-5 rounded-sm border border-[var(--color-danger)]/40 bg-red-50 px-4 py-3 text-sm text-[var(--color-danger)] dark:bg-red-950/20">

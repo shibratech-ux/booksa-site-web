@@ -35,7 +35,7 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
         onClick={card.onNavigate}
         className="block outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
-        <div className="relative aspect-[1.04/1] overflow-hidden rounded-[18px] bg-slate-100 ring-1 ring-black/5">
+        <div className="relative aspect-[1.04/1] overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-black/5">
           <ShimmerImage
             src={card.image}
             alt={card.title}
@@ -44,7 +44,7 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
             className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"
           />
           {card.badge ? (
-            <span className="absolute left-3 top-3 max-w-[calc(100%-3.75rem)] truncate rounded-sm bg-white/95 px-3 py-1.5 text-[11.76px] font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
+            <span className="absolute left-3 top-3 max-w-[calc(100%-3.75rem)] truncate rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
               {card.badge}
             </span>
           ) : null}
@@ -61,7 +61,7 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
           ) : null}
           <div className="mt-1 flex flex-col gap-1 text-[12px] font-semibold leading-[15px] text-slate-500">
             <p>
-              <span>{card.price}</span>{' '}
+              <span className="text-[var(--color-text-primary)]">{card.price}</span>{' '}
               {card.priceSuffix ? <span>{card.priceSuffix}</span> : null}
             </p>
             {card.supportingText ? (
@@ -81,12 +81,12 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
         aria-label={`Enregistrer ${card.title}`}
         aria-pressed={isSaved}
         onClick={() => setIsSaved((saved) => !saved)}
-        className="absolute right-2.5 top-2.5 inline-flex h-9 w-9 items-center justify-center rounded-md text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)] transition hover:scale-105"
+        className="absolute right-2.5 top-2.5 inline-flex h-11 w-11 items-center justify-center rounded-full text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)] transition hover:scale-105"
       >
         {isSaved ? (
-          <HeartFilled className="h-[24.2px] w-[24.2px] text-[var(--color-primary-500)]" />
+          <HeartFilled className="h-6 w-6 text-[var(--color-primary-500)]" />
         ) : (
-          <HeartRegular className="h-[24.2px] w-[24.2px]" />
+          <HeartRegular className="h-6 w-6" />
         )}
       </button>
     </article>
@@ -148,7 +148,7 @@ export function ExploreRail({
             type="button"
             aria-label="Défiler à gauche"
             onClick={() => scrollRail(-1)}
-            className="hidden h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 sm:inline-flex"
+            className="hidden h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 sm:inline-flex"
           >
             <ChevronLeftRegular className="h-4 w-4" />
           </button>
@@ -156,7 +156,7 @@ export function ExploreRail({
             type="button"
             aria-label="Défiler à droite"
             onClick={() => scrollRail(1)}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-slate-800 transition hover:bg-slate-200"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-800 transition hover:bg-slate-200"
           >
             <ChevronRightRegular className="h-4 w-4" />
           </button>
@@ -175,7 +175,7 @@ export function ExploreRail({
           <button
             type="button"
             onClick={onSeeAll}
-            className="marketplace-reference-card group flex aspect-[1.04/1] shrink-0 flex-col items-center justify-center rounded-[18px] border border-slate-200 bg-white text-gray-900 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
+            className="marketplace-reference-card group flex aspect-[1.04/1] shrink-0 flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white text-gray-900 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
           >
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-slate-300 text-gray-900 transition group-hover:bg-[var(--color-primary-500)] group-hover:text-white">
               <ArrowRightRegular className="h-5 w-5" />

@@ -300,7 +300,7 @@ function SeeAllHeader({
               className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:opacity-80"
               style={{ backgroundColor: theme.colors.surfaceMuted }}
             >
-              <FiMenu className="h-[19.8px] w-[19.8px]" aria-hidden="true" />
+              <FiMenu className="h-5 w-5" aria-hidden="true" />
             </button>
 
             <AnimatePresence>
@@ -327,8 +327,8 @@ function SeeAllHeader({
                     { label: 'Messages', Icon: MessageSquare, action: () => navigateFromMenu(ROUTES.messages) },
                     { label: 'Profile', Icon: CircleUserRound, action: () => navigateFromMenu(ROUTES.hostProfile) }
                   ].map(({ label, Icon, action }) => (
-                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-[14.112px] font-medium transition hover:bg-[var(--color-surface-muted)]">
-                      <Icon className="h-[18.7px] w-[18.7px] shrink-0" aria-hidden="true" />
+                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-sm font-medium transition hover:bg-[var(--color-surface-muted)]">
+                      <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
                       {label}
                     </button>
                   ))}
@@ -341,8 +341,8 @@ function SeeAllHeader({
                     { label: 'Languages & currency', Icon: Globe2, action: closeMenu },
                     { label: 'Help Center', Icon: CircleHelp, action: closeMenu }
                   ].map(({ label, Icon, action }) => (
-                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-[14.112px] transition hover:bg-[var(--color-surface-muted)]">
-                      <Icon className="h-[18.7px] w-[18.7px] shrink-0" aria-hidden="true" />
+                    <button key={label} type="button" role="menuitem" onClick={action} className="flex w-full items-center gap-3 px-5 py-2.5 text-sm transition hover:bg-[var(--color-surface-muted)]">
+                      <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
                       {label}
                     </button>
                   ))}
@@ -351,18 +351,18 @@ function SeeAllHeader({
 
                   <button type="button" role="menuitem" onClick={() => navigateFromMenu(ROUTES.hostListings)} className="flex w-full items-center justify-between gap-3 px-5 py-2 text-left transition hover:bg-[var(--color-surface-muted)]">
                     <span className="min-w-0">
-                      <span className="block text-[14.112px] font-semibold">Become a host</span>
-                      <span className="mt-0.5 block text-[11.76px] leading-4" style={{ color: theme.colors.textSecondary }}>
+                      <span className="block text-sm font-semibold">Become a host</span>
+                      <span className="mt-0.5 block text-xs leading-4" style={{ color: theme.colors.textSecondary }}>
                         It&apos;s easy to start hosting and earn extra income.
                       </span>
                     </span>
-                    <span className="shrink-0 text-[32.928px]" aria-hidden="true">🧑‍💼</span>
+                    <span className="shrink-0 text-3xl" aria-hidden="true">🧑‍💼</span>
                   </button>
 
                   <div className="mx-5 my-2 h-px" style={{ backgroundColor: theme.colors.border }} />
 
                   {['Refer a Host', 'Find a co-host', 'Gift cards'].map((label) => (
-                    <button key={label} type="button" role="menuitem" onClick={closeMenu} className="block w-full px-5 py-2.5 text-left text-[14.112px] transition hover:bg-[var(--color-surface-muted)]">
+                    <button key={label} type="button" role="menuitem" onClick={closeMenu} className="block w-full px-5 py-2.5 text-left text-sm transition hover:bg-[var(--color-surface-muted)]">
                       {label}
                     </button>
                   ))}
@@ -383,7 +383,7 @@ function SeeAllHeader({
                     }}
                     whileHover={{}}
                     whileTap={{}}
-                    className="h-auto min-h-0 w-full justify-start rounded-none px-5 py-2.5 text-left text-[14.112px] font-normal hover:translate-y-0 hover:bg-[var(--color-surface-muted)] hover:shadow-none disabled:cursor-wait disabled:opacity-50"
+                    className="h-auto min-h-0 w-full justify-start rounded-none px-5 py-2.5 text-left text-sm font-normal hover:translate-y-0 hover:bg-[var(--color-surface-muted)] hover:shadow-none disabled:cursor-wait disabled:opacity-50"
                   >
                     {isLoggingOut ? 'Logging out…' : status === 'authenticated' ? 'Log out' : 'Log in or sign up'}
                   </Button>
@@ -409,7 +409,7 @@ function SeeAllHeader({
           >
             <FilterRegular className="h-4 w-4" /> Filters
             {activeFilterCount ? (
-              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-[10.584px] font-bold text-white">
+              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-xs font-bold text-white">
                 {activeFilterCount}
               </span>
             ) : null}
@@ -475,8 +475,8 @@ function SeeAllMobileHeader({
           className="mx-auto flex h-[57.2px] w-full max-w-[275px] min-w-0 flex-col items-center justify-center rounded-md border px-4 text-center shadow-[0_5px_16px_rgba(15,23,42,0.10)]"
           style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
         >
-          <span className="w-full truncate text-[15.288px] font-semibold leading-5">Homes in Kinshasa</span>
-          <span className="w-full truncate text-[11.76px] leading-4" style={{ color: theme.colors.textSecondary }}>
+          <span className="w-full truncate text-md font-semibold leading-5">Homes in Kinshasa</span>
+          <span className="w-full truncate text-xs leading-4" style={{ color: theme.colors.textSecondary }}>
             Any weekend · Add guests
           </span>
         </button>
@@ -490,7 +490,7 @@ function SeeAllMobileHeader({
         >
           <FilterRegular className="h-5 w-5" />
           {activeFilterCount ? (
-            <span className="absolute right-0.5 top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-[9.408px] font-bold text-white">
+            <span className="absolute right-0.5 top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-xs font-bold text-white">
               {activeFilterCount}
             </span>
           ) : null}
@@ -507,7 +507,7 @@ function SeeAllMobileHeader({
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => onToggleFilter(filter)}
-                className="h-[37.4px] shrink-0 whitespace-nowrap rounded-md border px-3.5 text-[12.348px] font-medium transition active:scale-95"
+                className="h-[37.4px] shrink-0 whitespace-nowrap rounded-md border px-3.5 text-xs font-medium transition active:scale-95"
                 style={{
                   borderColor: isSelected ? theme.colors.primary[500] : theme.colors.border,
                   backgroundColor: isSelected ? theme.colors.primary[500] : theme.colors.surface,
@@ -628,7 +628,7 @@ function StayCard({ stay }: { stay: Stay }) {
         </div>
       </div>
 
-      <div className="px-1 pt-3 text-[14.112px] leading-[1.45]">
+      <div className="px-1 pt-3 text-sm leading-[1.45]">
         <div className="flex items-start justify-between gap-2">
           <h2 className="truncate font-semibold">{stay.title}</h2>
           <span className="flex shrink-0 items-center gap-1">
@@ -639,7 +639,7 @@ function StayCard({ stay }: { stay: Stay }) {
         <p style={{ color: theme.colors.textSecondary }}>{stay.details}</p>
         <p style={{ color: theme.colors.textSecondary }}>{stay.dates}</p>
         <p className="mt-1.5"><span className="font-semibold underline underline-offset-2">{formatTwoNightPriceInCdf(stay.price)}</span> <span style={{ color: theme.colors.textSecondary }}>for {stay.nights} nights</span></p>
-        <span className="mt-1 inline-flex rounded-sm bg-neutral-100 px-1.5 py-0.5 text-[10.584px] font-medium text-neutral-600">Free cancellation</span>
+        <span className="mt-1 inline-flex rounded-sm bg-neutral-100 px-1.5 py-0.5 text-xs font-medium text-neutral-600">Free cancellation</span>
       </div>
     </article>
   );
@@ -717,13 +717,13 @@ function MobileMapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapVal
           <span
             aria-label={marker.ariaLabel}
             title={marker.ariaLabel}
-            className="block whitespace-nowrap rounded-sm border border-neutral-200 bg-white px-2.5 py-1.5 text-[11.76px] font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.22)]"
+            className="block whitespace-nowrap rounded-sm border border-neutral-200 bg-white px-2.5 py-1.5 text-xs font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.22)]"
           >
             {marker.label}
           </span>
         )}
       >
-        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-sm bg-white px-2.5 py-1.5 text-[11.76px] font-semibold text-neutral-800 shadow-md">
+        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-sm bg-white px-2.5 py-1.5 text-xs font-semibold text-neutral-800 shadow-md">
           <LocationFilled className="h-3 w-3" /> Kinshasa
         </span>
       </BooksaMap>
@@ -795,8 +795,8 @@ export default function SeeAllPage() {
           >
             <div className="mx-auto mb-3 h-1 w-10 rounded-sm" style={{ backgroundColor: theme.colors.border }} />
             <h1 className="sr-only" aria-live="polite">{resultsTitle}</h1>
-            <div className="mb-5 flex items-center justify-center gap-2 text-[12.936px] font-semibold">
-              <span className="text-[24.696px]" aria-hidden="true">🏷️</span>
+            <div className="mb-5 flex items-center justify-center gap-2 text-[13px] font-semibold">
+              <span className="text-2xl" aria-hidden="true">🏷️</span>
               Prices include all fees
             </div>
 

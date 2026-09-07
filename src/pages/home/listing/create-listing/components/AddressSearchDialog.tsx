@@ -175,7 +175,7 @@ function AddressDetailsForm({
     'h-[66px] w-full bg-transparent px-4 pb-2 pt-6 text-base outline-none placeholder:text-transparent';
   const invalidFieldClassName = 'z-10 ring-2 ring-inset ring-[var(--color-danger)]';
   const errorMessageClassName =
-    'pointer-events-none absolute right-3 top-2 max-w-[48%] text-right text-[11.76px] font-medium leading-3 text-[var(--color-danger)]';
+    'pointer-events-none absolute right-3 top-2 max-w-[48%] text-right text-xs font-medium leading-3 text-[var(--color-danger)]';
 
   return (
     <motion.div
@@ -458,7 +458,7 @@ export function AddressSearchDialog({
               <FiX className="h-5 w-5" aria-hidden="true" />
             </button>
 
-            <h2 id={titleId} className="text-center text-[30.576px] font-semibold tracking-[-0.035em]">
+            <h2 id={titleId} className="text-center text-3xl font-semibold tracking-[-0.035em]">
               {selectedLocation ? 'Confirm your address' : 'Enter your address'}
             </h2>
 
@@ -485,7 +485,7 @@ export function AddressSearchDialog({
                   transition={{ duration: 0.18 }}
                 >
                   <div className="relative mt-6">
-                    <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2" aria-hidden="true" />
+                    <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2" aria-hidden="true" />
                     <input
                       ref={inputRef}
                       type="text"

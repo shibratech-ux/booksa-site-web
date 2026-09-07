@@ -110,7 +110,7 @@ function TimePill({ label }: { label: string }) {
   return (
     <button
       type="button"
-      className="inline-flex h-10 items-center justify-center rounded-md border border-neutral-200 px-4 text-[12.84192px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
+      className="inline-flex h-10 items-center justify-center rounded-md border border-neutral-200 px-4 text-[13px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
     >
       {label}
     </button>
@@ -180,10 +180,10 @@ function ScheduleContent({
       {compact ? (
         <div className="mt-4 flex items-start justify-between gap-4">
           <div className="min-w-0 pr-12">
-            <h2 className="text-[19.7568px] font-medium tracking-tight text-neutral-900">
+            <h2 className="text-xl font-medium tracking-tight text-neutral-900">
               Planifiez votre séance photo
             </h2>
-            <p className="mt-1 text-[12.84192px] text-neutral-500">Choisissez vos dates et horaires ci-dessous.</p>
+            <p className="mt-1 text-[13px] text-neutral-500">Choisissez vos dates et horaires ci-dessous.</p>
           </div>
           <button
             type="button"
@@ -196,14 +196,14 @@ function ScheduleContent({
         </div>
       ) : (
         <div className="pr-12 sm:pr-16">
-          <h2 className="text-[20.74464px] font-medium tracking-tight text-neutral-900 sm:text-[19.7568px]">
+          <h2 className="text-xl font-medium tracking-tight text-neutral-900 sm:text-xl">
             Planifiez votre séance photo
           </h2>
         </div>
       )}
 
       <div className={`mt-6 flex items-center justify-between border-b border-neutral-200 pb-5 ${compact ? 'mt-5' : ''}`}>
-        <p className="text-[13.82976px] font-medium leading-none text-neutral-900">1 invité</p>
+        <p className="text-sm font-medium leading-none text-neutral-900">1 invité</p>
 
         <div className="flex items-center gap-3 text-neutral-900">
           <button
@@ -212,7 +212,7 @@ function ScheduleContent({
           >
             −
           </button>
-          <span className="min-w-5 text-center text-[9.8784px] font-medium leading-none">1</span>
+          <span className="min-w-5 text-center text-xs font-medium leading-none">1</span>
           <button
             type="button"
             className="inline-flex h-8 w-8 items-center justify-center rounded-md text-md leading-none transition hover:text-neutral-500"
@@ -231,7 +231,7 @@ function ScheduleContent({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
-              className="text-[13.82976px] font-medium text-neutral-900"
+              className="text-sm font-medium text-neutral-900"
             >
               {formatDate(visibleMonth.toDate(), undefined, { month: 'long', year: 'numeric' })}
             </motion.h3>
@@ -261,7 +261,7 @@ function ScheduleContent({
                   className="shrink-0 snap-start rounded-sm border border-slate-200 bg-white px-4 py-4"
                 >
                   <div className="mb-4 flex items-center justify-between">
-                    <h4 className="text-[13.82976px] font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
+                    <h4 className="text-sm font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
                     <CalendarRegular className="h-5 w-5 text-neutral-700" />
                   </div>
 
@@ -285,12 +285,12 @@ function ScheduleContent({
                                 : 'text-neutral-900 hover:bg-neutral-100'
                           ].join(' ')}
                         >
-                          <span className="text-[10.86624px] font-medium uppercase leading-none tracking-[0.08em] text-inherit">
+                          <span className="text-xs font-medium uppercase leading-none tracking-[0.08em] text-inherit">
                             {item.dayLabel}
                           </span>
                           <span
                             className={[
-                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-sm text-[12.84192px] font-semibold leading-none transition',
+                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-sm text-[13px] font-semibold leading-none transition',
                               isSelected ? 'bg-neutral-900 text-white' : 'text-inherit'
                             ].join(' ')}
                           >
@@ -317,8 +317,8 @@ function ScheduleContent({
                 className="h-16 w-16 shrink-0 rounded-sm object-cover"
               />
               <div className="min-w-0">
-                <h3 className="text-[14.8176px] font-semibold leading-5 text-neutral-900">{experience.title}</h3>
-                <p className="mt-1 text-[13.82976px] text-neutral-600">
+                <h3 className="text-md font-semibold leading-5 text-neutral-900">{experience.title}</h3>
+                <p className="mt-1 text-sm text-neutral-600">
                   <span className="font-semibold text-neutral-900">{experience.price}</span> · {experience.meta}
                 </p>
               </div>
@@ -504,13 +504,13 @@ function ExperienceList() {
             />
 
             <div className="min-w-0 flex-1 pr-3">
-              <h3 className="mb-1 text-[12.84192px] font-semibold text-neutral-900 max-[611px]:text-[11.85408px]">{item.title}</h3>
+              <h3 className="mb-1 text-[13px] font-semibold text-neutral-900 max-[611px]:text-xs">{item.title}</h3>
 
-              <p className="line-clamp-2 text-[11.85408px] leading-4 text-neutral-600 max-[611px]:text-[10.86624px] max-[611px]:leading-4">
+              <p className="line-clamp-2 text-xs leading-4 text-neutral-600 max-[611px]:text-xs max-[611px]:leading-4">
                 {item.description}
               </p>
 
-              <div className="mt-4 flex items-center gap-1 text-[10.86624px] text-neutral-500 max-[611px]:text-[9.8784px]">
+              <div className="mt-4 flex items-center gap-1 text-xs text-neutral-500 max-[611px]:text-xs">
                 <span className="font-bold text-neutral-900">{formatExperiencePriceInCdf(item.price)}</span>
                 <span>/ invité</span>
                 <span className="mx-1">·</span>
@@ -534,7 +534,7 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">Mon portfolio</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-neutral-900">Mon portfolio</h2>
 
         <div className="mt-5 grid gap-1.5 sm:grid-cols-[minmax(0,1.85fr)_minmax(0,1fr)]">
           <button
@@ -579,8 +579,8 @@ function WhereYoullGoBlock({ city, placeLabel }: { city: string; placeLabel: str
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">Où vous irez</h2>
-        <p className="mt-2 text-[13.82976px] text-neutral-500">{city}</p>
+        <h2 className="text-xl font-semibold tracking-tight text-neutral-900">Où vous irez</h2>
+        <p className="mt-2 text-sm text-neutral-500">{city}</p>
 
         <BooksaMap
           center={DEFAULT_MAP_VIEW.center}
@@ -653,11 +653,11 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
   return (
     <section className="w-full px-3 py-6 pt-10">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">
+        <h2 className="text-xl font-semibold tracking-tight text-neutral-900">
           ★ 5.0 · 14 avis
         </h2>
 
-        <div className="-mx-4 flex w-screen gap-0 overflow-x-auto pb-2 pt-4 [scrollbar-width:none] md:mx-0 md:grid md:w-auto md:grid-cols-2 md:gap-x-12 md:gap-y-10 md:overflow-visible [&::-webkit-scrollbar]:hidden">
+        <div className="flex w-full gap-4 overflow-x-auto pb-2 pt-4 [scrollbar-width:none] md:mx-0 md:grid md:w-auto md:grid-cols-2 md:gap-x-12 md:gap-y-10 md:overflow-visible [&::-webkit-scrollbar]:hidden">
           {reviews.map((review) => (
             <article
               key={review.id}
@@ -670,15 +670,15 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
                   className="h-10 w-10 shrink-0 rounded-sm object-cover"
                 />
                 <div className="min-w-0">
-                  <h3 className="text-[13.82976px] font-normal leading-5 text-neutral-900">{review.name}</h3>
-                  <p className="text-[12.84192px] text-neutral-500">{review.location}</p>
+                  <h3 className="text-sm font-normal leading-5 text-neutral-900">{review.name}</h3>
+                  <p className="text-[13px] text-neutral-500">{review.location}</p>
                 </div>
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[12.84192px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
-                <p className="text-[11.85408px] leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
-                <button type="button" className="text-[11.85408px] font-semibold text-neutral-900 underline underline-offset-2">
+                <p className="text-[13px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
+                <p className="text-xs leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
+                <button type="button" className="text-xs font-semibold text-neutral-900 underline underline-offset-2">
                   Voir plus
                 </button>
               </div>
@@ -690,7 +690,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
           <button
             type="button"
             onClick={onShowReviews}
-            className="w-full rounded-md bg-gray-100 px-6 py-3 text-[14.8176px] font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[704px]"
+            className="w-full rounded-md bg-gray-100 px-6 py-3 text-md font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[704px]"
           >
             Voir les avis
           </button>
@@ -727,13 +727,13 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
         </button>
 
         <div className="flex items-start justify-between gap-4 pr-12">
-          <h2 className="text-[17.78112px] font-medium tracking-tight text-neutral-900">
+          <h2 className="text-lg font-medium tracking-tight text-neutral-900">
             ★ 5.0 · 14 avis
           </h2>
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-[13.82976px] font-medium text-gray-800 shadow-sm"
+            className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm"
           >
             Plus récents
             <ChevronDownRegular className="h-4 w-4" />
@@ -741,11 +741,11 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
         </div>
 
         <div className="mt-6 flex items-center gap-3 rounded-sm border border-gray-200 px-4 py-3">
-          <SearchRegular className="h-2.5 w-2.5 text-gray-500" />
+          <SearchRegular className="h-5 w-5 text-gray-500" />
           <input
             type="text"
             placeholder="Rechercher dans tous les avis"
-            className="w-full bg-transparent text-[14.8176px] text-gray-900 outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-md text-gray-900 outline-none placeholder:text-gray-500"
           />
         </div>
 
@@ -759,22 +759,22 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
                   className="h-11 w-11 shrink-0 rounded-sm object-cover"
                 />
                 <div>
-                  <h3 className="text-[15.80544px] font-semibold leading-5 text-neutral-900">{review.name}</h3>
-                  <p className="text-[12.84192px] text-neutral-500">{review.location}</p>
+                  <h3 className="text-base font-semibold leading-5 text-neutral-900">{review.name}</h3>
+                  <p className="text-[13px] text-neutral-500">{review.location}</p>
                 </div>
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[12.84192px] text-neutral-800">★★★★★ · 3 weeks ago</p>
-                <p className="text-[13.82976px] leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
+                <p className="text-[13px] text-neutral-800">★★★★★ · 3 weeks ago</p>
+                <p className="text-sm leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
                 <button
                   type="button"
-                  className="text-[12.84192px] font-semibold text-neutral-900 underline underline-offset-2"
+                  className="text-[13px] font-semibold text-neutral-900 underline underline-offset-2"
                 >
                   Voir plus
                 </button>
                 {review.id === 2 ? (
-                  <p className="pt-2 text-[12.84192px] text-neutral-500">
+                  <p className="pt-2 text-[13px] text-neutral-500">
                     Traduit de l’italien.{' '}
                     <button type="button" className="underline underline-offset-2">
                       Voir l’original
@@ -794,7 +794,7 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
           <div className="rounded-sm border border-slate-200 bg-white px-8 py-10 text-center">
@@ -805,8 +805,8 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
                 className="h-full w-full object-cover"
               />
             </div>
-              <h3 className="mt-6 text-[23.70816px] font-semibold leading-none text-neutral-900">Victor</h3>
-            <p className="mt-2 text-[11.85408px] font-normal text-neutral-500">Photographe</p>
+              <h3 className="mt-6 text-2xl font-semibold leading-none text-neutral-900">Victor</h3>
+            <p className="mt-2 text-xs font-normal text-neutral-500">Photographe</p>
           </div>
 
           <div className="space-y-6">
@@ -833,8 +833,8 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
                 <div key={item.title} className="flex items-start gap-4">
                   <Icon className="mt-1 h-6 w-6 shrink-0 text-neutral-900" />
                   <div>
-                    <h4 className="text-[13.82976px] font-medium text-neutral-900">{item.title}</h4>
-                    <p className="mt-1 text-[12.84192px] leading-5 text-neutral-600">{item.text}</p>
+                    <h4 className="text-sm font-medium text-neutral-900">{item.title}</h4>
+                    <p className="mt-1 text-[13px] leading-5 text-neutral-600">{item.text}</p>
                   </div>
                 </div>
               );
@@ -845,13 +845,13 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
         <div className="mt-8 flex justify-center">
           <button
             type="button"
-            className="w-full rounded-md bg-[#f1f1f1] px-6 py-3 text-[11.85408px] font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[704px]"
+            className="w-full rounded-md bg-[#f1f1f1] px-6 py-3 text-xs font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[704px]"
           >
             Envoyer un message à Victor
           </button>
         </div>
 
-        <p className="mx-auto mt-6 max-w-xl text-center text-[13.82976px] leading-6 text-neutral-500">
+        <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-6 text-neutral-500">
           Pour mieux protéger votre paiement, utilisez toujours Booksa pour envoyer de l’argent et communiquer avec les hôtes.
         </p>
       </div>
@@ -882,7 +882,7 @@ function ThingsToKnowBlock() {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-[20.74464px] font-semibold tracking-tight text-neutral-900">À savoir</h2>
+        <h2 className="text-xl font-semibold tracking-tight text-neutral-900">À savoir</h2>
 
         <div className="mt-8 grid gap-x-16 gap-y-12 sm:grid-cols-2">
           {items.map((item) => {
@@ -891,8 +891,8 @@ function ThingsToKnowBlock() {
             return (
               <article key={item.title} className="max-w-[286px]">
                 <Icon className="h-7 w-7 text-neutral-900" />
-                <h3 className="mt-4 text-[13.82976px] font-semibold text-neutral-900">{item.title}</h3>
-                <p className="mt-1 text-[12.84192px] leading-5 text-neutral-600">
+                <h3 className="mt-4 text-sm font-semibold text-neutral-900">{item.title}</h3>
+                <p className="mt-1 text-[13px] leading-5 text-neutral-600">
                   {item.text}{' '}
                   {'linkLabel' in item ? (
                     <button type="button" className="underline underline-offset-2">
@@ -920,11 +920,11 @@ function QualityTrustBlock() {
             </div>
           </div>
 
-          <h2 className="mx-auto mt-8 max-w-2xl text-[28.64736px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-[32.59872px]">
+          <h2 className="mx-auto mt-8 max-w-2xl text-[28px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-3xl">
             Les photographes sur Booksa sont sélectionnés pour leur qualité
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-[14.8176px] leading-7 text-neutral-600">
+          <p className="mx-auto mt-4 max-w-xl text-md leading-7 text-neutral-600">
             Les photographes sont évalués selon leur expérience professionnelle, la qualité de leur portfolio et leur
             réputation d’excellence.{' '}
             <button type="button" className="underline underline-offset-2">
@@ -933,7 +933,7 @@ function QualityTrustBlock() {
           </p>
         </div>
 
-        <p className="mt-8 text-center text-[12.84192px] text-neutral-500">
+        <p className="mt-8 text-center text-[13px] text-neutral-500">
           Un problème ?{' '}
           <button type="button" className="underline underline-offset-2">
             Signaler cette annonce
@@ -949,7 +949,7 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
 
   return (
     <div
-      className="flex w-full max-w-[462px] flex-row overflow-hidden rounded-sm max-[611px]:rounded-sm border shadow-[0_18px_42px_rgba(15,23,42,0.10)] sm:flex-row max-[611px]:w-full max-[611px]:max-w-[506px] max-[611px]:items-stretch max-[611px]:rounded-sm xl:ml-[12%]"
+      className="flex w-full max-w-[462px] flex-row overflow-hidden rounded-sm max-[611px]:rounded-sm border shadow-[0_18px_42px_rgba(15,23,42,0.10)] sm:flex-row max-[611px]:w-full max-[611px]:max-w-[506px] max-[611px]:items-stretch max-[611px]:rounded-sm xl:ml-0"
       style={{
         backgroundColor: theme.colors.surface,
         borderColor: theme.colors.border
@@ -960,10 +960,10 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
         style={{ borderColor: theme.colors.border }}
       >
         <div className="space-y-1">
-          <p className="text-base font-medium leading-none max-[611px]:text-[12.84192px] sm:text-sm" style={{ color: theme.colors.textPrimary }}>
+          <p className="text-base font-medium leading-none max-[611px]:text-[13px] sm:text-sm" style={{ color: theme.colors.textPrimary }}>
             {price}
           </p>
-          <p className="text-[9.8784px] font-medium leading-none max-[611px]:text-[8.89056px]" style={{ color: theme.colors.primary[500] }}>
+          <p className="text-xs font-medium leading-none max-[611px]:text-xs" style={{ color: theme.colors.primary[500] }}>
             Annulation gratuite
           </p>
         </div>
@@ -1016,16 +1016,16 @@ function ServiceHeroPanel({
       <div className="mx-auto max-w-[418px] space-y-5 px-6 pt-8 text-center max-[611px]:pt-12 sm:px-0">
         <div className="space-y-3">
           <h1 className="text-3xl px-2 font-semibold tracking-tight text-gray-900 sm:text-3xl">{title}</h1>
-          <p className="mx-auto max-w-lg text-[13.82976px] leading-5 text-gray-500 sm:text-[14.8176px] sm:leading-6">
+          <p className="mx-auto max-w-lg text-sm leading-5 text-gray-500 sm:text-md sm:leading-6">
             {description}
           </p>
         </div>
 
-        <div className="space-y-1 text-[11.85408px] text-gray-700">
+        <div className="space-y-1 text-xs text-gray-700">
           <p>
             ★ {rating} • {reviewCount} • {service.hostRole} à {service.city}
           </p>
-          <p className="text-gray-500 text-[11.85408px]">{summary}</p>
+          <p className="text-gray-500 text-xs">{summary}</p>
         </div>
       </div>
     </>
@@ -1117,7 +1117,7 @@ function MobileServiceDetailLayout({
         <ServiceSections hostAvatarImage={service.hostAvatarImage} heroImage={service.heroImage} onShowReviews={onShowReviews} />
       </div>
 
-      <div className="pointer-events-none fixed bottom-[11px] left-4 right-4 z-50">
+      <div className="pointer-events-none fixed bottom-[calc(12px+env(safe-area-inset-bottom))] left-4 right-4 z-50">
         <div className="pointer-events-auto mx-auto w-full max-w-[462px] rounded-sm p-2">
           <BookingSummaryCard price={service.price} onShowDates={onShowDates} />
         </div>
@@ -1134,10 +1134,10 @@ export default function ServiceDetailPage() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      <BooksaHeader />
+      <BooksaHeader showMobileNavigation={false} />
 
-      <main className="relative px-32 py-6 max-[611px]:px-0 max-[611px]:py-0 max-[611px]:pb-[187px]">
-        <div className="mx-auto max-w-[1650px] px-4 max-[611px]:px-0 sm:px-6 lg:px-8">
+      <main className="relative py-6 max-[611px]:py-0 max-[611px]:pb-40">
+        <div className="detail-container max-[611px]:px-0">
           <MobileServiceDetailLayout
             service={service}
             onShowDates={() => setShowScheduleDialog(true)}

@@ -186,7 +186,7 @@ export function ListingHighlightsStep({
 
         <h1
           id="listing-highlights-heading"
-          className="text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
           {content.title}
         </h1>

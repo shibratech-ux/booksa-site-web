@@ -325,7 +325,7 @@ export default function ExperiencesPage() {
           />
 
           <div className="space-y-8 pt-2 sm:space-y-9 lg:space-y-10">
-            <h1 className="max-w-4xl text-[20.74464px] font-medium tracking-tight sm:text-[17.78112px] lg:text-[23.70816px]">
+            <h1 className="max-w-4xl text-xl font-medium tracking-tight sm:text-lg lg:text-2xl">
               Populaire auprès des voyageurs de votre région
             </h1>
 

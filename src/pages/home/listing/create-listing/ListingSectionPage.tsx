@@ -351,8 +351,8 @@ export default function ListingSectionPage() {
   };
 
   return (
-    <main className="flex h-[100dvh] min-h-[572px] flex-col overflow-hidden bg-[var(--color-surface)] text-[var(--color-text-primary)] sm:min-h-[704px]">
-      <header className="mx-auto flex h-16 w-full max-w-[1584px] shrink-0 items-center justify-between border-b border-[var(--color-border)] px-4 sm:h-24 sm:border-b-0 sm:px-10 lg:px-14">
+    <main className="flex h-[100dvh] min-h-0 flex-col overflow-hidden bg-[var(--color-surface)] text-[var(--color-text-primary)] sm:min-h-0">
+      <header className="mx-auto flex h-16 w-full max-w-[1280px] shrink-0 items-center justify-between border-b border-[var(--color-border)] px-4 sm:h-20 sm:border-b-0 sm:px-10 lg:px-14">
         <BooksaLogo className="h-8 w-[105.6px] sm:h-9 sm:w-[123.2px]" />
         <div className="flex items-center gap-2 sm:gap-3">
           {!isIntroductionPage || section.step > 1 ? (

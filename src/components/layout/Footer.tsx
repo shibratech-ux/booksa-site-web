@@ -35,11 +35,11 @@ const footerLinks = [
 
 function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
-      <div className="mx-auto max-w-[1650px] px-4 py-10 sm:px-5 lg:px-8 lg:py-16">
-        <section className="rounded-sm bg-[var(--color-surface-muted)] px-5 py-8 sm:px-8">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-muted)]">
+      <div className="page-container py-10 pb-28 sm:pb-10 lg:py-12">
+        <section className="py-2">
           <div className="max-w-7xl">
-            <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)] sm:text-[21.73248px]">
+            <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)] sm:text-xl">
               Inspiration pour vos prochaines escapades
             </h2>
 
@@ -61,7 +61,7 @@ function Footer() {
 
             <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
               {footerBrowseDestinations.map((destination) => (
-                <button key={destination.location} type="button" className="group text-left">
+                <button key={`${destination.location}-${destination.meta}`} type="button" className="group text-left">
                   <p className="text-sm font-semibold text-[var(--color-text-primary)] transition group-hover:text-[var(--color-primary-500)]">
                     {destination.location}
                   </p>
@@ -82,10 +82,10 @@ function Footer() {
           </div>
         </section>
 
-        <div className="mt-14 grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-10 grid gap-8 border-t border-[var(--color-border)] pt-10 md:grid-cols-3">
           {footerLinks.map((group) => (
             <div key={group.title} className="space-y-4">
-              <h3 className="text-[12.84192px] font-bold uppercase tracking-[0.12em] text-[var(--color-text-primary)]">
+              <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">
                 {group.title}
               </h3>
               <ul className="space-y-3">
@@ -93,7 +93,7 @@ function Footer() {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-[12.84192px] text-[var(--color-text-secondary)] transition hover:text-[var(--color-primary-500)]"
+                      className="text-[13px] text-[var(--color-text-secondary)] transition hover:text-[var(--color-primary-500)]"
                     >
                       {link}
                     </a>

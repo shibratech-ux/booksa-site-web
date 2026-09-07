@@ -128,7 +128,7 @@ export function BasePriceDialog({
 
             <div className="flex min-h-0 flex-1 flex-col items-center pt-6">
               <label
-                className={`flex w-full items-center justify-center gap-2 text-[47.04px] font-bold leading-none tracking-[-0.055em] sm:text-[51.744px] ${
+                className={`flex w-full items-center justify-center gap-2 text-5xl font-bold leading-none tracking-[-0.055em] sm:text-5xl ${
                   isPriceInvalid ? 'text-[var(--color-danger)]' : ''
                 }`}
               >

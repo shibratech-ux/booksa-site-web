@@ -36,7 +36,7 @@ export function ListingPricingStep({
       className="mx-auto flex min-h-0 w-full max-w-[726px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-8"
     >
       <div className="mb-6 sm:mb-10">
-        <h1 className="text-[32.928px] font-bold leading-tight tracking-tight sm:text-4xl">
+        <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
           Now, set your prices
         </h1>
         <p className="mt-2 max-w-[682px] text-sm leading-snug text-[var(--color-text-secondary)] sm:text-lg">

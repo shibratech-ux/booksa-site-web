@@ -26,7 +26,7 @@ export function PropertyTypeStep({
       <div className="mx-auto w-full max-w-[704px]">
         <h1
           id="property-type-title"
-          className="text-left text-[32.928px] font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-center sm:text-4xl"
+          className="text-left text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-center sm:text-4xl"
         >
           Which of these best describes your place?
         </h1>

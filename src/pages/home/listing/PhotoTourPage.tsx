@@ -455,10 +455,10 @@ function PhotoTourSectionCard({
       transition={{ duration: 0.55, ease: 'easeOut' }}
     >
       <div className="space-y-3 lg:sticky lg:top-8 lg:self-start">
-        <h2 className="text-[19.7568px] font-medium tracking-[-0.03em] text-gray-900 sm:text-[17.78112px]">
+        <h2 className="text-xl font-medium tracking-[-0.03em] text-gray-900 sm:text-lg">
           {section.label}
         </h2>
-        <p className="max-w-md text-[11.85408px] font-normal leading-5 text-gray-500 sm:text-[13.82976px] sm:leading-6">
+        <p className="max-w-md text-xs font-normal leading-5 text-gray-500 sm:text-sm sm:leading-6">
           {section.description}
         </p>
       </div>
@@ -529,12 +529,12 @@ function PhotoTourMobileCard({
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
       <div className="absolute inset-x-0 bottom-0 p-3">
-        <p className="text-[12.84192px] font-semibold leading-4 text-white">{section.label}</p>
-        <p className="mt-1 line-clamp-2 text-[10.86624px] leading-4 text-white/80">{section.description}</p>
+        <p className="text-[13px] font-semibold leading-4 text-white">{section.label}</p>
+        <p className="mt-1 line-clamp-2 text-xs leading-4 text-white/80">{section.description}</p>
       </div>
 
       {section.images.length > 1 ? (
-        <div className="absolute right-3 top-3 rounded-sm bg-black/45 px-2.5 py-1 text-[9.8784px] font-medium text-white backdrop-blur-sm">
+        <div className="absolute right-3 top-3 rounded-sm bg-black/45 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
           {currentIndex + 1}/{section.images.length}
         </div>
       ) : null}
@@ -602,7 +602,7 @@ export function PhotoTourPage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <div className="sticky top-0 z-30 border-b border-transparent bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1584px] items-center justify-between px-4 py-3 sm:px-8 sm:py-4 lg:px-14">
+        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-3 sm:px-8 sm:py-4 lg:px-14">
           <button
             type="button"
             onClick={handleBack}
@@ -631,17 +631,17 @@ export function PhotoTourPage() {
         </div>
       </div>
 
-      <main className="mx-auto max-w-[1584px] px-4 pb-16 pt-4 sm:px-8 sm:pb-20 sm:pt-8 lg:px-14">
+      <main className="mx-auto max-w-[1280px] px-4 pb-16 pt-4 sm:px-8 sm:pb-20 sm:pt-8 lg:px-14">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}
           className="mb-5 sm:mb-8"
         >
-          <h1 className="text-[19.7568px] font-medium tracking-[-0.04em] text-gray-900 sm:text-[21.73248px]">
+          <h1 className="text-xl font-medium tracking-[-0.04em] text-gray-900 sm:text-xl">
             Visite photo
           </h1>
-          <p className="mt-1 max-w-xl text-[11.85408px] leading-5 text-gray-500 sm:mt-3 sm:max-w-2xl sm:text-[12.84192px] sm:leading-4">
+          <p className="mt-1 max-w-xl text-xs leading-5 text-gray-500 sm:mt-3 sm:max-w-2xl sm:text-[13px] sm:leading-4">
             {galleryTitle}
             <span className="mx-2 text-gray-300">•</span>
             {subtitle}
@@ -680,7 +680,7 @@ export function PhotoTourPage() {
                   src={section.images[0]}
                 />
               </div>
-              <p className="mt-1.5 text-[10.86624px] font-normal text-gray-900 sm:mt-2 sm:text-[12.84192px]">{section.label}</p>
+              <p className="mt-1.5 text-xs font-normal text-gray-900 sm:mt-2 sm:text-[13px]">{section.label}</p>
             </motion.button>
           ))}
         </motion.div>

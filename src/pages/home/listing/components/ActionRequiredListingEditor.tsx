@@ -298,7 +298,7 @@ export function ActionRequiredListingEditor({
                 sourceSize={100}
                 className="h-10 w-10 object-contain"
               />
-              <span className="absolute -left-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-[var(--color-text-primary)] px-1 text-[11.76px] font-bold text-[var(--color-surface)]">
+              <span className="absolute -left-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-[var(--color-text-primary)] px-1 text-xs font-bold text-[var(--color-surface)]">
                 2
               </span>
             </span>

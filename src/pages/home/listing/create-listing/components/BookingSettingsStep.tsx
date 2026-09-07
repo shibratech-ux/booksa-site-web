@@ -81,7 +81,7 @@ export function BookingSettingsStep({
       className="mx-auto flex min-h-0 w-full max-w-[792px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-10"
     >
       <div className="mb-10">
-        <h1 className="text-[32.928px] font-semibold leading-tight tracking-tight sm:text-4xl">{content.title}</h1>
+        <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{content.title}</h1>
         <p className="mt-2 text-base text-[var(--color-text-secondary)] sm:text-lg">
           {content.subtitle}{' '}
           <button type="button" className="font-medium underline underline-offset-2">

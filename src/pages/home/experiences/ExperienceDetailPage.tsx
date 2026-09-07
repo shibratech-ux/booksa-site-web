@@ -177,7 +177,7 @@ const scheduleTimes = [
 function ReviewsSection() {
   return (
     <section className="pt-2">
-      <h2 className="mb-6 text-[21.73248px] font-medium tracking-tight text-gray-950 sm:text-[23.70816px]">
+      <h2 className="mb-6 text-xl font-medium tracking-tight text-gray-950 sm:text-2xl">
         <span className="inline-flex items-center gap-2">
           <Star className="h-5 w-5 fill-current text-gray-950" />
           5.0 · 11 reviews
@@ -201,7 +201,7 @@ function ReviewsSection() {
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-2 text-[9.8784px] text-gray-700">
+            <div className="mt-4 flex items-center gap-2 text-xs text-gray-700">
               <span className="leading-none">★★★★★</span>
               <span>· {review.date}</span>
             </div>
@@ -225,7 +225,7 @@ function MoreExperiencesSection() {
   return (
     <section className="pt-16">
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h2 className="text-[21.73248px] font-medium tracking-tight text-gray-950 sm:text-[27.65952px]">
+        <h2 className="text-xl font-medium tracking-tight text-gray-950 sm:text-[28px]">
           <span className="inline-flex items-center gap-3">
             More experiences in Shibuya
   
@@ -258,7 +258,7 @@ function MoreExperiencesSection() {
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-[12.84192px] font-medium leading-4 text-gray-950">{experience.title}</h3>
+              <h3 className="text-[13px] font-medium leading-4 text-gray-950">{experience.title}</h3>
               <p className="text-xs text-gray-500">
                 {experience.category} · {experience.duration}
               </p>
@@ -276,7 +276,7 @@ function MoreExperiencesSection() {
 function AboutSection({ hostName = '逹也', hostDescription = 'Founder of EAST GREEN MATCHA' }: { hostName?: string; hostDescription?: string }) {
   return (
     <section className="pt-16">
-      <h2 className="mb-6 text-[21.73248px] font-medium tracking-tight text-gray-950 sm:text-[23.70816px]">About me</h2>
+      <h2 className="mb-6 text-xl font-medium tracking-tight text-gray-950 sm:text-2xl">About me</h2>
 
       <div className="grid gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
         <div className="space-y-6">
@@ -299,13 +299,13 @@ function AboutSection({ hostName = '逹也', hostDescription = 'Founder of EAST 
             Message {hostName}
           </button>
 
-          <p className="mx-auto max-w-[374px] text-center text-[10.86624px] leading-5 text-gray-500">
+          <p className="mx-auto max-w-[374px] text-center text-xs leading-5 text-gray-500">
             To help protect your payment, always use Booksa to send money and communicate with hosts.
           </p>
         </div>
 
         <div className="max-w-[814px]">
-          <p className="text-[14.8176px] leading-7 text-gray-800">{aboutText}</p>
+          <p className="text-md leading-7 text-gray-800">{aboutText}</p>
         </div>
       </div>
     </section>
@@ -348,7 +348,7 @@ function ThingsToKnowSection() {
   return (
     <section className="pt-16">
       <div className="border-t border-gray-200 pt-10">
-        <h2 className="mb-8 text-[21.73248px] font-semibold tracking-tight text-gray-950 sm:text-[27.65952px]">Things to know</h2>
+        <h2 className="mb-8 text-xl font-semibold tracking-tight text-gray-950 sm:text-[28px]">Things to know</h2>
 
         <div className="grid gap-x-14 gap-y-14 md:grid-cols-2 xl:grid-cols-3">
           {items.map((item) => {
@@ -357,8 +357,8 @@ function ThingsToKnowSection() {
             return (
               <article key={item.title} className="max-w-[352px]">
                 <Icon className="h-7 w-7 text-gray-900" />
-                <h3 className="mt-5 text-[14.8176px] font-semibold text-gray-950">{item.title}</h3>
-                <p className="mt-2 text-[14.8176px] leading-6 text-gray-500">{item.description}</p>
+                <h3 className="mt-5 text-md font-semibold text-gray-950">{item.title}</h3>
+                <p className="mt-2 text-md leading-6 text-gray-500">{item.description}</p>
               </article>
             );
           })}
@@ -397,7 +397,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
     borderColor: theme.colors.border
   } as const;
   const headingStyles = {
-    fontSize: `clamp(0.98784rem, 1.97568vw, ${theme.typography.headings.h1})`,
+    fontSize: `clamp(1.75rem, 2.5vw, 2rem)`,
     lineHeight: 1.1,
     letterSpacing: '-0.03em'
   } as const;
@@ -473,20 +473,20 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1474px] px-10 py-10 sm:px-8 lg:px-12">
-        <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_430px] xl:gap-10">
+      <main className="detail-container py-6 sm:py-10">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:gap-10">
           <section className="space-y-8">
-            <div className="grid gap-2 overflow-hidden rounded-sm md:grid-cols-2 md:grid-rows-2">
-              <div className="aspect-[0.98] overflow-hidden rounded-sm">
+            <div className="grid grid-cols-2 gap-2 overflow-hidden rounded-2xl md:grid-rows-2">
+              <div className="aspect-square overflow-hidden rounded-lg">
                 <ShimmerImage src={galleryImages[0]} alt="Experience photo 1" className="h-full w-full object-cover" />
               </div>
-              <div className="aspect-[0.98] overflow-hidden rounded-sm">
+              <div className="aspect-square overflow-hidden rounded-lg">
                 <ShimmerImage src={galleryImages[1]} alt="Experience photo 2" className="h-full w-full object-cover" />
               </div>
-              <div className="aspect-[0.98] overflow-hidden rounded-sm">
+              <div className="aspect-square overflow-hidden rounded-lg">
                 <ShimmerImage src={galleryImages[2]} alt="Experience photo 3" className="h-full w-full object-cover" />
               </div>
-              <div className="relative aspect-[0.98] overflow-hidden rounded-sm">
+              <div className="relative aspect-square overflow-hidden rounded-lg">
                 <ShimmerImage src={galleryImages[3]} alt="Experience photo 4" className="h-full w-full object-cover" />
                 <button
                   type="button"
@@ -499,7 +499,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
             </div>
 
             <section className="space-y-5 px-1">
-              <h2 className="text-[27.65952px] font-semibold tracking-tight text-gray-950 sm:text-[31.61088px]" style={{ color: theme.colors.textPrimary }}>
+              <h2 className="text-[28px] font-semibold tracking-tight text-gray-950 sm:text-3xl" style={{ color: theme.colors.textPrimary }}>
                 What you’ll do
               </h2>
               <div className="space-y-5">
@@ -538,7 +538,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                   {title}
                 </h1>
 
-                <p className="mx-auto max-w-[572px] font-light text-[14.8176px] leading-6" style={{ color: theme.colors.textSecondary }}>
+                <p className="mx-auto max-w-[572px] font-light text-md leading-6" style={{ color: theme.colors.textSecondary }}>
                   With the recent matcha boom, true quality is harder to find. I come from four generations of tea farmers. In my tea room, whisk your own bowl of premium matcha and slow down through a Japanese ritual.
                 </p>
 
@@ -584,7 +584,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                         <h3 className="text-sm font-semibold text-gray-950" style={{ color: theme.colors.textPrimary }}>
                           {item.title}
                         </h3>
-                        <p className="mt-0.5 text-[11.85408px] leading-5" style={{ color: theme.colors.textSecondary }}>
+                        <p className="mt-0.5 text-xs leading-5" style={{ color: theme.colors.textSecondary }}>
                           {item.description}
                         </p>
                       </div>
@@ -600,9 +600,9 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
               <div className="flex items-end justify-between gap-4 pb-4">
                 <div>
                   <p className="text-sm" style={{ color: theme.colors.textSecondary }}>
-                    From <span className="text-[13.82976px] font-semibold underline" style={{ color: theme.colors.textPrimary }}>${price}</span>
+                    From <span className="text-sm font-semibold underline" style={{ color: theme.colors.textPrimary }}>${price}</span>
                   </p>
-                  <p className="text-[9.8784px] font-normal" style={{ color: theme.colors.primary[500] }}>
+                  <p className="text-xs font-normal" style={{ color: theme.colors.primary[500] }}>
                     Free cancellation
                   </p>
                 </div>
@@ -667,7 +667,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </button>
 
                 <div className="border-b px-6 pb-5 pt-8" style={{ borderColor: theme.colors.border }}>
-                  <h2 className="text-[13.82976px] font-semibold tracking-tight" style={{ color: theme.colors.textPrimary }}>
+                  <h2 className="text-sm font-semibold tracking-tight" style={{ color: theme.colors.textPrimary }}>
                     Select a time
                   </h2>
                 </div>
@@ -675,10 +675,10 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 <div className="border-b px-6 py-5" style={{ borderColor: theme.colors.border }}>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-[8.89056px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                      <p className="text-xs font-semibold" style={{ color: theme.colors.textPrimary }}>
                         1 adult
                       </p>
-                      <p className="text-[7.90272px]" style={{ color: theme.colors.textSecondary }}>
+                      <p className="text-xs" style={{ color: theme.colors.textSecondary }}>
                         Age 14+
                       </p>
                     </div>
@@ -686,7 +686,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                       <button type="button" className="leading-none transition hover:text-gray-900" aria-label="Decrease guests">
                         −
                       </button>
-                      <span className="text-[8.89056px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                      <span className="text-xs font-semibold" style={{ color: theme.colors.textPrimary }}>
                         1
                       </span>
                       <button type="button" className="leading-none transition hover:text-gray-900" aria-label="Increase guests">
@@ -698,7 +698,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
 
                 <div className="border-b px-6 py-5" style={{ borderColor: theme.colors.border }}>
                   <div className="flex items-center justify-between">
-                    <p className="text-[9.8784px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                    <p className="text-xs font-semibold" style={{ color: theme.colors.textPrimary }}>
                       July 2026
                     </p>
                     <button type="button" className="rounded-md p-2 transition hover:bg-black/5" aria-label="Open calendar" style={{ color: theme.colors.textSecondary }}>
@@ -711,7 +711,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </div>
 
                 <div className="flex-1 overflow-y-auto px-6 py-5">
-                  <p className="mb-4 text-[9.8784px] font-semibold" style={{ color: theme.colors.textPrimary }}>
+                  <p className="mb-4 text-xs font-semibold" style={{ color: theme.colors.textPrimary }}>
                     Tomorrow, July 15
                   </p>
                   <div className="space-y-3">
@@ -730,14 +730,14 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                           <p className={`text-sm ${slot.active ? '' : 'text-gray-400 line-through'}`} style={slot.active ? { color: theme.colors.textPrimary } : undefined}>
                             {slot.time}
                           </p>
-                          <p className="mt-1 text-[9.8784px] font-medium" style={{ color: theme.colors.textPrimary }}>
+                          <p className="mt-1 text-xs font-medium" style={{ color: theme.colors.textPrimary }}>
                             {slot.priceLabel}
                           </p>
-                          <p className="text-[9.8784px]" style={{ color: theme.colors.textSecondary }}>
+                          <p className="text-xs" style={{ color: theme.colors.textSecondary }}>
                             Private pricing available
                           </p>
                         </div>
-                        <p className="text-[9.8784px] font-medium" style={{ color: theme.colors.textSecondary }}>
+                        <p className="text-xs font-medium" style={{ color: theme.colors.textSecondary }}>
                           {slot.availability}
                         </p>
                       </button>
@@ -746,7 +746,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </div>
 
                 <div className="flex items-center justify-between border-t px-6 py-4" style={{ borderColor: theme.colors.border }}>
-                  <p className="text-[9.8784px]" style={{ color: theme.colors.textSecondary }}>
+                  <p className="text-xs" style={{ color: theme.colors.textSecondary }}>
                     <span className="font-semibold underline" style={{ color: theme.colors.textPrimary }}>
                       ${price}
                     </span>{' '}

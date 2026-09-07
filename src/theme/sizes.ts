@@ -25,14 +25,14 @@ export const iconSizes = {
 } as const;
 
 export const controlSizes = {
-  compact: '2.25rem',
+  compact: '2.75rem',
   compactLarge: '2.5rem',
   standard: '3rem',
   input: '3.5rem',
   large: '3.5rem',
-  iconSmall: '2rem',
-  iconMedium: '2.25rem',
-  icon: '2.5rem',
+  iconSmall: '2.75rem',
+  iconMedium: '2.75rem',
+  icon: '2.75rem',
   iconLarge: '2.75rem',
   searchAction: '3rem'
 } as const;
