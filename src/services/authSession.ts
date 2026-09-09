@@ -1,5 +1,6 @@
 import {
   browserLocalPersistence,
+  getRedirectResult,
   onIdTokenChanged,
   setPersistence,
   type Unsubscribe
@@ -7,6 +8,7 @@ import {
 import { firebaseAuth } from '@/services/firebase';
 import { createAuthResponse } from '@/services/auth-user';
 import { useAuthStore } from '@/store/auth.store';
+import { logFirebaseAuthError } from '@/utils/firebaseErrors';
 
 let unsubscribeFromTokenChanges: Unsubscribe | null = null;
 
@@ -19,6 +21,18 @@ export function startAuthSessionPersistence(): void {
   void setPersistence(auth, browserLocalPersistence).catch(() => {
     // Firebase retains its available persistence fallback in restricted browsers.
   });
+
+  // Handle redirect login results if user was redirected back from Google OAuth
+  getRedirectResult(auth)
+    .then(async (result) => {
+      if (result?.user) {
+        const response = await createAuthResponse(result.user);
+        useAuthStore.getState().setUser(response.user, response.token);
+      }
+    })
+    .catch((error) => {
+      logFirebaseAuthError('getRedirectResult error', error);
+    });
 
   let sessionRevision = 0;
   unsubscribeFromTokenChanges = onIdTokenChanged(auth, async (user) => {
