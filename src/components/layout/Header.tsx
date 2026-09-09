@@ -34,7 +34,7 @@ export function Header() {
             <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher des rapports, des utilisateurs, des transactions..."
-              className="w-72 bg-transparent text-sm text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-secondary)]"
+              className="w-72 bg-transparent text-base sm:text-sm text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-secondary)]"
             />
           </div>
         </div>
@@ -42,8 +42,8 @@ export function Header() {
         <div className="flex items-center gap-3">
           <LanguageSwitcher compact />
           <IconButton icon={<AlertRegular className="h-4 w-4" />} label={t('notifications')} />
-          <div className="flex items-center gap-3 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[var(--color-primary-500)] text-sm font-bold text-white">
+          <div className="flex items-center gap-3 rounded-pill border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-500)] text-sm font-bold text-white">
               {initials}
             </div>
             <div className="hidden sm:block">
@@ -60,7 +60,7 @@ export function Header() {
           <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher..."
-            className={cn('w-full bg-transparent text-sm text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-secondary)]')}
+            className={cn('w-full bg-transparent text-base sm:text-sm text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-secondary)]')}
           />
         </div>
       </div>

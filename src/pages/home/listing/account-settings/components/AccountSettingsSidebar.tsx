@@ -70,7 +70,7 @@ export function AccountSettingsSidebar({
               type="button"
               onClick={() => id && onSectionChange(id)}
               aria-current={id === activeSection ? 'page' : undefined}
-              className={`flex min-w-0 items-center gap-4 rounded-md px-4 py-3 text-left text-base transition lg:w-full ${
+              className={`flex min-w-0 items-center gap-4 rounded-button px-4 py-3 text-left text-base transition lg:w-full ${
                 id === activeSection
                   ? 'bg-[var(--color-surface-muted)] font-semibold'
                   : 'hover:bg-[var(--color-surface-muted)]'

@@ -101,7 +101,7 @@ export function BasePriceDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className={`flex max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-lg bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition-[height] duration-200 sm:max-h-[calc(100vh-32px)] sm:rounded-lg sm:px-6 sm:pb-4 ${
+            className={`flex max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-dialog bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition-[height] duration-200 sm:max-h-[calc(100vh-32px)] sm:rounded-dialog sm:px-6 sm:pb-4 ${
               isBreakdownOpen ? 'h-[min(580px,92dvh)]' : 'h-[min(444px,92dvh)]'
             }`}
           >
@@ -109,7 +109,7 @@ export function BasePriceDialog({
               <button
                 type="button"
                 aria-label="Learn about base pricing"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
+                className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
               >
                 <CircleHelp className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
               </button>
@@ -120,7 +120,7 @@ export function BasePriceDialog({
                 type="button"
                 onClick={onClose}
                 aria-label="Close base price dialog"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
+                className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
               >
                 <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
               </button>
@@ -195,7 +195,7 @@ export function BasePriceDialog({
                     <button
                       type="button"
                       onClick={() => setIsBreakdownOpen(false)}
-                      className="mx-auto mt-7 flex items-center gap-1.5 rounded-md px-2 py-1 text-base transition hover:bg-[var(--color-surface-muted)]"
+                      className="mx-auto mt-7 flex items-center gap-1.5 rounded-button px-2 py-1 text-base transition hover:bg-[var(--color-surface-muted)]"
                     >
                       Show less
                       <ChevronUp className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
@@ -209,7 +209,7 @@ export function BasePriceDialog({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => setIsBreakdownOpen(true)}
-                    className={`${isPriceInvalid ? 'mt-4' : 'mt-8'} inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-base transition hover:bg-[var(--color-surface-muted)]`}
+                    className={`${isPriceInvalid ? 'mt-4' : 'mt-8'} inline-flex items-center gap-1.5 rounded-button px-2 py-1 text-base transition hover:bg-[var(--color-surface-muted)]`}
                     aria-expanded="false"
                     aria-label={`Guest price before taxes is FC ${priceFormatter.format(guestPrice)}. Show price breakdown.`}
                   >
@@ -223,14 +223,14 @@ export function BasePriceDialog({
             <footer className="flex shrink-0 items-center justify-between gap-4">
               <button
                 type="button"
-                className="rounded-md px-1 py-2 text-sm font-medium underline underline-offset-2 transition hover:text-[var(--color-text-secondary)]"
+                className="rounded-button px-1 py-2 text-sm font-medium underline underline-offset-2 transition hover:text-[var(--color-text-secondary)]"
               >
                 View similar {similarListingsLabel}
               </button>
               <button
                 type="button"
                 onClick={handleSave}
-                className="min-w-[105.6px] rounded-md bg-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-surface)] transition hover:opacity-90"
+                className="min-w-[105.6px] rounded-button bg-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold text-[var(--color-surface)] transition hover:opacity-90"
               >
                 Done
               </button>

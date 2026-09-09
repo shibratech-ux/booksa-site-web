@@ -217,7 +217,7 @@ export default function ListingSetupPage() {
         <button
           type="button"
           onClick={() => navigate(ROUTES.hostListings)}
-          className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
+          className="rounded-button border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
         >
           {tAuth('exit')}
         </button>
@@ -240,7 +240,7 @@ export default function ListingSetupPage() {
           </h2>
           <div className="mt-4 space-y-3" aria-busy={isLoadingDrafts}>
             {isLoadingDrafts ? (
-              <div className="h-[103.4px] animate-pulse rounded-sm bg-[var(--color-surface-muted)]" />
+              <div className="h-[103.4px] animate-pulse rounded-card bg-[var(--color-surface-muted)]" />
             ) : null}
             {draftListings.map((listing) => {
               const coverImage = getListingCoverImage(listing);
@@ -250,9 +250,9 @@ export default function ListingSetupPage() {
                   key={listing.id}
                   type="button"
                   onClick={() => handleResumeListing(listing)}
-                  className="group flex min-h-[90.2px] w-full items-center gap-3 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-left transition hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[103.4px] sm:gap-4 sm:px-6"
+                  className="group flex min-h-[90.2px] w-full items-center gap-3 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] px-4 text-left transition hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[103.4px] sm:gap-4 sm:px-6"
                 >
-                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] sm:h-11 sm:w-11 sm:rounded-sm">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-photo bg-[var(--color-surface-muted)] sm:h-11 sm:w-11 sm:rounded-photo">
                   {coverImage ? (
                     <ShimmerImage src={coverImage} alt="" className="h-full w-full object-cover" />
                   ) : (
@@ -295,7 +295,7 @@ export default function ListingSetupPage() {
                   aria-busy={createsNewListing && isCreatingListing}
                   className="group flex w-full items-center gap-4 py-5 text-left transition hover:opacity-70 disabled:cursor-wait disabled:opacity-50"
                 >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-[var(--color-text-primary)]">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-text-primary)]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <span className="flex-1 text-base">{t(labelKey)}</span>

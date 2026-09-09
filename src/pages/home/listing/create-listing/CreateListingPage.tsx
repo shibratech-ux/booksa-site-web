@@ -38,7 +38,7 @@ export default function CreateListingPage() {
           <button
             type="button"
             onClick={() => navigate(ROUTES.hostListingSetup)}
-            className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold"
+            className="rounded-button border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-sm font-semibold"
           >
             {tCommon('actions.back')}
           </button>
@@ -54,7 +54,7 @@ export default function CreateListingPage() {
             type="button"
             onClick={() => navigate(ROUTES.hostListingSetup)}
             aria-label={tCommon('actions.back')}
-            className="mb-8 inline-flex h-10 w-10 items-center justify-center rounded-md border border-[var(--color-border)]"
+            className="mb-8 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full border border-[var(--color-border)]"
           >
             <FiArrowLeft className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -71,7 +71,7 @@ export default function CreateListingPage() {
               <button
                 key={listing.id}
                 type="button"
-                className="flex min-h-[90.2px] w-full items-center gap-4 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-5 text-left transition hover:border-[var(--color-text-primary)]"
+                className="flex min-h-[90.2px] w-full items-center gap-4 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] px-5 text-left transition hover:border-[var(--color-text-primary)]"
               >
                 <FiHome className="h-6 w-6 shrink-0" aria-hidden="true" />
                 <span className="font-semibold">{t(listing.labelKey)}</span>
@@ -136,7 +136,7 @@ export default function CreateListingPage() {
               placeholder="Enter your address"
               aria-label="Enter your address"
               autoComplete="street-address"
-              className="h-[63.8px] w-full cursor-pointer rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] pl-12 pr-5 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
+              className="h-[63.8px] w-full cursor-pointer rounded-field border border-[var(--color-text-secondary)] bg-[var(--color-surface)] pl-12 pr-5 outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)]"
             />
           </form>
 
@@ -153,14 +153,14 @@ export default function CreateListingPage() {
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.16, ease: 'easeOut' }}
-          className="mx-auto flex aspect-[1.05] w-full max-w-[649px] items-end justify-center overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#eefbf1_0%,#e4f2e4_100%)] px-7 pt-10 sm:rounded-2xl sm:px-16 sm:pt-16 lg:px-20"
+          className="mx-auto flex aspect-[1.05] w-full max-w-[649px] items-end justify-center overflow-hidden rounded-photo bg-[linear-gradient(135deg,#eefbf1_0%,#e4f2e4_100%)] px-7 pt-10 sm:rounded-photo sm:px-16 sm:pt-16 lg:px-20"
           aria-label="Example Booksa listing preview"
         >
-          <article className="w-full max-w-[385px] translate-y-12 rounded-sm bg-white p-5 text-[#222] shadow-[0_16px_48px_rgba(15,23,42,0.12)] sm:p-6">
+          <article className="w-full max-w-[385px] translate-y-12 rounded-card bg-white p-5 text-[#222] shadow-[0_16px_48px_rgba(15,23,42,0.12)] sm:p-6">
             <ShimmerImage
               src={previewImage}
               alt="Villa with a swimming pool"
-              className="aspect-[1.1] w-full rounded-sm object-cover"
+              className="aspect-[1.1] w-full rounded-photo object-cover"
             />
             <h2 className="mt-6 text-[28px] font-semibold leading-7 tracking-[-0.035em]">
               Entire villa in

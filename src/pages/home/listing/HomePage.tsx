@@ -419,7 +419,7 @@ function ListingCard({ listing }: { listing: Listing }) {
         onClick={() => persistListingContext(listing)}
         className="block outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
-        <div className="relative aspect-[1.04/1] overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-black/5">
+        <div className="relative aspect-[1.04/1] overflow-hidden rounded-photo bg-slate-100 ring-1 ring-black/5">
           <ShimmerImage
             src={listing.image}
             alt={listing.title ?? listing.location}
@@ -485,7 +485,7 @@ function SectionHeader({
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="min-w-0">
-        <button type="button" onClick={onSeeAll} className="group flex min-w-0 items-center gap-1.5 text-left">
+        <button type="button" onClick={onSeeAll} className="group flex min-h-11 min-w-0 items-center gap-1.5 text-left sm:min-h-0">
           <h2 className="truncate text-[18px] font-bold tracking-[-0.025em] text-slate-900 sm:text-[22px]">{title}</h2>
           <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 shadow-sm ring-1 ring-slate-200/70 transition group-hover:bg-slate-200">
             <ArrowRightRegular className="h-2 w-2 transition group-hover:translate-x-0.5" />
@@ -506,7 +506,7 @@ function SectionHeader({
           type="button"
           aria-label="Défiler à droite"
           onClick={onNext}
-          className="inline-flex h-[28px] w-[28px] items-center justify-center rounded-full bg-slate-100 text-slate-800 transition hover:bg-slate-200"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full sm:h-[28px] sm:w-[28px] bg-slate-100 text-slate-800 transition hover:bg-slate-200"
         >
           <ChevronRightRegular className="h-4 w-4" />
         </button>

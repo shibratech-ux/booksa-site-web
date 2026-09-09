@@ -59,7 +59,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       data-loading={loading || undefined}
       className={cn(
         fullWidth ? 'w-full' : 'w-auto',
-        'flex h-12 max-sm:h-[56px] items-center justify-center gap-2 rounded-lg border-0! px-6 text-[16px] max-sm:text-[17.2px] font-semibold leading-5 max-sm:leading-6 shadow-none! transition-all duration-200 enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#E61E4D] focus:ring-offset-2 motion-reduce:transition-none motion-reduce:active:scale-100',
+        'flex h-12 max-sm:h-[56px] items-center justify-center gap-2 rounded-button border-0! px-6 text-[16px] max-sm:text-[17.2px] font-semibold leading-5 max-sm:leading-6 shadow-none! transition-all duration-200 enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#E61E4D] focus:ring-offset-2 motion-reduce:transition-none motion-reduce:active:scale-100',
         variantStyles[variant],
         className
       )}

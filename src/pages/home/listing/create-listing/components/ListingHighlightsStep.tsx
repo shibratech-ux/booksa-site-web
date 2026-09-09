@@ -175,7 +175,7 @@ export function ListingHighlightsStep({
       aria-labelledby="listing-highlights-heading"
     >
       <div className="mx-auto flex min-h-full w-full max-w-[748px] flex-col justify-start py-2 sm:justify-center sm:py-6">
-        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-sm bg-[var(--color-surface-muted)] px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)]">
+        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-pill bg-[var(--color-surface-muted)] px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)]">
           <CategoryIcon className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
           <span>{category.label}</span>
           <span aria-hidden="true">·</span>
@@ -206,7 +206,7 @@ export function ListingHighlightsStep({
                 aria-pressed={selected}
                 aria-disabled={unavailable}
                 onClick={() => toggleHighlight(id)}
-                className={`inline-flex min-h-12 items-center gap-2 rounded-md border px-4 text-sm font-semibold transition sm:min-h-14 sm:gap-3 sm:px-5 sm:text-base ${
+                className={`inline-flex min-h-12 items-center gap-2 rounded-pill border px-4 text-sm font-semibold transition sm:min-h-14 sm:gap-3 sm:px-5 sm:text-base ${
                   selected
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-[var(--shadow-sm)]'
                     : unavailable

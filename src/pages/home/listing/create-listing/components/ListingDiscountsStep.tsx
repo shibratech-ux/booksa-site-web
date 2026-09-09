@@ -85,7 +85,7 @@ export function ListingDiscountsStep({
               role="checkbox"
               aria-checked={selected}
               onClick={() => toggleDiscount(id)}
-              className="grid min-h-[105.6px] grid-cols-[48px_1fr_28px] items-center gap-3 rounded-md border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[118.8px] sm:grid-cols-[60px_1fr_32px] sm:gap-4 sm:px-6"
+              className="grid min-h-[105.6px] grid-cols-[48px_1fr_28px] items-center gap-3 rounded-card border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[118.8px] sm:grid-cols-[60px_1fr_32px] sm:gap-4 sm:px-6"
             >
               <span
                 className={`inline-flex w-fit items-center justify-center text-base font-bold ${
@@ -103,7 +103,7 @@ export function ListingDiscountsStep({
                 </span>
               </span>
               <span
-                className={`inline-flex h-6 w-6 items-center justify-center rounded-sm border transition ${
+                className={`inline-flex h-6 w-6 items-center justify-center rounded-xs border transition ${
                   selected
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                     : 'border-[var(--color-text-secondary)] bg-[var(--color-surface)]'

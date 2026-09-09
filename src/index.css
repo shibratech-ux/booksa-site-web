@@ -22,6 +22,15 @@
   --radius-lg: 1rem;
   --radius-xl: 1.25rem;
   --radius-2xl: 1.5rem;
+  /* Shared geometry by component role. */
+  --radius-button: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-card: 1rem;
+  --radius-photo: 1rem;
+  --radius-menu: 0.75rem;
+  --radius-dialog: 1.5rem;
+  --radius-search: 9999px;
+  --radius-pill: 9999px;
   --color-slate-50: #f7f7f7;
   --color-slate-100: #f7f7f7;
   --color-slate-200: #dddddd;
@@ -121,14 +130,11 @@
     --radius-xs: 0.25rem;
     --radius-sm: 0.5rem;
     --radius-md: 0.75rem;
-    --radius-card: 1rem;
     --radius-lg: 1rem;
     --radius-xl: 1.25rem;
     --radius-2xl: 1.5rem;
     --radius-3xl: 2rem;
     --radius-4xl: 2rem;
-    --radius-search: 2rem;
-    --radius-pill: 9999px;
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
     --shadow-sm: 0 3px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
@@ -320,7 +326,7 @@
 
   .dashboard-stat-card {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-card);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
       var(--color-card);
@@ -351,7 +357,7 @@
     justify-content: center;
     gap: 0.5rem;
     min-height: var(--control-standard);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-button);
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
@@ -415,7 +421,7 @@
 
   .table-container {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-card);
     overflow: hidden;
     background: var(--color-card);
     box-shadow: var(--shadow-sm);
@@ -430,14 +436,14 @@
 
   .surface-card {
     border: var(--border-normal) solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-card);
     background: var(--color-surface);
   }
 
   .search-surface {
     min-height: var(--control-large);
     border: var(--border-normal) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-search);
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
   }
@@ -477,7 +483,7 @@
   .field-control {
     min-height: var(--control-large);
     border: var(--border-normal) solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-field);
     background: var(--color-surface);
     color: var(--color-text-primary);
   }
@@ -493,7 +499,7 @@
     height: 2.75rem;
     align-items: center;
     justify-content: center;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
   }
 
   .shimmer-surface {

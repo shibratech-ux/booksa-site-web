@@ -25,7 +25,7 @@ function TripEmptyState() {
       <button
         type="button"
         onClick={() => navigate(ROUTES.home)}
-        className="mt-5 h-11 rounded-md bg-[var(--color-primary-500)] px-6 text-md font-semibold text-white shadow-sm transition active:scale-95"
+        className="mt-5 h-11 rounded-button bg-[var(--color-primary-500)] px-6 text-md font-semibold text-white shadow-sm transition active:scale-95"
       >
         Get started
       </button>
@@ -36,7 +36,7 @@ function TripEmptyState() {
 export default function TripsPage() {
   return (
     <main className="min-h-dvh bg-white text-slate-900">
-      <div className="relative flex min-h-[calc(100dvh-80px)] flex-col pb-20 sm:hidden">
+      <div className="relative flex min-h-dvh flex-col pb-[calc(80px+env(safe-area-inset-bottom))] sm:hidden">
         <div className="relative h-[32dvh] min-h-48 shrink-0">
           <BooksaMap
             title="Map for planning your next Booksa trip"

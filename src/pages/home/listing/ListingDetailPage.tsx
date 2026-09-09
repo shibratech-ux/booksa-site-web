@@ -180,7 +180,7 @@ function getReservationPrice(basePrice: string, nights: number) {
 
 function DetailStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-sm border border-slate-200 bg-white px-4 py-3">
+    <div className="rounded-field border border-slate-200 bg-white px-4 py-3">
       <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">{label}</p>
       <p className="mt-1 text-sm font-semibold text-gray-900">{value}</p>
     </div>
@@ -241,7 +241,7 @@ function MobileGalleryHero({
           <button
             type="button"
             onClick={onBack}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
             aria-label="Retour"
           >
             <ArrowLeftRegular className="h-5 w-5" />
@@ -250,14 +250,14 @@ function MobileGalleryHero({
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
               aria-label="Partager"
             >
               <ShareRegular className="h-4 w-4" />
             </button>
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-900 shadow-[var(--shadow-sm)] backdrop-blur"
               aria-label="Enregistrer"
             >
               <HeartRegular className="h-4 w-4" />
@@ -265,12 +265,12 @@ function MobileGalleryHero({
           </div>
         </div>
 
-        <div className="absolute bottom-4 right-4 rounded-sm bg-black/70 px-3 py-1.5 text-xs font-medium text-white">
+        <div className="absolute bottom-4 right-4 rounded-pill bg-black/70 px-3 py-1.5 text-xs font-medium text-white">
           {activeIndex + 1} / {images.length}
         </div>
       </div>
 
-      <div className="-mt-5 rounded-sm bg-white px-5 pt-10 text-center shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
+      <div className="-mt-5 rounded-t-dialog bg-white px-5 pt-10 text-center shadow-[0_-4px_16px_rgba(15,23,42,0.06)]">
         <h1 className="text-xl font-medium tracking-tight text-gray-900">
           {listing.title ?? 'Hôtel à Goma, RD.congo'}
         </h1>
@@ -298,12 +298,12 @@ function MobileBookingBar({
   const reservationPrice = getReservationPrice(listingPrice, nights);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] lg:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] bg-[var(--color-surface)] pb-[env(safe-area-inset-bottom)] lg:hidden">
       <div className="mx-auto max-w-lg">
-        <div className="flex items-center justify-between border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-4 shadow-[0_-12px_32px_rgba(15,23,42,0.12)]">
-          <div>
+        <div className="flex items-center justify-between gap-4 bg-[var(--color-surface)] px-4 py-4 shadow-[0_-12px_32px_rgba(15,23,42,0.12)]">
+          <div className="min-w-0 flex-1">
             <div className="text-sm font-bold leading-none text-[var(--color-text-primary)]">{reservationPrice}</div>
-            <div className="mt-1.5 text-xs font-normal text-[var(--color-text-secondary)]">
+            <div className="mt-1.5 text-xs font-normal leading-4 text-[var(--color-text-secondary)]">
               {t('forNights', { count: nights })} · {dateRange}
             </div>
           </div>
@@ -311,7 +311,7 @@ function MobileBookingBar({
           <button
             type="button"
             onClick={onReserve}
-            className="min-h-12 min-w-[140.8px] rounded-md bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-[var(--color-primary-600)] active:scale-95"
+            className="min-h-12 shrink-0 rounded-button bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-[var(--color-primary-600)] active:scale-95"
           >
             {t('reserve')}
           </button>
@@ -507,7 +507,7 @@ function DateRangePicker({
               type="button"
               aria-label="Mois précédent"
               onClick={() => setLeftMonth((current) => current.subtract(1, 'month'))}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
             >
               <ChevronLeftRegular className="h-5 w-5" />
             </button>
@@ -527,7 +527,7 @@ function DateRangePicker({
               type="button"
               aria-label="Mois suivant"
               onClick={() => setLeftMonth((current) => current.add(1, 'month'))}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-gray-400 transition hover:bg-slate-100 hover:text-gray-900"
             >
               <ChevronRightRegular className="h-4 w-4" />
             </button>
@@ -597,7 +597,7 @@ function DateRangePicker({
           <div className="mt-7 flex items-center justify-between">
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-200 text-gray-700 transition hover:bg-slate-100"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full border border-slate-200 text-gray-700 transition hover:bg-slate-100"
               aria-label="Ouvrir les raccourcis clavier"
             >
               <CalendarRegular className="h-4 w-4" />
@@ -653,7 +653,7 @@ function GuestCounter({
           aria-label={`Diminuer ${title}`}
           disabled={disabledDecrease}
           onClick={onDecrease}
-          className="flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="text-xl leading-none">−</span>
         </button>
@@ -663,7 +663,7 @@ function GuestCounter({
           aria-label={`Augmenter ${title}`}
           disabled={disabledIncrease}
           onClick={onIncrease}
-          className="flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-gray-500 transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <span className="text-xl leading-none">+</span>
         </button>
@@ -704,7 +704,7 @@ function GuestPickerDialog({
 
   return (
     <div className="absolute left-1/2 top-full z-40 mt-2 w-[min(100vw-2rem,360px)] -translate-x-1/2">
-      <div className="rounded-lg border border-slate-200 bg-white shadow-[var(--shadow-lg)]">
+      <div className="rounded-card border border-slate-200 bg-white shadow-[var(--shadow-lg)]">
         <div className="flex items-center justify-between border-b border-slate-200 px-5 py-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">Voyageurs</p>
@@ -715,7 +715,7 @@ function GuestPickerDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1 text-gray-500 transition hover:bg-slate-100 hover:text-gray-900"
+            className="rounded-full p-1 text-gray-500 transition hover:bg-slate-100 hover:text-gray-900"
             aria-label="Fermer le sélecteur de voyageurs"
           >
           <ChevronUpRegular className="h-5 w-5" />
@@ -780,13 +780,13 @@ function AmenitiesDialog({ open, onClose }: { open: boolean; onClose: () => void
         onClick={onClose}
       />
 
-      <div className="modal-animation relative z-10 w-full max-w-[836px] overflow-hidden rounded-lg bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
+      <div className="modal-animation relative z-10 w-full max-w-[836px] overflow-hidden rounded-dialog bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
         <div className="flex items-start justify-between px-6 pb-2 pt-5 sm:px-8 sm:pt-6">
           <button
             type="button"
             onClick={onClose}
             aria-label="Fermer la fenêtre des équipements"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-900 transition hover:bg-slate-100"
+            className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100"
           >
             <DismissRegular className="h-5 w-5" />
           </button>
@@ -867,7 +867,7 @@ function GuestReviewsDialog({
         onClick={onClose}
       />
 
-      <div className="relative z-10 mt-2 flex h-[min(88vh,820px)] w-full max-w-[902px] flex-col overflow-hidden rounded-lg bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
+      <div className="relative z-10 mt-2 flex h-[min(88vh,820px)] w-full max-w-[902px] flex-col overflow-hidden rounded-dialog bg-white shadow-[var(--shadow-xl)]" role="dialog" aria-modal="true">
         <div className="flex items-start justify-between px-6 pb-2 pt-6 sm:px-8">
           <div className="space-y-2">
             <h2 className="text-xl font-medium tracking-[-0.04em] text-gray-900">113 avis de voyageurs</h2>
@@ -880,7 +880,7 @@ function GuestReviewsDialog({
             type="button"
             onClick={onClose}
             aria-label="Fermer la fenêtre des avis"
-            className="inline-flex cursor-pointer h-10 w-10 items-center justify-center rounded-md text-gray-900 transition hover:bg-slate-100"
+            className="inline-flex cursor-pointer h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100"
           >
             <DismissRegular className="h-5 w-5" />
           </button>
@@ -892,7 +892,7 @@ function GuestReviewsDialog({
               <button
                 key={tag.label}
                 type="button"
-                className="inline-flex shrink-0 items-center gap-2 rounded-md border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
+                className="inline-flex shrink-0 items-center gap-2 rounded-button border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
               >
                 <span>{tag.label}</span>
                 <span className="text-gray-500">{tag.count}</span>
@@ -900,7 +900,7 @@ function GuestReviewsDialog({
             ))}
             <button
               type="button"
-              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-white text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
+              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-gray-700 shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:bg-slate-50"
               aria-label="Afficher plus de tags d’avis"
             >
               <ChevronRightRegular className="h-4 w-4" />
@@ -912,7 +912,7 @@ function GuestReviewsDialog({
           <div className="flex items-center justify-between gap-4">
             <button
               type="button"
-              className="inline-flex h-14 w-14 items-center justify-center rounded-sm border border-slate-200 bg-white text-gray-700 transition hover:bg-slate-50"
+              className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-slate-200 bg-white text-gray-700 transition hover:bg-slate-50"
               aria-label="Rechercher dans les avis"
             >
               <SearchRegular className="h-5 w-5" />
@@ -920,7 +920,7 @@ function GuestReviewsDialog({
 
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-sm border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-gray-700 transition hover:bg-slate-50"
+              className="inline-flex items-center gap-2 rounded-button border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-gray-700 transition hover:bg-slate-50"
             >
               <span>Les plus pertinents</span>
               <ChevronDownRegular className="h-4 w-4" />
@@ -935,7 +935,7 @@ function GuestReviewsDialog({
                 <div className="flex items-start gap-4">
                   <ShimmerImage
                     alt={review.name}
-                    className="h-12 w-12 rounded-sm object-cover ring-1 ring-slate-200"
+                    className="h-12 w-12 rounded-full object-cover ring-1 ring-slate-200"
                     src={review.avatarUrl}
                   />
                   <div className="min-w-0">
@@ -1003,7 +1003,7 @@ function BookingCard({
   };
 
   return (
-    <div className="relative mt-10 rounded-sm border border-slate-200 bg-white p-5 sm:p-6">
+    <div className="relative mt-10 rounded-card border border-slate-200 bg-white p-5 sm:p-6">
       <div className="mt-4">
         <p className="text-lg font-semibold tracking-tight text-gray-900">
           <span>{getReservationPrice(price, nights)}</span>
@@ -1011,7 +1011,7 @@ function BookingCard({
         </p>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-sm border border-slate-300">
+      <div className="mt-4 overflow-hidden rounded-field border border-slate-300">
         <div className="grid grid-cols-2 divide-x divide-slate-300 border-b border-slate-300">
           <div className="px-4 py-3">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">{t('checkIn')}</p>
@@ -1082,7 +1082,7 @@ function RoomCard({ listing, nights }: { listing: Listing; nights: number }) {
   const roomImage = listing.gallery?.[0] ?? listing.image;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-sm border border-slate-200 bg-white md:flex-row">
+    <div className="flex flex-col overflow-hidden rounded-card border border-slate-200 bg-white md:flex-row">
       <div className="md:w-[264px]">
         <ShimmerImage alt={listing.location} className="h-full w-full object-cover md:min-h-[187px]" src={roomImage} />
       </div>
@@ -1103,7 +1103,7 @@ function HostHighlightsCard({ hostName = 'Pamela' }: { hostName?: string }) {
     <section className="pt-8">
       <div className="py-6">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-rose-100 text-base font-medium text-rose-700">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-rose-100 text-base font-medium text-rose-700">
             {hostName.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -1197,7 +1197,7 @@ export default function ListingDetailPage() {
             }}
           />
 
-          <div className="hidden gap-1.5 overflow-hidden rounded-sm md:grid">
+          <div className="hidden gap-1.5 overflow-hidden rounded-photo md:grid">
             <div className="grid gap-1.5 lg:grid-cols-[2fr_1fr_1fr]">
               <button
               onClick={() => {
@@ -1248,7 +1248,7 @@ export default function ListingDetailPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/12 via-transparent to-transparent" />
                     {index === 1 ? (
-                      <span className="absolute bottom-4 right-4 rounded-sm bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[var(--shadow-sm)] transition group-hover:-translate-y-0.5 group-hover:shadow-[var(--shadow-md)]">
+                      <span className="absolute bottom-4 right-4 rounded-button bg-white px-4 py-2 text-xs font-semibold text-gray-900 shadow-[var(--shadow-sm)] transition group-hover:-translate-y-0.5 group-hover:shadow-[var(--shadow-md)]">
                         Voir toutes les photos
                       </span>
                     ) : null}
@@ -1283,7 +1283,7 @@ export default function ListingDetailPage() {
               <RoomCard listing={listing} nights={nights} />
               <button
                 type="button"
-                className="w-full rounded-md bg-slate-100 px-5 py-4 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
+                className="w-full rounded-button bg-slate-100 px-5 py-4 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
               >
                 Voir les 2 chambres
               </button>
@@ -1304,7 +1304,7 @@ export default function ListingDetailPage() {
               <button
                   type="button"
                   onClick={() => setAmenitiesOpen(true)}
-                  className="rounded-md bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
+                  className="rounded-button bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
                 >
                   Voir les 20 équipements
                 </button>
@@ -1336,7 +1336,7 @@ export default function ListingDetailPage() {
                     <div className="flex items-center gap-3">
                       <ShimmerImage
                         alt={review.name}
-                        className="h-12 w-12 rounded-sm object-cover ring-1 ring-slate-200"
+                        className="h-12 w-12 rounded-full object-cover ring-1 ring-slate-200"
                         src={review.avatarUrl}
                       />
                       <div>
@@ -1354,7 +1354,7 @@ export default function ListingDetailPage() {
                 <button
                   type="button"
                   onClick={() => setReviewsOpen(true)}
-                  className="rounded-md bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
+                  className="rounded-button bg-slate-100 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-slate-200"
                 >
                   Voir les 113 avis
                 </button>
@@ -1369,10 +1369,10 @@ export default function ListingDetailPage() {
 
             <section id="location" className="space-y-5 border-t border-slate-200 pt-8">
               <SectionHeading title="Où vous serez" subtitle="Kinshasa, France" />
-              <div className="overflow-hidden rounded-sm border border-slate-200 bg-white">
+              <div className="overflow-hidden rounded-card border border-slate-200 bg-white">
                 <div className="relative h-[308px] bg-[radial-gradient(circle_at_20%_20%,rgba(246,199,105,0.35),transparent_20%),radial-gradient(circle_at_70%_30%,rgba(244,114,182,0.22),transparent_18%),linear-gradient(180deg,#f8fafc,#eef2ff)]">
                   <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
-                  <div className="absolute left-6 top-6 rounded-sm bg-white/95 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
+                  <div className="absolute left-6 top-6 rounded-pill bg-white/95 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
                     Aperçu de la carte
                   </div>
                 </div>
@@ -1383,7 +1383,7 @@ export default function ListingDetailPage() {
               <SectionHeading title="À savoir" />
               <div className="grid gap-5 xl:grid-cols-3">
                 {thingsToKnow.map(({ title, icon: Icon, description }) => (
-                  <div key={title} className="rounded-sm p-5 ">
+                  <div key={title} className="rounded-card p-5 ">
                     <Icon className="h-6 w-6 text-gray-700" />
                     <h3 className="mt-4 text-sm font-semibold text-gray-900">{title}</h3>
                     <ul className="mt-3 space-y-1 text-sm leading-5 text-gray-600">
@@ -1400,7 +1400,7 @@ export default function ListingDetailPage() {
           <aside className="hidden space-y-4 lg:sticky lg:top-24 lg:block lg:self-start">
             <BookingCard listing={listing} price={listing.price} nights={nights} range={range} />
 
-            <div className="rounded-sm border border-slate-200 bg-white p-5 text-sm text-gray-600 sm:p-6">
+            <div className="rounded-card border border-slate-200 bg-white p-5 text-sm text-gray-600 sm:p-6">
               <p className="font-medium text-gray-900">Signaler ce logement</p>
               <p className="mt-2 leading-6">
                 Nous pouvons afficher cela comme action d’assistance plus tard si vous voulez un parcours Booksa
@@ -1433,29 +1433,29 @@ export default function ListingDetailPage() {
 // MeetYourHost.tsx
 export  function MeetYourHost() {
   return (
-    <section className="w-full border-t border-gray-200 bg-white px-6 py-10">
+    <section className="w-full min-w-0 border-t border-gray-200 bg-white py-8 sm:px-6 sm:py-10">
         <h2 className="mb-6 text-xl font-medium text-neutral-900">
         Rencontrez votre hôte
       </h2>
 
-      <div className="grid gap-10 md:grid-cols-[420px_1fr]">
+      <div className="grid min-w-0 gap-8 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
         {/* Host Card */}
-        <div className="rounded-sm bg-white/12 p-8 shadow-2xl shadow-gray-300/90 ring-1 ring-gray-100">
-          <div className="flex items-center justify-between gap-8">
-            <div className="flex flex-1 flex-col items-center">
-              <div className="relative mb-3 flex h-24 w-24 items-center justify-center rounded-sm bg-pink-100">
+        <div className="min-w-0 rounded-card bg-white/12 p-5 sm:p-8 shadow-2xl shadow-gray-300/90 ring-1 ring-gray-100">
+          <div className="flex min-w-0 items-center justify-between gap-4 sm:gap-8">
+            <div className="flex min-w-0 flex-1 flex-col items-center">
+              <div className="relative mb-3 flex h-24 w-24 items-center justify-center rounded-full bg-pink-100">
                 <span className="text-3xl font-bold text-rose-700">P</span>
 
-                <div className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-sm bg-rose-600 text-white shadow-md">
+                <div className="absolute -bottom-1 -right-1 flex h-9 w-9 items-center justify-center rounded-full bg-rose-600 text-white shadow-md">
                   <CheckmarkCircleRegular className="h-5 w-5 text-white" />
                 </div>
               </div>
 
-              <h3 className="text-3xl font-bold text-neutral-900">Pamela</h3>
+              <h3 className="text-2xl font-bold text-neutral-900 sm:text-3xl">Pamela</h3>
               <p className="text-sm text-neutral-500">Hôte</p>
             </div>
 
-            <div className="w-28 space-y-3">
+            <div className="w-24 shrink-0 space-y-3 sm:w-28">
               <Stat value="317" label="Avis" />
               <Stat value="4.74 ★" label="Note" />
               <Stat value="2" label="Années d’hébergement" last />
@@ -1476,7 +1476,7 @@ export  function MeetYourHost() {
               Répond en moins d’une heure
             </p>
 
-            <button className="mt-8 rounded-md bg-neutral-100 px-7 py-4 text-base font-semibold text-neutral-900 transition hover:bg-neutral-200">
+            <button className="mt-8 rounded-button bg-neutral-100 px-7 py-4 text-base font-semibold text-neutral-900 transition hover:bg-neutral-200">
               Envoyer un message à l’hôte
             </button>
           </div>

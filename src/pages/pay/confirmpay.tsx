@@ -77,7 +77,7 @@ function PaymentChoice({
       type="button"
       onClick={onClick}
       className={[
-        'flex w-full cursor-pointer items-start gap-4 px-0 py-0 text-left transition',
+        'flex min-h-11 w-full cursor-pointer items-start gap-4 px-0 py-2 text-left sm:min-h-0 sm:py-0 transition',
         active ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
       ].join(' ')}
     >
@@ -87,11 +87,11 @@ function PaymentChoice({
       </span>
       <span
         className={[
-          'mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-2',
+          'mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2',
           active ? 'border-[var(--color-text-primary)]' : 'border-[var(--color-border)]'
         ].join(' ')}
       >
-        {active ? <span className="h-3 w-3 rounded-sm bg-[var(--color-text-primary)]" /> : null}
+        {active ? <span className="h-3 w-3 rounded-full bg-[var(--color-text-primary)]" /> : null}
       </span>
     </button>
   );
@@ -107,7 +107,7 @@ function SectionCard({
   subtitle?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 sm:px-6 sm:py-6">
+    <div className="rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 sm:px-6 sm:py-6">
       <div className="mb-5">
         <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]">{title}</h2>
         {subtitle ? <p className="mt-1 text-xs leading-6 text-[var(--color-text-secondary)]">{subtitle}</p> : null}
@@ -157,15 +157,16 @@ export default function ConfirmPayPage() {
   return (
     <div className="min-h-screen bg-[var(--color-project-shell)] text-[var(--color-text-primary)]">
       <header className="sticky top-0 z-30 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-        <div className="mx-auto flex max-w-[1584px] items-center px-4 py-4 sm:px-6 lg:px-10">
+        <div className="mx-auto flex max-w-[1584px] items-center gap-3 px-4 py-4 sm:px-6 lg:px-10">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="inline-flex cursor-pointer items-center gap-2 text-[var(--color-text-primary)]"
+            className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]"
             aria-label="Retour"
           >
-            <BooksaLogo />
+            <ArrowLeftRegular className="h-5 w-5" aria-hidden="true" />
           </button>
+          <BooksaLogo />
         </div>
       </header>
 
@@ -174,7 +175,7 @@ export default function ConfirmPayPage() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-md bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border)] transition hover:-translate-y-0.5"
+            className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border)] transition hover:-translate-y-0.5"
             aria-label="Retour"
           >
             <ArrowLeftRegular className="h-5 w-5" />
@@ -187,7 +188,7 @@ export default function ConfirmPayPage() {
         <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
           <section className="space-y-5">
             <SectionCard title="1. Choisissez quand payer">
-              <div className="overflow-hidden rounded-sm bg-[var(--color-surface)]">
+              <div className="overflow-hidden rounded-photo bg-[var(--color-surface)]">
                 <div className="border-b border-[var(--color-border)] px-0 py-2">
                   <PaymentChoice
                     active={selectedChoice === 'now'}
@@ -208,7 +209,7 @@ export default function ConfirmPayPage() {
               <div className="mt-6 flex justify-end">
                 <button
                   type="button"
-                  className="inline-flex min-h-12 min-w-[127.6px] cursor-pointer items-center justify-center rounded-md bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
+                  className="inline-flex min-h-12 min-w-[127.6px] cursor-pointer items-center justify-center rounded-button bg-[var(--color-primary-500)] px-6 py-3 text-base font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
                 >
                   Suivant
                 </button>
@@ -218,9 +219,9 @@ export default function ConfirmPayPage() {
           </section>
 
           <aside className="space-y-4 lg:sticky lg:top-8 lg:self-start">
-            <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] sm:p-6">
+            <div className="rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] sm:p-6">
               <div className="flex gap-4">
-                <ShimmerImage alt={listing.location} src={roomImage} className="h-24 w-24 shrink-0 rounded-xl object-cover" />
+                <ShimmerImage alt={listing.location} src={roomImage} className="h-24 w-24 shrink-0 rounded-photo object-cover" />
                 <div className="min-w-0">
                   <h2 className="text-lg font-semibold leading-6 text-[var(--color-text-primary)]">
                     {listing.title ?? listing.location}
@@ -256,7 +257,7 @@ export default function ConfirmPayPage() {
                     </div>
                     <button
                       type="button"
-                      className="cursor-pointer rounded-md bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-4 py-2 text-xs font-medium text-[var(--color-text-primary)]"
+                      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-button bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-4 py-2 text-xs font-medium text-[var(--color-text-primary)]"
                     >
                       Modifier
                     </button>
@@ -271,7 +272,7 @@ export default function ConfirmPayPage() {
                     </div>
                     <button
                       type="button"
-                      className="cursor-pointer rounded-md bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-4 py-2 text-xs font-medium text-[var(--color-text-primary)]"
+                      className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-button bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-4 py-2 text-xs font-medium text-[var(--color-text-primary)]"
                     >
                       {t('edit')}
                     </button>
@@ -292,7 +293,7 @@ export default function ConfirmPayPage() {
                   </div>
                   <button
                     type="button"
-                    className="mt-3 cursor-pointer text-xs font-medium text-[var(--color-text-primary)] underline underline-offset-4"
+                    className="mt-3 inline-flex min-h-11 cursor-pointer items-center text-xs font-medium text-[var(--color-text-primary)] underline underline-offset-4"
                   >
                     Détail du prix
                   </button>
@@ -302,7 +303,7 @@ export default function ConfirmPayPage() {
               <div className="mt-5">
                 <button
                   type="button"
-                  className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-[var(--color-primary-500)] px-5 py-4 text-sm font-normal text-white transition hover:bg-[var(--color-primary-600)]"
+                  className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-button bg-[var(--color-primary-500)] px-5 py-4 text-sm font-normal text-white transition hover:bg-[var(--color-primary-600)]"
                 >
                   Confirmer et payer
                 </button>
@@ -312,7 +313,7 @@ export default function ConfirmPayPage() {
               </div>
             </div>
 
-            <div className="rounded-sm bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-5 py-4 text-sm text-[var(--color-text-primary)]">
+            <div className="rounded-card bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-5 py-4 text-sm text-[var(--color-text-primary)]">
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-7 w-7 items-center justify-center rounded-sm bg-[var(--color-primary-100)] text-[var(--color-primary-700)]">
                   <CheckmarkRegular className="h-4 w-4" />

@@ -46,7 +46,7 @@ export function ListingSafetyDetailsStep({
       <fieldset className="mt-8">
         <legend className="flex items-center gap-2 text-lg font-semibold">
           How are you hosting on Booksa?
-          <button type="button" aria-label="Learn about hosting types" className="rounded-md">
+          <button type="button" aria-label="Learn about hosting types" className="rounded-button">
             <InfoIcon />
           </button>
         </legend>
@@ -64,8 +64,8 @@ export function ListingSafetyDetailsStep({
                 onChange={() => onHostingTypeChange(value)}
                 className="peer sr-only"
               />
-              <span className="inline-flex h-[25.3px] w-[25.3px] items-center justify-center rounded-sm border border-[var(--color-text-secondary)] peer-checked:border-2 peer-checked:border-[var(--color-text-primary)]">
-                <span className={`h-[14.3px] w-[14.3px] rounded-sm ${hostingType === value ? 'bg-[var(--color-text-primary)]' : ''}`} />
+              <span className="inline-flex h-[25.3px] w-[25.3px] items-center justify-center rounded-full border border-[var(--color-text-secondary)] peer-checked:border-2 peer-checked:border-[var(--color-text-primary)]">
+                <span className={`h-[14.3px] w-[14.3px] rounded-full ${hostingType === value ? 'bg-[var(--color-text-primary)]' : ''}`} />
               </span>
               {label}
             </label>
@@ -76,7 +76,7 @@ export function ListingSafetyDetailsStep({
       <fieldset className="mt-10">
         <legend className="flex items-center gap-2 text-lg font-semibold">
           Does your place have any of these?
-          <button type="button" aria-label="Learn about required safety disclosures" className="rounded-md">
+          <button type="button" aria-label="Learn about required safety disclosures" className="rounded-button">
             <InfoIcon />
           </button>
         </legend>
@@ -97,7 +97,7 @@ export function ListingSafetyDetailsStep({
                   className="peer sr-only"
                 />
                 <span
-                  className={`inline-flex h-[25.3px] w-[25.3px] shrink-0 items-center justify-center rounded-sm border transition ${
+                  className={`inline-flex h-[25.3px] w-[25.3px] shrink-0 items-center justify-center rounded-xs border transition ${
                     selected
                       ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                       : 'border-[var(--color-text-secondary)] bg-[var(--color-surface)]'

@@ -253,7 +253,7 @@ export function AmenitiesStep({
                       type="button"
                       aria-pressed={selected}
                       onClick={() => onToggle(id)}
-                      className={`flex min-h-[114.4px] flex-col items-start rounded-md border bg-[var(--color-surface)] p-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[136.4px] ${
+                      className={`flex min-h-[114.4px] flex-col items-start rounded-card border bg-[var(--color-surface)] p-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[136.4px] ${
                         selected
                           ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
                           : 'border-[var(--color-border)]'

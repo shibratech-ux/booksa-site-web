@@ -178,7 +178,7 @@ function PhotoTourGallery({
   onImageClick: () => void;
 }) {
   const galleryFrameClass =
-    'h-full overflow-hidden rounded-sm bg-slate-100 shadow-[0_18px_40px_rgba(15,23,42,0.08)] ring-1 ring-black/5';
+    'h-full overflow-hidden rounded-photo bg-slate-100 shadow-[0_18px_40px_rgba(15,23,42,0.08)] ring-1 ring-black/5';
 
   if (images.length <= 1) {
     return (
@@ -355,27 +355,27 @@ function PhotoLightbox({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex cursor-pointer items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-1 sm:backdrop-blur-0"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-button bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-1 sm:backdrop-blur-0"
           >
             <DismissRegular className="h-5 w-5" />
             <span className="hidden sm:inline">Fermer</span>
           </button>
 
-          <div className="rounded-sm bg-white/10 px-3 py-1.5 text-sm font-medium tabular-nums text-white/95 backdrop-blur-sm sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-0">
+          <div className="rounded-pill bg-white/10 px-3 py-1.5 text-sm font-medium tabular-nums text-white/95 backdrop-blur-sm sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-0">
             {currentIndex + 1} / {images.length}
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
-              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white/10 text-white transition hover:bg-white/15"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
               aria-label="Partager"
             >
               <ShareRegular className="h-4 w-4" />
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-white/10 text-white transition hover:bg-white/15"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
               aria-label="Enregistrer"
             >
               <HeartRegular className="h-4 w-4" />
@@ -407,7 +407,7 @@ function PhotoLightbox({
           <button
             type="button"
             onClick={() => setCurrentIndex((current) => (current - 1 + images.length) % images.length)}
-            className="absolute left-2 top-1/2 hidden h-10 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-md border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:left-6 sm:h-12 sm:w-12"
+            className="absolute left-2 top-1/2 hidden h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:left-6 sm:h-12 sm:w-12"
             aria-label="Image précédente"
           >
             <ChevronLeftRegular className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -427,7 +427,7 @@ function PhotoLightbox({
           <button
             type="button"
             onClick={() => setCurrentIndex((current) => (current + 1) % images.length)}
-            className="absolute right-2 top-1/2 hidden h-10 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-md border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:right-6 sm:h-12 sm:w-12"
+            className="absolute right-2 top-1/2 hidden h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:right-6 sm:h-12 sm:w-12"
             aria-label="Image suivante"
           >
             <ChevronRightRegular className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -507,7 +507,7 @@ function PhotoTourMobileCard({
     <motion.button
       type="button"
       onClick={() => onActivate(currentImage)}
-      className="group relative overflow-hidden rounded-md bg-slate-100 text-left ring-1 ring-black/5"
+      className="group relative overflow-hidden rounded-button bg-slate-100 text-left ring-1 ring-black/5"
       whileTap={{ scale: 0.98 }}
     >
       <div
@@ -534,7 +534,7 @@ function PhotoTourMobileCard({
       </div>
 
       {section.images.length > 1 ? (
-        <div className="absolute right-3 top-3 rounded-sm bg-black/45 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
+        <div className="absolute right-3 top-3 rounded-pill bg-black/45 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
           {currentIndex + 1}/{section.images.length}
         </div>
       ) : null}
@@ -606,7 +606,7 @@ export function PhotoTourPage() {
           <button
             type="button"
             onClick={handleBack}
-            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-gray-900 transition hover:bg-slate-100 sm:h-11 sm:w-11"
+            className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100 sm:h-11 sm:w-11"
             aria-label="Retour"
           >
             <ArrowLeftRegular className="h-5 w-5" />
@@ -615,14 +615,14 @@ export function PhotoTourPage() {
           <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 sm:gap-3">
             <button
               type="button"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-button px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
             >
               <ShareRegular className="h-4 w-4" />
               <span className="hidden sm:inline">Partager</span>
             </button>
             <button
               type="button"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-button px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
             >
               <HeartRegular className="h-4 w-4" />
               <span className="hidden sm:inline">Enregistrer</span>
@@ -673,7 +673,7 @@ export function PhotoTourPage() {
               }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
-              <div className="overflow-hidden rounded-sm bg-slate-100 ring-1 ring-black/5">
+              <div className="overflow-hidden rounded-photo bg-slate-100 ring-1 ring-black/5">
                 <ShimmerImage
                   alt={section.label}
                   className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.04]"

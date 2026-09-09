@@ -58,7 +58,7 @@ export function LoadingScreen({
           />
 
           <div
-            className="relative rounded-sm px-5 py-4"
+            className="relative rounded-card px-5 py-4"
             style={{
               backgroundColor: 'transparent'
             }}

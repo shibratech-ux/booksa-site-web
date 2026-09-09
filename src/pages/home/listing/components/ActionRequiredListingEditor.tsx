@@ -57,9 +57,9 @@ function EditorCard({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-      <h2 className="text-base font-semibold">{title}</h2>
-      <div className="mt-2 break-words text-sm leading-6 text-[var(--color-text-secondary)]">{children}</div>
+    <section className="rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+      <h2 className="text-[0.830466rem] font-semibold">{title}</h2>
+      <div className="mt-2 break-words text-[0.72665775rem] leading-6 text-[var(--color-text-secondary)]">{children}</div>
     </section>
   );
 }
@@ -255,7 +255,7 @@ export function ActionRequiredListingEditor({
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="grid min-h-[calc(100dvh-96px)] bg-[var(--color-surface)] [&_button:focus-visible]:outline [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[var(--color-text-primary)] lg:h-[calc(100dvh-96px)] lg:min-h-0 lg:grid-cols-[360px_minmax(0,1fr)] lg:overflow-hidden xl:grid-cols-[400px_minmax(0,1fr)]"
+      className="grid text-[0.830466rem] min-h-[calc(100dvh-96px)] bg-[var(--color-surface)] [&_button:focus-visible]:outline [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[var(--color-text-primary)] lg:h-[calc(100dvh-96px)] lg:min-h-0 lg:grid-cols-[360px_minmax(0,1fr)] lg:overflow-hidden xl:grid-cols-[400px_minmax(0,1fr)]"
     >
       <aside className={`${isMobileDetailOpen ? 'hidden' : 'block'} min-w-0 border-[var(--color-border)] px-6 py-8 sm:px-8 lg:block lg:overflow-y-auto lg:overscroll-contain lg:border-r lg:py-10`}>
         <div className="mx-auto max-w-lg pb-6">
@@ -268,20 +268,20 @@ export function ActionRequiredListingEditor({
             >
               <ArrowLeft className="h-5 w-5" aria-hidden="true" />
             </button>
-            <h1 className="text-[28px] font-semibold leading-tight tracking-[-0.03em]">Listing editor</h1>
+            <h1 className="text-[23.253048px] font-semibold leading-tight tracking-[-0.03em]">Listing editor</h1>
           </div>
 
           <div className="mt-8 flex items-center gap-3">
             <div className="flex min-w-0 flex-1 rounded-full bg-[var(--color-surface-muted)] p-1">
               <button
                 type="button"
-                className="min-h-11 flex-1 rounded-full bg-[var(--color-surface)] px-3 py-2.5 text-sm font-semibold shadow-[var(--shadow-sm)]"
+                className="min-h-11 flex-1 rounded-full bg-[var(--color-surface)] px-3 py-2.5 text-[0.72665775rem] font-semibold shadow-[var(--shadow-sm)]"
               >
                 Your space
               </button>
               <button
                 type="button"
-                className="min-h-11 flex-1 rounded-full px-3 py-2.5 text-sm font-semibold text-[var(--color-text-secondary)]"
+                className="min-h-11 flex-1 rounded-full px-3 py-2.5 text-[0.72665775rem] font-semibold text-[var(--color-text-secondary)]"
               >
                 Arrival guide
               </button>
@@ -299,7 +299,7 @@ export function ActionRequiredListingEditor({
             type="button"
             onClick={() => setIsPublishDrawerOpen(true)}
             aria-haspopup="dialog"
-            className="mt-8 flex w-full items-center gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-left shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-surface-muted)]"
+            className="mt-8 flex w-full items-center gap-4 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] p-5 text-left shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-surface-muted)]"
           >
             <span className="relative inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-surface-muted)]">
               <ThreeDIcon
@@ -307,13 +307,13 @@ export function ActionRequiredListingEditor({
                 sourceSize={100}
                 className="h-10 w-10 object-contain"
               />
-              <span className="absolute -left-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--color-text-primary)] px-1 text-xs font-bold text-[var(--color-surface)]">
+              <span className="absolute -left-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--color-text-primary)] px-1 text-[0.6228495rem] font-bold text-[var(--color-surface)]">
                 2
               </span>
             </span>
             <span>
-              <span className="block text-base font-semibold">Complete steps to publish</span>
-              <span className="mt-1 block text-sm text-[var(--color-text-secondary)]">Required to publish</span>
+              <span className="block text-[0.830466rem] font-semibold">Complete steps to publish</span>
+              <span className="mt-1 block text-[0.72665775rem] text-[var(--color-text-secondary)]">Required to publish</span>
             </span>
           </button>
 
@@ -323,16 +323,16 @@ export function ActionRequiredListingEditor({
               onClick={() => { setActiveSection('photos'); setIsMobileDetailOpen(true); }}
               ref={activeSection === 'photos' ? selectedSectionRef : undefined}
               aria-pressed={activeSection === 'photos'}
-              className={`rounded-2xl border-2 p-5 text-left transition-colors hover:bg-[var(--color-surface-muted)] ${
+              className={`rounded-card border-2 p-5 text-left transition-colors hover:bg-[var(--color-surface-muted)] ${
                 activeSection === 'photos'
                   ? 'border-[var(--color-text-primary)]'
                   : 'border-transparent bg-[var(--color-surface-muted)]'
               }`}
             >
-              <span className="text-base font-semibold">{isPhotoTourCreated ? 'Photo tour' : 'Photos'}</span>
+              <span className="text-[0.830466rem] font-semibold">{isPhotoTourCreated ? 'Photo tour' : 'Photos'}</span>
               {isPhotoTourCreated ? (
                 <span className="mt-1 block">
-                  <span className="block text-sm text-[var(--color-text-secondary)]">
+                  <span className="block text-[0.72665775rem] text-[var(--color-text-secondary)]">
                     {bedroomCount} {bedroomCount === 1 ? 'bedroom' : 'bedrooms'} · {bedCount} {bedCount === 1 ? 'bed' : 'beds'} · {typeof basics.bathrooms === 'number' ? basics.bathrooms : 0} bath
                   </span>
                   <span className="relative mt-6 block h-40">
@@ -341,29 +341,29 @@ export function ActionRequiredListingEditor({
                         key={photoUrl}
                         src={photoUrl}
                         alt=""
-                        className="absolute bottom-0 h-32 w-28 rounded-xl object-cover shadow-[var(--shadow-md)]"
+                        className="absolute bottom-0 h-32 w-28 rounded-photo object-cover shadow-[var(--shadow-md)]"
                         style={{ left: `${index * 62 + 8}px`, zIndex: index + 1 }}
                       />
                     ))}
-                    <span className="absolute left-1/2 top-2 z-10 -translate-x-1/2 rounded-full bg-[var(--color-surface)] px-3 py-2 text-xs font-semibold shadow-[var(--shadow-sm)]">
+                    <span className="absolute left-1/2 top-2 z-10 -translate-x-1/2 rounded-full bg-[var(--color-surface)] px-3 py-2 text-[0.6228495rem] font-semibold shadow-[var(--shadow-sm)]">
                       {photoUrls.length} photos
                     </span>
                   </span>
-                  <span className="mt-4 flex items-center gap-2 text-sm font-semibold">
+                  <span className="mt-4 flex items-center gap-2 text-[0.72665775rem] font-semibold">
                     <span className="h-2 w-2 shrink-0 rounded-full bg-orange-600" aria-hidden="true" />
                     You have 2 tasks
                   </span>
                 </span>
               ) : (
                 <span className="mt-4 flex items-center gap-3 rounded-xl bg-[var(--color-surface-muted)] p-4">
-                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[var(--color-border)]">
+                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-photo bg-[var(--color-border)]">
                     {photoUrls[0] ? (
                       <ShimmerImage src={photoUrls[0]} alt="" className="h-full w-full object-cover" />
                     ) : (
                       <Image className="h-5 w-5" aria-hidden="true" />
                     )}
                   </span>
-                  <span className="min-w-0 flex-1 text-sm font-semibold leading-snug">
+                  <span className="min-w-0 flex-1 text-[0.72665775rem] font-semibold leading-snug">
                     Showcase your photos by room, instantly
                   </span>
                   <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-text-primary)] text-[var(--color-surface)]">
@@ -378,14 +378,14 @@ export function ActionRequiredListingEditor({
               onClick={() => { setActiveSection('title'); setIsMobileDetailOpen(true); }}
               ref={activeSection === 'title' ? selectedSectionRef : undefined}
               aria-pressed={activeSection === 'title'}
-              className={`rounded-2xl border-2 p-5 text-left transition-colors hover:bg-[var(--color-surface-muted)] ${
+              className={`rounded-card border-2 p-5 text-left transition-colors hover:bg-[var(--color-surface-muted)] ${
                 activeSection === 'title'
                   ? 'border-[var(--color-text-primary)]'
                   : 'border-transparent bg-[var(--color-surface-muted)]'
               }`}
             >
-              <span className="block text-base font-semibold">Title</span>
-              <span className="mt-2 line-clamp-2 break-words text-xl leading-7 text-[var(--color-text-secondary)]">{listingTitle}</span>
+              <span className="block text-[0.830466rem] font-semibold">Title</span>
+              <span className="mt-2 line-clamp-2 break-words text-[1.0380825rem] leading-7 text-[var(--color-text-secondary)]">{listingTitle}</span>
             </button>
 
             <EditorCard title="Property type">
@@ -462,7 +462,7 @@ export function ActionRequiredListingEditor({
 
             <EditorCard title="About the host">
               <div className="flex flex-col items-center py-5 text-center text-[var(--color-text-primary)]">
-                <span className="inline-flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[var(--color-primary-100)] text-3xl font-semibold text-[var(--color-primary-700)]">
+                <span className="inline-flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[var(--color-primary-100)] text-[1.660932rem] font-semibold text-[var(--color-primary-700)]">
                   {hostAvatarUrl ? (
                     <ShimmerImage src={hostAvatarUrl} alt="" className="h-full w-full rounded-full object-cover" />
                   ) : (
@@ -470,7 +470,7 @@ export function ActionRequiredListingEditor({
                   )}
                 </span>
                 <span className="mt-5 font-semibold">{hostName}</span>
-                <span className="text-xs text-[var(--color-text-secondary)]">Started hosting in {hostingYear}</span>
+                <span className="text-[0.6228495rem] text-[var(--color-text-secondary)]">Started hosting in {hostingYear}</span>
               </div>
             </EditorCard>
 
@@ -511,7 +511,7 @@ export function ActionRequiredListingEditor({
 
           <button
             type="button"
-            className="sticky bottom-5 z-10 mx-auto mt-5 flex items-center gap-2 rounded-full bg-[var(--color-text-primary)] px-6 py-3 text-base font-semibold text-[var(--color-surface)] shadow-[var(--shadow-lg)]"
+            className="sticky bottom-5 z-10 mx-auto mt-5 flex items-center gap-2 rounded-full bg-[var(--color-text-primary)] px-6 py-3 text-[0.830466rem] font-semibold text-[var(--color-surface)] shadow-[var(--shadow-lg)]"
           >
             <Eye className="h-5 w-5" aria-hidden="true" />
             View
@@ -528,7 +528,7 @@ export function ActionRequiredListingEditor({
               setIsMobileDetailOpen(false);
               requestAnimationFrame(() => selectedSectionRef.current?.focus());
             }}
-            className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--color-surface-muted)] px-4 text-sm font-semibold transition hover:brightness-95 lg:hidden"
+            className="mb-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--color-surface-muted)] px-4 text-[0.72665775rem] font-semibold transition hover:brightness-95 lg:hidden"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Listing editor
@@ -538,8 +538,8 @@ export function ActionRequiredListingEditor({
               <>
                 <div className="flex flex-wrap items-start justify-between gap-5">
                   <div>
-                    <h2 className="text-3xl font-semibold tracking-tight">Photo tour</h2>
-                    <p className="mt-3 max-w-[484px] text-base leading-6 text-[var(--color-text-secondary)]">
+                    <h2 className="text-[1.660932rem] font-semibold tracking-tight">Photo tour</h2>
+                    <p className="mt-3 max-w-[484px] text-[0.830466rem] leading-6 text-[var(--color-text-secondary)]">
                       Manage photos and add details. Guests will only see your tour if every room has a photo.
                     </p>
                   </div>
@@ -547,7 +547,7 @@ export function ActionRequiredListingEditor({
                     <button
                       type="button"
                       onClick={() => setIsAllPhotosOpen(true)}
-                      className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--color-surface-muted)] px-5 text-sm font-semibold"
+                      className="inline-flex h-12 items-center gap-2 rounded-full bg-[var(--color-surface-muted)] px-5 text-[0.72665775rem] font-semibold"
                     >
                       <Copy className="h-4 w-4" aria-hidden="true" />
                       All photos
@@ -565,7 +565,7 @@ export function ActionRequiredListingEditor({
                 <button
                   type="button"
                   onClick={() => setIsPublishDrawerOpen(true)}
-                  className="mt-8 flex min-h-16 w-full items-center gap-3 rounded-xl bg-[var(--color-surface-muted)] px-6 text-left text-base font-semibold"
+                  className="mt-8 flex min-h-16 w-full items-center gap-3 rounded-card bg-[var(--color-surface-muted)] px-6 text-left text-[0.830466rem] font-semibold"
                 >
                   <span className="h-2 w-2 shrink-0 rounded-full bg-orange-600" aria-hidden="true" />
                   <span className="flex-1">View your tasks</span>
@@ -575,15 +575,15 @@ export function ActionRequiredListingEditor({
                 <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 sm:gap-x-6">
                   {tourRooms.map(({ label, photoUrl }, index) => (
                     <article key={`${label}-${index}`} className="min-w-0">
-                      <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-[var(--color-surface-muted)]">
+                      <div className="flex aspect-square items-center justify-center overflow-hidden rounded-photo bg-[var(--color-surface-muted)]">
                         {photoUrl ? (
                           <ShimmerImage src={photoUrl} alt="" className="h-full w-full object-cover" />
                         ) : (
                           index === 1 ? <BedDouble className="h-12 w-12 text-[var(--color-text-secondary)]" /> : <Image className="h-12 w-12 text-[var(--color-text-secondary)]" />
                         )}
                       </div>
-                      <h3 className="mt-3 truncate text-base font-semibold">{label}</h3>
-                      <button type="button" className="mt-1 text-sm text-[var(--color-text-secondary)] hover:underline">
+                      <h3 className="mt-3 truncate text-[0.830466rem] font-semibold">{label}</h3>
+                      <button type="button" className="mt-1 text-[0.72665775rem] text-[var(--color-text-secondary)] hover:underline">
                         Add photos
                       </button>
                     </article>
@@ -592,9 +592,9 @@ export function ActionRequiredListingEditor({
               </>
             ) : (
             <>
-              <h2 className="text-3xl font-semibold tracking-tight">Photos</h2>
-              <div className="mt-8 flex flex-col items-center overflow-hidden rounded-3xl bg-[#f7f6f2] px-5 py-10 text-center text-[#222] dark:bg-[var(--color-surface-muted)] dark:text-[var(--color-text-primary)] sm:px-10 sm:py-12">
-                <h3 className="max-w-md text-[28px] font-semibold leading-tight tracking-[-0.03em] sm:text-[32px]">
+              <h2 className="text-[1.660932rem] font-semibold tracking-tight">Photos</h2>
+              <div className="mt-8 flex flex-col items-center overflow-hidden rounded-dialog bg-[#f7f6f2] px-5 py-10 text-center text-[#222] dark:bg-[var(--color-surface-muted)] dark:text-[var(--color-text-primary)] sm:px-10 sm:py-12">
+                <h3 className="max-w-md text-[23.253048px] font-semibold leading-tight tracking-[-0.03em] sm:text-[26.574912px]">
                   Showcase your photos<br />by room, instantly
                 </h3>
                 <div className="relative mt-8 h-[260px] w-[330px] max-w-full sm:h-[300px]">
@@ -619,7 +619,7 @@ export function ActionRequiredListingEditor({
                           key={photoUrl}
                           src={photoUrl}
                           alt=""
-                          className="absolute left-1/2 top-1/2 h-44 w-36 rounded-xl sm:h-56 sm:w-44 object-cover shadow-[0_16px_32px_rgba(0,0,0,0.18)]"
+                          className="absolute left-1/2 top-1/2 h-44 w-36 rounded-photo sm:h-56 sm:w-44 object-cover shadow-[0_16px_32px_rgba(0,0,0,0.18)]"
                           style={{
                             transform: `translate(-50%, -50%) translate(${photoLayout.x}px, ${photoLayout.y}px) rotate(${photoLayout.rotation}deg)`,
                             zIndex: photoLayout.zIndex
@@ -637,7 +637,7 @@ export function ActionRequiredListingEditor({
                   type="button"
                   onClick={() => void createPhotoTour()}
                   disabled={isCreatingPhotoTour || isPhotoTourCreated}
-                  className="mt-10 min-h-12 rounded-lg bg-white px-6 py-3 text-base font-semibold text-[#222] shadow-[var(--shadow-sm)] transition hover:shadow-[var(--shadow-md)] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[var(--color-surface)] dark:text-[var(--color-text-primary)]"
+                  className="mt-10 min-h-12 rounded-button bg-white px-6 py-3 text-[0.830466rem] font-semibold text-[#222] shadow-[var(--shadow-sm)] transition hover:shadow-[var(--shadow-md)] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[var(--color-surface)] dark:text-[var(--color-text-primary)]"
                 >
                   {isCreatingPhotoTour
                     ? 'Creating photo tour…'
@@ -650,16 +650,16 @@ export function ActionRequiredListingEditor({
             )
           ) : (
             <>
-              <h2 className="text-3xl font-semibold tracking-tight">Title</h2>
-              <div className="mt-8 rounded-2xl border border-[var(--color-border)] p-6 sm:p-8">
-                <label className="text-sm font-semibold" htmlFor="listing-editor-title">Listing title</label>
+              <h2 className="text-[1.660932rem] font-semibold tracking-tight">Title</h2>
+              <div className="mt-8 rounded-card border border-[var(--color-border)] p-6 sm:p-8">
+                <label className="text-[0.72665775rem] font-semibold" htmlFor="listing-editor-title">Listing title</label>
                 <input
                   id="listing-editor-title"
                   value={listingTitle}
                   readOnly
-                  className="mt-3 h-14 w-full rounded-md border border-[var(--color-border)] bg-transparent px-4 text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
+                  className="mt-3 h-14 w-full rounded-field border border-[var(--color-border)] bg-transparent px-4 text-[0.830466rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)]"
                 />
-                <p className="mt-3 text-sm text-[var(--color-text-secondary)]">
+                <p className="mt-3 text-[0.72665775rem] text-[var(--color-text-secondary)]">
                   Your title is saved with the listing details.
                 </p>
               </div>
@@ -672,12 +672,12 @@ export function ActionRequiredListingEditor({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           role="status"
-          className="fixed bottom-[calc(88px+env(safe-area-inset-bottom))] left-1/2 z-[130] flex w-[min(400px,calc(100vw-32px))] -translate-x-1/2 items-start gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-4 text-left md:bottom-8 shadow-[0_16px_48px_rgba(0,0,0,0.2)]"
+          className="fixed bottom-[calc(88px+env(safe-area-inset-bottom))] left-1/2 z-[130] flex w-[min(400px,calc(100vw-32px))] -translate-x-1/2 items-start gap-3 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-4 text-left md:bottom-8 shadow-[0_16px_48px_rgba(0,0,0,0.2)]"
         >
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[var(--color-success)]" fill="currentColor" aria-hidden="true" />
           <span className="min-w-0 flex-1">
             <span className="block font-semibold">Your photos are sorted</span>
-            <span className="mt-1 block text-sm leading-snug text-[var(--color-text-secondary)]">
+            <span className="mt-1 block text-[0.72665775rem] leading-snug text-[var(--color-text-secondary)]">
               Check each room or space to confirm your photos are in the right place.
             </span>
           </span>
@@ -712,12 +712,12 @@ export function ActionRequiredListingEditor({
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 330, damping: 34, mass: 0.9 }}
               onMouseDown={(event) => event.stopPropagation()}
-              className="ml-auto flex h-full w-full max-w-lg flex-col overflow-hidden sm:rounded-l-3xl bg-[var(--color-surface)] shadow-[-18px_0_55px_rgba(0,0,0,0.18)]"
+              className="ml-auto flex h-full w-full max-w-lg flex-col overflow-hidden sm:rounded-l-dialog bg-[var(--color-surface)] shadow-[-18px_0_55px_rgba(0,0,0,0.18)]"
             >
               <header className="relative flex min-h-24 shrink-0 items-center justify-center border-b border-[var(--color-border-subtle)] px-16 text-center">
                 <div>
-                  <h2 id="steps-to-publish-title" className="text-lg font-semibold">Steps to publish</h2>
-                  <p className="mt-1 max-w-[253px] truncate text-sm text-[var(--color-text-secondary)]">
+                  <h2 id="steps-to-publish-title" className="text-[0.93427425rem] font-semibold">Steps to publish</h2>
+                  <p className="mt-1 max-w-[253px] truncate text-[0.72665775rem] text-[var(--color-text-secondary)]">
                     {listingTitle}
                   </p>
                 </div>
@@ -732,32 +732,32 @@ export function ActionRequiredListingEditor({
               </header>
 
               <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-10 pt-7 sm:px-8">
-                <article className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
-                  <h3 className="text-lg font-semibold">Identity verification</h3>
-                  <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Not started</p>
+                <article className="overflow-hidden rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+                  <h3 className="text-[0.93427425rem] font-semibold">Identity verification</h3>
+                  <p className="mt-1 text-[0.72665775rem] text-[var(--color-text-secondary)]">Not started</p>
 
-                  <div className="mt-5 flex min-h-80 flex-col items-center justify-center rounded-xl bg-[var(--color-surface-muted)] px-6 py-8 text-center">
+                  <div className="mt-5 flex min-h-80 flex-col items-center justify-center rounded-card bg-[var(--color-surface-muted)] px-6 py-8 text-center">
                     <ThreeDIcon
                       name="verification"
                       sourceSize={200}
                       className="h-32 w-32 object-contain"
                     />
-                    <h4 className="mt-5 text-3xl font-semibold tracking-tight">Verify your identity</h4>
-                    <p className="mt-4 max-w-[286px] text-base leading-snug text-[var(--color-text-secondary)]">
+                    <h4 className="mt-5 text-[1.660932rem] font-semibold tracking-tight">Verify your identity</h4>
+                    <p className="mt-4 max-w-[286px] text-[0.830466rem] leading-snug text-[var(--color-text-secondary)]">
                       We’ll gather some information to help confirm you’re you.
                     </p>
                     <button
                       type="button"
-                      className="mt-7 rounded-md bg-[var(--color-text-primary)] px-6 py-3 text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
+                      className="mt-7 rounded-button bg-[var(--color-text-primary)] px-6 py-3 text-[0.830466rem] font-semibold text-[var(--color-surface)] transition hover:opacity-90"
                     >
                       Get started
                     </button>
                   </div>
                 </article>
 
-                <article className="mt-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-                  <h3 className="text-lg font-semibold">Phone number confirmation</h3>
-                  <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Not started</p>
+                <article className="mt-5 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+                  <h3 className="text-[0.93427425rem] font-semibold">Phone number confirmation</h3>
+                  <p className="mt-1 text-[0.72665775rem] text-[var(--color-text-secondary)]">Not started</p>
                 </article>
               </div>
             </motion.aside>

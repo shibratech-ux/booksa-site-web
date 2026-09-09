@@ -138,7 +138,7 @@ export function PlaceAccessStep({
                 type="button"
                 aria-pressed={selected}
                 onClick={() => onChange(id)}
-                className={`flex min-h-[96.8px] w-full items-center gap-4 rounded-md border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-5 sm:px-6 sm:py-5 ${
+                className={`flex min-h-[96.8px] w-full items-center gap-4 rounded-card border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-5 sm:px-6 sm:py-5 ${
                   selected
                     ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
                     : 'border-[var(--color-border)]'

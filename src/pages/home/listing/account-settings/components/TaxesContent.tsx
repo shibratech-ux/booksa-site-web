@@ -61,7 +61,7 @@ export function TaxesContent() {
               </p>
               <button
                 type="button"
-                className="mt-8 min-h-12 rounded-md bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
+                className="mt-8 min-h-12 rounded-button bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
               >
                 Add tax info
               </button>
@@ -74,7 +74,7 @@ export function TaxesContent() {
               </p>
               <button
                 type="button"
-                className="mt-8 min-h-12 rounded-md bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
+                className="mt-8 min-h-12 rounded-button bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85"
               >
                 Add VAT ID number
               </button>

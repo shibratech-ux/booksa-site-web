@@ -118,7 +118,7 @@ export function ListingDescriptionStep({
           autoFocus
           onChange={(event) => onChange(event.target.value)}
           aria-describedby="listing-description-count"
-          className="mt-6 min-h-[242px] w-full resize-none rounded-md border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] p-4 text-base leading-relaxed text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[378.4px] sm:p-6 sm:text-lg"
+          className="mt-6 min-h-[242px] w-full resize-none rounded-field border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] p-4 text-base leading-relaxed text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[378.4px] sm:p-6 sm:text-lg"
         />
         <p
           id="listing-description-count"

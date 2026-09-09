@@ -189,7 +189,7 @@ function AddressDetailsForm({
         type="button"
         onClick={onBack}
         aria-label="Back to address search"
-        className="absolute left-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
+        className="absolute left-5 top-5 inline-flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
       >
         <FiArrowLeft className="h-5 w-5" aria-hidden="true" />
       </button>
@@ -197,7 +197,7 @@ function AddressDetailsForm({
       <form noValidate onSubmit={handleSubmit}>
         <div className="relative mt-11">
           <label
-            className={`relative block h-[66px] overflow-hidden rounded-md border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)] ${
+            className={`relative block h-[66px] overflow-hidden rounded-field border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)] ${
               errors.country ? invalidFieldClassName : ''
             }`}
           >
@@ -239,7 +239,7 @@ function AddressDetailsForm({
             ) : null}
           </label>
 
-          <div className="mt-4 overflow-hidden rounded-md border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)]">
+          <div className="mt-4 overflow-hidden rounded-field border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)]">
             <label
               className={`relative block border-b border-[var(--color-border)] ${
                 errors.streetAddress ? invalidFieldClassName : ''
@@ -356,7 +356,7 @@ function AddressDetailsForm({
 
         <button
           type="submit"
-          className="mt-[83.6px] h-12 w-full rounded-md bg-[var(--color-text-primary)] text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
+          className="mt-[83.6px] h-12 w-full rounded-button bg-[var(--color-text-primary)] text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
         >
           Next
         </button>
@@ -447,13 +447,13 @@ export function AddressSearchDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="relative h-[92dvh] max-h-[792px] w-full max-w-[792px] overflow-y-auto rounded-lg bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-14 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:h-[730.4px] sm:max-h-[calc(100vh-48px)] sm:rounded-lg sm:px-7 sm:pb-6"
+            className="relative h-[92dvh] max-h-[792px] w-full max-w-[792px] overflow-y-auto rounded-dialog bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-14 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:h-[730.4px] sm:max-h-[calc(100vh-48px)] sm:rounded-dialog sm:px-7 sm:pb-6"
           >
             <button
               type="button"
               onClick={onClose}
               aria-label="Close address dialog"
-              className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-md transition hover:bg-[var(--color-surface-muted)]"
+              className="absolute right-5 top-5 inline-flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
             >
               <FiX className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -515,7 +515,7 @@ export function AddressSearchDialog({
                       aria-expanded={filteredSuggestions.length > 0}
                       aria-autocomplete="list"
                       aria-activedescendant={activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined}
-                      className="h-14 w-full rounded-md border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] pl-12 pr-12 outline-none"
+                      className="h-14 w-full rounded-field border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] pl-12 pr-12 outline-none"
                     />
                     {query ? (
                       <button
@@ -525,7 +525,7 @@ export function AddressSearchDialog({
                           inputRef.current?.focus();
                         }}
                         aria-label="Clear address search"
-                        className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md"
+                        className="absolute right-3 top-1/2 inline-flex h-8 max-sm:h-11 max-sm:w-11 w-8 -translate-y-1/2 items-center justify-center rounded-full"
                       >
                         <FiX className="h-4 w-4" aria-hidden="true" />
                       </button>
@@ -548,7 +548,7 @@ export function AddressSearchDialog({
                               aria-selected={activeIndex === index}
                               onMouseEnter={() => setActiveIndex(index)}
                               onClick={() => selectLocation(location)}
-                              className={`flex w-full items-center gap-4 rounded-md px-4 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus:bg-[var(--color-surface-muted)] ${
+                              className={`flex w-full items-center gap-4 rounded-button px-4 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus:bg-[var(--color-surface-muted)] ${
                                 activeIndex === index ? 'bg-[var(--color-surface-muted)]' : ''
                               }`}
                             >

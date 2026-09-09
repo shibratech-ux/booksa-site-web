@@ -102,7 +102,7 @@ export function BookingSettingsStep({
               role="radio"
               aria-checked={isSelected}
               onClick={() => onChange(option.id)}
-              className={`grid min-h-[101.2px] grid-cols-[1fr_auto] items-center gap-3 rounded-md border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-6 sm:px-6 sm:py-5 ${
+              className={`grid min-h-[101.2px] grid-cols-[1fr_auto] items-center gap-3 rounded-card border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-6 sm:px-6 sm:py-5 ${
                 isSelected
                   ? 'border-[var(--color-text-primary)] ring-1 ring-[var(--color-text-primary)]'
                   : 'border-[var(--color-border)]'

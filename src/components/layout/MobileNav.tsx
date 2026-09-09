@@ -27,7 +27,7 @@ export function MobileNav({ variant = 'fixed', hideHome = false }: MobileNavProp
   return (
     <nav
       className={cn(
-        'inset-x-0 bottom-0 z-30 min-h-16 border-t border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-background)_92%,transparent)] px-2 py-2 backdrop-blur-xl lg:hidden',
+        'inset-x-0 bottom-0 z-30 min-h-16 border-t border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-background)_92%,transparent)] px-2 pt-2 pb-[max(8px,env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden',
         variant === 'fixed' ? 'fixed' : 'absolute'
       )}
     >

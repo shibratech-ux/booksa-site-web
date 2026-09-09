@@ -257,7 +257,7 @@ export default function AccountSettingsPage() {
           <button
             type="button"
             onClick={() => navigate(ROUTES.home)}
-            className="rounded-md bg-[var(--color-surface-muted)] px-7 py-3 text-sm font-semibold transition hover:brightness-95"
+            className="rounded-button bg-[var(--color-surface-muted)] px-7 py-3 text-sm font-semibold transition hover:brightness-95"
           >
             {tCommon('actions.done')}
           </button>
@@ -282,7 +282,7 @@ export default function AccountSettingsPage() {
               navigate(-1);
             }}
             aria-label="Back"
-            className="grid h-8 w-8 place-items-center rounded-md bg-slate-50 text-slate-700"
+            className="grid h-8 max-sm:h-11 max-sm:w-11 w-8 place-items-center rounded-full bg-slate-50 text-slate-700"
           >
             <ArrowLeft className="h-5 w-5 stroke-[1.7]" />
           </button>

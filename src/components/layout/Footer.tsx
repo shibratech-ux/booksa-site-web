@@ -122,7 +122,7 @@ function Footer() {
             <LanguageSwitcher compact />
             <button
               type="button"
-              className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-xs text-[var(--color-text-primary)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
+              className="inline-flex min-h-10 items-center gap-2 rounded-button border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-xs text-[var(--color-text-primary)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
             >
               CDF
             </button>

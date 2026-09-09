@@ -244,7 +244,7 @@ function HeaderMenu({
         aria-haspopup="menu"
         onClick={() => setIsOpen((open) => !open)}
         className={`inline-flex items-center justify-center rounded-full transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 ${
-          compact ? "h-10 w-10" : "h-10 w-10"
+          compact ? "h-10 max-sm:h-11 max-sm:w-11 w-10" : "h-10 w-10"
         }`}
         style={{
           backgroundColor: theme.colors.surfaceMuted,
@@ -265,7 +265,7 @@ function HeaderMenu({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.16, ease: "easeOut" }}
-            className="absolute right-0 top-full z-50 mt-3 w-72 max-w-[calc(100vw-32px)] overflow-hidden rounded-xl border py-2 text-left shadow-[var(--shadow-lg)]"
+            className="absolute right-0 top-full z-50 mt-3 w-72 max-w-[calc(100vw-32px)] overflow-hidden rounded-menu border py-2 text-left shadow-[var(--shadow-lg)]"
             style={{
               backgroundColor: theme.colors.surface,
               borderColor: theme.colors.border,
@@ -376,7 +376,7 @@ function CompactMobileHeader() {
               key={t(item.labelKey)}
               type="button"
               aria-current={isActive ? "page" : undefined}
-              className="relative flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-lg border-b-2 px-2"
+              className="relative flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-button border-b-2 px-2"
               onClick={() => navigate(item.path)}
               style={{
                 backgroundColor: theme.colors.surface,
@@ -546,7 +546,7 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
                       key={t(item.labelKey)}
                       type="button"
                       aria-current={isActive ? "page" : undefined}
-                      className="group relative flex h-full shrink-0 cursor-pointer items-center rounded-lg px-1 transition"
+                      className="group relative flex h-full shrink-0 cursor-pointer items-center rounded-button px-1 transition"
                       onClick={() => handleNavigate(item.path)}
                       style={{
                         color: isActive
@@ -603,7 +603,7 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
               onClick={handleAccountAccess}
               disabled={checkingSession}
               aria-busy={checkingSession}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:bg-[var(--color-border)]"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:bg-[var(--color-border)]"
             >
               {isAuthenticated && user ? (
                 user.avatarUrl && failedAvatar !== user.avatarUrl ? (

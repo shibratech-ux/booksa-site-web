@@ -36,7 +36,7 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
         onClick={card.onNavigate}
         className="block outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
       >
-        <div className="relative aspect-[1.04/1] overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-black/5">
+        <div className="relative aspect-[1.04/1] overflow-hidden rounded-photo bg-slate-100 ring-1 ring-black/5">
           <ShimmerImage
             src={card.image}
             alt={card.title}
@@ -107,7 +107,7 @@ function SectionTitle({ children, onClick }: { children: ReactNode; onClick?: ()
   );
 
   return onClick ? (
-    <button type="button" onClick={onClick} className="group flex min-w-0 items-center gap-1.5 text-left">
+    <button type="button" onClick={onClick} className="group flex min-h-11 min-w-0 items-center gap-1.5 text-left sm:min-h-0">
       {content}
     </button>
   ) : (
@@ -149,7 +149,7 @@ export function ExploreRail({
             type="button"
             aria-label="Défiler à gauche"
             onClick={() => scrollRail(-1)}
-            className="hidden h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 sm:inline-flex"
+            className="hidden h-8 max-sm:h-11 max-sm:w-11 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 sm:inline-flex"
           >
             <ChevronLeftRegular className="h-4 w-4" />
           </button>
@@ -157,7 +157,7 @@ export function ExploreRail({
             type="button"
             aria-label="Défiler à droite"
             onClick={() => scrollRail(1)}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-800 transition hover:bg-slate-200"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full sm:h-8 max-sm:h-11 max-sm:w-11 sm:w-8 bg-slate-100 text-slate-800 transition hover:bg-slate-200"
           >
             <ChevronRightRegular className="h-4 w-4" />
           </button>

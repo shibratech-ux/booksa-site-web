@@ -42,12 +42,12 @@ function PrivacySwitch({
       aria-label={label}
       disabled={disabled}
       onClick={onChange}
-      className={`relative inline-flex h-8 w-12 shrink-0 items-center rounded-md transition-colors duration-200 disabled:cursor-wait disabled:opacity-60 ${
+      className={`relative inline-flex h-8 w-12 shrink-0 items-center rounded-full transition-colors duration-200 disabled:cursor-wait disabled:opacity-60 ${
         checked ? 'bg-[var(--color-text-primary)]' : 'bg-gray-400'
       }`}
     >
       <span
-        className={`inline-flex h-7 w-7 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-sm transition-transform duration-200 ${
+        className={`inline-flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-surface)] shadow-sm transition-transform duration-200 ${
           checked ? 'translate-x-[19px]' : 'translate-x-0.5'
         }`}
       >
@@ -94,7 +94,7 @@ function PrivacyLinkRow({ label }: { label: string }) {
   return (
     <button
       type="button"
-      className="flex min-h-[77px] w-full items-center justify-between gap-5 rounded-md border border-[var(--color-border)] px-4 text-left font-semibold transition hover:bg-[var(--color-surface-muted)]"
+      className="flex min-h-[77px] w-full items-center justify-between gap-5 rounded-button border border-[var(--color-border)] px-4 text-left font-semibold transition hover:bg-[var(--color-surface-muted)]"
     >
       {label}
       <FiChevronRight className="h-5 w-5 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
@@ -203,7 +203,7 @@ export function PrivacyContent({
           <PrivacyLinkRow label="Delete my account" />
         </div>
 
-        <article className="mt-4 flex gap-5 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5">
+        <article className="mt-4 flex gap-5 rounded-card border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5">
           <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-pink-500 text-pink-500">
             <FiLock className="h-5 w-5" aria-hidden="true" />
           </span>

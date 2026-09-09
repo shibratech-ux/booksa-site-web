@@ -99,7 +99,7 @@ function CloseButton({ onClick }: { onClick: () => void }) {
       type="button"
       aria-label="Fermer la fenêtre"
       onClick={onClick}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
+      className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
     >
       <DismissRegular className="h-5 w-5" />
     </button>
@@ -110,7 +110,7 @@ function TimePill({ label }: { label: string }) {
   return (
     <button
       type="button"
-      className="inline-flex h-10 items-center justify-center rounded-md border border-neutral-200 px-4 text-[13px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
+      className="inline-flex h-10 items-center justify-center rounded-button border border-neutral-200 px-4 text-[13px] font-medium text-neutral-900 transition hover:border-neutral-300 hover:bg-neutral-50"
     >
       {label}
     </button>
@@ -165,15 +165,15 @@ function ScheduleContent({
   visibleMonth: dayjs.Dayjs;
 }) {
   const contentShellClassName = compact
-    ? 'fixed inset-x-0 bottom-0 z-50 flex max-h-[90vh] flex-col overflow-hidden rounded-lg bg-white px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-4 shadow-[0_-12px_40px_rgba(0,0,0,0.16)]'
-    : 'relative flex max-h-[90vh] w-full max-w-[748px] flex-col overflow-hidden rounded-lg bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8';
+    ? 'fixed inset-x-0 bottom-0 z-50 flex max-h-[90dvh] flex-col overflow-hidden rounded-t-dialog bg-white px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-4 shadow-[0_-12px_40px_rgba(0,0,0,0.16)]'
+    : 'relative flex max-h-[90dvh] w-full max-w-[748px] flex-col overflow-hidden rounded-dialog bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8';
 
   return (
     <div
       className={contentShellClassName}
       onClick={(event) => event.stopPropagation()}
     >
-      <div className={compact ? 'mx-auto h-1.5 w-12 rounded-sm bg-neutral-300' : 'absolute right-4 top-4 sm:right-5 sm:top-5'}>
+      <div className={compact ? 'mx-auto h-1.5 w-12 rounded-full bg-neutral-300' : 'absolute right-4 top-4 sm:right-5 sm:top-5'}>
         {compact ? null : <CloseButton onClick={onClose} />}
       </div>
 
@@ -189,7 +189,7 @@ function ScheduleContent({
             type="button"
             aria-label="Fermer la fenêtre"
             onClick={onClose}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
+            className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
           >
             <DismissRegular className="h-5 w-5" />
           </button>
@@ -208,14 +208,14 @@ function ScheduleContent({
         <div className="flex items-center gap-3 text-neutral-900">
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-2xl leading-none text-neutral-300 transition hover:text-neutral-500"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-2xl leading-none text-neutral-300 transition hover:text-neutral-500"
           >
             −
           </button>
           <span className="min-w-5 text-center text-xs font-medium leading-none">1</span>
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-md leading-none transition hover:text-neutral-500"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full text-md leading-none transition hover:text-neutral-500"
           >
             +
           </button>
@@ -258,7 +258,7 @@ function ScheduleContent({
                   ref={(element) => {
                     monthSectionRefs.current[index] = element;
                   }}
-                  className="shrink-0 snap-start rounded-sm border border-slate-200 bg-white px-4 py-4"
+                  className="shrink-0 snap-start rounded-card border border-slate-200 bg-white px-4 py-4"
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <h4 className="text-sm font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
@@ -277,7 +277,7 @@ function ScheduleContent({
                           ref={isSelected ? selectedButtonRef : null}
                           onClick={() => setSelectedDate(item.date.toDate())}
                           className={[
-                            'flex min-w-[61.6px] shrink-0 flex-col items-center rounded-md px-3 py-3 text-center transition',
+                            'flex min-w-[61.6px] shrink-0 flex-col items-center rounded-button px-3 py-3 text-center transition',
                             isSelected
                               ? 'text-neutral-900'
                               : isPast
@@ -290,7 +290,7 @@ function ScheduleContent({
                           </span>
                           <span
                             className={[
-                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-sm text-[13px] font-semibold leading-none transition',
+                              'mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-[13px] font-semibold leading-none transition',
                               isSelected ? 'bg-neutral-900 text-white' : 'text-inherit'
                             ].join(' ')}
                           >
@@ -314,7 +314,7 @@ function ScheduleContent({
               <ShimmerImage
                 src={experience.image}
                 alt={experience.title}
-                className="h-16 w-16 shrink-0 rounded-sm object-cover"
+                className="h-16 w-16 shrink-0 rounded-photo object-cover"
               />
               <div className="min-w-0">
                 <h3 className="text-md font-semibold leading-5 text-neutral-900">{experience.title}</h3>
@@ -495,12 +495,12 @@ function ExperienceList() {
         {experiences.map((item) => (
           <article
             key={item.id}
-            className="flex min-h-[165px] items-center gap-5 rounded-sm border border-gray-100 bg-white p-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
+            className="flex min-h-[132px] items-center gap-3 sm:min-h-[165px] sm:gap-5 rounded-card border border-gray-100 bg-white p-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
           >
             <ShimmerImage
               src={item.image}
               alt={item.title}
-              className="h-[149.6px] w-[158.4px] shrink-0 rounded-sm object-cover"
+              className="h-28 w-28 shrink-0 sm:h-[149.6px] sm:w-[158.4px] rounded-photo object-cover"
             />
 
             <div className="min-w-0 flex-1 pr-3">
@@ -539,7 +539,7 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
         <div className="mt-5 grid gap-1.5 sm:grid-cols-[minmax(0,1.85fr)_minmax(0,1fr)]">
           <button
             type="button"
-            className="group relative overflow-hidden rounded-md bg-slate-100"
+            className="group relative overflow-hidden rounded-photo bg-slate-100"
           >
             <ShimmerImage
               src={portfolioImages[0]}
@@ -553,7 +553,7 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
               <button
                 key={`${image}-${index}`}
                 type="button"
-                className="group relative overflow-hidden rounded-md bg-slate-100"
+                className="group relative overflow-hidden rounded-photo bg-slate-100"
               >
                 <ShimmerImage
                   src={image}
@@ -562,7 +562,7 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
                 />
 
                 {index === 1 ? (
-                  <span className="absolute bottom-4 right-4 inline-flex h-14 w-14 items-center justify-center rounded-sm bg-[#d8c2a0] text-gray-900 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
+                  <span className="absolute bottom-4 right-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#d8c2a0] text-gray-900 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
                     <CopyRegular className="h-5 w-5" />
                   </span>
                 ) : null}
@@ -667,7 +667,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
                 <ShimmerImage
                   src={review.avatar}
                   alt={review.name}
-                  className="h-10 w-10 shrink-0 rounded-sm object-cover"
+                  className="h-10 w-10 shrink-0 rounded-full object-cover"
                 />
                 <div className="min-w-0">
                   <h3 className="text-sm font-normal leading-5 text-neutral-900">{review.name}</h3>
@@ -690,7 +690,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
           <button
             type="button"
             onClick={onShowReviews}
-            className="w-full rounded-md bg-gray-100 px-6 py-3 text-md font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[704px]"
+            className="w-full rounded-button bg-gray-100 px-6 py-3 text-md font-medium text-gray-900 transition hover:bg-gray-200 sm:max-w-[704px]"
           >
             Voir les avis
           </button>
@@ -714,14 +714,14 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[990px] rounded-lg bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8"
+        className="relative w-full max-w-[990px] rounded-dialog bg-white px-6 py-6 shadow-[var(--shadow-xl)] sm:px-8 sm:py-8"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           aria-label="Fermer les avis"
           onClick={onClose}
-          className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-700 transition hover:bg-gray-100"
+          className="absolute right-5 top-5 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100"
         >
           <DismissRegular className="h-5 w-5" />
         </button>
@@ -733,19 +733,19 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm"
+            className="inline-flex items-center gap-2 rounded-button border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm"
           >
             Plus récents
             <ChevronDownRegular className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="mt-6 flex items-center gap-3 rounded-sm border border-gray-200 px-4 py-3">
+        <div className="mt-6 flex items-center gap-3 rounded-field border border-gray-200 px-4 py-3">
           <SearchRegular className="h-5 w-5 text-gray-500" />
           <input
             type="text"
             placeholder="Rechercher dans tous les avis"
-            className="w-full bg-transparent text-md text-gray-900 outline-none placeholder:text-gray-500"
+            className="w-full bg-transparent text-base sm:text-md text-gray-900 outline-none placeholder:text-gray-500"
           />
         </div>
 
@@ -756,7 +756,7 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
                 <ShimmerImage
                   src={review.avatar}
                   alt={review.name}
-                  className="h-11 w-11 shrink-0 rounded-sm object-cover"
+                  className="h-11 w-11 shrink-0 rounded-full object-cover"
                 />
                 <div>
                   <h3 className="text-base font-semibold leading-5 text-neutral-900">{review.name}</h3>
@@ -797,8 +797,8 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
         <h2 className="text-xl font-semibold tracking-tight text-neutral-900">Mes qualifications</h2>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
-          <div className="rounded-sm border border-slate-200 bg-white px-8 py-10 text-center">
-            <div className="mx-auto h-24 w-24 overflow-hidden rounded-sm">
+          <div className="rounded-card border border-slate-200 bg-white px-8 py-10 text-center">
+            <div className="mx-auto h-24 w-24 overflow-hidden rounded-full">
               <ShimmerImage
                 src={avatarImage}
                 alt="Victor"
@@ -845,7 +845,7 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
         <div className="mt-8 flex justify-center">
           <button
             type="button"
-            className="w-full rounded-md bg-[#f1f1f1] px-6 py-3 text-xs font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[704px]"
+            className="w-full rounded-button bg-[#f1f1f1] px-6 py-3 text-xs font-medium text-neutral-900 transition hover:bg-[#e8e8e8] sm:max-w-[704px]"
           >
             Envoyer un message à Victor
           </button>
@@ -913,7 +913,7 @@ function QualityTrustBlock() {
   return (
     <section className="w-full px-3 py-6">
       <div className="mx-auto max-w-3xl">
-        <div className="rounded-sm bg-[#f5f2ec] px-6 py-16 text-center shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:px-10">
+        <div className="rounded-card bg-[#f5f2ec] px-6 py-16 text-center shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:px-10">
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-sm bg-[#f2c14f] shadow-[0_14px_24px_rgba(15,23,42,0.16)] ring-8 ring-[#e2b43f]/25">
             <div className="flex h-16 w-16 items-center justify-center rounded-sm border-[3px] border-[#a66f11] bg-[#f6cf63] text-[#8a5b09] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
               <StarFilled className="h-7 w-7" />
@@ -949,7 +949,7 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
 
   return (
     <div
-      className="flex w-full max-w-[462px] flex-row overflow-hidden rounded-sm max-[611px]:rounded-sm border shadow-[0_18px_42px_rgba(15,23,42,0.10)] sm:flex-row max-[611px]:w-full max-[611px]:max-w-[506px] max-[611px]:items-stretch max-[611px]:rounded-sm xl:ml-0"
+      className="flex w-full max-w-[462px] flex-row overflow-hidden rounded-card max-[611px]:rounded-card border shadow-[0_18px_42px_rgba(15,23,42,0.10)] sm:flex-row max-[611px]:w-full max-[611px]:max-w-[506px] max-[611px]:items-stretch max-[611px]:rounded-card xl:ml-0"
       style={{
         backgroundColor: theme.colors.surface,
         borderColor: theme.colors.border
@@ -971,7 +971,7 @@ function BookingSummaryCard({ onShowDates, price }: { onShowDates: () => void; p
       <div className="flex items-center justify-center bg-[color-mix(in_srgb,var(--color-primary-500)_8%,transparent)] px-5 py-4 max-[611px]:px-4 max-[611px]:py-2.5 sm:px-6 sm:py-0">
         <button
           type="button"
-          className="w-full rounded-md px-5 py-5 text-sm font-semibold leading-none text-white shadow-[0_10px_22px_rgba(15,23,42,0.14)] transition hover:opacity-90 sm:w-auto max-[611px]:min-w-[105.6px] max-[611px]:px-4 max-[611px]:py-4 max-[611px]:text-md"
+          className="w-full rounded-button px-5 py-5 text-sm font-semibold leading-none text-white shadow-[0_10px_22px_rgba(15,23,42,0.14)] transition hover:opacity-90 sm:w-auto max-[611px]:min-w-[105.6px] max-[611px]:px-4 max-[611px]:py-4 max-[611px]:text-md"
           style={{ backgroundColor: theme.colors.primary[500] }}
           onClick={onShowDates}
         >
@@ -1004,11 +1004,11 @@ function ServiceHeroPanel({
   return (
     <>
       <div className="relative overflow-visible max-[611px]:mx-0 max-[611px]:w-full max-[611px]:max-w-none">
-        <div className="overflow-hidden sm:rounded-sm max-[611px]:rounded-sm shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
+        <div className="overflow-hidden sm:rounded-photo max-[611px]:rounded-photo shadow-[0_20px_50px_rgba(15,23,42,0.08)]">
           <ShimmerImage src={service.heroImage} alt={title} className="h-[217.8px] w-full object-cover max-[611px]:h-[231px]" />
         </div>
 
-        <div className="absolute left-1/2 top-full z-10 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-sm border-4 border-white shadow-[0_10px_24px_rgba(15,23,42,0.12)] max-[611px]:border-0 max-[611px]:shadow-none">
+        <div className="absolute left-1/2 top-full z-10 h-20 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-4 border-white shadow-[0_10px_24px_rgba(15,23,42,0.12)] max-[611px]:border-0 max-[611px]:shadow-none">
           <ShimmerImage src={hostAvatarImage} alt={hostName} className="h-full w-full object-cover" />
         </div>
       </div>

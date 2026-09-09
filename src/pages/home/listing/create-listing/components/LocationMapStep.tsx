@@ -51,7 +51,7 @@ export function LocationMapStep({ confirmedLocation }: { confirmedLocation: Conf
             className="mt-5 h-[min(430px,52dvh)] min-h-[308px] rounded-[19px] border border-[var(--color-border)] shadow-[var(--shadow-sm)] sm:mt-7 sm:h-[506px]"
           >
 
-          <div className="pointer-events-none absolute left-4 right-4 top-4 rounded-sm bg-[var(--color-surface)] px-5 py-3 text-[var(--color-text-primary)] shadow-[var(--shadow-md)]">
+          <div className="pointer-events-none absolute left-4 right-4 top-4 rounded-card bg-[var(--color-surface)] px-5 py-3 text-[var(--color-text-primary)] shadow-[var(--shadow-md)]">
             <span className="block text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
               Confirmed address
             </span>

@@ -15,9 +15,9 @@ export default function BooksaLogo({ className = '' }: BooksaLogoProps) {
     <Link
       to={ROUTES.home}
       aria-label={t('accessibility.goHome')}
-      className={`inline-flex h-8 w-[110px] items-center justify-center overflow-hidden text-[var(--color-text-primary)] outline-none transition focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${className}`.trim()}
+      className={`inline-flex h-8 min-h-11 w-[110px] shrink-0 sm:min-h-0 items-center justify-center overflow-hidden text-[var(--color-text-primary)] outline-none transition focus-visible:ring-2 focus-visible:ring-[var(--color-primary-500)] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${className}`.trim()}
     >
-      <ShimmerImage src={booksaLogo} alt="Booksa" className="h-full w-full object-contain" />
+      <ShimmerImage src={booksaLogo} alt="Booksa" className="h-8 w-full object-contain sm:h-full" />
     </Link>
   );
 }

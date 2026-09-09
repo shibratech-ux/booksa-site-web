@@ -144,7 +144,7 @@ export function BooksaMap({
           role="status"
           className="absolute inset-0 flex items-center justify-center bg-neutral-100 px-6 text-center text-neutral-700"
         >
-          <div className="max-w-sm rounded-sm bg-white/95 p-5 shadow-sm ring-1 ring-black/5">
+          <div className="max-w-sm rounded-card bg-white/95 p-5 shadow-sm ring-1 ring-black/5">
             <p className="text-sm font-semibold text-neutral-900">Google Maps is not configured</p>
             <p className="mt-2 text-xs leading-5">
               Add a Maps Embed API key to display this map.
@@ -171,7 +171,7 @@ export function BooksaMap({
           ) : (
             <span
               aria-label={marker.ariaLabel ?? marker.label}
-              className="block rounded-sm border border-neutral-200 bg-white px-3 py-2 text-xs font-semibold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)]"
+              className="block rounded-pill border border-neutral-200 bg-white px-3 py-2 text-xs font-semibold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)]"
             >
               {marker.label}
             </span>

@@ -68,13 +68,13 @@ export function TravelForWorkContent({
           onKeyDown={(event) => { if (event.key === 'Enter') void saveWorkEmail(); }}
           autoComplete="email"
           disabled={isSaving}
-          className="mt-3 h-12 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
+          className="mt-3 h-12 w-full rounded-field border border-[var(--color-border)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
         />
         <button
           type="button"
           onClick={() => void saveWorkEmail()}
           disabled={!canSave}
-          className="mt-2 min-h-12 rounded-md bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85 disabled:cursor-default disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)] disabled:opacity-60"
+          className="mt-2 min-h-12 rounded-button bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85 disabled:cursor-default disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)] disabled:opacity-60"
         >
           {isSaving ? 'Adding…' : 'Add work email'}
         </button>
@@ -82,7 +82,7 @@ export function TravelForWorkContent({
         {saveMessage ? <p role="status" className="mt-3 text-sm text-[var(--color-success)]">{saveMessage}</p> : null}
       </section>
 
-      <section aria-label="Booksa for Work benefits" className="mt-12 rounded-sm border border-[var(--color-border)] px-6 sm:px-7">
+      <section aria-label="Booksa for Work benefits" className="mt-12 rounded-card border border-[var(--color-border)] px-6 sm:px-7">
         {benefits.map(({ icon: Icon, title, description }, index) => (
           <article key={title} className={`flex gap-5 py-6 ${index < benefits.length - 1 ? 'border-b border-[var(--color-border)]' : ''}`}>
             <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-pink-500 text-pink-500">

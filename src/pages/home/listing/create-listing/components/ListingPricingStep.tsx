@@ -52,7 +52,7 @@ export function ListingPricingStep({
           type="button"
           onClick={() => setIsBasePriceDialogOpen(true)}
           aria-haspopup="dialog"
-          className="min-h-[96.8px] rounded-md border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:px-6"
+          className="min-h-[96.8px] rounded-card border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:px-6"
         >
           <span className="block text-sm font-medium">Base price</span>
           <span className="mt-1 flex items-center text-3xl font-bold tracking-tight">
@@ -64,7 +64,7 @@ export function ListingPricingStep({
           type="button"
           onClick={() => setIsWeekendDialogOpen(true)}
           aria-haspopup="dialog"
-          className="grid min-h-[110px] grid-cols-1 items-center gap-2 rounded-md border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:grid-cols-[1fr_auto] sm:gap-5 sm:px-6"
+          className="grid min-h-[110px] grid-cols-1 items-center gap-2 rounded-card border border-[var(--color-border)] px-5 py-4 text-left transition hover:border-[var(--color-text-primary)] focus-visible:border-[var(--color-text-primary)] sm:grid-cols-[1fr_auto] sm:gap-5 sm:px-6"
         >
           <span>
             <span className="block text-sm font-medium">Weekend adjustment</span>

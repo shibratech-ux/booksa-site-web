@@ -186,7 +186,7 @@ export function LoginSecurityContent() {
                         autoComplete="new-password"
                         disabled={isUpdatingPassword}
                         tabIndex={isEditingPassword ? 0 : -1}
-                        className="h-12 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
+                        className="h-12 w-full rounded-field border border-[var(--color-border)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
                       />
                     </label>
                     <label className="mt-3 block">
@@ -198,7 +198,7 @@ export function LoginSecurityContent() {
                         autoComplete="new-password"
                         disabled={isUpdatingPassword}
                         tabIndex={isEditingPassword ? 0 : -1}
-                        className="h-12 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
+                        className="h-12 w-full rounded-field border border-[var(--color-border)] bg-[var(--color-surface)] px-4 outline-none transition focus:border-2 focus:border-[var(--color-text-primary)]"
                       />
                     </label>
 
@@ -212,7 +212,7 @@ export function LoginSecurityContent() {
                       type="submit"
                       disabled={isUpdatingPassword}
                       tabIndex={isEditingPassword ? 0 : -1}
-                      className="mt-4 min-h-12 rounded-md bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85 disabled:cursor-wait disabled:opacity-60"
+                      className="mt-4 min-h-12 rounded-button bg-[var(--color-text-primary)] px-6 font-semibold text-[var(--color-surface)] transition hover:opacity-85 disabled:cursor-wait disabled:opacity-60"
                     >
                       {isUpdatingPassword ? 'Updating…' : 'Update password'}
                     </button>
@@ -280,7 +280,7 @@ export function LoginSecurityContent() {
               Review each request carefully before approving access. We’ll email your employee or co-worker a 4-digit code that lets them log into your account with their trusted device.
             </p>
 
-            <article className="mt-12 flex gap-5 rounded-sm border border-[var(--color-border)] p-6">
+            <article className="mt-12 flex gap-5 rounded-card border border-[var(--color-border)] p-6">
               <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-pink-500 text-pink-500">
                 <FiLock className="h-5 w-5" aria-hidden="true" />
               </span>

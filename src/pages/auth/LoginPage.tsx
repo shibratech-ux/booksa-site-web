@@ -97,7 +97,7 @@ function MobileGoogleLogin({
         type="button"
         aria-label="Go back"
         onClick={onBack}
-        className="inline-flex h-10 w-10 items-center justify-center rounded-md transition active:scale-95"
+        className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition active:scale-95"
       >
         <ChevronLeftRegular className="h-5 w-5" aria-hidden="true" />
       </button>
@@ -115,7 +115,7 @@ function MobileGoogleLogin({
           type="button"
           disabled={isLoading}
           onClick={onContinue}
-          className="inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-md bg-neutral-900 text-md font-semibold text-white transition active:scale-[0.99] disabled:cursor-wait disabled:opacity-60"
+          className="inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-button bg-neutral-900 text-md font-semibold text-white transition active:scale-[0.99] disabled:cursor-wait disabled:opacity-60"
         >
           <img src={googleLogo} alt="" aria-hidden="true" className="h-4 w-4 object-contain" />
           {isLoading ? 'Connecting…' : 'Continue with Google'}
@@ -124,7 +124,7 @@ function MobileGoogleLogin({
           type="button"
           disabled={isLoading}
           onClick={onTryAnotherWay}
-          className="h-11 w-full rounded-md bg-slate-100 text-md font-semibold transition active:scale-[0.99] disabled:opacity-60"
+          className="h-11 w-full rounded-button bg-slate-100 text-md font-semibold transition active:scale-[0.99] disabled:opacity-60"
         >
           Try another way
         </button>
@@ -156,7 +156,7 @@ function MobileRememberedLogin({
       {avatarUrl ? (
         <img src={avatarUrl} alt="" className="h-16 w-16 rounded-full object-cover" />
       ) : (
-        <div className="grid h-16 w-16 place-items-center rounded-sm bg-[#fae4f3] text-2xl font-semibold text-[#a51472]">
+        <div className="grid h-16 w-16 place-items-center rounded-full bg-[#fae4f3] text-2xl font-semibold text-[#a51472]">
           {initial}
         </div>
       )}
@@ -173,7 +173,7 @@ function MobileRememberedLogin({
         onClick={onLogin}
         whileHover={{}}
         whileTap={{ scale: 0.99 }}
-        className="mt-3 h-11 w-full rounded-md bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-700)] text-md font-semibold text-white shadow-sm transition active:scale-[0.99]"
+        className="mt-3 h-11 w-full rounded-button bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-700)] text-md font-semibold text-white shadow-sm transition active:scale-[0.99]"
       >
         Log in
       </Button>
@@ -230,14 +230,14 @@ function MobileLoginOptions({
           placeholder="Phone number or email"
           aria-invalid={Boolean(formError)}
           aria-describedby={formError ? 'mobile-login-identifier-error' : undefined}
-          className="h-14 w-full rounded-md border border-slate-400 bg-white px-4 text-md text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
+          className="h-14 w-full rounded-field border border-slate-400 bg-white px-4 text-base sm:text-md text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900"
         />
         {formError ? <p id="mobile-login-identifier-error" className="mt-1.5 text-xs text-red-600">{formError}</p> : null}
         <Button
           type="submit"
           whileHover={{}}
           whileTap={{ scale: 0.99 }}
-          className="mt-3 h-11 w-full rounded-md bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-700)] text-md font-semibold text-white shadow-sm transition active:scale-[0.99]"
+          className="mt-3 h-11 w-full rounded-button bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-700)] text-md font-semibold text-white shadow-sm transition active:scale-[0.99]"
         >
           Continue
         </Button>
@@ -437,7 +437,7 @@ export default function LoginPage() {
           <h1 className="mt-5 text-center text-xl font-semibold tracking-[-0.025em]">
             Log in to continue
           </h1>
-          <div className="mt-7 rounded-sm border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="mt-7 rounded-card border border-slate-200 bg-white p-5 shadow-sm">
             <LoginForm defaultEmail={identifier} />
           </div>
           <button
@@ -499,7 +499,7 @@ export default function LoginPage() {
             placeholder="Phone number or email"
             aria-invalid={Boolean(formError)}
             aria-describedby={formError ? 'login-identifier-error' : undefined}
-            className="h-14 w-full rounded-md border border-slate-400 bg-white px-4 text-base text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 sm:h-14"
+            className="h-14 w-full rounded-field border border-slate-400 bg-white px-4 text-base text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 sm:h-14"
           />
           {formError ? (
             <p id="login-identifier-error" className="mt-1.5 text-xs text-red-600">
@@ -510,7 +510,7 @@ export default function LoginPage() {
           <Button
             type="submit"
             size="lg"
-            className="mt-3 w-full rounded-md"
+            className="mt-3 w-full rounded-button"
           >
             Continue
           </Button>

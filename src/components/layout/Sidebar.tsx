@@ -59,7 +59,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mt-6 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+      <div className="mt-6 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">Connecté en tant que</p>
         <p className="mt-1 text-sm font-semibold text-[var(--color-text-primary)]">{user?.name ?? tCommon('brand.defaultUser')}</p>
         <p className="text-xs text-[var(--color-text-secondary)]">{user?.email ?? 'utilisateur@booksa.io'}</p>

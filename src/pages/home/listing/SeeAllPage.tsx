@@ -298,7 +298,7 @@ function SeeAllHeader({
               aria-expanded={isMenuOpen}
               aria-haspopup="menu"
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:opacity-80"
+              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:opacity-80"
               style={{ backgroundColor: theme.colors.surfaceMuted }}
             >
               <FiMenu className="h-5 w-5" aria-hidden="true" />
@@ -315,7 +315,7 @@ function SeeAllHeader({
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.98, y: 14 }}
                   transition={{ type: 'spring', stiffness: 360, damping: 28, mass: 0.8 }}
-                  className="absolute right-0 top-full z-50 mt-4 w-[292.6px] overflow-hidden rounded-sm border py-2.5 text-left shadow-[0_16px_42px_rgba(15,23,42,0.18)]"
+                  className="absolute right-0 top-full z-50 mt-4 w-[292.6px] overflow-hidden rounded-menu border py-2.5 text-left shadow-[0_16px_42px_rgba(15,23,42,0.18)]"
                   style={{
                     backgroundColor: theme.colors.surface,
                     borderColor: theme.colors.border,
@@ -410,7 +410,7 @@ function SeeAllHeader({
           >
             <FilterRegular className="h-4 w-4" /> Filters
             {activeFilterCount ? (
-              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-xs font-bold text-white">
+              <span className="inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--color-primary-500)] px-1 text-xs font-bold text-white">
                 {activeFilterCount}
               </span>
             ) : null}
@@ -457,7 +457,7 @@ function SeeAllMobileHeader({
 
   return (
     <header
-      className="relative z-30 border-b sm:hidden"
+      className="relative z-30 shrink-0 border-b sm:hidden"
       style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
     >
       <div className="grid h-[79.2px] grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-2 px-3">
@@ -465,7 +465,7 @@ function SeeAllMobileHeader({
           type="button"
           aria-label="Go back"
           onClick={() => navigate(-1)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
+          className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition active:scale-95"
         >
           <ChevronLeftRegular className="h-5 w-5" />
         </button>
@@ -486,12 +486,12 @@ function SeeAllMobileHeader({
           type="button"
           aria-label={activeFilterCount ? `Clear ${activeFilterCount} selected filters` : 'Filters'}
           onClick={activeFilterCount ? onClearFilters : undefined}
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
+          className="relative inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition active:scale-95"
           style={{ color: activeFilterCount ? theme.colors.primary[500] : theme.colors.textPrimary }}
         >
           <FilterRegular className="h-5 w-5" />
           {activeFilterCount ? (
-            <span className="absolute right-0.5 top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-sm bg-[var(--color-primary-500)] px-1 text-xs font-bold text-white">
+            <span className="absolute right-0.5 top-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--color-primary-500)] px-1 text-xs font-bold text-white">
               {activeFilterCount}
             </span>
           ) : null}
@@ -508,7 +508,7 @@ function SeeAllMobileHeader({
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => onToggleFilter(filter)}
-                className="h-[37.4px] shrink-0 whitespace-nowrap rounded-full border px-3.5 text-xs font-medium transition active:scale-95"
+                className="h-11 shrink-0 whitespace-nowrap rounded-full border px-3.5 text-xs font-medium transition active:scale-95"
                 style={{
                   borderColor: isSelected ? theme.colors.primary[500] : theme.colors.border,
                   backgroundColor: isSelected ? theme.colors.primary[500] : theme.colors.surface,
@@ -600,7 +600,7 @@ function StayCard({ stay }: { stay: Stay }) {
             event.stopPropagation();
             setSaved((value) => !value);
           }}
-          className="absolute right-3 top-3 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]"
+          className="absolute right-2 top-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]"
         >
           {saved ? <HeartFilled className="h-6 w-6 text-[var(--color-primary-500)]" /> : <HeartRegular className="h-6 w-6" />}
         </button>
@@ -609,7 +609,7 @@ function StayCard({ stay }: { stay: Stay }) {
           type="button"
           aria-label="Previous photo"
           onClick={(event) => { event.stopPropagation(); scrollGallery(-1); }}
-          className="absolute left-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-sm group-hover:flex group-focus-within:flex"
+          className="absolute left-2 top-1/2 hidden h-8 max-sm:h-11 max-sm:w-11 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-sm group-hover:flex group-focus-within:flex"
         >
           <ChevronLeftRegular className="h-4 w-4" />
         </button>
@@ -617,7 +617,7 @@ function StayCard({ stay }: { stay: Stay }) {
           type="button"
           aria-label="Next photo"
           onClick={(event) => { event.stopPropagation(); scrollGallery(1); }}
-          className="absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-sm group-hover:flex group-focus-within:flex"
+          className="absolute right-2 top-1/2 hidden h-8 max-sm:h-11 max-sm:w-11 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-sm group-hover:flex group-focus-within:flex"
         >
           <ChevronRightRegular className="h-4 w-4" />
         </button>
@@ -640,7 +640,7 @@ function StayCard({ stay }: { stay: Stay }) {
         <p style={{ color: theme.colors.textSecondary }}>{stay.details}</p>
         <p style={{ color: theme.colors.textSecondary }}>{stay.dates}</p>
         <p className="mt-1.5"><span className="font-semibold underline underline-offset-2">{formatTwoNightPriceInCdf(stay.price)}</span> <span style={{ color: theme.colors.textSecondary }}>for {stay.nights} nights</span></p>
-        <span className="mt-1 inline-flex rounded-sm bg-[var(--color-surface-muted)] px-1.5 py-0.5 text-[10.85301px] font-medium text-[var(--color-text-secondary)]">Free cancellation</span>
+        <span className="mt-1 inline-flex rounded-pill bg-[var(--color-surface-muted)] px-1.5 py-0.5 text-[10.85301px] font-medium text-[var(--color-text-secondary)]">Free cancellation</span>
       </div>
     </article>
   );
@@ -680,7 +680,7 @@ function MapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }
         <button type="button" className="absolute bottom-[18%] right-[18%] z-20 flex items-center gap-1.5 rounded-full bg-[var(--color-surface-raised)] px-3 py-2 text-[12px] font-semibold text-[var(--color-text-primary)] shadow-md">
           <LocationFilled className="h-3.5 w-3.5" /> Kinshasa
         </button>
-        <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-md">
+        <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-md">
           <NavigationRegular className="h-4 w-4" />
         </button>
       </BooksaMap>
@@ -718,13 +718,13 @@ function MobileMapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapVal
           <span
             aria-label={marker.ariaLabel}
             title={marker.ariaLabel}
-            className="block whitespace-nowrap rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-xs font-bold text-[var(--color-text-primary)] shadow-sm"
+            className="block whitespace-nowrap rounded-pill border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-xs font-bold text-[var(--color-text-primary)] shadow-sm"
           >
             {marker.label}
           </span>
         )}
       >
-        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-sm bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-text-primary)] shadow-md">
+        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-pill bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-text-primary)] shadow-md">
           <LocationFilled className="h-3 w-3" /> Kinshasa
         </span>
       </BooksaMap>
@@ -768,7 +768,7 @@ export default function SeeAllPage() {
   }, [selectedFilters]);
 
   return (
-    <div className="h-[100dvh] overflow-hidden" style={{ backgroundColor: theme.colors.surface, color: theme.colors.textPrimary }}>
+    <div className="flex h-dvh flex-col overflow-hidden" style={{ backgroundColor: theme.colors.surface, color: theme.colors.textPrimary }}>
       <SeeAllHeader
         selectedFilters={selectedFilters}
         onToggleFilter={toggleFilter}
@@ -781,7 +781,7 @@ export default function SeeAllPage() {
         onClearFilters={() => setSelectedFilters([])}
       />
 
-      <main className="relative isolate h-[calc(100dvh-117px)] overflow-hidden sm:hidden">
+      <main className="relative isolate min-h-0 flex-1 overflow-hidden sm:hidden">
         <MobileMapPanel values={filteredMapValues} />
 
         <div
@@ -815,7 +815,7 @@ export default function SeeAllPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedFilters([])}
-                  className="mt-5 rounded-md px-5 py-2.5 text-xs font-semibold text-white"
+                  className="mt-5 rounded-button px-5 py-2.5 text-xs font-semibold text-white"
                   style={{ backgroundColor: theme.colors.primary[500] }}
                 >
                   Clear all filters
@@ -852,7 +852,7 @@ export default function SeeAllPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedFilters([])}
-                  className="mt-5 rounded-md px-5 py-2.5 text-xs font-semibold text-white"
+                  className="mt-5 rounded-button px-5 py-2.5 text-xs font-semibold text-white"
                   style={{ backgroundColor: theme.colors.primary[500] }}
                 >
                   Clear all filters

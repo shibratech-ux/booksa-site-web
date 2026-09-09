@@ -120,21 +120,21 @@ export default function HostProfilePage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
-      <section className="min-h-screen bg-white px-5 pb-36 pt-7 text-slate-900 lg:hidden">
+      <section className="min-h-screen bg-white px-5 pb-[calc(144px+env(safe-area-inset-bottom))] pt-7 text-slate-900 lg:hidden">
         <div className="mx-auto max-w-[429px]">
           <div className="flex items-center justify-between">
             <h1 className="text-[28px] font-semibold tracking-[-0.035em]">Profile</h1>
             <button
               type="button"
               aria-label="Notifications"
-              className="grid h-9 w-9 place-items-center rounded-md bg-slate-50 text-slate-700"
+              className="grid h-9 max-sm:h-11 max-sm:w-11 w-9 place-items-center rounded-full bg-slate-50 text-slate-700"
             >
               <Bell className="h-4 w-4 stroke-[1.7]" />
             </button>
           </div>
 
-          <article className="mt-4 flex min-h-[191.4px] flex-col items-center justify-center rounded-sm bg-white px-5 py-6 text-center shadow-[0_8px_28px_rgba(15,23,42,0.10)]">
-            <div className="grid h-20 w-20 place-items-center rounded-sm bg-[#f8e0f2] text-3xl font-semibold text-[#9c187c]">
+          <article className="mt-4 flex min-h-[191.4px] flex-col items-center justify-center rounded-card bg-white px-5 py-6 text-center shadow-[0_8px_28px_rgba(15,23,42,0.10)]">
+            <div className="grid h-20 w-20 place-items-center rounded-full bg-[#f8e0f2] text-3xl font-semibold text-[#9c187c]">
               {initial}
             </div>
             <h2 className="mt-2 text-[28px] font-semibold leading-none tracking-[-0.035em]">{displayName.split(' ')[0]}</h2>
@@ -142,13 +142,13 @@ export default function HostProfilePage() {
           </article>
 
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-md bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
+            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-card bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
+              <span className="absolute right-2 top-2 rounded-pill bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
               <ThreeDIcon name="pastTrips" sourceSize={100} className="h-14 w-14 object-contain" />
               <span className="mt-2 text-[13px] font-medium">Past trips</span>
             </button>
-            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-md bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded-sm bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
+            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-card bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
+              <span className="absolute right-2 top-2 rounded-pill bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
               <ThreeDIcon name="connectionPerson" sourceSize={100} className="h-14 w-14 object-contain" />
               <span className="mt-2 text-[13px] font-medium">Connections</span>
             </button>
@@ -157,7 +157,7 @@ export default function HostProfilePage() {
           <button
             type="button"
             onClick={() => navigate(ROUTES.hostListingSetup)}
-            className="mt-3 flex min-h-[79.2px] w-full items-center gap-4 rounded-md bg-white px-5 text-left shadow-[0_7px_22px_rgba(15,23,42,0.09)]"
+            className="mt-3 flex min-h-[79.2px] w-full items-center gap-4 rounded-card bg-white px-5 text-left shadow-[0_7px_22px_rgba(15,23,42,0.09)]"
           >
             <ThreeDIcon name="hostPerson" sourceSize={100} className="h-12 w-12 shrink-0 object-contain" />
             <span>
@@ -177,7 +177,7 @@ export default function HostProfilePage() {
         <button
           type="button"
           onClick={() => navigate(ROUTES.hostListings)}
-          className="fixed bottom-[85.8px] left-1/2 z-30 flex h-11 -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-md bg-slate-900 px-7 text-[13px] font-medium text-white shadow-lg"
+          className="fixed bottom-[calc(80px+env(safe-area-inset-bottom))] left-1/2 z-30 flex h-11 -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-pill bg-slate-900 px-7 text-[13px] font-medium text-white shadow-lg"
         >
           <Repeat2 className="h-4 w-4" aria-hidden="true" />
           Switch to hosting
@@ -215,7 +215,7 @@ export default function HostProfilePage() {
             <button
               type="button"
               aria-label={`Profil de ${displayName}`}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
             >
               {initial}
             </button>
@@ -225,7 +225,7 @@ export default function HostProfilePage() {
                 aria-label="Menu du compte"
                 aria-expanded={isMenuOpen}
                 onClick={() => setIsMenuOpen((open) => !open)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)]"
               >
                 <FiMenu className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -243,7 +243,7 @@ export default function HostProfilePage() {
               <button
                 key={item.label}
                 type="button"
-                className={`flex min-w-fit items-center gap-4 rounded-md px-5 py-4 text-left font-semibold transition lg:w-full ${
+                className={`flex min-w-fit items-center gap-4 rounded-button px-5 py-4 text-left font-semibold transition lg:w-full ${
                   index === 0 ? 'bg-[var(--color-surface-muted)]' : 'hover:bg-[var(--color-surface-muted)]'
                 }`}
               >
@@ -274,15 +274,15 @@ export default function HostProfilePage() {
             <button
               type="button"
               onClick={() => setIsEditing((editing) => !editing)}
-              className="rounded-md bg-[var(--color-surface-muted)] px-4 py-2 text-sm font-semibold"
+              className="rounded-button bg-[var(--color-surface-muted)] px-4 py-2 text-sm font-semibold"
             >
               {isEditing ? 'Annuler' : 'Modifier'}
             </button>
           </div>
 
           <div className="mt-6 grid gap-8 xl:grid-cols-[minmax(280px,345px)_1fr] xl:items-center">
-            <article className="flex min-h-[253px] flex-col items-center justify-center rounded-sm bg-[var(--color-surface)] p-6 text-center shadow-[var(--shadow-lg)]">
-              <span className="inline-flex h-28 w-28 items-center justify-center rounded-sm bg-[var(--color-primary-100)] text-4xl font-semibold text-[var(--color-primary-700)]">
+            <article className="flex min-h-[253px] flex-col items-center justify-center rounded-card bg-[var(--color-surface)] p-6 text-center shadow-[var(--shadow-lg)]">
+              <span className="inline-flex h-28 w-28 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-4xl font-semibold text-[var(--color-primary-700)]">
                 {initial}
               </span>
               {isEditing ? (
@@ -291,12 +291,12 @@ export default function HostProfilePage() {
                     value={draftName}
                     onChange={(event) => setDraftName(event.target.value)}
                     aria-label="Nom affiché"
-                    className="min-w-0 flex-1 rounded-md border border-[var(--color-border)] bg-transparent px-3 py-2 text-center font-semibold outline-none"
+                    className="min-w-0 flex-1 rounded-field border border-[var(--color-border)] bg-transparent px-3 py-2 text-center font-semibold outline-none"
                   />
                   <button
                     type="button"
                     onClick={saveProfile}
-                    className="rounded-md bg-[var(--color-primary-500)] px-3 py-2 text-sm font-semibold text-white hover:bg-[var(--color-primary-600)]"
+                    className="rounded-button bg-[var(--color-primary-500)] px-3 py-2 text-sm font-semibold text-white hover:bg-[var(--color-primary-600)]"
                   >
                     Enregistrer
                   </button>
@@ -317,7 +317,7 @@ export default function HostProfilePage() {
               <button
                 type="button"
                 onClick={() => setIsEditing(true)}
-                className="mt-6 rounded-md bg-[var(--color-primary-500)] px-6 py-3.5 font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
+                className="mt-6 rounded-button bg-[var(--color-primary-500)] px-6 py-3.5 font-semibold text-white transition hover:bg-[var(--color-primary-600)]"
               >
                 Commencer
               </button>

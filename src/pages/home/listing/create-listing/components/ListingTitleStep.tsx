@@ -43,7 +43,7 @@ export function ListingTitleStep({
           autoFocus
           onChange={(event) => onChange(event.target.value)}
           aria-describedby="listing-title-count"
-          className="mt-6 min-h-[165px] w-full resize-none rounded-md border border-[var(--color-text-secondary)] bg-[var(--color-surface)] p-4 text-lg font-medium leading-relaxed text-[var(--color-text-primary)] outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[204.6px] sm:p-5 sm:text-xl"
+          className="mt-6 min-h-[165px] w-full resize-none rounded-field border border-[var(--color-text-secondary)] bg-[var(--color-surface)] p-4 text-lg font-medium leading-relaxed text-[var(--color-text-primary)] outline-none transition placeholder:text-[var(--color-text-secondary)] focus:border-2 focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[204.6px] sm:p-5 sm:text-xl"
         />
         <p
           id="listing-title-count"

@@ -153,7 +153,7 @@ export function NotificationsContent() {
                 onChange={(event) => setUnsubscribeMarketing(event.target.checked)}
                 className="peer sr-only"
               />
-              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-sm border transition ${
+              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-xs border transition ${
                 unsubscribeMarketing
                   ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                   : 'border-[var(--color-text-secondary)]'

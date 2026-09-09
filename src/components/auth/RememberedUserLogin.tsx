@@ -39,7 +39,7 @@ export function RememberedUserLogin({
       {avatarUrl ? (
         <img src={avatarUrl} alt="" className="h-16 w-16 rounded-full object-cover" />
       ) : (
-        <div className="grid h-[57.2px] w-[57.2px] place-items-center rounded-sm bg-[#fae4f3] text-lg font-semibold text-[#a51472]">
+        <div className="grid h-[57.2px] w-[57.2px] place-items-center rounded-full bg-[#fae4f3] text-lg font-semibold text-[#a51472]">
           {initial}
         </div>
       )}
@@ -58,7 +58,7 @@ export function RememberedUserLogin({
       <button
         type="button"
         onClick={onLogin}
-        className="mt-3 h-12 w-full rounded-md bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-700)] text-[13px] font-semibold text-white shadow-sm transition hover:brightness-95 sm:h-12"
+        className="mt-3 h-12 w-full rounded-button bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-700)] text-[13px] font-semibold text-white shadow-sm transition hover:brightness-95 sm:h-12"
       >
         {loginLabel}
       </button>

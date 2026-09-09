@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, Check, ChevronRight, Image, Plus, Trash2, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Check, ChevronRight, Image, Images, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import {
@@ -9,6 +9,7 @@ import {
   updateListingPhotoTour,
   uploadListingPhotos
 } from '@/services/listing-photo.service';
+import { PhotoManagerDialog, photoActionClass, photoPrimaryClass, photoIconClass } from './PhotoManagerDialog';
 import { PhotoUploadDialog } from '../create-listing/components/PhotoUploadDialog';
 
 const roomDestinationImageModules = import.meta.glob<string>(
@@ -35,67 +36,6 @@ const roomDestinations = Object.entries(roomDestinationImageModules)
   .filter(({ imageName }) => imageName && !imageName.startsWith('Screenshot_'))
   .sort((first, second) => first.label.localeCompare(second.label));
 
-function TrashActionsDialog({
-  open,
-  busy,
-  onClose,
-  onRemoveFromRoom,
-  onDelete
-}: {
-  open: boolean;
-  busy: boolean;
-  onClose: () => void;
-  onRemoveFromRoom: () => void;
-  onDelete: () => void;
-}) {
-  return (
-    <AnimatePresence>
-      {open ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[170] flex items-center justify-center bg-black/10 px-4"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget && !busy) onClose();
-          }}
-        >
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Photo removal options"
-            initial={{ opacity: 0, scale: 0.97, y: 34 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: 22 }}
-            transition={{ type: 'spring', stiffness: 360, damping: 28, mass: 0.8 }}
-            onMouseDown={(event) => event.stopPropagation()}
-            className="w-full max-w-[291.5px] overflow-hidden rounded-lg bg-[var(--color-surface)] px-5 py-5 shadow-[0_14px_45px_rgba(0,0,0,0.24)]"
-          >
-            <button
-              type="button"
-              disabled={busy}
-              onClick={onRemoveFromRoom}
-              className="flex min-h-[57.2px] w-full items-center justify-between gap-4 rounded-md px-1 text-left text-base font-medium hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
-            >
-              <span>Remove from room or space</span>
-              <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              disabled={busy}
-              onClick={onDelete}
-              className="mt-1 flex min-h-[57.2px] w-full items-center justify-between gap-4 rounded-md px-1 text-left text-base font-medium hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
-            >
-              <span>{busy ? 'Working…' : 'Delete from listing'}</span>
-              <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
-            </button>
-          </motion.div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
-  );
-}
-
 export function AllPhotosManager({
   photoUrls,
   photoLabels = [],
@@ -113,7 +53,6 @@ export function AllPhotosManager({
   onPhotoLabelsChange?: (photoLabels: string[]) => void;
   onBack: () => void;
 }) {
-  const [showArrangeDialog, setShowArrangeDialog] = useState(true);
   const [photos, setPhotos] = useState(photoUrls);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
   const [descriptions, setDescriptions] = useState(() =>
@@ -127,54 +66,47 @@ export function AllPhotosManager({
   const [isSavingPhoto, setIsSavingPhoto] = useState(false);
   const [isTrashDialogOpen, setIsTrashDialogOpen] = useState(false);
   const [isTrashActionBusy, setIsTrashActionBusy] = useState(false);
-  const descriptionInputRef = useRef<HTMLTextAreaElement | null>(null);
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const [isManagingPhotos, setIsManagingPhotos] = useState(false);
   const [selectedPhotoIndexes, setSelectedPhotoIndexes] = useState<Set<number>>(() => new Set());
   const [isMoveDialogOpen, setIsMoveDialogOpen] = useState(false);
   const [isMovingPhotos, setIsMovingPhotos] = useState(false);
   const [selectedDestination, setSelectedDestination] = useState<string | null>(null);
-  const [failedDestinationImages, setFailedDestinationImages] = useState<Set<string>>(
-    () => new Set()
-  );
+  const [failedDestinationImages, setFailedDestinationImages] = useState<Set<string>>(() => new Set());
   const [photoAssignments, setPhotoAssignments] = useState(() =>
     photoUrls.map((_, index) => photoLabels[index] ?? 'Unassigned')
   );
 
+  // Reconcile subscription updates by URL so room labels and drafts follow their photos.
+  // Only incoming URL changes should trigger this; local deletion updates its own arrays.
   useEffect(() => {
+    if (photos.length === photoUrls.length && photos.every((url, index) => url === photoUrls[index])) return;
+    const previousUrls = photos;
+    const realign = (values: string[], incoming: string[], fallback: string) =>
+      photoUrls.map((url, index) => {
+        const previousIndex = previousUrls.indexOf(url);
+        return previousIndex >= 0 ? values[previousIndex] ?? incoming[index] ?? fallback : incoming[index] ?? fallback;
+      });
     setPhotos(photoUrls);
+    setPhotoAssignments((current) => realign(current, photoLabels, 'Unassigned'));
+    setDescriptions((current) => realign(current, photoDescriptions, ''));
+    setSavedDescriptions((current) => realign(current, photoDescriptions, ''));
+    setSelectedPhotoIndexes(new Set());
+    setSelectedPhotoIndex((current) => {
+      if (current === null) return null;
+      const nextIndex = photoUrls.indexOf(previousUrls[current]);
+      return nextIndex < 0 ? null : nextIndex;
+    });
   }, [photoUrls]);
 
   useEffect(() => {
-    if (!showArrangeDialog && !isMoveDialogOpen && !isTrashDialogOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
-      if (isTrashDialogOpen) {
-        setIsTrashDialogOpen(false);
-      } else if (isMoveDialogOpen) {
-        setIsMoveDialogOpen(false);
-        setSelectedDestination(null);
-      } else {
-        setShowArrangeDialog(false);
-      }
-    };
-
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isMoveDialogOpen, isTrashDialogOpen, showArrangeDialog]);
-
-  const closeFromBackdrop = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) setShowArrangeDialog(false);
-  };
+    const nextCover = coverPhotoUrl && photoUrls.includes(coverPhotoUrl)
+      ? coverPhotoUrl : photoUrls[0] ?? '';
+    setCoverUrl(nextCover);
+    setSavedCoverUrl(nextCover);
+  }, [coverPhotoUrl]);
 
   const openPhotoSelection = () => {
-    setShowArrangeDialog(false);
     setSelectedPhotoIndexes(new Set());
     setIsManagingPhotos(true);
   };
@@ -204,7 +136,7 @@ export function AllPhotosManager({
   };
 
   const moveSelectedPhotos = async () => {
-    if (!selectedDestination) return;
+    if (!selectedDestination || isMovingPhotos || selectedPhotoIndexes.size === 0) return;
     const nextAssignments = photoAssignments.map((assignment, index) =>
       selectedPhotoIndexes.has(index) ? selectedDestination : assignment
     );
@@ -226,26 +158,31 @@ export function AllPhotosManager({
   };
 
   const openPhotoEditor = (index: number) => {
-    setShowArrangeDialog(false);
     setSelectedPhotoIndex(index);
   };
 
-  const closePhotoEditor = () => setSelectedPhotoIndex(null);
+  const closePhotoEditor = () => {
+    if (isSavingPhoto || isTrashActionBusy || isMovingPhotos) return;
+    setDescriptions(savedDescriptions);
+    setCoverUrl(savedCoverUrl);
+    setSelectedPhotoIndex(null);
+    setSelectedPhotoIndexes(new Set());
+  };
 
   const openMoveDialogForPhoto = () => {
     if (selectedPhotoIndex === null) return;
     setSelectedPhotoIndexes(new Set([selectedPhotoIndex]));
-    setSelectedDestination(photoAssignments[selectedPhotoIndex] ?? null);
+    setSelectedDestination(null);
     setIsMoveDialogOpen(true);
   };
 
   const saveSelectedPhoto = async () => {
-    if (selectedPhotoIndex === null) return;
+    if (selectedPhotoIndex === null || isSavingPhoto) return;
     setIsSavingPhoto(true);
     try {
       await updateListingPhotoTour(listingId, photos, photoAssignments, descriptions);
-      if (coverUrl) await setListingCoverPhoto(listingId, coverUrl);
       setSavedDescriptions(descriptions);
+      if (coverUrl !== savedCoverUrl && coverUrl) await setListingCoverPhoto(listingId, coverUrl);
       setSavedCoverUrl(coverUrl);
       onPhotoLabelsChange?.(photoAssignments);
       toast.success('Photo details saved.');
@@ -300,6 +237,7 @@ export function AllPhotosManager({
         nextDescriptions
       );
       setPhotos(nextPhotos);
+      if (nextPhotos.length === 0) setIsManagingPhotos(false);
       setPhotoAssignments(nextAssignments);
       setDescriptions(nextDescriptions);
       setSavedDescriptions(nextDescriptions);
@@ -323,584 +261,188 @@ export function AllPhotosManager({
     ? ''
     : descriptions[selectedPhotoIndex] ?? '';
 
-  if (selectedPhotoIndex !== null && selectedPhotoUrl) {
-    const isCoverPhoto = coverUrl === selectedPhotoUrl;
-    const roomLabel = photoAssignments[selectedPhotoIndex] || 'Unassigned';
-    const hasPendingChanges = coverUrl !== savedCoverUrl ||
-      selectedPhotoDescription !== (savedDescriptions[selectedPhotoIndex] ?? '');
-
-    return (
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="flex min-h-[calc(100vh-95px)] flex-col bg-[var(--color-surface)]"
-      >
-        <div className="flex flex-1 flex-col px-5 pb-10 pt-6 sm:px-10 lg:px-20">
-          <div className="mx-auto flex w-full max-w-[1364px] items-center justify-between">
-            <button
-              type="button"
-              onClick={closePhotoEditor}
-              aria-label="Close photo editor"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
-            >
-              <X className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                disabled={isCoverPhoto}
-                onClick={() => setCoverUrl(selectedPhotoUrl)}
-                className="h-11 rounded-md bg-[var(--color-surface-muted)] px-5 text-sm font-semibold transition hover:brightness-95 disabled:text-[var(--color-text-secondary)]"
-              >
-                {isCoverPhoto ? 'Cover photo' : 'Make cover photo'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsTrashDialogOpen(true)}
-                disabled={isTrashActionBusy}
-                aria-label="Delete photo"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95 disabled:opacity-60"
-              >
-                <Trash2 className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-
-          <main className="mx-auto mt-7 w-full max-w-[671px] flex-1 sm:mt-2">
-            <div className="relative overflow-hidden rounded-sm bg-[var(--color-surface-muted)]">
-              <ShimmerImage
-                src={selectedPhotoUrl}
-                alt={`Listing photo ${selectedPhotoIndex + 1}`}
-                className="aspect-[1.82/1] w-full object-cover"
-              />
-              <button
-                type="button"
-                onClick={() => descriptionInputRef.current?.focus()}
-                className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-md bg-black/60 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm"
-              >
-                <Plus className="h-5 w-5" aria-hidden="true" />
-                Add a visual description
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={openMoveDialogForPhoto}
-              className="mt-7 flex min-h-12 w-full items-center justify-between gap-4 text-left text-base"
-            >
-              <span>Move from <strong>{roomLabel}</strong>?</span>
-              <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
-            </button>
-
-            <label className="mt-3 block">
-              <span className="sr-only">Photo description</span>
-              <textarea
-                ref={descriptionInputRef}
-                value={selectedPhotoDescription}
-                maxLength={250}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  setDescriptions((current) => current.map((description, index) =>
-                    index === selectedPhotoIndex ? value : description
-                  ));
-                }}
-                placeholder="Add a description for this room or space."
-                className="min-h-[101.2px] w-full resize-none rounded-md border-2 border-[var(--color-text-primary)] bg-transparent px-4 py-3 text-base outline-none placeholder:text-[var(--color-text-secondary)] focus:ring-2 focus:ring-[var(--color-primary-500)]"
-              />
-              <span className="mt-2 block text-sm text-[var(--color-text-secondary)]">
-                {250 - selectedPhotoDescription.length} characters available
-              </span>
-            </label>
-          </main>
-        </div>
-
-        <footer className="sticky bottom-0 flex min-h-24 items-center justify-end border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 sm:px-10 lg:px-20">
-          <button
-            type="button"
-            onClick={() => void saveSelectedPhoto()}
-            disabled={!hasPendingChanges || isSavingPhoto}
-            className="h-12 min-w-[101.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:opacity-50"
-          >
-            {isSavingPhoto ? 'Saving…' : 'Save'}
-          </button>
-        </footer>
-
-        <TrashActionsDialog
-          open={isTrashDialogOpen}
-          busy={isTrashActionBusy}
-          onClose={() => setIsTrashDialogOpen(false)}
-          onRemoveFromRoom={() => void removeTargetPhotosFromRoom()}
-          onDelete={() => void deleteTargetPhotos()}
-        />
-
-        <AnimatePresence>
-          {isMoveDialogOpen ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[160] flex items-center justify-center bg-black/40 px-4 py-6"
-              onMouseDown={(event) => {
-                if (event.target === event.currentTarget) closeMoveDialog();
-              }}
-            >
-              <motion.div
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="move-one-photo-title"
-                initial={{ opacity: 0, scale: 0.96, y: 18 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.97, y: 12 }}
-                onMouseDown={(event) => event.stopPropagation()}
-                className="flex max-h-[min(82vh,665px)] w-full max-w-[627px] flex-col overflow-hidden rounded-lg bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
-              >
-                <header className="relative flex h-20 shrink-0 items-center justify-center px-16">
-                  <button
-                    type="button"
-                    onClick={closeMoveDialog}
-                    aria-label="Close move photo dialog"
-                    className="absolute left-4 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-[var(--color-surface-muted)]"
-                  >
-                    <X className="h-5 w-5" aria-hidden="true" />
-                  </button>
-                  <h2 id="move-one-photo-title" className="text-base font-semibold">Move photo</h2>
-                </header>
-
-                <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-8">
-                  <h3 className="mb-4 text-2xl font-semibold tracking-tight">Choose a room or space</h3>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3">
-                    {[...new Set([...existingDestinations, ...roomDestinations.map(({ label }) => label)])].map((destination) => {
-                      const existingPhotoIndex = photoAssignments.findIndex((label) => label === destination);
-                      const destinationAsset = roomDestinations.find(({ label }) => label === destination);
-                      const previewUrl = existingPhotoIndex >= 0
-                        ? photos[existingPhotoIndex]
-                        : destinationAsset?.imageUrl;
-                      const isActive = selectedDestination === destination;
-
-                      return (
-                        <button
-                          key={destination}
-                          type="button"
-                          onClick={() => setSelectedDestination(destination)}
-                          aria-pressed={isActive}
-                          className="min-w-0 text-left"
-                        >
-                          <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
-                            {previewUrl ? (
-                              <ShimmerImage src={previewUrl} alt="" className="h-full w-full object-cover" />
-                            ) : (
-                              <Image className="h-10 w-10 text-[var(--color-text-secondary)]" aria-hidden="true" />
-                            )}
-                            {isActive ? (
-                              <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-                                <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
-                              </span>
-                            ) : null}
-                          </span>
-                          <span className="mt-2 block truncate text-base font-semibold">{destination}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <footer className="flex h-20 shrink-0 items-center justify-between border-t border-[var(--color-border)] px-6">
-                  <button type="button" onClick={closeMoveDialog} className="h-11 px-3 text-base font-semibold">
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    disabled={!selectedDestination || isMovingPhotos}
-                    onClick={() => void moveSelectedPhotos()}
-                    className="h-12 min-w-[123.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)]"
-                  >
-                    {isMovingPhotos ? 'Moving…' : 'Move'}
-                  </button>
-                </footer>
-              </motion.div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      </motion.section>
-    );
-  }
+  const isEditing = selectedPhotoIndex !== null && Boolean(selectedPhotoUrl);
+  const isBusy = isSavingPhoto || isMovingPhotos || isTrashActionBusy;
+  const hasPendingChanges = coverUrl !== savedCoverUrl ||
+    descriptions.some((description, index) => description !== (savedDescriptions[index] ?? ''));
+  const unassignedCount = photoAssignments.filter((label) => label === 'Unassigned').length;
+  const allSelected = photos.length > 0 && selectedCount === photos.length;
+  const destinations = [
+    ...existingDestinations.map((label) => ({ label, imageUrl: photos[photoAssignments.indexOf(label)], existing: true })),
+    ...roomDestinations.filter(({ label }) => !existingDestinations.includes(label)).map((room) => ({ ...room, existing: false }))
+  ];
 
   return (
     <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="relative min-h-[calc(100vh-95px)] bg-[var(--color-surface)] px-6 py-10 sm:px-10 lg:px-20"
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+      className="relative flex min-h-[calc(100dvh-96px)] flex-col bg-[var(--color-surface)] text-[var(--color-text-primary)] [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[var(--color-text-primary)]"
     >
-      <div className="mx-auto max-w-[1364px]">
-        {isManagingPhotos ? (
-          <div className="grid min-h-11 grid-cols-[1fr_auto_1fr] items-center gap-4">
-            <div className="justify-self-start">
-              {selectedCount > 0 ? (
-                <button
-                  type="button"
-                  onClick={() => setSelectedPhotoIndexes(new Set())}
-                  className="h-11 rounded-md bg-[var(--color-surface-muted)] px-5 text-sm font-semibold"
-                >
-                  Deselect
+      <div className="mx-auto w-full max-w-[1280px] flex-1 px-5 pb-36 pt-6 sm:px-10 sm:pt-8 lg:px-16">
+        <nav aria-label="Photo tour navigation" className="flex flex-wrap items-center justify-between gap-3">
+          <button type="button" onClick={isEditing ? closePhotoEditor : onBack} disabled={isBusy} className="group inline-flex min-h-11 items-center gap-3 rounded-full pr-3 text-sm font-semibold">
+            <span className={`${photoIconClass} border border-[var(--color-border)] group-hover:bg-[var(--color-surface-muted)]`}><ArrowLeft className="h-4 w-4" aria-hidden="true" /></span>
+            {isEditing ? 'All photos' : 'Photo tour'}
+          </button>
+          {isEditing ? (
+            <span className="text-sm text-[var(--color-text-secondary)]">Photo {(selectedPhotoIndex ?? 0) + 1} of {photos.length}</span>
+          ) : (
+            <button type="button" onClick={() => setIsUploadDialogOpen(true)} className={photoActionClass}>
+              <Plus className="h-4 w-4" aria-hidden="true" /> Add photos
+            </button>
+          )}
+        </nav>
+
+        {isEditing && selectedPhotoUrl && selectedPhotoIndex !== null ? (
+          <>
+            <header className="mb-8 mt-9 sm:mt-12">
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Photo details</h1>
+              <p className="mt-3 text-base text-[var(--color-text-secondary)]">Give guests a closer look at your space.</p>
+            </header>
+            <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(280px,1fr)] lg:gap-12">
+              <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-photo bg-[var(--color-surface-muted)]">
+                <ShimmerImage src={selectedPhotoUrl} alt={selectedPhotoDescription || `Listing photo ${selectedPhotoIndex + 1}`} className="h-full w-full object-contain" />
+                {coverUrl === selectedPhotoUrl && <span className="absolute left-4 top-4 rounded-full bg-[var(--color-surface)] px-4 py-2 text-xs font-semibold shadow-[var(--shadow-sm)]">Cover photo</span>}
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold">Make a great first impression</h2>
+                <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">Your cover photo is the first image guests see in search results.</p>
+                <button type="button" disabled={coverUrl === selectedPhotoUrl || isBusy} onClick={() => setCoverUrl(selectedPhotoUrl)} className={`${photoActionClass} mt-5 w-full`}>
+                  {coverUrl === selectedPhotoUrl ? <><Check className="h-4 w-4" aria-hidden="true" /> Cover photo</> : 'Make cover photo'}
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={closePhotoSelection}
-                  aria-label="Close photo selection"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
-                >
-                  <X className="h-5 w-5" aria-hidden="true" />
+                <div className="my-7 border-t border-[var(--color-border)]" />
+                <button type="button" onClick={openMoveDialogForPhoto} disabled={isBusy || hasPendingChanges} className="flex min-h-12 w-full items-center justify-between gap-4 rounded-button text-left disabled:opacity-50">
+                  <span><span className="block text-xs text-[var(--color-text-secondary)]">Room or space</span><span className="mt-1 block font-semibold">{photoAssignments[selectedPhotoIndex] || 'Unassigned'}</span></span>
+                  <ChevronRight className="h-5 w-5" aria-hidden="true" />
                 </button>
+                <label className="mt-7 block" htmlFor="listing-photo-description">
+                  <span className="text-base font-semibold">Visual description</span>
+                  <span id="photo-description-help" className="mb-3 mt-2 block text-sm leading-6 text-[var(--color-text-secondary)]">Describe what’s in the photo to help everyone explore your space, including guests using screen readers.</span>
+                </label>
+                <textarea
+                  id="listing-photo-description" value={selectedPhotoDescription} maxLength={250} disabled={isBusy}
+                  aria-describedby="photo-description-help photo-description-count"
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    setDescriptions((current) => current.map((description, index) => index === selectedPhotoIndex ? value : description));
+                  }}
+                  placeholder="A bright living room with a sofa and large windows."
+                  className="min-h-36 w-full resize-y rounded-field border border-[var(--color-border)] bg-transparent p-4 text-base sm:text-sm leading-6 outline-none focus:border-[var(--color-text-primary)] focus:ring-1 focus:ring-[var(--color-text-primary)] disabled:opacity-50"
+                />
+                <p id="photo-description-count" className="mt-2 text-right text-xs text-[var(--color-text-secondary)]">{selectedPhotoDescription.length}/250</p>
+                <button type="button" onClick={() => setIsTrashDialogOpen(true)} disabled={isBusy || hasPendingChanges} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-button text-sm font-semibold underline underline-offset-4 disabled:opacity-40">
+                  <Trash2 className="h-4 w-4" aria-hidden="true" /> Remove photo
+                </button>
+                {hasPendingChanges && <p className="mt-2 text-xs text-[var(--color-text-secondary)]">Save or cancel your changes before moving or removing this photo.</p>}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <header className="mb-8 mt-9 flex flex-wrap items-end justify-between gap-5 sm:mt-12">
+              <div>
+                <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">All photos</h1>
+                <p className="mt-3 text-base leading-6 text-[var(--color-text-secondary)]">Show guests what makes your place special.</p>
+              </div>
+              <button type="button" disabled={photos.length === 0 && !isManagingPhotos} onClick={isManagingPhotos ? closePhotoSelection : openPhotoSelection} className={photoActionClass}>
+                {isManagingPhotos ? 'Done' : 'Manage photos'}
+              </button>
+            </header>
+            <div className="mb-8 flex items-start gap-4 rounded-card bg-[var(--color-surface-muted)] p-5 sm:p-6">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-surface)]"><Images className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" /></span>
+              <div>
+                <h2 className="text-sm font-semibold sm:text-base">Lead with your best photo</h2>
+                <p className="mt-1 text-sm leading-6 text-[var(--color-text-secondary)]">Choose a photo to set your cover or add a description. Use Manage photos to organize them into rooms and spaces.</p>
+              </div>
+            </div>
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3 text-sm">
+              <p className="text-[var(--color-text-secondary)]"><span className="font-semibold text-[var(--color-text-primary)]">{photos.length} {photos.length === 1 ? 'photo' : 'photos'}</span>{unassignedCount > 0 && <span> · {unassignedCount} unassigned</span>}</p>
+              {isManagingPhotos && <button type="button" className="min-h-11 rounded-button font-semibold underline underline-offset-4" onClick={() => setSelectedPhotoIndexes(allSelected ? new Set() : new Set(photos.map((_, index) => index)))}>{allSelected ? 'Deselect all' : 'Select all'}</button>}
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4">
+              {photos.map((photoUrl, index) => {
+                const isSelected = selectedPhotoIndexes.has(index);
+                const room = photoAssignments[index] || 'Unassigned';
+                return (
+                  <button key={`${photoUrl}-${index}`} type="button"
+                    onClick={() => isManagingPhotos ? togglePhotoSelection(index) : openPhotoEditor(index)}
+                    aria-pressed={isManagingPhotos ? isSelected : undefined}
+                    aria-label={`${isManagingPhotos ? (isSelected ? 'Deselect' : 'Select') : 'Edit'} photo ${index + 1}, ${room}${photoUrl === coverUrl ? ', cover photo' : ''}`}
+                    className="group min-w-0 rounded-photo text-left"
+                  >
+                    <span className={`relative block aspect-square overflow-hidden rounded-photo bg-[var(--color-surface-muted)] transition ${isManagingPhotos && isSelected ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-4 ring-offset-[var(--color-surface)]' : ''}`}>
+                      <ShimmerImage src={photoUrl} alt={descriptions[index] || ''} loading={index < 4 ? 'eager' : 'lazy'} decoding="async" className="h-full w-full object-cover transition duration-300 motion-safe:group-hover:scale-[1.04]" />
+                      {photoUrl === coverUrl && <span className="absolute left-2 top-2 rounded-full bg-[var(--color-surface)] px-3 py-1.5 text-[11px] font-semibold shadow-[var(--shadow-sm)] sm:left-3 sm:top-3">Cover photo</span>}
+                      {isManagingPhotos && <span className={`absolute bottom-3 right-3 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white shadow-sm ${isSelected ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]' : 'bg-black/25'}`}>{isSelected && <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />}</span>}
+                    </span>
+                    <span className="mt-3 flex items-baseline justify-between gap-2 px-0.5"><span className="truncate text-sm font-medium">{room}</span><span className="text-xs text-[var(--color-text-secondary)]">{index + 1}</span></span>
+                  </button>
+                );
+              })}
+              {photos.length === 0 && (
+                <div className="col-span-full flex min-h-80 flex-col items-center justify-center rounded-card border border-dashed border-[var(--color-border)] px-6 text-center">
+                  <Image className="mb-5 h-10 w-10 text-[var(--color-text-secondary)]" strokeWidth={1.25} aria-hidden="true" />
+                  <h2 className="text-xl font-semibold">Your space starts here</h2>
+                  <p className="mb-6 mt-2 text-sm text-[var(--color-text-secondary)]">Add photos to bring your listing to life.</p>
+                  <button type="button" onClick={() => setIsUploadDialogOpen(true)} className={photoPrimaryClass}><Plus className="h-4 w-4" aria-hidden="true" /> Add photos</button>
+                </div>
               )}
             </div>
-
-            <h1 className="text-center text-2xl font-semibold tracking-tight sm:text-3xl">
-              {selectedCount > 0 ? `${selectedCount} selected` : 'Select photos'}
-            </h1>
-
-            <div className="flex items-center gap-2 justify-self-end">
-              {selectedCount > 0 ? (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => setIsMoveDialogOpen(true)}
-                    className="h-11 rounded-md bg-[var(--color-surface-muted)] px-6 text-sm font-semibold"
-                  >
-                    Move
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsTrashDialogOpen(true)}
-                    aria-label={`Delete ${selectedCount} selected ${selectedCount === 1 ? 'photo' : 'photos'}`}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
-                  >
-                    <Trash2 className="h-5 w-5" aria-hidden="true" />
-                  </button>
-                </>
-              ) : null}
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-wrap items-center justify-between gap-5">
-            <button
-              type="button"
-              onClick={onBack}
-              aria-label="Back to photo tour"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:brightness-95"
-            >
-              <ArrowLeft className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={openPhotoSelection}
-                className="h-11 rounded-md bg-[var(--color-surface-muted)] px-6 text-sm font-semibold"
-              >
-                Manage photos
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsUploadDialogOpen(true)}
-                aria-label="Add photos"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)]"
-              >
-                <Plus className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
+          </>
         )}
-
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {photos.map((photoUrl, index) => {
-            const isSelected = selectedPhotoIndexes.has(index);
-            const photo = (
-              <figure
-              key={`${photoUrl}-${index}`}
-              className={`relative aspect-square overflow-hidden rounded-sm bg-[var(--color-surface-muted)] transition ${
-                isSelected ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''
-              }`}
-            >
-              <ShimmerImage src={photoUrl} alt={`Listing photo ${index + 1}`} className="h-full w-full object-cover" />
-              {photoUrl === coverUrl ? (
-                <figcaption className="absolute left-4 top-4 rounded-sm bg-[var(--color-surface)]/90 px-4 py-2 text-sm font-medium shadow-[var(--shadow-sm)] backdrop-blur-sm">
-                  Cover photo
-                </figcaption>
-              ) : null}
-              {isManagingPhotos && photoAssignments[index] && photoAssignments[index] !== 'Unassigned' ? (
-                <span className="absolute bottom-4 left-4 max-w-[calc(100%-2rem)] truncate rounded-sm bg-[var(--color-surface)]/95 px-4 py-2 text-sm font-medium shadow-[var(--shadow-sm)]">
-                  {photoAssignments[index]}
-                </span>
-              ) : null}
-              {isManagingPhotos && isSelected ? (
-                <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-                  <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
-                </span>
-              ) : null}
-            </figure>
-            );
-
-            return isManagingPhotos ? (
-              <button
-                key={`${photoUrl}-${index}`}
-                type="button"
-                onClick={() => togglePhotoSelection(index)}
-                aria-pressed={isSelected}
-                aria-label={`${isSelected ? 'Deselect' : 'Select'} listing photo ${index + 1}`}
-                className="block rounded-md text-left"
-              >
-                {photo}
-              </button>
-            ) : (
-              <button
-                key={`${photoUrl}-${index}`}
-                type="button"
-                onClick={() => openPhotoEditor(index)}
-                aria-label={`Edit listing photo ${index + 1}`}
-                className="block rounded-md text-left"
-              >
-                {photo}
-              </button>
-            );
-          })}
-          {photos.length === 0 ? (
-            <div className="col-span-full flex min-h-[352px] items-center justify-center rounded-sm border border-dashed border-[var(--color-border)] text-[var(--color-text-secondary)]">
-              <span className="flex flex-col items-center gap-3">
-                <Image className="h-10 w-10" aria-hidden="true" />
-                No photos available
-              </span>
-            </div>
-          ) : null}
-        </div>
       </div>
 
-      <AnimatePresence>
-        {showArrangeDialog ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onMouseDown={closeFromBackdrop}
-            className="fixed inset-0 z-[150] flex items-center justify-center bg-black/40 px-4 py-6"
-          >
-            <motion.div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="arrange-photos-title"
-              initial={{ opacity: 0, scale: 0.96, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.97, y: 10 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              onMouseDown={(event) => event.stopPropagation()}
-              className="relative flex min-h-[492.8px] w-full max-w-[415.8px] flex-col items-center rounded-lg bg-[var(--color-surface)] px-6 pb-7 pt-16 text-center shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
-            >
-              <button
-                type="button"
-                onClick={() => setShowArrangeDialog(false)}
-                aria-label="Close photo arrangement dialog"
-                className="absolute left-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-[var(--color-surface-muted)]"
-              >
-                <X className="h-5 w-5" aria-hidden="true" />
-              </button>
+      {(isEditing || isManagingPhotos) && (
+        <footer className="sticky bottom-[calc(72px+env(safe-area-inset-bottom))] z-20 md:bottom-0 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 sm:px-10">
+          <div className="mx-auto flex max-w-[1152px] flex-wrap items-center justify-between gap-3">
+            <p aria-live="polite" className="text-sm font-medium">{isEditing ? (hasPendingChanges ? 'Unsaved changes' : 'All changes saved') : `${selectedCount} selected`}</p>
+            <div className="flex items-center gap-3">
+              {isEditing ? <>
+                <button type="button" onClick={closePhotoEditor} disabled={isBusy} className={photoActionClass}>{hasPendingChanges ? 'Cancel' : 'Done'}</button>
+                <button type="button" onClick={() => void saveSelectedPhoto()} disabled={!hasPendingChanges || isBusy} className={photoPrimaryClass}>{isSavingPhoto ? 'Saving…' : 'Save'}</button>
+              </> : <>
+                <button type="button" onClick={() => setIsTrashDialogOpen(true)} disabled={!selectedCount || isBusy} aria-label="Remove selected photos" className={`${photoIconClass} border border-[var(--color-border)]`}><Trash2 className="h-5 w-5" aria-hidden="true" /></button>
+                <button type="button" onClick={() => { setSelectedDestination(null); setIsMoveDialogOpen(true); }} disabled={!selectedCount || isBusy} className={photoPrimaryClass}>Move <span className="hidden sm:inline">to a room</span><ChevronRight className="h-4 w-4" aria-hidden="true" /></button>
+              </>}
+            </div>
+          </div>
+        </footer>
+      )}
 
-              <div className="relative h-[132px] w-[297px] max-w-full">
-                {photos.slice(0, 3).map((photoUrl, index) => (
-                  <ShimmerImage
-                    key={`${photoUrl}-preview`}
-                    src={photoUrl}
-                    alt=""
-                    className="absolute left-1/2 top-1/2 h-[105.6px] w-[134.2px] rounded-sm object-cover shadow-[var(--shadow-md)]"
-                    style={{
-                      transform: `translate(-50%, -50%) translateX(${(index - 1) * 50}px) rotate(${(index - 1) * 5}deg)`,
-                      zIndex: index === 1 ? 3 : index + 1
-                    }}
-                  />
-                ))}
-                {photos.length === 0 ? (
-                  <span className="absolute inset-0 flex items-center justify-center rounded-sm bg-[var(--color-surface-muted)]">
-                    <Image className="h-9 w-9 text-[var(--color-text-secondary)]" aria-hidden="true" />
-                  </span>
-                ) : null}
-              </div>
+      <PhotoManagerDialog open={isMoveDialogOpen} title={selectedCount === 1 ? 'Move photo' : 'Move photos'} busy={isMovingPhotos} onClose={closeMoveDialog}
+        footer={<><button type="button" disabled={isMovingPhotos} onClick={closeMoveDialog} className={photoActionClass}>Cancel</button><button type="button" disabled={!selectedDestination || isMovingPhotos} onClick={() => void moveSelectedPhotos()} className={photoPrimaryClass}>{isMovingPhotos ? 'Moving…' : 'Move'}</button></>}
+      >
+        <h3 className="text-2xl font-semibold tracking-tight">Choose a room or space</h3>
+        <p className="mb-6 mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">Help guests see how your place fits together. Choose a room for {selectedCount === 1 ? 'this photo' : `these ${selectedCount} photos`}.</p>
+        {[true, false].map((existing) => {
+          const group = destinations.filter((room) => room.existing === existing);
+          if (!group.length) return null;
+          return <section key={String(existing)} className="mb-7 last:mb-0">
+            <h4 className="mb-4 text-sm font-semibold">{existing ? 'Your rooms and spaces' : 'Add a new room or space'}</h4>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {group.map(({ label, imageUrl }) => <button key={label} type="button" disabled={isMovingPhotos} onClick={() => setSelectedDestination(label)} aria-pressed={selectedDestination === label} className="min-w-0 rounded-photo text-left disabled:opacity-50">
+                <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-photo bg-[var(--color-surface-muted)] ${selectedDestination === label ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-4 ring-offset-[var(--color-surface)]' : ''}`}>
+                  {imageUrl && !failedDestinationImages.has(imageUrl) ? <ShimmerImage src={imageUrl} alt="" loading="lazy" onError={() => setFailedDestinationImages((current) => new Set(current).add(imageUrl))} className="h-full w-full object-cover" /> : <Image className="h-9 w-9 text-[var(--color-text-secondary)]" aria-hidden="true" />}
+                  {selectedDestination === label && <span className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-text-primary)] text-[var(--color-surface)]"><Check className="h-4 w-4" aria-hidden="true" /></span>}
+                </span>
+                <span className="mt-3 block text-sm font-semibold">{label}</span>
+                {existing && <span className="mt-1 block text-xs text-[var(--color-text-secondary)]">{photoAssignments.filter((room) => room === label).length} photos</span>}
+              </button>)}
+            </div>
+          </section>;
+        })}
+      </PhotoManagerDialog>
 
-              <h2 id="arrange-photos-title" className="mt-6 text-2xl font-semibold tracking-tight">
-                Lead with your best photos
-              </h2>
-              <p className="mt-3 max-w-[341px] text-sm leading-snug text-[var(--color-text-secondary)]">
-                Instantly sort your photos so the best ones show up first.
-              </p>
-              <button
-                type="button"
-                onClick={() => setShowArrangeDialog(false)}
-                className="mt-10 h-12 w-full rounded-md bg-[var(--color-text-primary)] px-6 text-base font-semibold text-[var(--color-surface)]"
-              >
-                Arrange photos
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowArrangeDialog(false)}
-                className="mt-4 min-h-11 rounded-md px-5 text-base font-semibold hover:bg-[var(--color-surface-muted)]"
-              >
-                No thanks
-              </button>
-            </motion.div>
-          </motion.div>
-        ) : null}
+      <PhotoManagerDialog open={isTrashDialogOpen} title={trashTargetIndexes.length === 1 ? 'Remove photo' : 'Remove photos'} busy={isTrashActionBusy} onClose={() => setIsTrashDialogOpen(false)}>
+        <p className="mb-5 text-sm leading-6 text-[var(--color-text-secondary)]">Choose what to do with {trashTargetIndexes.length === 1 ? 'this photo' : `these ${trashTargetIndexes.length} photos`}.</p>
+        <button type="button" disabled={isTrashActionBusy} onClick={() => void removeTargetPhotosFromRoom()} className="flex w-full items-center justify-between gap-4 rounded-card border border-[var(--color-border)] p-5 text-left hover:bg-[var(--color-surface-muted)] disabled:opacity-50">
+          <span><span className="block font-semibold">Remove from room or space</span><span className="mt-1 block text-sm text-[var(--color-text-secondary)]">Keep in your listing as unassigned photos.</span></span><ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+        </button>
+        <button type="button" disabled={isTrashActionBusy} onClick={() => void deleteTargetPhotos()} className="mt-3 flex w-full items-center justify-between gap-4 rounded-card border border-[var(--color-border)] p-5 text-left hover:bg-[var(--color-surface-muted)] disabled:opacity-50">
+          <span><span className="block font-semibold text-[var(--color-danger)]">{isTrashActionBusy ? 'Working…' : 'Delete from listing'}</span><span className="mt-1 block text-sm text-[var(--color-text-secondary)]">Permanently delete. This can’t be undone.</span></span><Trash2 className="h-5 w-5 shrink-0 text-[var(--color-danger)]" aria-hidden="true" />
+        </button>
+      </PhotoManagerDialog>
 
-        {isMoveDialogOpen ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[160] flex items-center justify-center bg-black/40 px-4 py-6"
-            onMouseDown={(event) => {
-              if (event.target === event.currentTarget) closeMoveDialog();
-            }}
-          >
-            <motion.div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="move-photos-title"
-              initial={{ opacity: 0, scale: 0.96, y: 18 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.97, y: 12 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              onMouseDown={(event) => event.stopPropagation()}
-              className="flex max-h-[min(82vh,665px)] w-full max-w-[627px] flex-col overflow-hidden rounded-lg bg-[var(--color-surface)] shadow-[0_24px_80px_rgba(0,0,0,0.3)]"
-            >
-              <header className="relative flex h-20 shrink-0 items-center justify-center px-16">
-                <button
-                  type="button"
-                  onClick={closeMoveDialog}
-                  aria-label="Close move photos dialog"
-                  className="absolute left-4 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-[var(--color-surface-muted)]"
-                >
-                  <X className="h-5 w-5" aria-hidden="true" />
-                </button>
-                <h2 id="move-photos-title" className="text-base font-semibold">Move photos</h2>
-              </header>
-
-              <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-8">
-                {existingDestinations.length > 0 ? (
-                  <section>
-                    <h3 className="mb-4 text-2xl font-semibold tracking-tight">Choose a room or space</h3>
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3">
-                      {existingDestinations.map((destination) => {
-                        const photoIndex = photoAssignments.findIndex((label) => label === destination);
-                        const isActive = selectedDestination === destination;
-                        return (
-                          <button
-                            key={destination}
-                            type="button"
-                            onClick={() => setSelectedDestination(destination)}
-                            aria-pressed={isActive}
-                            className="min-w-0 text-left"
-                          >
-                            <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
-                              {photoUrls[photoIndex] ? (
-                                <ShimmerImage src={photoUrls[photoIndex]} alt="" className="h-full w-full object-cover" />
-                              ) : (
-                                <Image className="h-10 w-10 text-[var(--color-text-secondary)]" aria-hidden="true" />
-                              )}
-                              {isActive ? (
-                                <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-                                  <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
-                                </span>
-                              ) : null}
-                            </span>
-                            <span className="mt-2 block truncate text-base font-semibold">{destination}</span>
-                            <span className="mt-0.5 block text-sm text-[var(--color-text-secondary)]">
-                              {photoAssignments.filter((label) => label === destination).length} photos
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </section>
-                ) : null}
-
-                <section className={existingDestinations.length > 0 ? 'mt-9' : ''}>
-                  <h3 className="mb-4 text-2xl font-semibold tracking-tight">Add a new room or space</h3>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3">
-                    {roomDestinations.map(({ label, imageName, imageUrl }) => {
-                      const isActive = selectedDestination === label;
-                      return (
-                        <button
-                          key={label}
-                          type="button"
-                          onClick={() => setSelectedDestination(label)}
-                          aria-pressed={isActive}
-                          className="min-w-0 text-left"
-                        >
-                          <span className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-sm bg-[var(--color-surface-muted)] ${isActive ? 'ring-2 ring-[var(--color-text-primary)] ring-offset-2' : ''}`}>
-                            {failedDestinationImages.has(imageName) ? (
-                              <Image
-                                className="h-10 w-10 text-[var(--color-text-secondary)]"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <ShimmerImage
-                                src={imageUrl}
-                                alt=""
-                                aria-hidden="true"
-                                data-room-image={imageName}
-                                loading="lazy"
-                                decoding="async"
-                                onError={() => {
-                                  setFailedDestinationImages((failedImages) =>
-                                    new Set(failedImages).add(imageName)
-                                  );
-                                }}
-                                className="h-full w-full object-cover"
-                              />
-                            )}
-                            {isActive ? (
-                              <span className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-sm bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-                                <Check className="h-5 w-5" strokeWidth={3} aria-hidden="true" />
-                              </span>
-                            ) : null}
-                          </span>
-                          <span className="mt-2 block truncate text-base font-semibold">{label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </section>
-              </div>
-
-              <footer className="flex h-20 shrink-0 items-center justify-between border-t border-[var(--color-border)] px-6">
-                <button type="button" onClick={closeMoveDialog} className="h-11 px-3 text-base font-semibold">
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  disabled={!selectedDestination || isMovingPhotos}
-                  onClick={() => void moveSelectedPhotos()}
-                  className="h-12 min-w-[123.2px] rounded-md bg-[var(--color-text-primary)] px-7 text-base font-semibold text-[var(--color-surface)] disabled:cursor-not-allowed disabled:bg-[var(--color-surface-muted)] disabled:text-[var(--color-text-secondary)]"
-                >
-                  {isMovingPhotos ? 'Moving…' : 'Move'}
-                </button>
-              </footer>
-            </motion.div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-
-      <TrashActionsDialog
-        open={isTrashDialogOpen}
-        busy={isTrashActionBusy}
-        onClose={() => setIsTrashDialogOpen(false)}
-        onRemoveFromRoom={() => void removeTargetPhotosFromRoom()}
-        onDelete={() => void deleteTargetPhotos()}
-      />
-
-      <PhotoUploadDialog
-        open={isUploadDialogOpen}
-        onClose={() => setIsUploadDialogOpen(false)}
-        onUpload={async (files, onProgress) => {
-          await uploadListingPhotos(files, onProgress, listingId);
-        }}
-      />
+      <PhotoUploadDialog open={isUploadDialogOpen} onClose={() => setIsUploadDialogOpen(false)} onUpload={async (files, onProgress) => { await uploadListingPhotos(files, onProgress, listingId); }} />
     </motion.section>
   );
 }

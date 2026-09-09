@@ -44,7 +44,7 @@ export function PropertyTypeStep({
                 type="button"
                 aria-pressed={selected}
                 onClick={() => onCategoryChange(id)}
-                className={`flex min-h-[145.2px] flex-col items-start rounded-md border bg-[var(--color-surface)] p-4 text-left transition hover:-translate-y-0.5 hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[198px] sm:p-5 md:min-h-[242px] ${
+                className={`flex min-h-[145.2px] flex-col items-start rounded-card border bg-[var(--color-surface)] p-4 text-left transition hover:-translate-y-0.5 hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[198px] sm:p-5 md:min-h-[242px] ${
                   selected
                     ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
                     : 'border-[var(--color-border)]'
@@ -102,7 +102,7 @@ export function PropertyTypeStep({
                       type="button"
                       aria-pressed={selected}
                       onClick={() => onOptionChange(id)}
-                      className={`flex min-h-[105.6px] flex-col items-start justify-center rounded-md border bg-[var(--color-surface)] px-4 py-3 text-left transition hover:border-[var(--color-text-primary)] ${
+                      className={`flex min-h-[105.6px] flex-col items-start justify-center rounded-card border bg-[var(--color-surface)] px-4 py-3 text-left transition hover:border-[var(--color-text-primary)] ${
                         selected
                           ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
                           : 'border-[var(--color-border)]'

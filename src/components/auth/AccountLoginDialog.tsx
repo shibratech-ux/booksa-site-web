@@ -114,11 +114,11 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
     }
   }
 
-  const actionClassName = 'h-12 min-h-12 w-full rounded-md text-base font-semibold';
+  const actionClassName = 'h-12 min-h-12 w-full rounded-button text-base font-semibold';
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 sm:p-6"
+      className="fixed inset-0 z-[150] flex items-end justify-center bg-black/40 pt-4 sm:items-center sm:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -139,7 +139,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: reducedMotion ? 0 : 18, scale: reducedMotion ? 1 : 0.98 }}
         transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 360, damping: 30 }}
-        className="relative max-h-[calc(100dvh-32px)] w-full max-w-[480px] overflow-y-auto rounded-[32px] bg-[var(--color-surface)] px-6 pb-6 pt-16 text-[var(--color-text-primary)] shadow-[var(--shadow-xl)] outline-none"
+        className="relative max-h-[calc(100dvh-16px)] w-full max-w-[480px] overflow-y-auto overscroll-contain rounded-t-dialog bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-16 sm:max-h-[calc(100dvh-48px)] sm:rounded-dialog sm:px-6 sm:pb-6 text-[var(--color-text-primary)] shadow-[var(--shadow-xl)] outline-none"
       >
         {step !== 'welcome' ? (
           <button
@@ -147,7 +147,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
             onClick={() => changeStep(step === 'google' && lastUser ? 'welcome' : step === 'credentials' ? 'google' : 'credentials')}
             disabled={pending !== null}
             aria-label={t('accountDialog.back')}
-            className="absolute left-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
+            className="absolute left-3 top-3 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
           >
             <ArrowLeftRegular className="h-5 w-5" aria-hidden="true" />
           </button>
@@ -157,7 +157,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
           onClick={onClose}
           disabled={pending !== null}
           aria-label={tCommon('actions.close')}
-          className="absolute right-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
+          className="absolute right-3 top-3 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
         >
           <DismissRegular className="h-5 w-5" aria-hidden="true" />
         </button>
@@ -193,7 +193,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
                   setPassword('');
                   changeStep('credentials');
                 }}
-                className="mt-4 min-h-12 rounded-xl px-6 text-base font-semibold transition hover:bg-[var(--color-surface-muted)]"
+                className="mt-4 min-h-12 rounded-button px-6 text-base font-semibold transition hover:bg-[var(--color-surface-muted)]"
               >
                 {t('accountDialog.notYou')}
               </button>

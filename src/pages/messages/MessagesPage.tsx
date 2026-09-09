@@ -43,7 +43,7 @@ export default function MessagesPage() {
               }}
               aria-label={isSearchOpen ? 'Close message search' : 'Search messages'}
               aria-expanded={isSearchOpen}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[#f7f7f7] text-[#222222] transition hover:bg-[#eeeeee]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#f7f7f7] text-[#222222] transition hover:bg-[#eeeeee]"
             >
               {isSearchOpen ? (
                 <X className="h-5 w-5 stroke-[1.8]" aria-hidden="true" />
@@ -61,7 +61,7 @@ export default function MessagesPage() {
                 }}
                 aria-label="Message settings"
                 aria-expanded={isSettingsOpen}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[#f7f7f7] text-[#222222] transition hover:bg-[#eeeeee]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#f7f7f7] text-[#222222] transition hover:bg-[#eeeeee]"
               >
                 <Settings className="h-5 w-5 stroke-[1.8]" aria-hidden="true" />
               </button>
@@ -74,12 +74,12 @@ export default function MessagesPage() {
                     exit={{ opacity: 0, y: -5, scale: 0.98 }}
                     transition={{ duration: 0.16 }}
                     role="menu"
-                    className="absolute right-0 top-11 z-20 w-48 overflow-hidden rounded-sm border border-slate-200 bg-white p-1.5 text-sm shadow-[0_12px_35px_rgba(15,23,42,0.14)]"
+                    className="absolute right-0 top-11 z-20 w-48 overflow-hidden rounded-menu border border-slate-200 bg-white p-1.5 text-sm shadow-[0_12px_35px_rgba(15,23,42,0.14)]"
                   >
-                    <button type="button" role="menuitem" className="w-full rounded-md px-3 py-2.5 text-left hover:bg-slate-50">
+                    <button type="button" role="menuitem" className="w-full rounded-button px-3 py-2.5 text-left hover:bg-slate-50">
                       Notification settings
                     </button>
-                    <button type="button" role="menuitem" className="w-full rounded-md px-3 py-2.5 text-left hover:bg-slate-50">
+                    <button type="button" role="menuitem" className="w-full rounded-button px-3 py-2.5 text-left hover:bg-slate-50">
                       Archived messages
                     </button>
                   </motion.div>
@@ -95,7 +95,7 @@ export default function MessagesPage() {
               initial={{ height: 0, opacity: 0, marginTop: 0 }}
               animate={{ height: 42, opacity: 1, marginTop: 16 }}
               exit={{ height: 0, opacity: 0, marginTop: 0 }}
-              className="flex items-center gap-2 overflow-hidden rounded-md border border-slate-300 px-4"
+              className="flex items-center gap-2 overflow-hidden rounded-field border border-slate-300 px-4"
             >
               <Search className="h-5 w-5 shrink-0 text-slate-500" aria-hidden="true" />
               <span className="sr-only">Search messages</span>
@@ -104,7 +104,7 @@ export default function MessagesPage() {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search messages"
-                className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                className="min-w-0 flex-1 bg-transparent text-base sm:text-sm outline-none placeholder:text-slate-400"
               />
             </motion.label>
           ) : null}

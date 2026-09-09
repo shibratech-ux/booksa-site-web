@@ -188,7 +188,7 @@ function ReviewsSection() {
         {reviewItems.map((review) => (
           <article key={review.name} className="max-w-[396px]">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-rose-100 text-sm font-semibold text-rose-700">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-rose-100 text-sm font-semibold text-rose-700">
                 {'avatarUrl' in review ? (
                   <ShimmerImage src={review.avatarUrl} alt={review.name} className="h-full w-full object-cover" />
                 ) : (
@@ -213,7 +213,7 @@ function ReviewsSection() {
 
       <button
         type="button"
-        className="mt-8 rounded-md border border-gray-900 px-5 py-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50"
+        className="mt-8 rounded-button border border-gray-900 px-5 py-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50"
       >
         Show all 11 reviews
       </button>
@@ -235,14 +235,14 @@ function MoreExperiencesSection() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-100 text-gray-900 transition hover:bg-gray-200"
+            className="flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition hover:bg-gray-200"
             aria-label="Previous experiences"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-100 text-gray-900 transition hover:bg-gray-200"
+            className="flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-gray-100 text-gray-900 transition hover:bg-gray-200"
             aria-label="Next experiences"
           >
             <ChevronRight className="h-5 w-5" />
@@ -253,7 +253,7 @@ function MoreExperiencesSection() {
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {moreExperiences.map((experience) => (
           <article key={experience.title} className="space-y-3">
-            <div className="aspect-[1] overflow-hidden rounded-sm bg-gray-100 shadow-sm">
+            <div className="aspect-[1] overflow-hidden rounded-photo bg-gray-100 shadow-sm">
               <ShimmerImage src={experience.image} alt={experience.title} className="h-full w-full object-cover" />
             </div>
 
@@ -280,8 +280,8 @@ function AboutSection({ hostName = '逹也', hostDescription = 'Founder of EAST 
 
       <div className="grid gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:items-start">
         <div className="space-y-6">
-          <div className="rounded-sm border border-gray-100 bg-white px-6 py-8 text-center">
-            <div className="mx-auto h-24 w-24 overflow-hidden rounded-sm">
+          <div className="rounded-card border border-gray-100 bg-white px-6 py-8 text-center">
+            <div className="mx-auto h-24 w-24 overflow-hidden rounded-full">
               <ShimmerImage
                 src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300"
                 alt={hostName}
@@ -294,7 +294,7 @@ function AboutSection({ hostName = '逹也', hostDescription = 'Founder of EAST 
 
           <button
             type="button"
-            className="flex h-14 w-full items-center justify-center rounded-md bg-gray-100 px-6 text-sm font-semibold text-gray-900 transition hover:bg-gray-200"
+            className="flex h-14 w-full items-center justify-center rounded-button bg-gray-100 px-6 text-sm font-semibold text-gray-900 transition hover:bg-gray-200"
           >
             Message {hostName}
           </button>
@@ -437,7 +437,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
           <BooksaLogo className="h-10 w-[121px]" />
 
           <div
-            className="hidden items-center rounded-sm border shadow-[var(--shadow-sm)] md:flex"
+            className="hidden items-center rounded-pill border shadow-[var(--shadow-sm)] md:flex"
             style={surfaceStyles}
           >
             <button
@@ -452,7 +452,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
             </button>
             <button className="px-4 py-3 text-sm font-medium">Add guests</button>
             <button
-              className="m-1 flex h-10 w-10 items-center justify-center rounded-md text-white"
+              className="m-1 flex h-10 w-10 items-center justify-center rounded-full text-white"
               style={{ backgroundColor: theme.colors.primary[500] }}
             >
               <navigationIcons.search className="h-2 w-2" />
@@ -460,13 +460,13 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <button className="hidden rounded-md px-4 py-2 text-sm font-medium transition hover:bg-black/5 md:block">
+            <button className="hidden rounded-button px-4 py-2 text-sm font-medium transition hover:bg-black/5 md:block">
               Become a host
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-black/5">
+            <button className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-black/5">
               <Globe className="h-4 w-4" />
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-md transition hover:bg-black/5">
+            <button className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-black/5">
               <navigationIcons.menu className="h-4 w-4" />
             </button>
           </div>
@@ -477,20 +477,20 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] xl:gap-10">
           <section className="space-y-8">
             <div className="grid grid-cols-2 gap-2 overflow-hidden rounded-2xl md:grid-rows-2">
-              <div className="aspect-square overflow-hidden rounded-lg">
+              <div className="aspect-square overflow-hidden rounded-photo">
                 <ShimmerImage src={galleryImages[0]} alt="Experience photo 1" className="h-full w-full object-cover" />
               </div>
-              <div className="aspect-square overflow-hidden rounded-lg">
+              <div className="aspect-square overflow-hidden rounded-photo">
                 <ShimmerImage src={galleryImages[1]} alt="Experience photo 2" className="h-full w-full object-cover" />
               </div>
-              <div className="aspect-square overflow-hidden rounded-lg">
+              <div className="aspect-square overflow-hidden rounded-photo">
                 <ShimmerImage src={galleryImages[2]} alt="Experience photo 3" className="h-full w-full object-cover" />
               </div>
-              <div className="relative aspect-square overflow-hidden rounded-lg">
+              <div className="relative aspect-square overflow-hidden rounded-photo">
                 <ShimmerImage src={galleryImages[3]} alt="Experience photo 4" className="h-full w-full object-cover" />
                 <button
                   type="button"
-                  className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-md bg-[#d3a8a2] text-gray-900 shadow-lg transition hover:scale-105"
+                  className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#d3a8a2] text-gray-900 shadow-lg transition hover:scale-105"
                   aria-label="View photos"
                 >
                   <Share2 className="h-2.5 w-2.5" />
@@ -506,7 +506,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 {whatYoullDo.map((step, index) => (
                   <div key={step.title} className="flex gap-4">
                     <div
-                      className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-sm font-semibold"
+                      className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold"
                       style={{ backgroundColor: `${theme.colors.primary[50]}99`, color: theme.colors.primary[700] }}
                     >
                       {index + 1}
@@ -555,10 +555,10 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 </div>
 
                 <div className="flex items-center justify-center gap-6 pt-1">
-                  <button className="rounded-md p-2 transition hover:bg-black/5" aria-label="Share">
+                  <button className="rounded-full p-2 transition hover:bg-black/5" aria-label="Share">
                     <Share2 className="h-5 w-5" />
                   </button>
-                  <button className="rounded-md p-2 transition hover:bg-black/5" aria-label="Save">
+                  <button className="rounded-full p-2 transition hover:bg-black/5" aria-label="Save">
                     <Heart className="h-5 w-5" />
                   </button>
                 </div>
@@ -571,7 +571,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                   return (
                     <div key={item.title} className="flex items-start gap-4">
                       <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-sm border shadow-sm"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border shadow-sm"
                         style={{ borderColor: theme.colors.border, backgroundColor: theme.colors.surface }}
                       >
                         {'avatarUrl' in item ? (
@@ -595,7 +595,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
             </section>
 
             <section
-              className="dashboard-card dashboard-card-elevated sticky top-28 rounded-sm p-6"
+              className="dashboard-card dashboard-card-elevated sticky top-28 rounded-card p-6"
             >
               <div className="flex items-end justify-between gap-4 pb-4">
                 <div>
@@ -609,7 +609,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsScheduleOpen(true)}
-                  className="rounded-md px-6 py-3 text-sm font-semibold text-white transition hover:brightness-95"
+                  className="rounded-button px-6 py-3 text-sm font-semibold text-white transition hover:brightness-95"
                   style={{ backgroundColor: theme.colors.primary[500] }}
                 >
                   Show dates
@@ -620,7 +620,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                 {bookingSlots.map((slot) => (
                   <div
                     key={slot.day}
-                    className={`flex items-start justify-between rounded-sm border p-4 ${
+                    className={`flex items-start justify-between rounded-card border p-4 ${
                       slot.active ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50/70 opacity-70'
                     }`}
                     style={slot.active ? { borderColor: theme.colors.border, backgroundColor: theme.colors.surface } : undefined}
@@ -654,12 +654,12 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
               style={{ backgroundColor: 'rgba(2, 6, 23, 0.72)' }}
             >
               <div
-                className="dashboard-card dashboard-card-elevated relative flex max-h-[calc(100vh-3rem)] w-full max-w-[649px] flex-col overflow-hidden rounded-sm"
+                className="dashboard-card dashboard-card-elevated relative flex max-h-[calc(100vh-3rem)] w-full max-w-[649px] flex-col overflow-hidden rounded-dialog"
               >
                 <button
                   type="button"
                   onClick={() => setIsScheduleOpen(false)}
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-md transition hover:text-gray-900"
+                  className="absolute right-4 top-4 flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:text-gray-900"
                   style={{ color: theme.colors.textSecondary }}
                   aria-label="Close dialog"
                 >
@@ -701,7 +701,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                     <p className="text-xs font-semibold" style={{ color: theme.colors.textPrimary }}>
                       July 2026
                     </p>
-                    <button type="button" className="rounded-md p-2 transition hover:bg-black/5" aria-label="Open calendar" style={{ color: theme.colors.textSecondary }}>
+                    <button type="button" className="rounded-full p-2 transition hover:bg-black/5" aria-label="Open calendar" style={{ color: theme.colors.textSecondary }}>
                       <svg className="booksa-icon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <rect x="3" y="5" width="18" height="16" rx="2" />
                         <path d="M8 3v4M16 3v4M3 11h18" />
@@ -719,7 +719,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                       <button
                         key={slot.time}
                         type="button"
-                        className={`flex w-full items-center justify-between rounded-md border px-5 py-4 text-left transition ${
+                        className={`flex w-full items-center justify-between rounded-button border px-5 py-4 text-left transition ${
                           slot.active
                             ? 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                             : 'border-gray-100 bg-gray-50 text-gray-400'
@@ -754,7 +754,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                   </p>
                   <button
                     type="button"
-                    className="rounded-md px-8 py-3 text-xs font-semibold text-white transition hover:brightness-95"
+                    className="rounded-button px-8 py-3 text-xs font-semibold text-white transition hover:brightness-95"
                     style={{ backgroundColor: theme.colors.primary[500] }}
                   >
                     Next

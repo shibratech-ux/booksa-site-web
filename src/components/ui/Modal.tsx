@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { DismissRegular } from '@fluentui/react-icons';
-import { Button } from './Button';
+import { IconButton } from './IconButton';
 import { useTranslation } from 'react-i18next';
 
 interface ModalProps {
@@ -62,7 +62,7 @@ export function Modal({ open, title, children, onClose }: ModalProps) {
     <AnimatePresence>
       {open ? (
         <motion.div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-[var(--color-overlay)] p-3 sm:items-center sm:p-6"
+          className="fixed inset-0 z-[150] flex items-end justify-center bg-[var(--color-overlay)] sm:items-center sm:p-6"
           onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -75,19 +75,17 @@ export function Modal({ open, title, children, onClose }: ModalProps) {
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: reducedMotion ? 1 : 0.98, y: reducedMotion ? 0 : 18, opacity: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.2 }}
-            className="max-h-[calc(100dvh-24px)] w-full max-w-2xl overflow-y-auto rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-xl)] outline-none sm:max-h-[calc(100dvh-48px)] sm:p-8"
+            className="max-h-[calc(100dvh-16px)] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-t-dialog border border-[var(--color-border)] bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-6 shadow-[var(--shadow-xl)] outline-none sm:max-h-[calc(100dvh-48px)] sm:rounded-dialog sm:p-8"
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
           >
             <div className="mb-6 flex items-start justify-between gap-4">
-              <div>
-                <h3 id={titleId} className="text-xl font-semibold text-[var(--color-text-primary)]">{title}</h3>
+              <div className="min-w-0 flex-1">
+                <h3 id={titleId} className="break-words text-xl font-semibold text-[var(--color-text-primary)]">{title}</h3>
                 <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{t('modal.subtitle')}</p>
               </div>
-              <Button variant="ghost" size="sm" onClick={onClose} leftIcon={<DismissRegular className="h-4 w-4" />}>
-                {t('actions.close')}
-              </Button>
+              <IconButton label={t('actions.close')} onClick={onClose} icon={<DismissRegular className="h-5 w-5" />} />
             </div>
             {children}
           </motion.div>

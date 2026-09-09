@@ -211,7 +211,7 @@ export function LanguagesCurrencyContent({
                     onClick={() => void saveSetting(key)}
                     disabled={isSaving || draft === settings[key]}
                     tabIndex={isEditing ? 0 : -1}
-                    className="mt-4 min-h-12 rounded-md bg-[var(--color-text-primary)] px-8 font-semibold text-[var(--color-surface)] disabled:cursor-default disabled:opacity-35"
+                    className="mt-4 min-h-12 rounded-button bg-[var(--color-text-primary)] px-8 font-semibold text-[var(--color-surface)] disabled:cursor-default disabled:opacity-35"
                   >
                     {isSaving ? tCommon('actions.saving') : tCommon('actions.save')}
                   </button>

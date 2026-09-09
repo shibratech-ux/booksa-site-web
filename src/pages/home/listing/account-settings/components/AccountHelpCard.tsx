@@ -22,7 +22,7 @@ const helpItems = [
 
 export function AccountHelpCard() {
   return (
-    <section aria-label="Personal information help" className="mt-12 rounded-sm border border-[var(--color-border)] px-6 sm:px-7">
+    <section aria-label="Personal information help" className="mt-12 rounded-card border border-[var(--color-border)] px-6 sm:px-7">
       {helpItems.map(({ icon: Icon, title, description }, index) => (
         <article
           key={title}
