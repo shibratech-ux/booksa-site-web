@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" width="100%" height="100%">
+  <defs>
+    <!-- Corporate deep indigo to slate gradient -->
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A237E" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 
+    Continuous line symbol:
+    - Vertical line forms the stem of the 'b'.
+    - Angled lines form a property roof.
+    - Dual arcs form the bowl of the 'b' and an internal location pin dome.
+  -->
+  <path d="
+      M 70 30 
+      L 70 220 
+      M 70 120 
+      L 120 70 
+      L 170 120 
+      L 170 170 
+      A 50 50 0 0 1 70 170 
+      A 50 50 0 0 1 170 170"
+    fill="none"
+    stroke="url(#brandGradient)"
+    stroke-width="20"
+    stroke-linecap="round"
+    stroke-linejoin="round" />
+</svg>

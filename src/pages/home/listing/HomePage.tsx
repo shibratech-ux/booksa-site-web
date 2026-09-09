@@ -10,10 +10,12 @@ import { Link, generatePath, useNavigate } from 'react-router-dom';
 import Footer from '@/components/layout/Footer';
 import BooksaHeader from '@/components/layout/BooksaHeader';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
+import { SeeAllCard } from '@/components/home/SeeAllCard';
 import { HOME_SECTION_TITLES } from '@/pages/home/homeSectionTitles';
 import type { Listing } from './listing.types';
 import { persistListingContext, persistSeeAllSectionTitle } from '@/utils/navigationPersistence';
 import { ROUTES } from '@/utils/constants';
+import { useTheme } from '@/theme/useTheme';
 
 const popularHomes: Listing[] = [
   {
@@ -407,6 +409,7 @@ function ListingCard({ listing }: { listing: Listing }) {
   const listingId = encodeURIComponent(`${listing.location}-${listing.price}`);
   const detailPath = generatePath(ROUTES.listingDetail, { listingId });
   const [isSaved, setIsSaved] = useState(false);
+  const { theme } = useTheme();
 
   return (
     <article className="marketplace-reference-card group relative shrink-0 snap-start">
@@ -435,10 +438,11 @@ function ListingCard({ listing }: { listing: Listing }) {
           <h3 className="line-clamp-2 min-h-5 break-words text-[12px] font-semibold leading-[15px] text-slate-900 sm:text-[13px] sm:leading-[17px]">
             {listing.location}
           </h3>
-          <div className="mt-1 text-slate-500">
+          <div className="mt-1" style={{ color: theme.colors.textSecondary }}>
             <p className="flex min-w-0 items-center text-[12px] font-semibold leading-[15px]">
               <span className="min-w-0 truncate">
-                <span className="text-[var(--color-text-primary)]">{listing.price}</span> pour 2 nuits
+                <span style={{ color: theme.colors.textPrimary }}>{listing.price}</span>{' '}
+                <span style={{ color: theme.colors.textSecondary }}>pour 2 nuits</span>
               </span>
               <span className="shrink-0" aria-label={`Note ${listing.rating} sur 5`}>
                 <span aria-hidden="true"> · ★ {listing.rating}</span>
@@ -483,13 +487,13 @@ function SectionHeader({
       <div className="min-w-0">
         <button type="button" onClick={onSeeAll} className="group flex min-w-0 items-center gap-1.5 text-left">
           <h2 className="truncate text-[18px] font-bold tracking-[-0.025em] text-slate-900 sm:text-[22px]">{title}</h2>
-          <span className="hidden h-4 w-4 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 shadow-sm ring-1 ring-slate-200/70 transition group-hover:bg-slate-200 sm:inline-flex">
+          <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 shadow-sm ring-1 ring-slate-200/70 transition group-hover:bg-slate-200">
             <ArrowRightRegular className="h-2 w-2 transition group-hover:translate-x-0.5" />
           </span>
         </button>
         {subtitle ? <p className="mt-0.5 truncate text-[11.76px] text-slate-500 sm:text-[13px]">{subtitle}</p> : null}
       </div>
-      <div className="flex shrink-0 items-center gap-[6px]">
+      <div className="hidden shrink-0 items-center gap-[6px] sm:flex">
         <button
           type="button"
           aria-label="Défiler à gauche"
@@ -551,16 +555,11 @@ function PropertyRail({
           <ListingCard key={`${listing.location}-${listing.price}`} listing={listing} />
         ))}
 
-        <button
-          type="button"
+        <SeeAllCard
+          title={title}
+          images={listings.map((listing) => listing.image)}
           onClick={() => onSeeAll(title)}
-          className="marketplace-reference-card group flex aspect-[1.04/1] shrink-0 flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white text-gray-900 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
-        >
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-slate-300 text-gray-900 transition group-hover:bg-[var(--color-primary-500)] group-hover:text-white">
-            <ArrowRightRegular className="h-5 w-5" />
-          </div>
-          <span className="mt-4 text-sm font-medium">Tout voir</span>
-        </button>
+        />
       </div>
     </section>
   );

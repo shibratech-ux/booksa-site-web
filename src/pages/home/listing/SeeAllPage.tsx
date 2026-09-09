@@ -21,7 +21,8 @@ import {
   Heart,
   Luggage,
   MessageSquare,
-  Settings2
+  Settings2,
+  Tag
 } from 'lucide-react';
 import BooksaLogo from '@/components/layout/BooksaLogo';
 import { LanguageSwitcher } from '@/components/language/LanguageSwitcher';
@@ -254,39 +255,39 @@ function SeeAllHeader({
       className="relative z-30 hidden border-b sm:block"
       style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
     >
-      <div className="marketplace-reference-container mx-auto flex h-[86px] items-center justify-between gap-6 px-4 lg:px-0">
+      <div className="marketplace-reference-container mx-auto flex h-24 items-center justify-between gap-4 px-4 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-0">
         <BooksaLogo className="h-9 w-[104px] shrink-0" />
 
         <button
           type="button"
           aria-label="Change search"
-          className="hidden h-[46px] w-[445px] min-w-0 items-center rounded-full border pl-3 pr-1 shadow-[0_3px_12px_rgba(15,23,42,0.13)] transition hover:shadow-[0_5px_16px_rgba(15,23,42,0.16)] md:flex"
+          className="flex h-[46px] min-w-0 flex-1 items-center rounded-full border pl-3 pr-1.5 text-left shadow-sm transition hover:shadow-md md:max-w-[466px] lg:w-[466px] lg:justify-self-center"
           style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
         >
           <img src={homesIcon} alt="" aria-hidden="true" className="mr-2 h-6 w-6 shrink-0 object-contain" />
-          <span className="whitespace-nowrap text-[13px] font-semibold">Homes in Kinshasa</span>
-          <span className="mx-3 h-[26px] w-px" style={{ backgroundColor: theme.colors.border }} />
-          <span className="whitespace-nowrap text-[12px] font-medium">Any weekend</span>
-          <span className="mx-3 h-[26px] w-px" style={{ backgroundColor: theme.colors.border }} />
-          <span className="whitespace-nowrap text-[12px] font-medium">Add guests</span>
+          <span className="min-w-0 truncate text-[13px] font-semibold">Homes in Kinshasa</span>
+          <span className="mx-2 hidden h-6 w-px shrink-0 md:block" style={{ backgroundColor: theme.colors.border }} />
+          <span className="hidden whitespace-nowrap text-[13px] font-medium md:block">Any weekend</span>
+          <span className="mx-2 hidden h-6 w-px shrink-0 md:block" style={{ backgroundColor: theme.colors.border }} />
+          <span className="hidden whitespace-nowrap text-[13px] font-medium md:block">Add guests</span>
           <span
-            className="ml-auto inline-flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-full text-white"
+            className="ml-auto inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white"
             style={{ backgroundColor: theme.colors.primary[500] }}
           >
             <SearchRegular className="h-[15px] w-[15px]" />
           </span>
         </button>
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center justify-end gap-3 lg:justify-self-end">
           <button
             type="button"
             onClick={() => navigate(ROUTES.hostListings)}
-            className="hidden text-[13px] font-semibold lg:block"
+            className="hidden whitespace-nowrap rounded-full px-3 py-3 text-[13px] font-semibold transition hover:bg-[var(--color-surface-muted)] xl:block"
           >
             Become a host
           </button>
 
-          <LanguageSwitcher compact />
+          <LanguageSwitcher iconOnly />
 
           <div ref={menuRef} className="relative">
             <button
@@ -394,8 +395,8 @@ function SeeAllHeader({
         </div>
       </div>
 
-      <div className="marketplace-reference-container mx-auto h-[65px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="mx-auto flex h-full w-max min-w-full items-center justify-center gap-2 px-4">
+      <div className="marketplace-reference-container mx-auto h-[55px] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mx-auto flex h-full w-max min-w-full items-center justify-center gap-2 px-4 pb-2 lg:px-0">
           <button
             type="button"
             aria-label={activeFilterCount ? `Clear ${activeFilterCount} selected filters` : 'Filters'}
@@ -414,7 +415,7 @@ function SeeAllHeader({
               </span>
             ) : null}
           </button>
-          <span className="mx-1 h-6 w-px shrink-0" style={{ backgroundColor: theme.colors.border }} />
+          <span className="mx-1 h-5 w-px shrink-0" style={{ backgroundColor: theme.colors.border }} />
           {quickFilters.map((filter) => {
             const isSelected = selectedFilters.includes(filter);
             return (
@@ -464,7 +465,7 @@ function SeeAllMobileHeader({
           type="button"
           aria-label="Go back"
           onClick={() => navigate(-1)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md transition active:scale-95"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
         >
           <ChevronLeftRegular className="h-5 w-5" />
         </button>
@@ -472,7 +473,7 @@ function SeeAllMobileHeader({
         <button
           type="button"
           aria-label="Change search"
-          className="mx-auto flex h-[57.2px] w-full max-w-[275px] min-w-0 flex-col items-center justify-center rounded-md border px-4 text-center shadow-[0_5px_16px_rgba(15,23,42,0.10)]"
+          className="mx-auto flex h-[57.2px] w-full max-w-[275px] min-w-0 flex-col items-center justify-center rounded-full border px-4 text-center shadow-[0_5px_16px_rgba(15,23,42,0.10)]"
           style={{ backgroundColor: theme.colors.surface, borderColor: theme.colors.border }}
         >
           <span className="w-full truncate text-md font-semibold leading-5">Homes in Kinshasa</span>
@@ -485,7 +486,7 @@ function SeeAllMobileHeader({
           type="button"
           aria-label={activeFilterCount ? `Clear ${activeFilterCount} selected filters` : 'Filters'}
           onClick={activeFilterCount ? onClearFilters : undefined}
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-md transition active:scale-95"
+          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full transition active:scale-95"
           style={{ color: activeFilterCount ? theme.colors.primary[500] : theme.colors.textPrimary }}
         >
           <FilterRegular className="h-5 w-5" />
@@ -507,7 +508,7 @@ function SeeAllMobileHeader({
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => onToggleFilter(filter)}
-                className="h-[37.4px] shrink-0 whitespace-nowrap rounded-md border px-3.5 text-xs font-medium transition active:scale-95"
+                className="h-[37.4px] shrink-0 whitespace-nowrap rounded-full border px-3.5 text-xs font-medium transition active:scale-95"
                 style={{
                   borderColor: isSelected ? theme.colors.primary[500] : theme.colors.border,
                   backgroundColor: isSelected ? theme.colors.primary[500] : theme.colors.surface,
@@ -573,7 +574,7 @@ function StayCard({ stay }: { stay: Stay }) {
 
   return (
     <article className="group min-w-0 cursor-pointer" onClick={openListing} onKeyDown={handleKeyDown} role="button" tabIndex={0}>
-      <div className="relative aspect-[1.325] overflow-hidden rounded-[18px]" style={{ backgroundColor: theme.colors.surfaceMuted }}>
+      <div className="relative aspect-[1.325] overflow-hidden rounded-[19px]" style={{ backgroundColor: theme.colors.surfaceMuted }}>
         <div ref={galleryRef} className="flex h-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {stay.gallery.map((image, index) => (
             <ShimmerImage
@@ -587,7 +588,7 @@ function StayCard({ stay }: { stay: Stay }) {
         </div>
 
         {stay.badge ? (
-          <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-[12px] font-semibold text-neutral-900 shadow-sm">
+          <span className="absolute left-3 top-3 rounded-full bg-[var(--color-surface-raised)] px-3 py-1.5 text-[10.85301px] font-semibold text-[var(--color-text-primary)] shadow-sm">
             {stay.badge}
           </span>
         ) : null}
@@ -601,14 +602,14 @@ function StayCard({ stay }: { stay: Stay }) {
           }}
           className="absolute right-3 top-3 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)]"
         >
-          {saved ? <HeartFilled className="h-6 w-6 text-rose-500" /> : <HeartRegular className="h-6 w-6" />}
+          {saved ? <HeartFilled className="h-6 w-6 text-[var(--color-primary-500)]" /> : <HeartRegular className="h-6 w-6" />}
         </button>
 
         <button
           type="button"
           aria-label="Previous photo"
           onClick={(event) => { event.stopPropagation(); scrollGallery(-1); }}
-          className="absolute left-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow group-hover:flex"
+          className="absolute left-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-sm group-hover:flex group-focus-within:flex"
         >
           <ChevronLeftRegular className="h-4 w-4" />
         </button>
@@ -616,7 +617,7 @@ function StayCard({ stay }: { stay: Stay }) {
           type="button"
           aria-label="Next photo"
           onClick={(event) => { event.stopPropagation(); scrollGallery(1); }}
-          className="absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow group-hover:flex"
+          className="absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-sm group-hover:flex group-focus-within:flex"
         >
           <ChevronRightRegular className="h-4 w-4" />
         </button>
@@ -628,7 +629,7 @@ function StayCard({ stay }: { stay: Stay }) {
         </div>
       </div>
 
-      <div className="px-1 pt-3 text-sm leading-[1.45]">
+      <div className="px-1 pt-3 text-[12.661845px] leading-[1.45]">
         <div className="flex items-start justify-between gap-2">
           <h2 className="truncate font-semibold">{stay.title}</h2>
           <span className="flex shrink-0 items-center gap-1">
@@ -639,7 +640,7 @@ function StayCard({ stay }: { stay: Stay }) {
         <p style={{ color: theme.colors.textSecondary }}>{stay.details}</p>
         <p style={{ color: theme.colors.textSecondary }}>{stay.dates}</p>
         <p className="mt-1.5"><span className="font-semibold underline underline-offset-2">{formatTwoNightPriceInCdf(stay.price)}</span> <span style={{ color: theme.colors.textSecondary }}>for {stay.nights} nights</span></p>
-        <span className="mt-1 inline-flex rounded-sm bg-neutral-100 px-1.5 py-0.5 text-xs font-medium text-neutral-600">Free cancellation</span>
+        <span className="mt-1 inline-flex rounded-sm bg-[var(--color-surface-muted)] px-1.5 py-0.5 text-[10.85301px] font-medium text-[var(--color-text-secondary)]">Free cancellation</span>
       </div>
     </article>
   );
@@ -659,7 +660,7 @@ function MapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }
   const markers = createMapMarkers(values);
 
   return (
-    <aside className="relative mb-[24px] mt-[40px] hidden min-h-0 overflow-hidden rounded-[19px] bg-[#e9e7e2] lg:block">
+    <aside className="relative mb-[24px] mt-[40px] hidden min-h-0 overflow-hidden bg-[var(--color-surface-muted)] lg:block lg:rounded-[19px]">
       <BooksaMap
         title={`Map of stays in ${DEFAULT_MAP_VIEW.label}`}
         center={DEFAULT_MAP_VIEW.center}
@@ -669,17 +670,17 @@ function MapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapValue[] }
         initialBounds={DEFAULT_MAP_VIEW.bounds}
         markers={markers}
         controlLayout="split"
-        className="h-full w-full"
+        className="h-full w-full rounded-none! lg:rounded-[19px]!"
         renderMarker={(marker) => (
-          <button type="button" aria-label={marker.ariaLabel} title={marker.ariaLabel} className="rounded-full border border-neutral-200 bg-white px-2.5 py-1.5 text-[12px] font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.24)] transition hover:scale-105">
+          <button type="button" aria-label={marker.ariaLabel} title={marker.ariaLabel} className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-[12px] font-bold text-[var(--color-text-primary)] shadow-sm transition hover:scale-105">
             {marker.label}
           </button>
         )}
       >
-        <button type="button" className="absolute bottom-[18%] right-[18%] z-20 flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-[12px] font-semibold text-neutral-800 shadow-md">
+        <button type="button" className="absolute bottom-[18%] right-[18%] z-20 flex items-center gap-1.5 rounded-full bg-[var(--color-surface-raised)] px-3 py-2 text-[12px] font-semibold text-[var(--color-text-primary)] shadow-md">
           <LocationFilled className="h-3.5 w-3.5" /> Kinshasa
         </button>
-        <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-white text-neutral-900 shadow-md">
+        <button type="button" aria-label="Use my location" className="absolute bottom-4 right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-[var(--color-surface-raised)] text-[var(--color-text-primary)] shadow-md">
           <NavigationRegular className="h-4 w-4" />
         </button>
       </BooksaMap>
@@ -712,18 +713,18 @@ function MobileMapPanel({ values = DEFAULT_MAP_VALUES }: { values?: SeeAllMapVal
         markers={markers}
         interactive={false}
         showControls={false}
-        className="h-full w-full"
+        className="h-full w-full rounded-none!"
         renderMarker={(marker) => (
           <span
             aria-label={marker.ariaLabel}
             title={marker.ariaLabel}
-            className="block whitespace-nowrap rounded-sm border border-neutral-200 bg-white px-2.5 py-1.5 text-xs font-bold text-neutral-900 shadow-[0_2px_7px_rgba(0,0,0,0.22)]"
+            className="block whitespace-nowrap rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-xs font-bold text-[var(--color-text-primary)] shadow-sm"
           >
             {marker.label}
           </span>
         )}
       >
-        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-sm bg-white px-2.5 py-1.5 text-xs font-semibold text-neutral-800 shadow-md">
+        <span className="absolute left-1/2 top-[53%] z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-sm bg-[var(--color-surface-raised)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-text-primary)] shadow-md">
           <LocationFilled className="h-3 w-3" /> Kinshasa
         </span>
       </BooksaMap>
@@ -767,7 +768,7 @@ export default function SeeAllPage() {
   }, [selectedFilters]);
 
   return (
-    <div className="h-[100dvh] overflow-hidden sm:h-screen sm:min-h-[704px]" style={{ backgroundColor: theme.colors.surface, color: theme.colors.textPrimary }}>
+    <div className="h-[100dvh] overflow-hidden" style={{ backgroundColor: theme.colors.surface, color: theme.colors.textPrimary }}>
       <SeeAllHeader
         selectedFilters={selectedFilters}
         onToggleFilter={toggleFilter}
@@ -790,13 +791,13 @@ export default function SeeAllPage() {
           <div className="h-[clamp(160px,28dvh,224px)] pointer-events-none" aria-hidden="true" />
 
           <section
-            className="min-h-full rounded-sm px-4 pb-[calc(90px+env(safe-area-inset-bottom))] pt-4 shadow-[0_-6px_22px_rgba(15,23,42,0.12)]"
+            className="min-h-full px-4 pb-[calc(90px+env(safe-area-inset-bottom))] pt-4 shadow-lg"
             style={{ backgroundColor: theme.colors.surface }}
           >
-            <div className="mx-auto mb-3 h-1 w-10 rounded-sm" style={{ backgroundColor: theme.colors.border }} />
+            <div className="mx-auto mb-3 h-1 w-10 rounded-full" style={{ backgroundColor: theme.colors.border }} />
             <h1 className="sr-only" aria-live="polite">{resultsTitle}</h1>
             <div className="mb-5 flex items-center justify-center gap-2 text-[13px] font-semibold">
-              <span className="text-2xl" aria-hidden="true">🏷️</span>
+              <Tag className="h-6 w-6 text-[var(--color-primary-500)]" aria-hidden="true" />
               Prices include all fees
             </div>
 
@@ -827,13 +828,13 @@ export default function SeeAllPage() {
 
       <MarketplaceMobileNav />
 
-      <main className="marketplace-reference-container mx-auto hidden h-[calc(100vh-151px)] px-4 sm:block lg:px-0">
-        <div className="grid h-full gap-[48px] lg:grid-cols-[minmax(0,1fr)_minmax(440px,1.03fr)] xl:grid-cols-[638px_minmax(0,1fr)]">
-          <section ref={resultsRef} className="min-h-0 overflow-y-auto pb-10 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex h-[89px] items-center justify-between gap-4">
+      <main className="marketplace-reference-container mx-auto hidden h-[calc(100dvh-151px)] px-4 sm:block lg:px-0">
+        <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.03fr)] xl:gap-12">
+          <section ref={resultsRef} className="min-h-0 min-w-0 overflow-y-auto pb-10 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex min-h-[89px] flex-wrap items-center justify-between gap-x-4 gap-y-2 py-5">
               <h1 aria-live="polite" className="text-[20px] font-semibold tracking-[-0.025em]">{resultsTitle}</h1>
               <span className="flex shrink-0 items-center gap-2 text-[13px] font-medium">
-                <span className="text-[24px]" aria-hidden="true">🏷️</span> Prices include all fees
+                <Tag className="h-6 w-6 shrink-0 text-[var(--color-primary-500)]" aria-hidden="true" /> Prices include all fees
               </span>
             </div>
 

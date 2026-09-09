@@ -34,6 +34,17 @@ npm run preview
 
 ## Netlify
 
+Pour publier les modifications sur GitHub depuis la branche `main` :
+
+```bash
+npm ci # uniquement si les dépendances ne sont pas encore installées
+./deploy.sh "Update Booksa website"
+```
+
+Le script `deploy.sh` vérifie la branche distante, exécute `npm run build`, ajoute toutes les modifications non ignorées, crée un commit si nécessaire et pousse vers `origin`. Il pousse aussi les commits locaux existants sans nouvelles modifications. Les fichiers `.env` et `.env.*` (sauf `.env.example`) doivent être ignorés et non suivis par Git.
+
+Pour une autre branche déjà présente sur `origin`, utilisez `./deploy.sh "Message du commit" nom-de-branche` depuis cette branche. Le script s'arrête si la branche active ne correspond pas, si elle est en retard sur la branche distante ou si la compilation échoue.
+
 - Le projet est prêt pour un déploiement Netlify via `netlify.toml`.
 - Utilisez `.env.example` pour renseigner les variables `VITE_*` dans Netlify.
 - Si vous ne voulez pas passer en production, connectez d’abord le dépôt en `Deploy Preview` ou en déploiement de branche.

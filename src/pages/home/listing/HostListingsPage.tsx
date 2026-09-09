@@ -267,7 +267,7 @@ function MobileAttentionCard({ onClick, className = '' }: { onClick: () => void;
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-[74.8px] items-center gap-3 rounded-md border-t border-[var(--color-border)] bg-[var(--color-surface)] px-5 text-left shadow-[0_-8px_24px_rgba(15,23,42,0.06)] ${className}`}
+      className={`flex min-h-20 items-center gap-3 rounded-t-2xl border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-4 text-left shadow-[0_-4px_16px_rgba(0,0,0,0.04)] ${className}`}
     >
       <span className="relative flex h-10 w-10 shrink-0 items-center justify-center">
         <span className="text-2xl" aria-hidden="true">📅</span>
@@ -559,7 +559,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
 
         <MobileAttentionCard
           onClick={() => mobileActionRequiredRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-          className="fixed inset-x-0 bottom-[72.6px] z-30"
+          className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30"
         />
       </div>
 
@@ -813,7 +813,7 @@ function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
           </p>
         </div>
 
-        <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[72.6px] z-30" />
+        <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30" />
       </div>
 
       <div className="hidden md:block">
@@ -1045,7 +1045,7 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
         </button>
       </div>
 
-      <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[72.6px] z-30" />
+      <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30" />
     </motion.section>
   );
 }
@@ -1076,27 +1076,29 @@ export default function HostListingsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
+    <main className="min-h-dvh bg-[var(--color-surface)] pb-[calc(72px+env(safe-area-inset-bottom))] text-[var(--color-text-primary)] [&_button:focus-visible]:outline [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-4 [&_button:focus-visible]:outline-[var(--color-text-primary)] md:pb-0">
       <header className="hidden border-b border-[var(--color-border)] bg-[var(--color-surface)] md:block">
-        <div className="mx-auto flex min-h-20 max-w-[1280px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto grid h-24 max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-8 lg:px-12 xl:px-20">
           <button
             type="button"
             onClick={() => setActiveSection('today')}
             aria-label={t('accessibility.hostHome')}
+            className="w-fit rounded-lg"
           >
-            <BooksaLogo className="h-10 w-[118.8px]" />
+            <BooksaLogo className="h-8 w-[110px]" />
           </button>
 
-          <nav aria-label={t('nav.host')} className="hidden items-center gap-8 md:flex">
+          <nav aria-label={t('nav.host')} className="flex h-full items-center gap-1 lg:gap-2">
             {hostNavigation.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => handleNavigation(item)}
-                className={`border-b py-2 text-sm transition hover:opacity-70 ${
+                aria-current={item.id === activeSection ? 'page' : undefined}
+                className={`relative inline-flex h-12 items-center rounded-full px-4 text-sm font-semibold transition-colors hover:bg-[var(--color-surface-muted)] ${
                   item.id === activeSection
-                    ? 'border-[var(--color-text-primary)] font-semibold'
-                    : 'border-transparent text-[var(--color-text-secondary)]'
+                    ? 'text-[var(--color-text-primary)] after:absolute after:inset-x-4 after:bottom-1 after:h-0.5 after:rounded-full after:bg-[var(--color-text-primary)]'
+                    : 'text-[var(--color-text-secondary)]'
                 }`}
               >
                 {t(item.labelKey)}
@@ -1104,25 +1106,23 @@ export default function HostListingsPage() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={() => navigate(ROUTES.home)}
-              className="hidden text-sm font-semibold transition hover:opacity-70 sm:block"
+              className="hidden min-h-11 items-center rounded-full px-4 text-sm font-semibold transition-colors hover:bg-[var(--color-surface-muted)] xl:inline-flex"
             >
               {t('nav.travelerMode')}
             </button>
-            
-            
+
             <button
               type="button"
               onClick={() => navigate(ROUTES.hostProfile)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)]"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-100)] text-sm font-semibold text-[var(--color-primary-700)] transition hover:brightness-95"
               aria-label={t('accessibility.hostAccount', { name: user?.name ?? 'Booksa' })}
             >
               {initial}
             </button>
-
 
             <div>
               <button
@@ -1130,30 +1130,13 @@ export default function HostListingsPage() {
                 aria-label={t('accessibility.accountMenu')}
                 aria-expanded={isMenuOpen}
                 onClick={() => setIsMenuOpen((open) => !open)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-[var(--color-surface-muted)] transition hover:opacity-75"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
                 <FiMenu className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>
         </div>
-
-        <nav aria-label={t('nav.hostMobile')} className="flex justify-center gap-6 overflow-x-auto border-t border-[var(--color-border)] px-4 py-3 md:hidden">
-          {hostNavigation.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => handleNavigation(item)}
-              className={`shrink-0 border-b pb-1 text-sm ${
-                item.id === activeSection
-                  ? 'border-[var(--color-text-primary)] font-semibold'
-                  : 'border-transparent text-[var(--color-text-secondary)]'
-              }`}
-            >
-              {t(item.labelKey)}
-            </button>
-          ))}
-        </nav>
       </header>
       <HostAccountDrawer open={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
@@ -1169,13 +1152,14 @@ export default function HostListingsPage() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="flex h-[calc(100dvh-66px)] flex-col overflow-hidden bg-[var(--color-surface)] text-center md:hidden"
+            className="flex min-h-[calc(100dvh-72px-env(safe-area-inset-bottom))] flex-col bg-[var(--color-surface)] text-center md:hidden"
           >
-            <div className="flex shrink-0 justify-center gap-2 px-5 pt-6">
+            <div className="flex shrink-0 justify-center gap-3 px-6 pb-6 pt-8">
               <button
                 type="button"
                 onClick={() => setReservationView('today')}
-                className={`h-7 rounded-md border px-3 text-[13px] font-semibold transition ${
+                aria-pressed={reservationView === 'today'}
+                className={`min-h-11 rounded-full border px-5 text-sm font-semibold transition-colors ${
                   reservationView === 'today'
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-sm'
                     : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
@@ -1186,7 +1170,8 @@ export default function HostListingsPage() {
               <button
                 type="button"
                 onClick={() => setReservationView('upcoming')}
-                className={`h-7 rounded-md border px-3 text-[13px] font-semibold transition ${
+                aria-pressed={reservationView === 'upcoming'}
+                className={`min-h-11 rounded-full border px-5 text-sm font-semibold transition-colors ${
                   reservationView === 'upcoming'
                     ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-sm'
                     : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
@@ -1196,7 +1181,7 @@ export default function HostListingsPage() {
               </button>
             </div>
 
-            <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-8 pb-5">
+            <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
               <div className="relative flex h-32 w-40 items-center justify-center">
                 <span className="select-none text-8xl leading-none" aria-hidden="true">📖</span>
                 <ThreeDIcon
@@ -1205,16 +1190,16 @@ export default function HostListingsPage() {
                   className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_10px_12px_rgba(15,23,42,0.15)]"
                 />
               </div>
-              <h1 className="mt-5 max-w-[275px] text-2xl font-semibold leading-[1.12] tracking-[-0.035em]">
+              <h1 className="mt-6 max-w-xs text-[28px] font-semibold leading-tight tracking-[-0.03em]">
                 {t('reservations.empty')}
               </h1>
-              <p className="mt-3 max-w-[297px] text-md leading-[1.45] text-[var(--color-text-secondary)]">
+              <p className="mt-3 max-w-xs text-base leading-6 text-[var(--color-text-secondary)]">
                 {t('reservations.emptyHelp')}
               </p>
               <button
                 type="button"
                 onClick={() => navigate(ROUTES.hostListingSetup)}
-                className="mt-7 rounded-md border border-[var(--color-text-primary)] px-3 py-2 text-sm font-semibold transition active:scale-95"
+                className="mt-6 min-h-12 rounded-lg border border-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)] active:scale-[0.98]"
               >
                 {t('reservations.finishListing')}
               </button>
@@ -1227,21 +1212,21 @@ export default function HostListingsPage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="mx-auto hidden min-h-[calc(100vh-95px)] max-w-3xl flex-col items-center px-5 pb-16 pt-6 text-center md:flex"
+            className="mx-auto hidden min-h-[calc(100dvh-96px)] max-w-3xl flex-col items-center px-8 pb-20 pt-10 text-center md:flex"
           >
-            <div className="inline-flex rounded-sm bg-[var(--color-surface-muted)] p-1.5">
-              <button type="button" onClick={() => setReservationView('today')} className={`rounded-md px-6 py-3 text-sm font-semibold transition ${reservationView === 'today' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
+            <div className="inline-flex gap-1 rounded-full bg-[var(--color-surface-muted)] p-1.5">
+              <button type="button" onClick={() => setReservationView('today')} aria-pressed={reservationView === 'today'} className={`min-h-11 rounded-full px-6 py-3 text-sm font-semibold transition-colors ${reservationView === 'today' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
                 {t('nav.today')}
               </button>
-              <button type="button" onClick={() => setReservationView('upcoming')} className={`rounded-md px-6 py-3 text-sm font-semibold transition ${reservationView === 'upcoming' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
+              <button type="button" onClick={() => setReservationView('upcoming')} aria-pressed={reservationView === 'upcoming'} className={`min-h-11 rounded-full px-6 py-3 text-sm font-semibold transition-colors ${reservationView === 'upcoming' ? 'bg-[var(--color-surface)] shadow-[var(--shadow-sm)]' : 'text-[var(--color-text-secondary)]'}`}>
                 {t('reservations.upcoming')}
               </button>
             </div>
-            <div className="mt-14 flex max-w-md flex-col items-center sm:mt-16">
+            <div className="flex w-full max-w-md flex-1 flex-col items-center justify-center py-16">
               <span className="select-none text-9xl leading-none drop-shadow-sm" role="img" aria-label={t('reservations.calendarImage')}>📖</span>
-              <h1 className="mt-8 text-[28px] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-3xl">{t('reservations.empty')}</h1>
-              <p className="mt-5 max-w-sm text-base leading-6 text-[var(--color-text-secondary)] sm:text-lg">{t('reservations.emptyHelp')}</p>
-              <button type="button" onClick={() => navigate(ROUTES.hostListingSetup)} className="mt-8 rounded-md bg-[var(--color-surface-muted)] px-7 py-3.5 text-base font-semibold transition hover:brightness-95">{t('reservations.finishListing')}</button>
+              <h1 className="mt-8 text-[32px] font-semibold leading-tight tracking-[-0.03em]">{t('reservations.empty')}</h1>
+              <p className="mt-4 max-w-sm text-base leading-6 text-[var(--color-text-secondary)]">{t('reservations.emptyHelp')}</p>
+              <button type="button" onClick={() => navigate(ROUTES.hostListingSetup)} className="mt-6 min-h-12 rounded-lg border border-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[var(--color-surface-muted)]">{t('reservations.finishListing')}</button>
             </div>
           </motion.section>
         </>
@@ -1249,7 +1234,7 @@ export default function HostListingsPage() {
 
       <nav
         aria-label={t('nav.hostMobile')}
-        className="fixed inset-x-0 bottom-0 z-40 grid h-[72.6px] grid-cols-5 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-1 pb-[env(safe-area-inset-bottom)] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 grid h-[calc(72px+env(safe-area-inset-bottom))] grid-cols-5 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-1 pb-[env(safe-area-inset-bottom)] md:hidden"
       >
         {mobileHostNavigation.map(({ id, labelKey, Icon }) => {
           const isActive = activeSection === id;
@@ -1259,7 +1244,7 @@ export default function HostListingsPage() {
               type="button"
               onClick={() => handleNavigation(hostNavigation.find((item) => item.id === id)!)}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex flex-col items-center justify-center gap-1 text-xs font-medium ${isActive ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium transition-colors hover:bg-[var(--color-surface-muted)] ${isActive ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
             >
               <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.3]' : 'stroke-[1.7]'}`} aria-hidden="true" />
               <span>{t(labelKey)}</span>
@@ -1270,7 +1255,7 @@ export default function HostListingsPage() {
           type="button"
           onClick={() => setActiveSection('menu')}
           aria-current={activeSection === 'menu' ? 'page' : undefined}
-          className={`flex flex-col items-center justify-center gap-1 text-xs font-medium ${activeSection === 'menu' ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
+          className={`flex flex-col items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium transition-colors hover:bg-[var(--color-surface-muted)] ${activeSection === 'menu' ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
         >
           <FiMenu className={`h-5 w-5 ${activeSection === 'menu' ? 'stroke-[2.3]' : 'stroke-[1.7]'}`} aria-hidden="true" />
           <span>Menu</span>

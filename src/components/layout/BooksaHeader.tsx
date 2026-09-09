@@ -115,9 +115,9 @@ function SearchField({ collapsed = false }: { collapsed?: boolean }) {
               { label: "Anytime", icon: false },
               { label: "Add guests", icon: false },
             ].map((field, index) => (
-              <div key={field.label} className="flex min-w-0 items-center">
+              <div key={field.label} className="flex min-w-0 flex-1 items-center justify-center">
                 <span
-                  className="flex min-w-0 items-center gap-2 px-3 text-[12px] font-semibold whitespace-nowrap"
+                  className="flex min-w-0 items-center gap-1.5 px-2 text-[11px] font-semibold leading-none whitespace-nowrap sm:gap-2 sm:px-3 sm:text-[12px]"
                   style={{ color: theme.colors.textPrimary }}
                 >
                   {field.icon ? (
@@ -125,14 +125,14 @@ function SearchField({ collapsed = false }: { collapsed?: boolean }) {
                       src={homesIcon}
                       alt=""
                       aria-hidden="true"
-                      className="h-[24px] w-[24px] shrink-0 object-contain"
+                      className="h-5 w-5 shrink-0 object-contain sm:h-6 sm:w-6"
                     />
                   ) : null}
                   {field.label}
                 </span>
                 {index < 2 ? (
                   <span
-                    className="h-[26px] w-px shrink-0"
+                    className="h-6 w-px shrink-0"
                     aria-hidden="true"
                     style={{ backgroundColor: theme.colors.border }}
                   />

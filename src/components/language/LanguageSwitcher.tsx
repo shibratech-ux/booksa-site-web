@@ -11,15 +11,18 @@ import { updateUserLanguage } from '@/services/language.service';
 import { useAuthStore } from '@/store/auth.store';
 import { STORAGE_KEYS } from '@/utils/constants';
 import { SelectField } from '@/components/ui/SelectField';
+import { Globe2 } from 'lucide-react';
 
 type LanguageSwitcherProps = {
   compact?: boolean;
+  iconOnly?: boolean;
   fullWidth?: boolean;
   className?: string;
 };
 
 export function LanguageSwitcher({
   compact = false,
+  iconOnly = false,
   fullWidth = false,
   className = ''
 }: LanguageSwitcherProps) {
@@ -48,6 +51,27 @@ export function LanguageSwitcher({
       if (changeId.current === currentChange) setSyncStatus('error');
     }
   };
+
+  if (iconOnly) {
+    return (
+      <div className={`relative h-10 w-10 shrink-0 rounded-full bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:bg-[var(--color-border-subtle)] focus-within:ring-2 focus-within:ring-[var(--color-primary-500)] focus-within:ring-offset-2 ${className}`}>
+        <Globe2 className="pointer-events-none absolute left-1/2 top-1/2 h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2" aria-hidden="true" />
+        <select
+          value={selectedLanguage}
+          aria-label={t('language.label')}
+          title={t('language.label')}
+          onChange={(event) => {
+            if (isSupportedLanguage(event.target.value)) void changeLanguage(event.target.value);
+          }}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+        >
+          {SUPPORTED_LANGUAGES.map(({ code, label }) => (
+            <option key={code} value={code}>{label}</option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 
   return (
     <div className={className}>

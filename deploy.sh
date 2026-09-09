@@ -1,106 +1,80 @@
 #!/usr/bin/env bash
-
-# Usage:
-#   ./deploy.sh
-#   ./deploy.sh "My commit message"
-#
-# Stages local changes, creates a commit, and pushes main to origin.
-# Netlify is expected to deploy automatically from the GitHub main branch.
-
 set -euo pipefail
 
-readonly EXPECTED_BRANCH="main"
-readonly REMOTE_NAME="origin"
-readonly COMMIT_MESSAGE="${1:-Update Booksa website}"
+# Usage: ./deploy.sh [commit-message] [branch]
+# Stages all non-ignored changes, builds, commits, and pushes to origin.
+# Run from any directory; the repository is resolved from this script's location.
 
 error() {
   printf 'Error: %s\n' "$*" >&2
+  exit 1
 }
 
-printf '[1/6] Checking Git repository...\n'
-
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  error 'This script must be run inside a Git repository.'
-  exit 1
+if (( $# > 2 )); then
+  error 'Usage: ./deploy.sh [commit-message] [branch]'
 fi
 
+readonly COMMIT_MESSAGE="${1:-Update Booksa website}"
+readonly BRANCH="${2:-main}"
+readonly REMOTE_NAME="origin"
+
+command -v git >/dev/null 2>&1 || error 'Git is not installed or available in PATH.'
+command -v npm >/dev/null 2>&1 || error 'npm is required to validate the production build.'
+
+script_directory="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$script_directory"
+git rev-parse --is-inside-work-tree >/dev/null 2>&1 || error 'The script must be located in the project Git repository.'
 repository_root="$(git rev-parse --show-toplevel)"
 cd "$repository_root"
 
-if ! remote_url="$(git remote get-url "$REMOTE_NAME" 2>/dev/null)"; then
-  error "Git remote '$REMOTE_NAME' does not exist."
-  exit 1
-fi
-
-printf 'Repository:\n%s\n\n' "$remote_url"
-
-printf '[2/6] Checking branch...\n'
+[[ -f package.json ]] || error 'No package.json found at the repository root.'
+[[ -d node_modules ]] || error 'Dependencies are missing. Run npm ci, then retry.'
+git check-ref-format --branch "$BRANCH" >/dev/null 2>&1 || error "Invalid branch: $BRANCH"
 current_branch="$(git branch --show-current)"
+[[ -n "$current_branch" ]] || error 'Detached HEAD detected. Check out a branch before running this script.'
+[[ "$current_branch" == "$BRANCH" ]] || error "Current branch is '$current_branch', expected '$BRANCH'. Check out '$BRANCH' or pass '$current_branch' as the second argument."
+remote_url="$(git remote get-url "$REMOTE_NAME")" || error "No '$REMOTE_NAME' remote is configured."
 
-if [[ "$current_branch" != "$EXPECTED_BRANCH" ]]; then
-  printf "Current branch is '%s'.\n" "${current_branch:-detached HEAD}" >&2
-  printf "Deployment expects '%s'.\n" "$EXPECTED_BRANCH" >&2
-  printf 'No commit or push was performed.\n' >&2
-  exit 1
-fi
-
-printf "Current branch: %s\n\n" "$current_branch"
-
-printf '[3/6] Checking changes and sensitive files...\n'
+printf 'Repository: %s\nBranch: %s\n' "$remote_url" "$BRANCH"
+printf '\n[1/5] Checking local changes...\n'
 git status --short
+[[ -z "$(git diff --name-only --diff-filter=U)" ]] || error 'Resolve merge conflicts before deploying.'
+for operation in MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD rebase-merge rebase-apply; do
+  [[ ! -e "$(git rev-parse --git-path "$operation")" ]] || error "Finish the pending Git operation ($operation) before deploying."
+done
 
-if [[ -z "$(git status --porcelain)" ]]; then
-  printf 'No local changes to commit.\n'
-  exit 0
-fi
-
-sensitive_file_found=false
-while IFS= read -r file_path; do
-  file_name="${file_path##*/}"
-  case "$file_name" in
-    .env|.env.local|.env.production|.env.development.local)
-      printf "Warning: sensitive environment file is tracked or eligible for staging: %s\n" "$file_path" >&2
-      sensitive_file_found=true
+# Preserve the project's environment-file protection; .env.example is allowed.
+while IFS= read -r -d '' file_path; do
+  case "${file_path##*/}" in
+    .env.example) ;;
+    .env|.env.*)
+      # Allow a previously tracked environment file to be removed in this commit.
+      [[ ! -e "$file_path" ]] || error "Environment file would be included: $file_path. Remove it from Git tracking and ignore it before retrying."
       ;;
   esac
-done < <(git ls-files --cached --others --exclude-standard)
+done < <(git ls-files -z --cached --others --exclude-standard)
 
-if [[ "$sensitive_file_found" == true ]]; then
-  printf 'Deployment stopped. Remove sensitive environment files from Git tracking before continuing.\n' >&2
-  printf '.env.example is allowed and remains versioned.\n' >&2
-  exit 1
+printf '\n[2/5] Checking remote branch...\n'
+# Fetch before staging or committing so a stale branch leaves local changes intact.
+git fetch "$REMOTE_NAME" "refs/heads/$BRANCH"
+if ! git merge-base --is-ancestor FETCH_HEAD HEAD; then
+  error "Local '$BRANCH' is behind or diverged from '$REMOTE_NAME/$BRANCH'. Integrate the remote changes and retry."
 fi
 
-printf 'Sensitive-file check passed.\n\n'
+printf '\n[3/5] Running production build...\n'
+npm run build
 
-printf '[4/6] Staging files...\n'
-git add .
-git status --short
-
+printf '\n[4/5] Staging and committing changes...\n'
+git add --all
 if git diff --cached --quiet; then
-  printf 'No changes were staged; no commit was created.\n'
-  exit 0
+  printf 'No new changes to commit; existing local commits will still be pushed.\n'
+else
+  git commit -m "$COMMIT_MESSAGE"
 fi
 
-printf '\n[5/6] Creating commit...\n'
-printf 'Commit message: %s\n' "$COMMIT_MESSAGE"
-git commit -m "$COMMIT_MESSAGE"
+printf '\n[5/5] Pushing to GitHub...\n'
+# A normal push also rejects remote changes made since the fetch above.
+git push --set-upstream "$REMOTE_NAME" "HEAD:refs/heads/$BRANCH"
 
-printf '\n[6/6] Checking remote state and pushing to GitHub...\n'
-git fetch "$REMOTE_NAME" "$EXPECTED_BRANCH"
-
-behind_count="$(git rev-list --count "HEAD..FETCH_HEAD")"
-if (( behind_count > 0 )); then
-  printf "Local '%s' is behind '%s/%s' by %s commit(s).\n" \
-    "$EXPECTED_BRANCH" "$REMOTE_NAME" "$EXPECTED_BRANCH" "$behind_count" >&2
-  printf "Run 'git pull %s %s', resolve any conflicts, then push when the branch is synchronized.\n" \
-    "$REMOTE_NAME" "$EXPECTED_BRANCH" >&2
-  printf 'The new local commit was not pushed.\n' >&2
-  exit 1
-fi
-
-git push "$REMOTE_NAME" "$EXPECTED_BRANCH"
-
-printf '\nDeployment push completed successfully.\n\n'
-printf 'GitHub branch:\n%s\n\n' "$EXPECTED_BRANCH"
-printf 'Netlify should detect the new GitHub commit automatically if continuous deployment is configured.\n'
+printf '\nSuccess. Branch %s was pushed to origin.\n' "$BRANCH"
+printf 'If Netlify is connected to this branch, a deployment should start for new commits.\n'

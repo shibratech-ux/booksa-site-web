@@ -71,30 +71,30 @@ export interface ThemeColorTokens {
 
 export const colors: ThemeColorTokens = {
   primary: {
-    50: '#fff1f5',
-    100: '#ffe4ec',
-    200: '#ffc9da',
-    300: '#ff9abb',
-    400: '#f66795',
-    500: '#e00b55',
-    600: '#ce1052',
-    700: '#ad1048',
-    800: '#8f123f',
-    900: '#761538'
+    50: '#eff6ff',
+    100: '#dbeafe',
+    200: '#bfdbfe',
+    300: '#93c5fd',
+    400: '#60a5fa',
+    500: '#2563eb',
+    600: '#1d4ed8',
+    700: '#1e40af',
+    800: '#1e3a8a',
+    900: '#172554'
   },
-  secondary: '#e00b55',
+  secondary: '#2563eb',
   success: '#008A05',
   warning: '#F59E0B',
   danger: '#C13515',
   info: '#0EA5E9',
   gradient: {
     light: {
-      topLeft: 'rgba(233, 20, 95, 0.10)',
-      topRight: 'rgba(233, 20, 95, 0.06)',
+      topLeft: 'rgba(37, 99, 235, 0.10)',
+      topRight: 'rgba(37, 99, 235, 0.06)',
       base: '#FFFFFF'
     },
     dark: {
-      topLeft: 'rgba(233, 20, 95, 0.16)',
+      topLeft: 'rgba(37, 99, 235, 0.16)',
       topRight: 'rgba(12, 170, 220, 0.10)',
       base: '#0F172A'
     }
@@ -124,7 +124,7 @@ export const colors: ThemeColorTokens = {
     surfaceRaised: '#253349'
   },
   chart: {
-    blue: ['#e00b55', '#5B8CFF', '#e00b55', '#f66795', '#8AB4FF'],
+    blue: ['#2563EB', '#5B8CFF', '#1D4ED8', '#60A5FA', '#8AB4FF'],
     green: ['#DCFCE7', '#86EFAC', '#4ADE80', '#22C55E', '#15803D'],
     amber: ['#FEF3C7', '#FDE68A', '#FCD34D', '#F59E0B', '#B45309'],
     red: ['#FEE2E2', '#FCA5A5', '#F87171', '#C13515', '#B91C1C']

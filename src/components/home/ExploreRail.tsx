@@ -8,6 +8,7 @@ import {
 import { useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
+import { SeeAllCard } from '@/components/home/SeeAllCard';
 
 export type ExploreCardData = {
   id: string;
@@ -172,16 +173,11 @@ export function ExploreRail({
         ))}
 
         {onSeeAll ? (
-          <button
-            type="button"
+          <SeeAllCard
+            title={title}
+            images={cards.map((card) => card.image)}
             onClick={onSeeAll}
-            className="marketplace-reference-card group flex aspect-[1.04/1] shrink-0 flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white text-gray-900 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
-          >
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-slate-300 text-gray-900 transition group-hover:bg-[var(--color-primary-500)] group-hover:text-white">
-              <ArrowRightRegular className="h-5 w-5" />
-            </div>
-            <span className="mt-4 text-sm font-medium">Tout voir</span>
-          </button>
+          />
         ) : null}
       </div>
     </section>

@@ -44,3 +44,17 @@ From the repository root, deploy the current `main` branch with a custom commit 
 ```
 
 If the message is omitted, the script uses `Update Booksa website`. The script checks the repository, branch, remote, local changes, and sensitive environment files before committing. It fetches `origin/main` and refuses to push when the local branch is behind. Netlify CLI is not used; continuous deployment is expected to start from the GitHub push.
+
+`update_github_netlify.sh` is an alternative entry point for the same workflow:
+
+```bash
+./update_github_netlify.sh "Update Booksa website" main
+./update_github_netlify.sh --help
+```
+
+Both scripts resolve the project from their own location and can be invoked from
+another working directory. All deployment logic lives in `deploy.sh` so the two
+entry points use the same checks. A requested branch must already exist on
+`origin` and match the checked-out branch. Build or Git failures stop the script
+and return a nonzero exit status; a failed push leaves any new local commit in
+place for retrying. Neither entry point waits for or verifies the Netlify build.

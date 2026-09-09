@@ -1,79 +1,84 @@
-import type { ReactNode } from 'react';
-import { forwardRef } from 'react';
-import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion';
-import { ArrowSyncRegular } from '@fluentui/react-icons';
+import { forwardRef, type ReactNode } from 'react';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '@/utils/helpers';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
+  children?: ReactNode;
+  label?: string;
   loading?: boolean;
+  fullWidth?: boolean;
+  variant?: ButtonVariant;
+  /** Retained for existing callers; all sizes use 56px on mobile and 48px at sm and above. */
+  size?: ButtonSize;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  children?: ReactNode;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    'border-transparent bg-[var(--color-primary-500)] text-white shadow-none hover:bg-[var(--color-primary-600)] focus-visible:ring-[var(--color-primary-500)]',
+  primary: 'bg-[#E61E4D] text-white hover:bg-[#D70466]',
   secondary:
-    'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-text-primary)]',
+    'bg-[var(--color-surface)] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]',
   outline:
-    'border-[var(--color-text-primary)] bg-transparent text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-text-primary)]',
+    'bg-transparent text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]',
   ghost:
-    'border-transparent bg-transparent text-[var(--color-text-primary)] shadow-none hover:bg-[var(--color-surface-muted)] focus-visible:ring-[var(--color-primary-500)]',
-  danger:
-    'border-transparent bg-[var(--color-danger)] text-white shadow-none hover:brightness-95 focus-visible:ring-[var(--color-danger)]'
-};
-
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'min-h-[var(--control-compact)] px-[var(--space-lg)] text-sm',
-  md: 'min-h-[var(--control-standard)] px-[var(--space-2xl)] text-base',
-  lg: 'min-h-[var(--control-large)] px-[var(--space-2xl)] text-base'
+    'bg-transparent text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]',
+  danger: 'bg-[var(--color-danger)] text-white hover:brightness-95'
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   {
-    className,
-    variant = 'primary',
-    size = 'md',
+    label,
+    onClick,
+    type = 'button',
+    disabled = false,
     loading = false,
+    fullWidth = true,
+    className = '',
+    variant = 'primary',
+    size: _size,
     leftIcon,
     rightIcon,
     children,
-    disabled,
-    type,
     ...props
   },
   ref
 ) {
-  const prefersReducedMotion = useReducedMotion();
   const isDisabled = disabled || loading;
 
   return (
     <motion.button
+      {...props}
       ref={ref}
-      type={type ?? 'button'}
-      whileHover={isDisabled || prefersReducedMotion ? undefined : { scale: 1 }}
-      whileTap={isDisabled || prefersReducedMotion ? undefined : { scale: 0.98 }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
-      className={cn(
-        'inline-flex items-center justify-center gap-[var(--space-sm)] whitespace-nowrap rounded-md border font-semibold transition-[background-color,border-color,color,box-shadow,filter,opacity] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] disabled:cursor-not-allowed disabled:opacity-55',
-        variantStyles[variant],
-        sizeStyles[size],
-        className
-      )}
+      type={type}
+      onClick={onClick}
       disabled={isDisabled}
       aria-busy={loading || undefined}
       data-loading={loading || undefined}
-      {...props}
+      className={cn(
+        fullWidth ? 'w-full' : 'w-auto',
+        'flex h-12 max-sm:h-[56px] items-center justify-center gap-2 rounded-lg border-0! px-6 text-[16px] max-sm:text-[17.2px] font-semibold leading-5 max-sm:leading-6 shadow-none! transition-all duration-200 enabled:active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#E61E4D] focus:ring-offset-2 motion-reduce:transition-none motion-reduce:active:scale-100',
+        variantStyles[variant],
+        className
+      )}
     >
-      {loading ? <ArrowSyncRegular className="h-4 w-4 animate-spin" aria-hidden="true" /> : leftIcon}
-      <span>{children}</span>
-      {!loading ? rightIcon : null}
+      {loading ? (
+        <span className="flex items-center gap-2">
+          <span
+            aria-hidden="true"
+            className="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
+          />
+          Logging in...
+        </span>
+      ) : (
+        <>
+          {leftIcon}
+          {label ?? children}
+          {rightIcon}
+        </>
+      )}
     </motion.button>
   );
 });
