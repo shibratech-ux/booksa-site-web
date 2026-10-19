@@ -1,5 +1,5 @@
 export const THREE_D_ICONS_ORIGIN =
-  import.meta.env.VITE_3DICONS_BASE_URL ??
+  import.meta.env?.VITE_3DICONS_BASE_URL ??
   'https://bvconuycpdvgzbvbkijl.supabase.co/storage/v1/object/public/sizes';
 
 export const threeDIconSlugs = {

@@ -1,5 +1,5 @@
-import type { FluentIcon } from '@fluentui/react-icons';
-import { CameraRegular, ClockRegular, HeartRegular, LocationRegular, SparkleRegular, FoodRegular } from '@fluentui/react-icons';
+import type { LucideIcon } from 'lucide-react';
+import { Camera, Clock, Heart, MapPin, Sparkles, Utensils } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatters';
 
 export type ServiceCard = {
@@ -29,7 +29,7 @@ export type ServiceDetail = {
   rating: string;
   reviewCount: string;
   summary: string;
-  highlights: { icon: FluentIcon; title: string; description: string }[];
+  highlights: { icon: LucideIcon; title: string; description: string }[];
   details: { title: string; description: string }[];
   contextTitle: string;
   contextDescription: string;
@@ -274,17 +274,17 @@ const serviceDetailData: Record<string, ServiceDetail> = {
     summary: 'Sur place',
     highlights: [
       {
-        icon: CameraRegular,
+        icon: Camera,
         title: '8 ans d’expérience',
         description: 'Je suis photographe professionnel, spécialisé dans le portrait et la photographie lifestyle.'
       },
       {
-        icon: SparkleRegular,
+        icon: Sparkles,
         title: 'Moment fort de carrière',
         description: 'J’ai travaillé avec divers médias et photographié des voyageurs pour créer des images mémorables.'
       },
       {
-        icon: HeartRegular,
+        icon: Heart,
         title: 'Favori des voyageurs',
         description: 'Apprécié pour sa qualité constante, sa direction soignée et son énergie chaleureuse sur le plateau.'
       }
@@ -323,17 +323,17 @@ const serviceDetailData: Record<string, ServiceDetail> = {
     summary: 'Dans une cuisine privée',
     highlights: [
       {
-        icon: FoodRegular,
+        icon: Utensils,
         title: 'Cuisine pratique',
         description: 'Apprenez lors d’une séance guidée avec préparation des ingrédients et dressage.'
       },
       {
-        icon: ClockRegular,
+        icon: Clock,
         title: 'Durée flexible',
         description: 'Choisissez entre une dégustation plus courte ou un atelier culinaire plus immersif.'
       },
       {
-        icon: LocationRegular,
+        icon: MapPin,
         title: 'Emplacement central',
         description: 'L’expérience se déroule dans un cadre londonien calme et facile d’accès.'
       }
@@ -372,17 +372,17 @@ const serviceDetailData: Record<string, ServiceDetail> = {
     summary: 'Petits groupes bienvenus',
     highlights: [
       {
-        icon: FoodRegular,
+        icon: Utensils,
         title: 'Ingrédients frais',
         description: 'Cuisinez avec des ingrédients locaux et des techniques simples.'
       },
       {
-        icon: SparkleRegular,
+        icon: Sparkles,
         title: 'Atmosphère authentique',
         description: 'Une cuisine romaine chaleureuse, avec une présentation simple et épurée.'
       },
       {
-        icon: CameraRegular,
+        icon: Camera,
         title: 'Moments photogéniques',
         description: 'Le dressage, la préparation et le service sont pensés pour être superbes en photo.'
       }
@@ -421,17 +421,17 @@ const serviceDetailData: Record<string, ServiceDetail> = {
     summary: 'Direction créative incluse',
     highlights: [
       {
-        icon: CameraRegular,
+        icon: Camera,
         title: 'Photos éditoriales',
         description: 'Des images nettes et élégantes avec une narration visuelle forte.'
       },
       {
-        icon: SparkleRegular,
+        icon: Sparkles,
         title: 'Parcours soigné',
         description: 'Le service est structuré pour être fluide, soigné et facile à réserver.'
       },
       {
-        icon: LocationRegular,
+        icon: MapPin,
         title: 'Parcours urbain',
         description: 'Les lieux de prise de vue sont centrés en ville pour un accès facile.'
       }

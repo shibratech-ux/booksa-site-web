@@ -6,12 +6,12 @@ import { NAV_ITEMS } from '@/utils/constants';
 import { navigationIcons } from '@/icons/navigation.icons';
 import { cn } from '@/utils/helpers';
 import { Button } from '@/components/ui/Button';
-import type { FluentIcon } from '@fluentui/react-icons';
+import type { LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 type NavPath = (typeof NAV_ITEMS)[number]['path'];
 
-const navIconMap: Partial<Record<NavPath, FluentIcon>> = {
+const navIconMap: Partial<Record<NavPath, LucideIcon>> = {
   '/': navigationIcons.dashboard
 };
 

@@ -1,14 +1,14 @@
-import type { IconType } from 'react-icons';
+import type { LucideIcon } from 'lucide-react';
 import {
-  FiBell,
-  FiBriefcase,
-  FiCreditCard,
-  FiDollarSign,
-  FiGlobe,
-  FiLock,
-  FiShield,
-  FiUser
-} from 'react-icons/fi';
+  Bell,
+  Briefcase,
+  CreditCard,
+  DollarSign,
+  Globe,
+  Lock,
+  Shield,
+  User
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 type SettingsItem = {
@@ -22,7 +22,7 @@ type SettingsItem = {
     | 'payments'
     | 'languagesCurrency'
     | 'travelForWork';
-  icon: IconType;
+  icon: LucideIcon;
 };
 
 export type AccountSettingsSection =
@@ -36,14 +36,14 @@ export type AccountSettingsSection =
   | 'travel-for-work';
 
 const settingsItems: SettingsItem[] = [
-  { id: 'personal-information', labelKey: 'personalInformation', icon: FiUser },
-  { id: 'login-security', labelKey: 'loginSecurity', icon: FiShield },
-  { id: 'privacy', labelKey: 'privacy', icon: FiLock },
-  { id: 'notifications', labelKey: 'notifications', icon: FiBell },
-  { id: 'taxes', labelKey: 'taxes', icon: FiDollarSign },
-  { id: 'payments', labelKey: 'payments', icon: FiCreditCard },
-  { id: 'languages-currency', labelKey: 'languagesCurrency', icon: FiGlobe },
-  { id: 'travel-for-work', labelKey: 'travelForWork', icon: FiBriefcase }
+  { id: 'personal-information', labelKey: 'personalInformation', icon: User },
+  { id: 'login-security', labelKey: 'loginSecurity', icon: Shield },
+  { id: 'privacy', labelKey: 'privacy', icon: Lock },
+  { id: 'notifications', labelKey: 'notifications', icon: Bell },
+  { id: 'taxes', labelKey: 'taxes', icon: DollarSign },
+  { id: 'payments', labelKey: 'payments', icon: CreditCard },
+  { id: 'languages-currency', labelKey: 'languagesCurrency', icon: Globe },
+  { id: 'travel-for-work', labelKey: 'travelForWork', icon: Briefcase }
 ];
 
 export function AccountSettingsSidebar({

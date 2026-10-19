@@ -8,6 +8,7 @@ import {
   CalendarClock,
   Car,
   ChefHat,
+  Check,
   Clock,
   Coffee,
   ConciergeBell,
@@ -41,7 +42,8 @@ import {
   Wine,
   type LucideIcon
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import type { ListingCategory } from '../listingCategories';
 
 type Amenity = {
@@ -198,7 +200,7 @@ const restaurantGroups: AmenityGroup[] = [
   }
 ];
 
-const getAmenityGroups = (category: ListingCategory) => {
+export const getAmenityGroups = (category: ListingCategory) => {
   if (category.id === 'restaurant') return restaurantGroups;
   if (category.id === 'hotel') return hotelGroups;
   return privateRoomGroups;
@@ -213,39 +215,50 @@ export function AmenitiesStep({
   selectedAmenities: string[];
   onToggle: (amenityId: string) => void;
 }) {
+  const { t } = useTranslation('booking');
+  const reduceMotion = useReducedMotion();
   const groups = getAmenityGroups(category);
-  const description =
-    category.id === 'restaurant'
-      ? 'Choose the amenities and service options guests can expect. You can add more after you publish your listing.'
-      : 'You can add more amenities after you publish your listing.';
+  const groupLabels = t('amenitiesStep.groups', { returnObjects: true });
+  const amenityLabels = t('amenitiesStep.labels', { returnObjects: true });
+  const details = t('amenitiesStep.details', { returnObjects: true });
+  const selectedCount = groups.reduce((count, group) => count + group.amenities.filter(amenity => selectedAmenities.includes(amenity.id)).length, 0);
 
   return (
     <motion.section
-      initial={{ opacity: 0, x: 24 }}
+      initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-12"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+      className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-12 sm:pt-8"
       aria-labelledby="amenities-title"
     >
-      <div className="mx-auto w-full max-w-[704px]">
+      <div className="mx-auto w-full max-w-2xl">
         <h1
           id="amenities-title"
-          className="max-w-[682px] text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="max-w-xl text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
-          Tell guests which amenities they&apos;ll find at your place
+          {t(`amenitiesStep.titles.${category.id}`)}
         </h1>
-        <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)]">{description}</p>
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-[var(--color-text-secondary)] sm:text-base">
+          {t(`amenitiesStep.descriptions.${category.id}`)}
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] pb-4 text-sm sm:mt-8">
+          <p className="text-[var(--color-text-secondary)]">{t('amenitiesStep.choose')}</p>
+          <p className="font-medium text-[var(--color-text-primary)]" role="status" aria-live="polite" aria-atomic="true">
+            {t('amenitiesStep.selected', { count: selectedCount })}
+          </p>
+        </div>
 
-        <div className="mt-8 space-y-10">
+        <div className="mt-6 space-y-8 sm:mt-8 sm:space-y-10">
           {groups.map((group) => (
             <section key={group.id} aria-labelledby={`amenity-group-${group.id}`}>
-              <h2 id={`amenity-group-${group.id}`} className="text-lg font-semibold">
-                {group.title}
+              <h2 id={`amenity-group-${group.id}`} className="text-lg font-semibold text-[var(--color-text-primary)]">
+                {groupLabels[group.id as keyof typeof groupLabels]}
               </h2>
-              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-                {group.amenities.map(({ id, label, description: amenityDescription, icon: Icon }) => {
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+                {group.amenities.map(({ id, icon: Icon }) => {
                   const selected = selectedAmenities.includes(id);
+                  const amenityDescription = id in details ? details[id as keyof typeof details] : null;
 
                   return (
                     <button
@@ -253,14 +266,19 @@ export function AmenitiesStep({
                       type="button"
                       aria-pressed={selected}
                       onClick={() => onToggle(id)}
-                      className={`flex min-h-[114.4px] flex-col items-start rounded-card border bg-[var(--color-surface)] p-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[136.4px] ${
+                      className={`relative flex min-h-28 min-w-0 flex-col items-start rounded-card border p-4 text-left text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-text-primary)] sm:min-h-32 sm:p-5 ${
                         selected
-                          ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
-                          : 'border-[var(--color-border)]'
+                          ? 'border-[var(--color-text-primary)] bg-[var(--color-surface-muted)] ring-1 ring-[var(--color-text-primary)]'
+                          : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-muted)]'
                       }`}
                     >
-                      <Icon className="h-7 w-7 shrink-0" strokeWidth={1.8} aria-hidden="true" />
-                      <span className="mt-auto pt-4 text-base font-semibold leading-snug">{label}</span>
+                      <Icon className="h-7 w-7 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+                      {selected ? (
+                        <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text-primary)] text-[var(--color-surface)]">
+                          <Check className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
+                        </span>
+                      ) : null}
+                      <span className="mt-auto break-words pt-4 text-sm font-semibold leading-snug sm:text-base">{amenityLabels[id as keyof typeof amenityLabels]}</span>
                       {amenityDescription ? (
                         <span className="mt-1 text-sm leading-snug text-[var(--color-text-secondary)]">
                           {amenityDescription}

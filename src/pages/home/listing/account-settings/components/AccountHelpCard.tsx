@@ -1,19 +1,19 @@
-import { FiEye, FiLock, FiShield } from 'react-icons/fi';
+import { Eye, Lock, Shield } from 'lucide-react';
 
 const helpItems = [
   {
-    icon: FiShield,
+    icon: Shield,
     title: "Why isn’t my info shown here?",
     description: 'We’re hiding some account details to protect your identity.'
   },
   {
-    icon: FiLock,
+    icon: Lock,
     title: 'Which details can be edited?',
     description:
       'Contact info and personal details can be edited. If this info was used to verify your identity, you’ll need to get verified again the next time you book—or to continue hosting.'
   },
   {
-    icon: FiEye,
+    icon: Eye,
     title: 'What info is shared with others?',
     description:
       'Booksa only releases contact information for Hosts and guests after a reservation is confirmed.'

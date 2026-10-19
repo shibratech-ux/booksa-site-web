@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FiCheck, FiChevronRight, FiLock } from 'react-icons/fi';
+import { Check, ChevronRight, Lock } from 'lucide-react';
 import { updateLoggedInUserProfile } from '@/services/user.service';
 
 type PrivacySettingKey =
@@ -51,7 +51,7 @@ function PrivacySwitch({
           checked ? 'translate-x-[19px]' : 'translate-x-0.5'
         }`}
       >
-        {checked ? <FiCheck className="h-4 w-4" aria-hidden="true" /> : null}
+        {checked ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
       </span>
     </button>
   );
@@ -97,7 +97,7 @@ function PrivacyLinkRow({ label }: { label: string }) {
       className="flex min-h-[77px] w-full items-center justify-between gap-5 rounded-button border border-[var(--color-border)] px-4 text-left font-semibold transition hover:bg-[var(--color-surface-muted)]"
     >
       {label}
-      <FiChevronRight className="h-5 w-5 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
+      <ChevronRight className="h-5 w-5 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
     </button>
   );
 }
@@ -205,7 +205,7 @@ export function PrivacyContent({
 
         <article className="mt-4 flex gap-5 rounded-card border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5">
           <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-pink-500 text-pink-500">
-            <FiLock className="h-5 w-5" aria-hidden="true" />
+            <Lock className="h-5 w-5" aria-hidden="true" />
           </span>
           <div>
             <h4 className="font-semibold">Committed to privacy</h4>

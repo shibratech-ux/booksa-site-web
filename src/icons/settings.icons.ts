@@ -1,9 +1,9 @@
-import { AlertRegular, PaintBrushRegular, SettingsRegular, ShieldCheckmarkRegular } from '@fluentui/react-icons';
+import { Bell, Paintbrush, Settings, ShieldCheck } from 'lucide-react';
 
 export const settingsIcons = {
-  notifications: AlertRegular,
-  appearance: PaintBrushRegular,
-  preferences: SettingsRegular,
-  security: ShieldCheckmarkRegular,
-  enterprise: SettingsRegular
+  notifications: Bell,
+  appearance: Paintbrush,
+  preferences: Settings,
+  security: ShieldCheck,
+  enterprise: Settings
 } as const;

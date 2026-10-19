@@ -1,0 +1,13 @@
+# Booksa listing creation
+
+`src/domain/listing.ts` defines the Firestore document types, normalizer and shared validation. Category-specific IDs and counter limits come from the existing Booksa category, access, amenities, highlights and counter catalogs used by the UI. The supplied contract does not enumerate those category-specific IDs; confirm these catalogs against Flutter when its source is available.
+
+`createCurrentUserDraft`, `updateCurrentUserDraft`, and `generateCurrentUserListing` write to `annonceslisting` using transactions. Identity and profile fields are obtained from Firebase Auth and `users/{uid}`. Draft synchronization whitelists editable fields, replaces the photo map, preserves identity and creation metadata, and skips finalized statuses. Finalization validates the current transaction snapshot plus the wizard values before writing `action-required`, `generatedSummary`, ordered `imageUrls`, and `completion`. Publication and activation are subsequent lifecycle states, not actions performed by this wizard.
+
+The stored resume path is `/host/listing/create`; `listingResume.ts` maps canonical step IDs to the existing React section routes. Address confirmation persists `addressDraft` and `confirmedLocation`. Photos are uploaded to Firebase Storage, assigned unique orders transactionally and reloaded from Firestore on resume. Storage names include the listing ID and a collision-resistant prefix on the sanitized original name. Removed photo paths are recorded in `photoCleanupPaths`; object cleanup can be performed separately without resurrecting deleted photo metadata.
+
+Run `npm run test:listing` for the contract tests and `npm run build` for TypeScript and the production bundle. Tests use a transaction double, not a Firebase emulator. Firebase project security rules and real Auth/Firestore/Storage integration must also enforce ownership and be verified in the target environment; no project rules are included in this repository.
+
+Step 1 on the website ends at Basics, followed directly by the step 2 introduction. The former Bathroom types and Who else pages are no longer rendered; existing documents paused on either step resume at Basics. Their saved `bathroomTypes` and `whoElseIds` values remain in `flowDraft` for document compatibility. The required bedroom-lock question for private rooms and suites is collected on the guest-access page, before Basics.
+
+The former “Your location on Booksa” introduction (`map-visibility`) is skipped on the website. Guest access leads directly to the location map; existing drafts paused on `map-visibility` resume at `location`. The stored legacy step ID remains accepted for compatibility.

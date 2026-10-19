@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accessibility,
+  Calendar,
   CheckCircle2,
   CalendarX,
   ChevronLeft,
@@ -9,6 +10,8 @@ import {
   Globe,
   Heart,
   MapPin,
+  Minus,
+  Plus,
   Share2,
   Star,
   Coffee,
@@ -202,7 +205,9 @@ function ReviewsSection() {
             </div>
 
             <div className="mt-4 flex items-center gap-2 text-xs text-gray-700">
-              <span className="leading-none">★★★★★</span>
+              <span className="flex items-center" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-3 w-3 fill-current" aria-hidden="true" />)}
+              </span>
               <span>· {review.date}</span>
             </div>
 
@@ -263,7 +268,8 @@ function MoreExperiencesSection() {
                 {experience.category} · {experience.duration}
               </p>
               <p className="text-xs text-gray-700">
-                From <span className="font-medium">{experience.price}</span> / guest · ★ {experience.rating}
+                From <span className="font-medium">{experience.price}</span> / guest ·{' '}
+                <span className="inline-flex items-center gap-1"><Star className="h-3 w-3 fill-current" aria-hidden="true" />{experience.rating}</span>
               </p>
             </div>
           </article>
@@ -444,7 +450,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
               className="flex items-center gap-2 border-r px-4 py-3 text-sm font-medium"
               style={{ borderColor: theme.colors.border }}
             >
-              <span>🎈</span>
+              <MapPin className="h-4 w-4" aria-hidden="true" />
               <span>Anywhere</span>
             </button>
             <button className="border-r px-4 py-3 text-sm font-medium" style={{ borderColor: theme.colors.border }}>
@@ -683,14 +689,14 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                       </p>
                     </div>
                     <div className="flex items-center gap-5 text-sm" style={{ color: theme.colors.textSecondary }}>
-                      <button type="button" className="leading-none transition hover:text-gray-900" aria-label="Decrease guests">
-                        −
+                      <button type="button" className="inline-flex h-8 w-8 items-center justify-center rounded-full transition hover:text-gray-900" aria-label="Decrease guests">
+                        <Minus className="h-4 w-4" aria-hidden="true" />
                       </button>
                       <span className="text-xs font-semibold" style={{ color: theme.colors.textPrimary }}>
                         1
                       </span>
-                      <button type="button" className="leading-none transition hover:text-gray-900" aria-label="Increase guests">
-                        +
+                      <button type="button" className="inline-flex h-8 w-8 items-center justify-center rounded-full transition hover:text-gray-900" aria-label="Increase guests">
+                        <Plus className="h-4 w-4" aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -702,10 +708,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
                       July 2026
                     </p>
                     <button type="button" className="rounded-full p-2 transition hover:bg-black/5" aria-label="Open calendar" style={{ color: theme.colors.textSecondary }}>
-                      <svg className="booksa-icon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="3" y="5" width="18" height="16" rx="2" />
-                        <path d="M8 3v4M16 3v4M3 11h18" />
-                      </svg>
+                      <Calendar className="h-5 w-5" aria-hidden="true" />
                     </button>
                   </div>
                 </div>

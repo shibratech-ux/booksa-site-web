@@ -50,6 +50,16 @@ export function formatDateTime(
   return new Intl.DateTimeFormat(localeFor(language), options).format(toDate(value));
 }
 
+/** Locale-aware range that folds shared parts, e.g. "Oct 20 – 30" or "20–30 oct.". */
+export function formatDateRange(
+  start: DateValue,
+  end: DateValue,
+  language?: LanguageInput,
+  options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' }
+): string {
+  return new Intl.DateTimeFormat(localeFor(language), options).formatRange(toDate(start), toDate(end));
+}
+
 export function formatTime(
   value: DateValue,
   language?: LanguageInput,

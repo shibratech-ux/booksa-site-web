@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeftRegular, DismissRegular, MailRegular } from '@fluentui/react-icons';
+import { ArrowLeft, X, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
 import { Input } from '@/components/ui/Input';
@@ -149,7 +149,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
             aria-label={t('accountDialog.back')}
             className="absolute left-3 top-3 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
           >
-            <ArrowLeftRegular className="h-5 w-5" aria-hidden="true" />
+            <ArrowLeft className="h-5 w-5" aria-hidden="true" />
           </button>
         ) : null}
         <button
@@ -159,7 +159,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
           aria-label={tCommon('actions.close')}
           className="absolute right-3 top-3 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)] disabled:opacity-50"
         >
-          <DismissRegular className="h-5 w-5" aria-hidden="true" />
+          <X className="h-5 w-5" aria-hidden="true" />
         </button>
 
         {step === 'welcome' ? (
@@ -176,7 +176,7 @@ function AccountLoginPanel({ onClose, onAuthenticated }: Omit<AccountLoginDialog
             </h2>
             {maskedEmail ? (
               <p className="mt-7 flex max-w-full items-center justify-center gap-3 text-base">
-                <MailRegular className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <Mail className="h-5 w-5 shrink-0" aria-hidden="true" />
                 <span className="break-all">{maskedEmail}</span>
               </p>
             ) : null}

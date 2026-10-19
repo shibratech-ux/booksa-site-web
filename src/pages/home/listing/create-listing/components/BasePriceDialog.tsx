@@ -101,7 +101,7 @@ export function BasePriceDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className={`flex max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-dialog bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition-[height] duration-200 sm:max-h-[calc(100vh-32px)] sm:rounded-dialog sm:px-6 sm:pb-4 ${
+            className={`flex max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-t-dialog bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] transition-[height] duration-200 sm:max-h-[calc(100vh-32px)] sm:rounded-dialog sm:px-6 sm:pb-4 ${
               isBreakdownOpen ? 'h-[min(580px,92dvh)]' : 'h-[min(444px,92dvh)]'
             }`}
           >
@@ -111,7 +111,7 @@ export function BasePriceDialog({
                 aria-label="Learn about base pricing"
                 className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
               >
-                <CircleHelp className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+                <CircleHelp className="h-5 w-5" aria-hidden="true" />
               </button>
               <h2 id={titleId} className="text-center text-base font-semibold">
                 Base price
@@ -122,7 +122,7 @@ export function BasePriceDialog({
                 aria-label="Close base price dialog"
                 className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
               >
-                <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
             </header>
 
@@ -198,7 +198,7 @@ export function BasePriceDialog({
                       className="mx-auto mt-7 flex items-center gap-1.5 rounded-button px-2 py-1 text-base transition hover:bg-[var(--color-surface-muted)]"
                     >
                       Show less
-                      <ChevronUp className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                      <ChevronUp className="h-5 w-5" aria-hidden="true" />
                     </button>
                   </motion.div>
                 ) : (
@@ -214,7 +214,7 @@ export function BasePriceDialog({
                     aria-label={`Guest price before taxes is FC ${priceFormatter.format(guestPrice)}. Show price breakdown.`}
                   >
                     Guest price before taxes FC {priceFormatter.format(guestPrice)}
-                    <ChevronDown className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                    <ChevronDown className="h-5 w-5" aria-hidden="true" />
                   </motion.button>
                 )}
               </AnimatePresence>

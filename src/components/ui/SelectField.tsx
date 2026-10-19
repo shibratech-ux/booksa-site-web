@@ -1,5 +1,5 @@
 import { forwardRef, useId, type ReactNode, type SelectHTMLAttributes } from 'react';
-import { ChevronDownRegular } from '@fluentui/react-icons';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/utils/helpers';
 
 export interface SelectFieldProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -45,7 +45,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(funct
         >
           {children}
         </select>
-        <ChevronDownRegular
+        <ChevronDown
           className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--color-text-primary)]"
           aria-hidden="true"
         />

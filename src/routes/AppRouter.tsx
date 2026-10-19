@@ -12,6 +12,7 @@ const ExperienceDetailPage = lazy(() => import('@/pages/home/experiences/Experie
 const ServicesPage = lazy(() => import('@/pages/home/services/ServicesPage'));
 const ServiceDetailPage = lazy(() => import('@/pages/home/services/ServiceDetailPage'));
 const SeeAllPage = lazy(() => import('@/pages/home/listing/SeeAllPage'));
+const SeeAllMapPage = lazy(() => import('@/pages/home/listing/SeeAllMapPage'));
 const PhotoTourPage = lazy(() => import('@/pages/home/listing/PhotoTourPage'));
 const ListingDetailPage = lazy(() => import('@/pages/home/listing/ListingDetailPage'));
 const HostListingsPage = lazy(() => import('@/pages/home/listing/HostListingsPage'));
@@ -65,6 +66,7 @@ export function AppRouter() {
           <Route path={ROUTES.services} element={<ServicesPage />} />
           <Route path={ROUTES.serviceDetail} element={<ServiceDetailPage />} />
           <Route path={ROUTES.seeAll} element={<SeeAllPage />} />
+          <Route path={ROUTES.seeAllMap} element={<SeeAllMapPage />} />
           <Route path={ROUTES.photoTour} element={<PhotoTourPage />} />
           <Route path={ROUTES.confirmPay} element={<ConfirmPayPage />} />
           <Route path={ROUTES.listingDetail} element={<ListingDetailPage />} />

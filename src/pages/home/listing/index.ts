@@ -6,6 +6,7 @@ export { default as ListingSetupPage } from './create-listing/ListingSetupPage';
 export { default as ListingDetailPage } from './ListingDetailPage';
 export { default as PhotoTourPage } from './PhotoTourPage';
 export { default as SeeAllPage } from './SeeAllPage';
+export { default as SeeAllMapPage } from './SeeAllMapPage';
 export type { Listing } from './listing.types';
 
 export { default } from './HomePage';

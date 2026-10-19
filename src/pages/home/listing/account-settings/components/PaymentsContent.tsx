@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiBell, FiChevronDown, FiChevronRight, FiCreditCard } from 'react-icons/fi';
+import { Bell, ChevronDown, ChevronRight, CreditCard } from 'lucide-react';
 import { updateLoggedInUserProfile } from '@/services/user.service';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 
@@ -67,7 +67,7 @@ function PaymentsTabContent() {
         <PrimaryButton>Add coupon</PrimaryButton>
 
         <article className="mt-7 rounded-card border border-[var(--color-border)] p-6">
-          <FiCreditCard className="h-10 w-10 text-pink-500" aria-hidden="true" />
+          <CreditCard className="h-10 w-10 text-pink-500" aria-hidden="true" />
           <h4 className="mt-5 font-semibold">Make all payments through Booksa</h4>
           <p className="mt-2 text-sm leading-5 text-[var(--color-text-secondary)]">
             Always pay and communicate through Booksa to ensure you’re protected under our Terms of Service, Payments Terms of Service, cancellation, and other safeguards.
@@ -92,7 +92,7 @@ function PayoutsTabContent() {
         {['When you’ll get your payout', 'How payouts work', 'Go to your transaction history'].map((item) => (
           <button key={item} type="button" className="mt-5 flex w-full items-center justify-between gap-5 text-left font-semibold underline underline-offset-2">
             {item}
-            <FiChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
+            <ChevronRight className="h-5 w-5 shrink-0" aria-hidden="true" />
           </button>
         ))}
       </section>
@@ -146,7 +146,7 @@ function ServiceFeeTabContent({ initialFee, onSaved }: { initialFee: ServiceFee;
       <p className="mt-10 text-sm text-[var(--color-text-secondary)]">For listings located in Brazil and Mexico, Booksa deducts a 16% host fee for single fee and 4% host fee for split fee.</p>
 
       <article className="mt-7 rounded-card border border-[var(--color-border)] p-6">
-        <FiCreditCard className="h-10 w-10 text-pink-500" aria-hidden="true" />
+        <CreditCard className="h-10 w-10 text-pink-500" aria-hidden="true" />
         <h4 className="mt-5 font-semibold">Same payout, simpler pricing</h4>
         <p className="mt-3 text-sm leading-5 text-[var(--color-text-secondary)]">You can make the same amount of money and your guests won’t pay more. Choose single fee and adjust your prices accordingly.</p>
       </article>
@@ -166,7 +166,7 @@ function DonationsTabContent() {
   return (
     <div className="pt-8">
       <article className="flex gap-4 rounded-card border border-[var(--color-border)] p-5">
-        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-sm bg-blue-500 text-white"><FiBell aria-hidden="true" /></span>
+        <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-sm bg-blue-500 text-white"><Bell aria-hidden="true" /></span>
         <div><h3 className="font-semibold">Host payout donations aren’t available</h3><p className="mt-1 text-sm text-[var(--color-text-secondary)]">These aren’t available to hosts in your location. You can show your support by making a one-time or monthly donation.</p></div>
       </article>
 
@@ -184,7 +184,7 @@ function DonationsTabContent() {
           {faqs.map(([question, answer], index) => (
             <div key={question} className="border-b border-[var(--color-border)]">
               <button type="button" onClick={() => setOpenFaq(openFaq === index ? null : index)} aria-expanded={openFaq === index} className="flex w-full items-center justify-between gap-5 py-6 text-left text-lg">
-                {question}<FiChevronDown className={`h-5 w-5 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} aria-hidden="true" />
+                {question}<ChevronDown className={`h-5 w-5 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} aria-hidden="true" />
               </button>
               <motion.div initial={false} animate={{ height: openFaq === index ? 'auto' : 0, opacity: openFaq === index ? 1 : 0 }} className="overflow-hidden"><p className="pb-6 text-sm text-[var(--color-text-secondary)]">{answer}</p></motion.div>
             </div>

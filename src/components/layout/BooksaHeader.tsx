@@ -1,14 +1,15 @@
+import { SearchDialog } from "@/components/home/SearchDialog";
 import BooksaLogo from "./BooksaLogo";
 import {
-  SearchRegular,
-} from "@fluentui/react-icons";
-import { CircleUserRound } from "lucide-react";
-import { FiHelpCircle, FiMenu } from "react-icons/fi";
+  CircleHelp,
+  CircleUserRound,
+  House,
+  Menu,
+  Search,
+} from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useId, useRef, useState } from "react";
-import allIcon from "@/assets/images/all.png";
-import homesIcon from "@/assets/images/homes.png";
 import { useTheme } from "@/theme/useTheme";
 import { ROUTES } from "@/utils/constants";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,8 +22,7 @@ import MarketplaceMobileNav from "@/components/layout/MarketplaceMobileNav";
 type NavigationItem = {
   label: string;
   labelKey: "all" | "hotel" | "room" | "restaurant";
-  iconSrc?: string;
-  iconEmoji?: string;
+  emoji: string;
   path: string;
   badge?: string;
 };
@@ -31,25 +31,25 @@ const navigationItems: NavigationItem[] = [
   {
     label: "All",
     labelKey: "all",
-    iconSrc: allIcon,
+    emoji: "🏆",
     path: ROUTES.home,
   },
   {
     label: "Hotel",
     labelKey: "hotel",
-    iconSrc: homesIcon,
+    emoji: "🏠",
     path: ROUTES.homes,
   },
   {
     label: "Room",
     labelKey: "room",
-    iconEmoji: "🎈",
+    emoji: "🛏️",
     path: ROUTES.experiences,
   },
   {
     label: "Restaurant",
     labelKey: "restaurant",
-    iconEmoji: "🛎️",
+    emoji: "🛎️",
     path: ROUTES.services,
   },
 ] as const;
@@ -65,26 +65,67 @@ const DESKTOP_HEADER_EXPANDED_HEIGHT = 200;
 const DESKTOP_HEADER_COLLAPSED_HEIGHT = 80;
 const DESKTOP_HEADER_COLLAPSE_OFFSET = 40;
 
+// Emoji glyphs carry their own colors, so inactive tabs are muted with
+// grayscale + opacity instead of the text color used by lucide icons.
+function CategoryEmoji({
+  emoji,
+  isActive,
+  className = "",
+}: {
+  emoji: string;
+  isActive: boolean;
+  className?: string;
+}) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block select-none leading-none transition duration-200 group-hover:opacity-100 group-hover:grayscale-0 ${
+        isActive ? "" : "opacity-70 grayscale"
+      } ${className}`}
+    >
+      {emoji}
+    </span>
+  );
+}
+
 function isNavigationItemActive(item: NavigationItem, pathname: string) {
   return item.label === "All"
     ? pathname === ROUTES.home
     : item.path !== ROUTES.home && pathname === item.path;
 }
 
-const searchFieldItems = [
-  { labelKey: "where", valueKey: "searchDestinations" },
-  { labelKey: "when", valueKey: "addDates" },
-  { labelKey: "who", valueKey: "addGuests" },
-] as const;
+type SearchSegment = {
+  id: "where" | "when" | "who";
+  labelKey: "where" | "when" | "who";
+  valueKey: "searchDestinations" | "addDates" | "addGuests" | "anywhere" | "anytime";
+};
 
-function SearchField({ collapsed = false }: { collapsed?: boolean }) {
+const searchSegments: SearchSegment[] = [
+  { id: "where", labelKey: "where", valueKey: "searchDestinations" },
+  { id: "when", labelKey: "when", valueKey: "addDates" },
+  { id: "who", labelKey: "who", valueKey: "addGuests" },
+];
+
+const compactSearchSegments: SearchSegment[] = [
+  { id: "where", labelKey: "where", valueKey: "anywhere" },
+  { id: "when", labelKey: "when", valueKey: "anytime" },
+  { id: "who", labelKey: "who", valueKey: "addGuests" },
+];
+
+// Segmented search pill: each segment highlights on its own, and the
+// dividers on either side of the hovered/focused segment fade out so the
+// highlight reads as one continuous shape.
+function SearchField({ collapsed = false, onSearch }: { collapsed?: boolean; onSearch: (section: "where" | "when" | "who") => void }) {
   const { theme } = useTheme();
   const { t } = useTranslation("navigation");
   const isCompact = collapsed;
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const segments = isCompact ? compactSearchSegments : searchSegments;
+  const lastIndex = segments.length - 1;
 
   return (
-    <motion.button
-      type="button"
+    <motion.div
+      role="search"
       aria-label={t("searchAll")}
       layout
       animate={{
@@ -93,95 +134,101 @@ function SearchField({ collapsed = false }: { collapsed?: boolean }) {
         height: isCompact ? 48 : 66,
       }}
       transition={{ type: "spring", stiffness: 260, damping: 30, mass: 1 }}
-      className={`booksa-header-search flex min-h-0 items-center rounded-full border text-left transition hover:shadow-[var(--shadow-md)] ${
-        isCompact ? "w-full justify-between px-0" : "w-full"
-      }`}
+      className="booksa-header-search flex min-h-0 w-full items-center rounded-full border transition-shadow hover:shadow-[var(--shadow-md)]"
       style={{
         backgroundColor: theme.colors.surface,
         borderColor: theme.colors.border,
       }}
+      onMouseLeave={() => setActiveIndex(null)}
     >
-      <div
-        className={`flex w-full items-center ${
-          isCompact
-            ? "p-[3px]"
-            : "p-2"
-        }`}
-      >
-        {isCompact ? (
-          <>
-            {[
-              { label: "Anywhere", icon: true },
-              { label: "Anytime", icon: false },
-              { label: "Add guests", icon: false },
-            ].map((field, index) => (
-              <div key={field.label} className="flex min-w-0 flex-1 items-center justify-center">
-                <span
-                  className="flex min-w-0 items-center gap-1.5 px-2 text-[11px] font-semibold leading-none whitespace-nowrap sm:gap-2 sm:px-3 sm:text-[12px]"
-                  style={{ color: theme.colors.textPrimary }}
+      <div className={`flex h-full w-full items-center ${isCompact ? "p-[3px]" : ""}`}>
+        {segments.map((segment, index) => {
+          const isLast = index === lastIndex;
+          const hideDivider =
+            isLast || activeIndex === index || activeIndex === index + 1;
+          const label = t(segment.labelKey);
+          const value = t(segment.valueKey);
+
+          return (
+            <div key={segment.id} className="flex h-full min-w-0 flex-1 items-center">
+              <div
+                className={`flex h-full min-w-0 flex-1 items-center rounded-full transition-colors duration-150 hover:bg-[var(--color-surface-muted)] ${
+                  isLast ? (isCompact ? "pr-[2px]" : "pr-2") : ""
+                }`}
+                onMouseEnter={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
+                onBlur={() => setActiveIndex(null)}
+              >
+                <button
+                  type="button"
+                  aria-label={`${label}: ${value}`}
+                  onClick={() => onSearch(segment.id)}
+                  className={`flex h-full min-w-0 flex-1 cursor-pointer items-center rounded-full text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--color-text-primary)] ${
+                    isCompact ? "justify-center gap-1.5 px-3" : "flex-col items-start justify-center px-6"
+                  }`}
                 >
-                  {field.icon ? (
-                    <img
-                      src={homesIcon}
-                      alt=""
+                  {isCompact ? (
+                    <>
+                      {index === 0 ? (
+                        <House className="h-5 w-5 shrink-0" aria-hidden="true" />
+                      ) : null}
+                      <span
+                        className="truncate text-[12px] font-semibold leading-none"
+                        style={{ color: theme.colors.textPrimary }}
+                      >
+                        {value}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span
+                        className="text-xs font-semibold"
+                        style={{ color: theme.colors.textPrimary }}
+                      >
+                        {label}
+                      </span>
+                      <span
+                        className="mt-0.5 w-full truncate text-sm"
+                        style={{ color: theme.colors.textSecondary }}
+                      >
+                        {value}
+                      </span>
+                    </>
+                  )}
+                </button>
+
+                {isLast ? (
+                  <button
+                    type="button"
+                    aria-label={t("searchAll")}
+                    onClick={() => onSearch("where")}
+                    className={`inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)] ${
+                      isCompact ? "h-[38px] w-[38px]" : "h-12 w-12"
+                    }`}
+                    style={{ backgroundColor: theme.colors.primary[500] }}
+                  >
+                    <Search
+                      className={isCompact ? "h-[15px] w-[15px]" : "h-[18px] w-[18px]"}
                       aria-hidden="true"
-                      className="h-5 w-5 shrink-0 object-contain sm:h-6 sm:w-6"
                     />
-                  ) : null}
-                  {field.label}
-                </span>
-                {index < 2 ? (
-                  <span
-                    className="h-6 w-px shrink-0"
-                    aria-hidden="true"
-                    style={{ backgroundColor: theme.colors.border }}
-                  />
+                  </button>
                 ) : null}
               </div>
-            ))}
-          </>
-        ) : (
-          searchFieldItems.map((field, index) => (
-            <div key={field.labelKey} className="flex min-w-0 flex-1 items-center justify-between">
-              <div className="min-w-0 px-6 py-1">
-                <p
-                  className="text-xs font-semibold"
-                  style={{ color: theme.colors.textPrimary }}
-                >
-                  {t(field.labelKey)}
-                </p>
-                <p
-                  className="truncate mt-0.5 text-sm"
-                  style={{ color: theme.colors.textSecondary }}
-                >
-                  {t(field.valueKey)}
-                </p>
-              </div>
 
-              {index < 2 ? (
-                <div
-                  className="hidden h-8 w-px sm:block"
+              {!isLast ? (
+                <span
+                  className={`w-px shrink-0 transition-opacity duration-150 ${
+                    isCompact ? "h-6" : "h-8"
+                  } ${hideDivider ? "opacity-0" : "opacity-100"}`}
                   aria-hidden="true"
                   style={{ backgroundColor: theme.colors.border }}
                 />
               ) : null}
             </div>
-          ))
-        )}
-
-        <span
-          className={`ml-2 inline-flex shrink-0 items-center justify-center rounded-full text-white ${
-            isCompact ? "h-[38px] w-[38px]" : "h-[48px] w-[48px]"
-          }`}
-          style={{ backgroundColor: theme.colors.primary[500] }}
-        >
-          <SearchRegular
-            className={isCompact ? "h-[15px] w-[15px]" : "h-[18px] w-[18px]"}
-            aria-hidden="true"
-          />
-        </span>
+          );
+        })}
       </div>
-    </motion.button>
+    </motion.div>
   );
 }
 
@@ -252,7 +299,7 @@ function HeaderMenu({
           "--tw-ring-color": theme.colors.primary[500],
         } as React.CSSProperties}
       >
-        <FiMenu className="h-4 w-4" aria-hidden="true" />
+        <Menu className="h-4 w-4" aria-hidden="true" />
       </button>
 
       <AnimatePresence>
@@ -277,7 +324,7 @@ function HeaderMenu({
               role="menuitem"
               className="flex w-full items-center gap-3 px-5 py-3 text-md transition hover:opacity-70"
             >
-              <FiHelpCircle className="h-5 w-5 shrink-0" aria-hidden="true" />
+              <CircleHelp className="h-5 w-5 shrink-0" aria-hidden="true" />
               <span>{t("helpCenter")}</span>
             </button>
 
@@ -336,7 +383,7 @@ function HeaderMenu({
   );
 }
 
-function CompactMobileHeader() {
+function CompactMobileHeader({ onSearch }: { onSearch: () => void }) {
   const { theme } = useTheme();
   const { t } = useTranslation("navigation");
   const location = useLocation();
@@ -348,14 +395,15 @@ function CompactMobileHeader() {
       <button
         type="button"
         aria-label={t("searchAll")}
-        className="mx-auto flex h-11 w-full max-w-[462px] items-center justify-center gap-2 rounded-full border px-4 text-sm font-semibold shadow-[0_3px_14px_rgba(15,23,42,0.12)]"
+        onClick={onSearch}
+        className="mx-auto flex min-h-11 w-full max-w-[462px] items-center justify-center gap-2 rounded-full border px-4 py-[calc(var(--spacing)*3.9)] text-sm font-semibold shadow-[0_3px_14px_rgba(15,23,42,0.12)]"
         style={{
           backgroundColor: theme.colors.surface,
           borderColor: theme.colors.border,
           color: theme.colors.textPrimary,
         }}
       >
-        <SearchRegular
+        <Search
           className="h-5 w-5 shrink-0"
           aria-hidden="true"
           style={{ color: theme.colors.textPrimary }}
@@ -376,7 +424,7 @@ function CompactMobileHeader() {
               key={t(item.labelKey)}
               type="button"
               aria-current={isActive ? "page" : undefined}
-              className="relative flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-button border-b-2 px-2"
+              className="group relative flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-button border-b-2 px-2"
               onClick={() => navigate(item.path)}
               style={{
                 backgroundColor: theme.colors.surface,
@@ -387,7 +435,7 @@ function CompactMobileHeader() {
               }}
             >
               <span className="relative inline-flex items-center justify-center">
-                {item.iconSrc ? <img src={item.iconSrc} alt="" aria-hidden="true" className="h-7 w-7 object-contain" /> : <span aria-hidden="true" className="text-2xl leading-none">{item.iconEmoji}</span>}
+                <CategoryEmoji emoji={item.emoji} isActive={isActive} className="text-xl" />
                 {item.badge ? (
                   <span
                     className="absolute -right-5 -top-2 rounded-full px-1.5 py-0.5 text-xs font-bold tracking-[0.14em] text-white shadow-sm"
@@ -421,6 +469,7 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
   const [isCollapsed, setIsCollapsed] = useState(
     () => typeof window !== "undefined" && window.scrollY > DESKTOP_HEADER_COLLAPSE_OFFSET,
   );
+  const [searchSection, setSearchSection] = useState<"where" | "when" | "who" | null>(null);
   const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
   const [authDestination, setAuthDestination] = useState<string | null>(null);
 
@@ -526,7 +575,7 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
                 exit={{ opacity: 0, y: -6, scale: 0.98 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
               >
-                <SearchField collapsed />
+                <SearchField collapsed onSearch={setSearchSection} />
               </motion.div>
             ) : (
               <motion.nav
@@ -540,7 +589,6 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
               >
                 {navigationItems.map((item) => {
                   const isActive = isNavigationItemActive(item, location.pathname);
-
                   return (
                     <button
                       key={t(item.labelKey)}
@@ -556,7 +604,7 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
                     >
                       <span className="flex items-center gap-2 text-sm font-semibold">
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center transition-transform duration-200 group-hover:-translate-y-1" aria-hidden="true">
-                          {item.iconSrc ? <img src={item.iconSrc} alt="" className="h-full w-full object-contain" /> : <span className="text-[32px] leading-none">{item.iconEmoji}</span>}
+                          <CategoryEmoji emoji={item.emoji} isActive={isActive} className="text-2xl" />
                         </span>
                         <span className="relative">
                           {t(item.labelKey)}
@@ -628,7 +676,7 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
               exit={{ opacity: 0, height: 0, marginTop: 0 }}
               transition={{ type: "spring", stiffness: 260, damping: 30, mass: 0.95 }}
             >
-              <SearchField />
+              <SearchField onSearch={setSearchSection} />
             </motion.div>
           ) : null}
         </AnimatePresence>
@@ -644,9 +692,10 @@ export default function BooksaHeader({ showMobileNavigation = true }: { showMobi
       </div>
 
       <div className="lg:hidden">
-        <CompactMobileHeader />
+        <CompactMobileHeader onSearch={() => setSearchSection("where")} />
       </div>
 
+      <SearchDialog open={searchSection !== null} initialSection={searchSection ?? "where"} onClose={() => setSearchSection(null)} />
       <AccountLoginDialog
         open={isLoginDialogOpen}
         onClose={() => {

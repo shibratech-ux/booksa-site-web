@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import type { ListingCategory } from '../listingCategories';
 
 const MAXIMUM_DESCRIPTION_LENGTH = 500;
@@ -86,43 +87,43 @@ export function ListingDescriptionStep({
   value: string;
   onChange: (value: string) => void;
 }) {
-  const subject = category.id === 'restaurant' ? 'dining experience' : category.label.toLocaleLowerCase();
+  const { t } = useTranslation('booking');
+  const reduceMotion = useReducedMotion();
 
   return (
     <motion.section
-      initial={{ opacity: 0, x: 24 }}
+      initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+      className="min-h-0 flex-1 overflow-y-auto px-6 pb-8 pt-5 sm:px-10 sm:py-10"
       aria-labelledby="listing-description-heading"
     >
-      <div className="mx-auto flex min-h-full w-full max-w-[704px] flex-col justify-start py-2 sm:justify-center sm:py-6">
+      <div className="mx-auto flex min-h-full w-full max-w-xl flex-col justify-start sm:justify-center sm:py-6">
         <h1
           id="listing-description-heading"
-          className="text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-3xl"
         >
-          Create your description
+          {t('listingDescriptionStep.title')}
         </h1>
-        <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
-          Share what makes your {subject} special.
+        <p id="listing-description-hint" className="mt-3 text-base leading-6 text-[var(--color-text-secondary)]">
+          {t(`listingDescriptionStep.subtitle.${category.id}`)}
         </p>
 
         <label htmlFor="listing-description" className="sr-only">
-          Listing description
+          {t('listingDescriptionStep.label')}
         </label>
         <textarea
           id="listing-description"
           value={value}
           maxLength={MAXIMUM_DESCRIPTION_LENGTH}
-          autoFocus
           onChange={(event) => onChange(event.target.value)}
-          aria-describedby="listing-description-count"
-          className="mt-6 min-h-[242px] w-full resize-none rounded-field border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] p-4 text-base leading-relaxed text-[var(--color-text-primary)] outline-none transition focus:border-[var(--color-text-primary)] sm:mt-8 sm:min-h-[378.4px] sm:p-6 sm:text-lg"
+          aria-describedby="listing-description-hint listing-description-count"
+          className="mt-8 min-h-64 w-full resize-y rounded-field border border-[var(--color-text-secondary)] bg-[var(--color-surface)] p-5 text-base leading-7 text-[var(--color-text-primary)] outline-none transition-shadow focus:border-[var(--color-text-primary)] focus:ring-1 focus:ring-[var(--color-text-primary)] sm:min-h-72 sm:p-6 sm:text-lg"
         />
         <p
           id="listing-description-count"
-          className="mt-3 text-sm font-semibold text-[var(--color-text-secondary)]"
+          className="mt-3 text-xs font-semibold text-[var(--color-text-secondary)]"
           aria-live="polite"
         >
           {value.length}/{MAXIMUM_DESCRIPTION_LENGTH}

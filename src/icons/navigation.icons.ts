@@ -1,25 +1,25 @@
 import {
-  PanelLeftRegular,
-  PersonRegular,
-  ReceiptRegular,
-  ChartMultipleRegular,
-  SettingsRegular,
-  SignOutRegular,
-  AlertRegular,
-  SearchRegular,
-  DismissRegular,
-  HomeRegular
-} from '@fluentui/react-icons';
+  PanelLeft,
+  User,
+  Receipt,
+  ChartColumn,
+  Settings,
+  LogOut,
+  Bell,
+  Search,
+  X,
+  House
+} from 'lucide-react';
 
 export const navigationIcons = {
-  dashboard: HomeRegular,
-  users: PersonRegular,
-  transactions: ReceiptRegular,
-  reports: ChartMultipleRegular,
-  settings: SettingsRegular,
-  logout: SignOutRegular,
-  menu: PanelLeftRegular,
-  search: SearchRegular,
-  notifications: AlertRegular,
-  close: DismissRegular
+  dashboard: House,
+  users: User,
+  transactions: Receipt,
+  reports: ChartColumn,
+  settings: Settings,
+  logout: LogOut,
+  menu: PanelLeft,
+  search: Search,
+  notifications: Bell,
+  close: X
 } as const;

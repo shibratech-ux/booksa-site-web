@@ -1,6 +1,8 @@
-import { FiMinus, FiPlus } from 'react-icons/fi';
-import { motion } from 'framer-motion';
-import type { ListingCategory } from '../listingCategories';
+import { Minus, Plus } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { IconButton } from '@/components/ui/IconButton';
+import type { ListingCategory, ListingCategoryOption } from '../listingCategories';
 
 export type ListingBasics = Record<string, number>;
 
@@ -12,7 +14,7 @@ type CounterDefinition = {
   initialValue: number;
 };
 
-const getCounterContent = (
+export const getCounterContent = (
   category: ListingCategory,
   listingTypeLabel: string,
   accessType: string
@@ -117,68 +119,85 @@ const getCounterContent = (
 
 export function ListingBasicsStep({
   category,
-  listingTypeLabel,
+  listingOption,
   accessType,
   values,
   onChange
 }: {
   category: ListingCategory;
-  listingTypeLabel: string;
+  listingOption: ListingCategoryOption;
   accessType: string;
   values: ListingBasics;
   onChange: (counterId: string, value: number) => void;
 }) {
-  const content = getCounterContent(category, listingTypeLabel, accessType);
+  const { t, i18n } = useTranslation('booking');
+  const reduceMotion = useReducedMotion();
+  const content = getCounterContent(category, listingOption.label, accessType);
+  const propertyLabels = t('propertyTypeStep.options', { returnObjects: true });
+  const propertyType = propertyLabels[listingOption.id as keyof typeof propertyLabels]
+    .toLocaleLowerCase(i18n.resolvedLanguage ?? 'fr');
+  const variants = t('listingBasicsStep.variants', { returnObjects: true });
+  const copy = variants[`${category.id}-${accessType}` as keyof typeof variants];
+  const labels = { ...t('listingBasicsStep.labels', { returnObjects: true }), ...copy.labels };
+  const numberFormatter = new Intl.NumberFormat(i18n.resolvedLanguage ?? 'fr');
 
   return (
     <motion.section
-      initial={{ opacity: 0, x: 24 }}
+      initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+      className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-10 sm:pt-8"
       aria-labelledby="listing-basics-title"
     >
-      <div className="mx-auto w-full max-w-[704px]">
+      <div className="mx-auto w-full max-w-2xl">
         <h1
           id="listing-basics-title"
-          className="text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="max-w-xl text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
-          {content.title}
+          {t('listingBasicsStep.title', { propertyType })}
         </h1>
-        <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)]">
-          {content.description}
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--color-text-secondary)] sm:text-base">
+          {copy.description}
         </p>
 
-        <div className="mt-9 divide-y divide-[var(--color-border)]">
-          {content.counters.map(({ id, label, minimum, maximum, initialValue }) => {
+        <div className="mt-6 divide-y divide-[var(--color-border)] sm:mt-8" role="group" aria-labelledby="listing-basics-title">
+          {content.counters.map(({ id, minimum, maximum, initialValue }) => {
             const value = values[id] ?? initialValue;
+            const label = labels[id as keyof typeof labels];
+            const formattedValue = numberFormatter.format(value);
 
             return (
-              <div key={id} className="flex min-h-[79.2px] items-center justify-between gap-3 py-3 sm:min-h-[90.2px] sm:gap-6 sm:py-4">
-                <span className="min-w-0 flex-1 text-base font-medium sm:text-lg text-[var(--color-text-primary)]">{label}</span>
-                <div className="flex shrink-0 items-center gap-2 sm:gap-4">
-                  <button
-                    type="button"
+              <div key={id} className="flex min-h-20 items-center justify-between gap-3 py-3 sm:min-h-24 sm:gap-6 sm:py-4">
+                <span className="min-w-0 flex-1 text-base leading-snug text-[var(--color-text-primary)] sm:text-lg">{label}</span>
+                <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                  <IconButton
+                    size="sm"
+                    variant="plain"
                     onClick={() => onChange(id, Math.max(minimum, value - 1))}
                     disabled={value <= minimum}
-                    aria-label={`Decrease ${label}`}
-                    className="inline-flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:border-[var(--color-text-primary)] disabled:opacity-35"
-                  >
-                    <FiMinus className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                  <output className="w-7 text-center text-base font-medium" aria-label={`${label}: ${value}`}>
-                    {value}
+                    label={t('listingBasicsStep.decrease', { label })}
+                    icon={
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-surface-muted)]">
+                        <Minus className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+                      </span>
+                    }
+                  />
+                  <output className="min-w-6 text-center text-base tabular-nums" aria-label={t('listingBasicsStep.value', { label, value: formattedValue })} aria-live="polite" aria-atomic="true">
+                    {formattedValue}
                   </output>
-                  <button
-                    type="button"
+                  <IconButton
+                    size="sm"
+                    variant="plain"
                     onClick={() => onChange(id, Math.min(maximum, value + 1))}
                     disabled={value >= maximum}
-                    aria-label={`Increase ${label}`}
-                    className="inline-flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] transition hover:border-[var(--color-text-primary)] disabled:opacity-35"
-                  >
-                    <FiPlus className="h-4 w-4" aria-hidden="true" />
-                  </button>
+                    label={t('listingBasicsStep.increase', { label })}
+                    icon={
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-surface-muted)]">
+                        <Plus className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+                      </span>
+                    }
+                  />
                 </div>
               </div>
             );

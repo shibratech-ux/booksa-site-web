@@ -8,6 +8,7 @@ export const ROUTES = {
   services: '/services',
   serviceDetail: '/services/:serviceId',
   seeAll: '/see-all',
+  seeAllMap: '/see-all/map',
   photoTour: '/phototour',
   confirmPay: '/confirm-pay',
   listingDetail: '/listing/:listingId',

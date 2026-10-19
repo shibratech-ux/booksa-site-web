@@ -8,7 +8,7 @@ Base d'application React + TypeScript construite avec Vite, Tailwind CSS, Zustan
 npm create vite@latest my-dashboard -- --template react-ts
 cd my-dashboard
 npm install
-npm install react-router-dom axios zustand @tanstack/react-query firebase react-hook-form zod dayjs react-hot-toast @tanstack/react-table recharts @amcharts/amcharts5 gsap @gsap/react animejs framer-motion lucide-react @heroicons/react @fluentui/react-icons react-icons
+npm install react-router-dom axios zustand @tanstack/react-query firebase react-hook-form zod dayjs react-hot-toast @tanstack/react-table recharts @amcharts/amcharts5 gsap @gsap/react animejs framer-motion lucide-react
 npm install tailwindcss @tailwindcss/vite
 ```
 

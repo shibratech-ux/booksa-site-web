@@ -1,126 +1,91 @@
-import { CalendarCheck, Zap, type LucideIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useId, useState } from 'react';
+import { CalendarCheck } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import type { ListingCategory } from '../listingCategories';
 
 export type BookingSetting = 'review-first' | 'instant-book';
 
 type BookingSettingsStepProps = {
   category: ListingCategory;
-  listingTypeLabel: string;
   value: BookingSetting;
   onChange: (value: BookingSetting) => void;
 };
 
-type SettingOption = {
-  id: BookingSetting;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  recommended?: boolean;
-};
-
-const getContent = (categoryId: string, listingTypeLabel: string) => {
-  if (categoryId === 'restaurant') {
-    return {
-      title: 'Pick your reservation settings',
-      subtitle: 'Choose how guests reserve your restaurant. You can change this at any time.',
-      options: [
-        {
-          id: 'review-first' as const,
-          title: 'Approve your first 5 reservations',
-          description: `Review requests for your ${listingTypeLabel.toLowerCase()}, then switch to instant reservations.`,
-          icon: CalendarCheck,
-          recommended: true
-        },
-        {
-          id: 'instant-book' as const,
-          title: 'Use instant reservations',
-          description: 'Let guests reserve automatically.',
-          icon: Zap
-        }
-      ] satisfies SettingOption[]
-    };
-  }
-
-  return {
-    title: 'Pick your booking settings',
-    subtitle: 'You can change this at any time.',
-    options: [
-      {
-        id: 'review-first' as const,
-        title: 'Approve your first 5 bookings',
-        description:
-          'Start by reviewing reservation requests, then switch to Instant Book, so guests can book automatically.',
-        icon: CalendarCheck,
-        recommended: true
-      },
-      {
-        id: 'instant-book' as const,
-        title: 'Use Instant Book',
-        description: `Let guests book your ${listingTypeLabel.toLowerCase()} automatically.`,
-        icon: Zap
-      }
-    ] satisfies SettingOption[]
-  };
-};
+const options = ['review-first', 'instant-book'] as const;
 
 export function BookingSettingsStep({
   category,
-  listingTypeLabel,
   value,
   onChange
 }: BookingSettingsStepProps) {
-  const content = getContent(category.id, listingTypeLabel);
+  const { t } = useTranslation('booking');
+  const id = useId();
+  const reduceMotion = useReducedMotion();
+  const [showHelp, setShowHelp] = useState(false);
+  const context = category.id === 'restaurant' ? 'restaurant' : category.id === 'private-room' ? 'room' : 'hotel';
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-0 w-full max-w-[792px] flex-1 flex-col justify-start overflow-y-auto px-5 py-6 sm:justify-center sm:px-10 sm:py-10"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.35, ease: 'easeOut' }}
+      aria-labelledby={`${id}-title`}
+      className="flex min-h-0 flex-1 overflow-y-auto overscroll-contain"
     >
-      <div className="mb-10">
-        <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">{content.title}</h1>
-        <p className="mt-2 text-base text-[var(--color-text-secondary)] sm:text-lg">
-          {content.subtitle}{' '}
-          <button type="button" className="font-medium underline underline-offset-2">
-            Learn more
+      <div className="mx-auto w-full max-w-[680px] px-5 pb-10 pt-5 sm:px-10 sm:py-10 lg:my-auto">
+        <h1 id={`${id}-title`} className="text-2xl font-semibold leading-tight tracking-tight sm:text-[32px]">
+          {t(`bookingSettingsStep.${context}.title`)}
+        </h1>
+        <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base">
+          {t('bookingSettingsStep.subtitle')}{' '}
+          <button
+            type="button"
+            aria-expanded={showHelp}
+            aria-controls={`${id}-help`}
+            onClick={() => setShowHelp((current) => !current)}
+            className="-my-2 inline-flex min-h-11 items-center rounded-button font-medium underline underline-offset-2 hover:text-[var(--color-text-primary)]"
+          >
+            {t('bookingSettingsStep.learnMore')}
           </button>
         </p>
-      </div>
+        <p id={`${id}-help`} hidden={!showHelp} className="mt-4 rounded-card bg-[var(--color-surface-muted)] p-4 text-sm leading-6 text-[var(--color-text-secondary)]">
+          {t(`bookingSettingsStep.${context}.help`)}
+        </p>
 
-      <div className="grid gap-3" role="radiogroup" aria-label={content.title}>
-        {content.options.map((option) => {
-          const Icon = option.icon;
-          const isSelected = value === option.id;
+        <div className="mt-7 grid gap-3 sm:mt-8" role="radiogroup" aria-labelledby={`${id}-title`}>
+          {options.map((option) => {
+            const recommended = option === 'review-first';
+            const descriptionId = `${id}-${option}-description`;
 
-          return (
-            <button
-              key={option.id}
-              type="button"
-              role="radio"
-              aria-checked={isSelected}
-              onClick={() => onChange(option.id)}
-              className={`grid min-h-[101.2px] grid-cols-[1fr_auto] items-center gap-3 rounded-card border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-6 sm:px-6 sm:py-5 ${
-                isSelected
-                  ? 'border-[var(--color-text-primary)] ring-1 ring-[var(--color-text-primary)]'
-                  : 'border-[var(--color-border)]'
-              }`}
-            >
-              <span>
-                <span className="block text-lg font-semibold">{option.title}</span>
-                {option.recommended ? (
-                  <span className="mt-1 block text-sm font-medium text-green-600">Recommended</span>
-                ) : null}
-                <span className="mt-1 block max-w-[572px] text-sm leading-snug text-[var(--color-text-secondary)]">
-                  {option.description}
+            return (
+              <label key={option} className="relative block cursor-pointer">
+                <input
+                  type="radio"
+                  name={`${id}-booking-setting`}
+                  value={option}
+                  checked={value === option}
+                  onChange={() => onChange(option)}
+                  aria-describedby={descriptionId}
+                  className="peer sr-only"
+                />
+                <span className="grid min-h-20 grid-cols-[1fr_auto] items-start gap-5 rounded-card border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-5 transition-colors hover:border-[var(--color-text-primary)] peer-checked:border-[var(--color-text-primary)] peer-checked:bg-[var(--color-surface-muted)] peer-checked:ring-1 peer-checked:ring-[var(--color-text-primary)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-[var(--color-text-primary)] peer-disabled:cursor-wait peer-disabled:opacity-50 sm:px-6 sm:py-6">
+                  <span>
+                    <span className="block text-base font-semibold leading-6">{t(`bookingSettingsStep.${context}.${option}.title`)}</span>
+                    {recommended ? (
+                      <span className="mt-0.5 block text-sm font-medium leading-5 text-[var(--color-success)]">{t('bookingSettingsStep.recommended')}</span>
+                    ) : null}
+                    <span id={descriptionId} className="mt-1 block text-sm leading-5 text-[var(--color-text-secondary)]">
+                      {t(`bookingSettingsStep.${context}.${option}.description`)}
+                    </span>
+                  </span>
+                  {recommended ? <CalendarCheck className="mt-0.5 h-7 w-7 shrink-0" strokeWidth={1.5} aria-hidden="true" /> : null}
                 </span>
-              </span>
-              <Icon className="h-8 w-8 shrink-0 stroke-[1.6]" aria-hidden="true" />
-            </button>
-          );
-        })}
+              </label>
+            );
+          })}
+        </div>
       </div>
     </motion.section>
   );

@@ -4,6 +4,7 @@ import {
   Briefcase,
   Building2,
   ChefHat,
+  Check,
   Coffee,
   ConciergeBell,
   Crown,
@@ -17,7 +18,8 @@ import {
   Users,
   type LucideIcon
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import type { ListingCategory } from '../listingCategories';
 
 const MAXIMUM_HIGHLIGHTS = 2;
@@ -67,27 +69,7 @@ const privateRoomHighlights: HighlightOption[] = [
   { id: 'welcoming-host', label: 'Welcoming host', icon: Users }
 ];
 
-const getAccessLabel = (categoryId: ListingCategory['id'], accessType: string | null) => {
-  if (categoryId === 'restaurant') {
-    if (accessType === 'entire-venue') return 'Entire venue';
-    if (accessType === 'private-dining-area') return 'Private dining area';
-    if (accessType === 'shared-dining-area') return 'Shared dining area';
-    return 'Dining experience';
-  }
-
-  if (categoryId === 'private-room') {
-    if (accessType === 'private-suite') return 'Private suite';
-    if (accessType === 'shared-room') return 'Shared room';
-    return 'Private room';
-  }
-
-  if (accessType === 'entire-place') return 'Entire property';
-  if (accessType === 'private-room') return 'Private room';
-  if (accessType === 'shared-room') return 'Shared room';
-  return 'Guest stay';
-};
-
-const getHighlightContent = (
+export const getHighlightContent = (
   category: ListingCategory,
   listingTypeLabel: string,
   accessType: string | null
@@ -151,10 +133,12 @@ export function ListingHighlightsStep({
   selectedHighlights: string[];
   onChange: (highlightIds: string[]) => void;
 }) {
+  const { t, i18n } = useTranslation('booking');
+  const reduceMotion = useReducedMotion();
   const content = getHighlightContent(category, listingTypeLabel, accessType);
-  const accessLabel = getAccessLabel(category.id, accessType);
+  const option = category.options.find(option => option.label === listingTypeLabel);
+  const listingType = t(`propertyTypeStep.options.${option?.id}`, { defaultValue: listingTypeLabel }).toLocaleLowerCase(i18n.language);
   const selectionLimitReached = selectedHighlights.length >= MAXIMUM_HIGHLIGHTS;
-  const CategoryIcon = category.icon;
 
   const toggleHighlight = (highlightId: string) => {
     if (selectedHighlights.includes(highlightId)) {
@@ -167,34 +151,25 @@ export function ListingHighlightsStep({
 
   return (
     <motion.section
-      initial={{ opacity: 0, x: 24 }}
+      initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+      className="min-h-0 flex-1 overflow-y-auto px-6 pb-8 pt-5 sm:px-10 sm:py-10"
       aria-labelledby="listing-highlights-heading"
     >
-      <div className="mx-auto flex min-h-full w-full max-w-[748px] flex-col justify-start py-2 sm:justify-center sm:py-6">
-        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-pill bg-[var(--color-surface-muted)] px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)]">
-          <CategoryIcon className="h-4 w-4" strokeWidth={1.8} aria-hidden="true" />
-          <span>{category.label}</span>
-          <span aria-hidden="true">·</span>
-          <span>{listingTypeLabel}</span>
-          <span aria-hidden="true">·</span>
-          <span>{accessLabel}</span>
-        </div>
-
+      <div className="mx-auto flex min-h-full w-full max-w-[704px] flex-col justify-start sm:justify-center sm:py-6">
         <h1
           id="listing-highlights-heading"
-          className="text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
-          {content.title}
+          {t(`listingHighlightsStep.titles.${category.id}`, { listingType })}
         </h1>
-        <p className="mt-2 max-w-[726px] text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
-          {content.description}
+        <p id="listing-highlights-hint" className="mt-3 max-w-xl text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
+          {t('listingHighlightsStep.subtitle', { maximum: MAXIMUM_HIGHLIGHTS })}
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-3" role="group" aria-label={`${category.label} highlights`}>
+        <div className="mt-7 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4" role="group" aria-labelledby="listing-highlights-heading" aria-describedby="listing-highlights-hint listing-highlights-count">
           {content.options.map(({ id, label, icon: Icon }) => {
             const selected = selectedHighlights.includes(id);
             const unavailable = selectionLimitReached && !selected;
@@ -206,25 +181,30 @@ export function ListingHighlightsStep({
                 aria-pressed={selected}
                 aria-disabled={unavailable}
                 onClick={() => toggleHighlight(id)}
-                className={`inline-flex min-h-12 items-center gap-2 rounded-pill border px-4 text-sm font-semibold transition sm:min-h-14 sm:gap-3 sm:px-5 sm:text-base ${
+                className={`relative flex min-h-28 min-w-0 flex-col items-start justify-between gap-5 rounded-card border p-4 text-left text-[var(--color-text-primary)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-text-primary)] sm:min-h-32 sm:p-5 ${
                   selected
-                    ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-[var(--shadow-sm)]'
+                    ? 'border-[var(--color-text-primary)] bg-[var(--color-surface-muted)] ring-1 ring-[var(--color-text-primary)]'
                     : unavailable
-                      ? 'cursor-not-allowed border-[var(--color-border)] opacity-45'
-                      : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:-translate-y-0.5 hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)]'
+                      ? 'cursor-not-allowed border-[var(--color-border)] bg-[var(--color-surface)] opacity-50'
+                      : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]'
                 }`}
               >
-                <Icon className="h-6 w-6" strokeWidth={1.7} aria-hidden="true" />
-                <span>{label}</span>
+                <Icon className="h-7 w-7 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+                {selected ? (
+                  <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text-primary)] text-[var(--color-surface)]">
+                    <Check className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
+                  </span>
+                ) : null}
+                <span className="break-words text-sm font-semibold leading-snug sm:text-base">{t(`listingHighlightsStep.options.${id}`, { defaultValue: label })}</span>
               </button>
             );
           })}
         </div>
 
-        <p className="mt-4 text-sm text-[var(--color-text-secondary)]" aria-live="polite">
-          {selectedHighlights.length}/{MAXIMUM_HIGHLIGHTS} selected
-          {selectionLimitReached ? ' — remove one to choose a different highlight' : ''}
-        </p>
+        <div id="listing-highlights-count" className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm text-[var(--color-text-secondary)]" role="status" aria-live="polite" aria-atomic="true">
+          <p className="font-medium text-[var(--color-text-primary)]">{t('listingHighlightsStep.selected', { count: selectedHighlights.length, maximum: MAXIMUM_HIGHLIGHTS })}</p>
+          {selectionLimitReached ? <p>{t('listingHighlightsStep.limitHint')}</p> : null}
+        </div>
       </div>
     </motion.section>
   );

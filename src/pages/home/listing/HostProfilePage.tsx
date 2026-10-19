@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FiMenu, FiMessageSquare } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -15,12 +14,16 @@ import {
   UserRound,
   UserRoundPlus,
   UsersRound,
-  type LucideIcon
+  type LucideIcon,
+  MenuIcon,
+  MessageSquare
 } from 'lucide-react';
 import BooksaLogo from '@/components/layout/BooksaLogo';
 import { HostAccountDrawer } from '@/components/layout/HostAccountDrawer';
 import MarketplaceMobileNav from '@/components/layout/MarketplaceMobileNav';
-import { ThreeDIcon } from '@/components/ui/ThreeDIcon';
+import pastTripsImage from '@/assets/images/past_trips.png';
+import connectionProfileImage from '@/assets/images/connection_profil.png';
+import becomeHostImage from '@/assets/images/become_host.png';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/utils/constants';
 
@@ -107,7 +110,7 @@ export default function HostProfilePage() {
             onClick={() => handleMobileMenuItem(item)}
             className="flex min-h-[46.2px] w-full items-center gap-4 text-left text-sm text-slate-800"
           >
-            <Icon className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
+            <Icon className="h-5 w-5 shrink-0 stroke-[1.5]" aria-hidden="true" />
             <span className="flex-1">{item.label}</span>
             {item.action !== 'logout' ? (
               <ChevronRight className="h-4 w-4 text-slate-400" aria-hidden="true" />
@@ -129,7 +132,7 @@ export default function HostProfilePage() {
               aria-label="Notifications"
               className="grid h-9 max-sm:h-11 max-sm:w-11 w-9 place-items-center rounded-full bg-slate-50 text-slate-700"
             >
-              <Bell className="h-4 w-4 stroke-[1.7]" />
+              <Bell className="h-4 w-4 stroke-[1.5]" />
             </button>
           </div>
 
@@ -142,14 +145,12 @@ export default function HostProfilePage() {
           </article>
 
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-card bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded-pill bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
-              <ThreeDIcon name="pastTrips" sourceSize={100} className="h-14 w-14 object-contain" />
+            <button type="button" className="flex min-h-[136.4px] flex-col items-center justify-center rounded-card bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
+              <img src={pastTripsImage} alt="" aria-hidden="true" decoding="async" className="h-16 w-16 object-contain" />
               <span className="mt-2 text-[13px] font-medium">Past trips</span>
             </button>
-            <button type="button" className="relative flex min-h-[136.4px] flex-col items-center justify-center rounded-card bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
-              <span className="absolute right-2 top-2 rounded-pill bg-slate-600 px-1.5 py-0.5 text-xs font-semibold text-white">NEW</span>
-              <ThreeDIcon name="connectionPerson" sourceSize={100} className="h-14 w-14 object-contain" />
+            <button type="button" className="flex min-h-[136.4px] flex-col items-center justify-center rounded-card bg-white px-3 py-4 shadow-[0_7px_22px_rgba(15,23,42,0.09)]">
+              <img src={connectionProfileImage} alt="" aria-hidden="true" decoding="async" className="h-16 w-24 object-contain" />
               <span className="mt-2 text-[13px] font-medium">Connections</span>
             </button>
           </div>
@@ -159,7 +160,7 @@ export default function HostProfilePage() {
             onClick={() => navigate(ROUTES.hostListingSetup)}
             className="mt-3 flex min-h-[79.2px] w-full items-center gap-4 rounded-card bg-white px-5 text-left shadow-[0_7px_22px_rgba(15,23,42,0.09)]"
           >
-            <ThreeDIcon name="hostPerson" sourceSize={100} className="h-12 w-12 shrink-0 object-contain" />
+            <img src={becomeHostImage} alt="" aria-hidden="true" decoding="async" className="h-16 w-14 shrink-0 object-contain" />
             <span>
               <span className="block text-sm font-semibold">Become a host</span>
               <span className="mt-0.5 block text-xs leading-3 text-slate-500">It&apos;s easy to start hosting and earn extra income.</span>
@@ -227,7 +228,7 @@ export default function HostProfilePage() {
                 onClick={() => setIsMenuOpen((open) => !open)}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)]"
               >
-                <FiMenu className="h-5 w-5" aria-hidden="true" />
+                <MenuIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -326,7 +327,7 @@ export default function HostProfilePage() {
 
           <div className="mt-10 border-t border-[var(--color-border)] pt-10">
             <button type="button" className="flex items-center gap-4 text-left transition hover:opacity-70">
-              <FiMessageSquare className="h-6 w-6" aria-hidden="true" />
+              <MessageSquare className="h-6 w-6" aria-hidden="true" />
               <span>Afficher les commentaires que j’ai rédigés</span>
             </button>
           </div>

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { HeartRegular, PersonRegular, SearchRegular } from '@fluentui/react-icons';
-import { CircleUserRound, Luggage, MessageSquare } from 'lucide-react';
+import { CircleUserRound, Luggage, MessageSquare, Heart, User, Search } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '@/store/auth.store';
 import { ROUTES } from '@/utils/constants';
@@ -18,7 +17,8 @@ export default function MarketplaceMobileNav() {
     location.pathname === ROUTES.homes ||
     location.pathname === ROUTES.experiences ||
     location.pathname === ROUTES.services ||
-    location.pathname === ROUTES.seeAll;
+    location.pathname === ROUTES.seeAll ||
+    location.pathname === ROUTES.seeAllMap;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +57,7 @@ export default function MarketplaceMobileNav() {
         }`}
         aria-current={isExplore ? 'page' : undefined}
       >
-        <SearchRegular className="h-5 w-5" />
+        <Search className="h-5 w-5" aria-hidden="true" />
         <span>Explore</span>
       </Link>
 
@@ -65,7 +65,7 @@ export default function MarketplaceMobileNav() {
         type="button"
         className="flex flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium leading-4 text-[var(--color-text-secondary)]"
       >
-        <HeartRegular className="h-5 w-5" />
+        <Heart className="h-5 w-5" aria-hidden="true" />
         <span>Wishlists</span>
       </button>
 
@@ -78,7 +78,7 @@ export default function MarketplaceMobileNav() {
             }`}
             aria-current={isTrips ? 'page' : undefined}
           >
-            <Luggage className={`h-5 w-5 ${isTrips ? 'stroke-[2.4]' : 'stroke-[1.7]'}`} />
+            <Luggage className="h-5 w-5 stroke-[1.5]" />
             <span>Trips</span>
           </Link>
           <Link
@@ -88,7 +88,7 @@ export default function MarketplaceMobileNav() {
             }`}
             aria-current={isMessages ? 'page' : undefined}
           >
-            <MessageSquare className={`h-5 w-5 ${isMessages ? 'stroke-[2.4]' : 'stroke-[1.7]'}`} />
+            <MessageSquare className="h-5 w-5 stroke-[1.5]" />
             <span>Messages</span>
           </Link>
           <Link
@@ -98,7 +98,7 @@ export default function MarketplaceMobileNav() {
             }`}
             aria-current={isProfile ? 'page' : undefined}
           >
-            <CircleUserRound className={`h-5 w-5 ${isProfile ? 'stroke-[2.4]' : 'stroke-[1.7]'}`} />
+            <CircleUserRound className="h-5 w-5 stroke-[1.5]" />
             <span>Profile</span>
           </Link>
         </>
@@ -107,7 +107,7 @@ export default function MarketplaceMobileNav() {
           to={ROUTES.login}
           className="flex flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium leading-4 text-[var(--color-text-secondary)]"
         >
-          <PersonRegular className="h-5 w-5" />
+          <User className="h-5 w-5" aria-hidden="true" />
           <span>Log in</span>
         </Link>
       )}

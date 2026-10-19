@@ -46,12 +46,7 @@ export default defineConfig({
               return 'firebase';
             }
 
-            if (
-              id.includes('/lucide-react/') ||
-              id.includes('/react-icons/') ||
-              id.includes('/@heroicons/') ||
-              id.includes('/@fluentui/react-icons/')
-            ) {
+            if (id.includes('/lucide-react/')) {
               return 'icons';
             }
 

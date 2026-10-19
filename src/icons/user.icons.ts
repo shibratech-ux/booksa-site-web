@@ -1,9 +1,9 @@
-import { PersonRegular, PersonSettingsRegular, PersonShieldRegular } from '@fluentui/react-icons';
+import { User, UserCog, UserCheck } from 'lucide-react';
 
 export const userIcons = {
-  profile: PersonRegular,
-  account: PersonRegular,
-  permissions: PersonSettingsRegular,
-  person: PersonRegular,
-  security: PersonShieldRegular
+  profile: User,
+  account: User,
+  permissions: UserCog,
+  person: User,
+  security: UserCheck
 } as const;

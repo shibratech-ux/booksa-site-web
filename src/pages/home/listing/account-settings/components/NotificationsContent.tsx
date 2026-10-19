@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiCheck } from 'react-icons/fi';
+import { Check } from 'lucide-react';
 
 type NotificationTab = 'offers' | 'account';
 
@@ -158,7 +158,7 @@ export function NotificationsContent() {
                   ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
                   : 'border-[var(--color-text-secondary)]'
               }`}>
-                {unsubscribeMarketing ? <FiCheck className="h-4 w-4" aria-hidden="true" /> : null}
+                {unsubscribeMarketing ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
               </span>
               <span>Unsubscribe from all marketing emails</span>
             </label>

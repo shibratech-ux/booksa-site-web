@@ -1,10 +1,4 @@
-import {
-  ArrowRightRegular,
-  ChevronLeftRegular,
-  ChevronRightRegular,
-  HeartFilled,
-  HeartRegular
-} from '@fluentui/react-icons';
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, Star } from 'lucide-react';
 import { useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
@@ -69,8 +63,8 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
               <p>{card.supportingText}</p>
             ) : null}
             {card.rating ? (
-              <p>
-                <span aria-hidden="true">★</span> {card.rating}
+              <p className="flex items-center gap-1">
+                <Star className="h-3 w-3 fill-current" aria-hidden="true" /> {card.rating}
               </p>
             ) : null}
           </div>
@@ -85,9 +79,9 @@ function ExploreCard({ card }: { card: ExploreCardData }) {
         className="absolute right-2.5 top-2.5 inline-flex h-11 w-11 items-center justify-center rounded-full text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)] transition hover:scale-105"
       >
         {isSaved ? (
-          <HeartFilled className="h-6 w-6 text-[var(--color-primary-500)]" />
+          <Heart className="h-6 w-6 text-[var(--color-primary-500)]" fill="currentColor" aria-hidden="true" />
         ) : (
-          <HeartRegular className="h-6 w-6" />
+          <Heart className="h-6 w-6" aria-hidden="true" />
         )}
       </button>
     </article>
@@ -101,7 +95,7 @@ function SectionTitle({ children, onClick }: { children: ReactNode; onClick?: ()
         {children}
       </h2>
       {onClick ? (
-        <ArrowRightRegular className="hidden h-5 w-5 shrink-0 text-slate-700 transition group-hover:translate-x-0.5 sm:block" />
+        <ArrowRight className="hidden h-5 w-5 shrink-0 text-slate-700 transition group-hover:translate-x-0.5 sm:block" aria-hidden="true" />
       ) : null}
     </>
   );
@@ -151,7 +145,7 @@ export function ExploreRail({
             onClick={() => scrollRail(-1)}
             className="hidden h-8 max-sm:h-11 max-sm:w-11 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-900 sm:inline-flex"
           >
-            <ChevronLeftRegular className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           </button>
           <button
             type="button"
@@ -159,7 +153,7 @@ export function ExploreRail({
             onClick={() => scrollRail(1)}
             className="inline-flex h-11 w-11 items-center justify-center rounded-full sm:h-8 max-sm:h-11 max-sm:w-11 sm:w-8 bg-slate-100 text-slate-800 transition hover:bg-slate-200"
           >
-            <ChevronRightRegular className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </div>

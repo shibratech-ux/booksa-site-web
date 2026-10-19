@@ -1,4 +1,4 @@
-import { FiHome } from 'react-icons/fi';
+import { House } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BooksaMap } from '@/components/maps/BooksaMap';
 import type { AddressDetails, WorldLocation } from './AddressSearchDialog';
@@ -60,7 +60,7 @@ export function LocationMapStep({ confirmedLocation }: { confirmedLocation: Conf
 
           <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
             <span className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-[var(--shadow-md)]">
-              <FiHome className="h-5 w-5" aria-hidden="true" />
+              <House className="h-5 w-5" aria-hidden="true" />
             </span>
             <span className="mt-3 whitespace-nowrap rounded-sm bg-[var(--color-text-primary)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] shadow-[var(--shadow-sm)]">
               Drag the map to check the location

@@ -1,12 +1,5 @@
 import { motion } from 'framer-motion';
-import {
-  ArrowLeftRegular,
-  ChevronLeftRegular,
-  ChevronRightRegular,
-  DismissRegular,
-  HeartRegular,
-  ShareRegular
-} from '@fluentui/react-icons';
+import { ArrowLeftIcon, ChevronLeft, ChevronRight, X, Heart, Share } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
@@ -357,7 +350,7 @@ function PhotoLightbox({
             onClick={onClose}
             className="inline-flex cursor-pointer items-center gap-2 rounded-button bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-1 sm:backdrop-blur-0"
           >
-            <DismissRegular className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
             <span className="hidden sm:inline">Fermer</span>
           </button>
 
@@ -371,14 +364,14 @@ function PhotoLightbox({
               className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
               aria-label="Partager"
             >
-              <ShareRegular className="h-4 w-4" />
+              <Share className="h-4 w-4" aria-hidden="true" />
             </button>
             <button
               type="button"
               className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
               aria-label="Enregistrer"
             >
-              <HeartRegular className="h-4 w-4" />
+              <Heart className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -410,7 +403,7 @@ function PhotoLightbox({
             className="absolute left-2 top-1/2 hidden h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:left-6 sm:h-12 sm:w-12"
             aria-label="Image précédente"
           >
-            <ChevronLeftRegular className="h-5 w-5 sm:h-6 sm:w-6" />
+            <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
           </button>
 
           <motion.img
@@ -430,7 +423,7 @@ function PhotoLightbox({
             className="absolute right-2 top-1/2 hidden h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:right-6 sm:h-12 sm:w-12"
             aria-label="Image suivante"
           >
-            <ChevronRightRegular className="h-5 w-5 sm:h-6 sm:w-6" />
+            <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -609,7 +602,7 @@ export function PhotoTourPage() {
             className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100 sm:h-11 sm:w-11"
             aria-label="Retour"
           >
-            <ArrowLeftRegular className="h-5 w-5" />
+            <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
           </button>
 
           <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 sm:gap-3">
@@ -617,14 +610,14 @@ export function PhotoTourPage() {
               type="button"
               className="inline-flex cursor-pointer items-center gap-2 rounded-button px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
             >
-              <ShareRegular className="h-4 w-4" />
+              <Share className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Partager</span>
             </button>
             <button
               type="button"
               className="inline-flex cursor-pointer items-center gap-2 rounded-button px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
             >
-              <HeartRegular className="h-4 w-4" />
+              <Heart className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Enregistrer</span>
             </button>
           </div>

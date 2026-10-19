@@ -1,4 +1,4 @@
-import { MailRegular } from '@fluentui/react-icons';
+import { Mail } from 'lucide-react';
 
 export interface RememberedUserLoginProps {
   name: string;
@@ -49,7 +49,7 @@ export function RememberedUserLogin({
       </h1>
 
       <p className="mt-3 flex items-center justify-center gap-2 text-[13px] text-slate-600">
-        <MailRegular className="h-4 w-4" aria-hidden="true" />
+        <Mail className="h-4 w-4" aria-hidden="true" />
         <span>{email ? maskEmail(email) : 'Email unavailable'}</span>
       </p>
 

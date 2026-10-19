@@ -1,5 +1,6 @@
 import { forwardRef, type ReactNode } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
+import { DotsLoader } from '@/components/common/DotsLoader';
 import { cn } from '@/utils/helpers';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -66,10 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     >
       {loading ? (
         <span className="flex items-center gap-2">
-          <span
-            aria-hidden="true"
-            className="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
-          />
+          <DotsLoader className="w-12" />
           Logging in...
         </span>
       ) : (

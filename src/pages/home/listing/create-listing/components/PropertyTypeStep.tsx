@@ -1,5 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { getListingCategory, listingCategories } from '../listingCategories';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { getListingCategory } from '../listingCategories';
+
+const categoryOrder = ['hotel', 'private-room', 'restaurant'] as const;
 
 export function PropertyTypeStep({
   categoryValue,
@@ -12,113 +16,82 @@ export function PropertyTypeStep({
   onCategoryChange: (category: string) => void;
   onOptionChange: (option: string) => void;
 }) {
-  const selectedCategory = getListingCategory(categoryValue);
+  const { t } = useTranslation('booking');
+  const reduceMotion = useReducedMotion();
+  const optionLabels = t('propertyTypeStep.options', { returnObjects: true });
 
   return (
     <motion.section
-      initial={{ opacity: 0, x: 24 }}
+      initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 24 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-10 sm:pt-4"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+      className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-10 sm:pt-8"
       aria-labelledby="property-type-title"
     >
       <div className="mx-auto w-full max-w-[704px]">
         <h1
           id="property-type-title"
-          className="text-left text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-center sm:text-4xl"
+          className="max-w-xl text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
-          Which of these best describes your place?
+          {t('propertyTypeStep.title')}
         </h1>
-        <p className="mt-2 max-w-[572px] text-left text-sm leading-relaxed text-[var(--color-text-secondary)] sm:mx-auto sm:mt-3 sm:text-center sm:text-base">
-          Choose a category and we’ll tailor the listing details to the experience you offer.
+        <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)] sm:text-base">
+          {t('propertyTypeStep.subtitle')}
         </p>
 
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3" role="group" aria-label="Listing category">
-          {listingCategories.map(({ id, label, shortDescription, icon: Icon, informationSections }) => {
-            const selected = categoryValue === id;
+        <div className="mt-8 space-y-10 sm:mt-10 sm:space-y-12">
+          {categoryOrder.map((categoryId) => {
+            const category = getListingCategory(categoryId)!;
 
             return (
-              <button
-                key={id}
-                type="button"
-                aria-pressed={selected}
-                onClick={() => onCategoryChange(id)}
-                className={`flex min-h-[145.2px] flex-col items-start rounded-card border bg-[var(--color-surface)] p-4 text-left transition hover:-translate-y-0.5 hover:border-[var(--color-text-primary)] hover:shadow-[var(--shadow-sm)] sm:min-h-[198px] sm:p-5 md:min-h-[242px] ${
-                  selected
-                    ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
-                    : 'border-[var(--color-border)]'
-                }`}
-              >
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-sm bg-[var(--color-surface-muted)]">
-                  <Icon className="h-6 w-6" strokeWidth={1.8} aria-hidden="true" />
-                </span>
-                <span className="mt-4 text-xl font-semibold text-[var(--color-text-primary)]">{label}</span>
-                <span className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                  {shortDescription}
-                </span>
-                <span className="mt-4 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
-                  We’ll cover
-                </span>
-                <span className="mt-2 flex flex-wrap gap-1.5">
-                  {informationSections.map(({ id: informationId, title }) => (
-                    <span
-                      key={informationId}
-                      className="rounded-sm bg-[var(--color-surface-muted)] px-2 py-1 text-xs font-medium text-[var(--color-text-primary)]"
-                    >
-                      {title}
-                    </span>
-                  ))}
-                </span>
-              </button>
+              <section key={category.id} aria-labelledby={`property-category-${category.id}`}>
+                <h2
+                  id={`property-category-${category.id}`}
+                  className="mb-4 text-xl font-semibold text-[var(--color-text-primary)] sm:mb-5 sm:text-2xl"
+                >
+                  {t(`propertyTypeStep.categories.${category.id}`)}
+                </h2>
+                <div
+                  className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4"
+                  role="group"
+                  aria-labelledby={`property-category-${category.id}`}
+                >
+                  {category.options.map(({ id, icon: Icon }) => {
+                    const selected = categoryValue === category.id && optionValue === id;
+
+                    return (
+                      <button
+                        key={`${category.id}-${id}`}
+                        type="button"
+                        aria-pressed={selected}
+                        onClick={() => {
+                          if (categoryValue !== category.id) onCategoryChange(category.id);
+                          onOptionChange(id);
+                        }}
+                        className={`relative flex min-h-28 min-w-0 flex-col items-start justify-between gap-4 rounded-card border p-4 text-left text-[var(--color-text-primary)] transition-colors sm:min-h-32 sm:p-5 ${
+                          selected
+                            ? 'border-[var(--color-text-primary)] bg-[var(--color-surface-muted)] ring-1 ring-[var(--color-text-primary)]'
+                            : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]'
+                        }`}
+                      >
+                        <Icon className="h-7 w-7 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+                        {selected ? (
+                          <span className="absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--color-text-primary)] text-[var(--color-surface)]">
+                            <Check className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
+                          </span>
+                        ) : null}
+                        <span className="break-words text-sm font-semibold leading-snug sm:text-base">
+                          {optionLabels[id as keyof typeof optionLabels]}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
             );
           })}
         </div>
-
-        <AnimatePresence mode="wait">
-          {selectedCategory ? (
-            <motion.div
-              key={selectedCategory.id}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="mt-12 border-t border-[var(--color-border)] pt-9"
-            >
-              <h2 className="text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-3xl">
-                {selectedCategory.optionsTitle}
-              </h2>
-              <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
-                Select the option that most closely matches your listing.
-              </p>
-
-              <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3" role="group" aria-label={selectedCategory.optionsTitle}>
-                {selectedCategory.options.map(({ id, label, icon: Icon }) => {
-                  const selected = optionValue === id;
-
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => onOptionChange(id)}
-                      className={`flex min-h-[105.6px] flex-col items-start justify-center rounded-card border bg-[var(--color-surface)] px-4 py-3 text-left transition hover:border-[var(--color-text-primary)] ${
-                        selected
-                          ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
-                          : 'border-[var(--color-border)]'
-                      }`}
-                    >
-                      <Icon className="h-6 w-6" strokeWidth={1.8} aria-hidden="true" />
-                      <span className="mt-2 text-base font-semibold text-[var(--color-text-primary)]">
-                        {label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
       </div>
     </motion.section>
   );

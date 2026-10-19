@@ -1,10 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import {
-  ArrowLeftRegular,
-  CheckmarkRegular,
-  StarFilled
-} from '@fluentui/react-icons';
+import { ArrowLeft, Check, Star } from 'lucide-react';
 import { formatCurrency, formatDate } from '@/utils/formatters';
 import { useTranslation } from 'react-i18next';
 import { ROUTES } from '@/utils/constants';
@@ -164,7 +160,7 @@ export default function ConfirmPayPage() {
             className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full text-[var(--color-text-primary)] hover:bg-[var(--color-surface-muted)]"
             aria-label="Retour"
           >
-            <ArrowLeftRegular className="h-5 w-5" aria-hidden="true" />
+            <ArrowLeft className="h-5 w-5" aria-hidden="true" />
           </button>
           <BooksaLogo />
         </div>
@@ -178,7 +174,7 @@ export default function ConfirmPayPage() {
             className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)] ring-1 ring-[var(--color-border)] transition hover:-translate-y-0.5"
             aria-label="Retour"
           >
-            <ArrowLeftRegular className="h-5 w-5" />
+            <ArrowLeft className="h-5 w-5" aria-hidden="true" />
           </button>
           <div>
             <h1 className="text-[28px] font-bold tracking-tight text-[var(--color-text-primary)] sm:text-3xl">Confirmer et payer</h1>
@@ -228,7 +224,7 @@ export default function ConfirmPayPage() {
                   </h2>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-secondary)]">
                     <span className="inline-flex items-center gap-1">
-                      <StarFilled className="h-4 w-4 text-[var(--color-primary-500)]" />
+                      <Star className="h-4 w-4 text-[var(--color-primary-500)]" fill="currentColor" aria-hidden="true" />
                       <span className="font-medium">{listing.rating}</span>
                     </span>
                     <span>•</span>
@@ -316,7 +312,7 @@ export default function ConfirmPayPage() {
             <div className="rounded-card bg-[color-mix(in_srgb,var(--color-primary-500)_10%,white)] px-5 py-4 text-sm text-[var(--color-text-primary)]">
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-7 w-7 items-center justify-center rounded-sm bg-[var(--color-primary-100)] text-[var(--color-primary-700)]">
-                  <CheckmarkRegular className="h-4 w-4" />
+                  <Check className="h-4 w-4" aria-hidden="true" />
                 </div>
                 <p className="leading-6">
                   Bonne trouvaille ! Ce logement est généralement réservé rapidement.

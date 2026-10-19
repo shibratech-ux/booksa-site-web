@@ -1,34 +1,36 @@
-import { useEffect, useRef, useState } from 'react';
+import { getListingResumeTarget } from './create-listing/listingResume';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  FiBookmark,
-  FiBell,
-  FiBookOpen,
-  FiCalendar,
-  FiChevronDown,
-  FiChevronRight,
-  FiClipboard,
-  FiEdit3,
-  FiGrid,
-  FiGlobe,
-  FiHelpCircle,
-  FiHome,
-  FiList,
-  FiMenu,
-  FiMessageSquare,
-  FiPlus,
-  FiLogOut,
-  FiRefreshCw,
-  FiSearch,
-  FiSettings,
-  FiUserPlus,
-  FiUsers
-} from 'react-icons/fi';
+  Bookmark,
+  Bell,
+  BookOpen,
+  Calendar,
+  ChevronRight,
+  Clipboard,
+  PenLine,
+  LayoutGrid,
+  Globe,
+  CircleHelp,
+  House,
+  List,
+  MenuIcon,
+  MessageSquare,
+  Plus,
+  LogOut,
+  RefreshCw,
+  SearchIcon,
+  Settings,
+  UserPlus,
+  Users
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BooksaLogo from '@/components/layout/BooksaLogo';
 import { HostAccountDrawer, hostOnboardingImages } from '@/components/layout/HostAccountDrawer';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import { ThreeDIcon } from '@/components/ui/ThreeDIcon';
+import { MessagesInbox } from '@/components/messages/MessagesInbox';
+import todayReservationsImage from '@/assets/images/today_reservations.png';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES, STORAGE_KEYS } from '@/utils/constants';
 import { useTranslation } from 'react-i18next';
@@ -41,7 +43,10 @@ import {
 } from '@/services/listing-draft.service';
 import { formatDate } from '@/utils/formatters';
 import { InProgressListingDialog } from './components/InProgressListingDialog';
-import { ActionRequiredListingEditor } from './components/ActionRequiredListingEditor';
+import { CurrentListingEditor } from './components/CurrentListingEditor';
+import { HostCalendar, type CalendarListing } from './calendar/HostCalendar';
+import { resolveListingPricing } from '@/domain/calendar';
+import { getListingCoverUrl } from '@/domain/listing-photos';
 
 const hostNavigation = [
   { id: 'today', labelKey: 'nav.today' },
@@ -51,84 +56,19 @@ const hostNavigation = [
 ] as const;
 
 const mobileHostNavigation = [
-  { id: 'today', labelKey: 'nav.today', Icon: FiBookmark },
-  { id: 'calendar', labelKey: 'nav.calendar', Icon: FiCalendar },
-  { id: 'listings', labelKey: 'nav.listings', Icon: FiClipboard },
-  { id: 'messages', labelKey: 'nav.messages', Icon: FiMessageSquare }
+  { id: 'today', labelKey: 'nav.today', Icon: Bookmark },
+  { id: 'calendar', labelKey: 'nav.calendar', Icon: Calendar },
+  { id: 'listings', labelKey: 'nav.listings', Icon: Clipboard },
+  { id: 'messages', labelKey: 'nav.messages', Icon: MessageSquare }
 ] as const;
 type ReservationView = 'today' | 'upcoming';
 type HostSection = (typeof hostNavigation)[number]['id'] | 'menu';
-type MessageFilter = 'all' | 'unread' | 'hosting' | 'traveling' | 'support';
 
-const resumableListingPaths = new Set<string>([
-  ROUTES.hostListingCreate,
-  ROUTES.hostListingFirstSection,
-  ROUTES.hostListingSecondSection,
-  ROUTES.hostListingThirdSection
-]);
 
-const findListingPhotoUrl = (value: unknown): string | undefined => {
-  if (typeof value === 'string') return /^https?:\/\//i.test(value) ? value : undefined;
-  if (!value || typeof value !== 'object') return undefined;
-
-  const listingPhoto = value as Record<string, unknown>;
-  for (const key of [
-    'url',
-    'imageUrl',
-    'photoUrl',
-    'downloadURL',
-    'downloadUrl'
-  ]) {
-    const candidate = listingPhoto[key];
-    if (typeof candidate === 'string' && /^https?:\/\//i.test(candidate)) return candidate;
-  }
-  return undefined;
-};
-
-const getListingPhotoUrls = (listing: ListingDraft): string[] => {
-  if (
-    !listing.listingPhotos ||
-    typeof listing.listingPhotos !== 'object' ||
-    Array.isArray(listing.listingPhotos)
-  ) return [];
-  return [
-    ...new Set(
-      Object.values(listing.listingPhotos)
-        .map(findListingPhotoUrl)
-        .filter((photoUrl): photoUrl is string => Boolean(photoUrl))
-    )
-  ];
-};
-
-const getListingCoverImage = (listing: ListingDraft) => {
-  const listingPhotoUrls = getListingPhotoUrls(listing);
-  if (listingPhotoUrls.length === 0) return undefined;
-
-  const listingPhotoUrlSet = new Set(listingPhotoUrls);
-  const preferredCover = [
-    listing.generatedListing?.coverImageUrl,
-    listing.coverImageUrl,
-    listing.coverImage
-  ]
-    .map(findListingPhotoUrl)
-    .find((photoUrl) => photoUrl && listingPhotoUrlSet.has(photoUrl));
-
-  return preferredCover ?? listingPhotoUrls[0];
-};
-
-const getListingImageUrls = (listing: ListingDraft) => {
-  const listingPhotoUrls = getListingPhotoUrls(listing);
-  const coverImageUrl = getListingCoverImage(listing);
-  return [
-    ...new Set([
-      ...(coverImageUrl ? [coverImageUrl] : []),
-      ...listingPhotoUrls
-    ])
-  ];
-};
 
 const getStatusDetails = (status: ListingDraft['status']) => {
   if (status === 'active') return { label: 'Active', color: 'bg-[var(--color-success)]' };
+  if (status === 'published') return { label: 'Published', color: 'bg-[var(--color-success)]' };
   if (status === 'draft' || status === 'in-progress') {
     return { label: 'In progress', color: 'bg-[var(--color-warning)]' };
   }
@@ -145,7 +85,7 @@ const toDisplayLabel = (value: unknown, fallback: string) => {
 };
 
 const getListingSummary = (listing: ListingDraft) => {
-  if (listing.generatedListing) return listing.generatedListing;
+  if (listing.generatedSummary) return listing.generatedSummary;
 
   const flowDraft = listing.flowDraft ?? {};
   const confirmedLocation = listing.confirmedLocation ?? {};
@@ -156,7 +96,7 @@ const getListingSummary = (listing: ListingDraft) => {
   const locationParts = [address.city, address.region, address.country].filter(
     (part): part is string => typeof part === 'string' && Boolean(part.trim())
   );
-  const coverImageUrl = getListingCoverImage(listing);
+  const coverImageUrl = getListingCoverUrl(listing);
 
   return {
     title:
@@ -181,31 +121,31 @@ function ListingCover({
   listing: ListingDraft;
   layout: 'list' | 'grid' | 'dialog' | 'mobile';
 }) {
-  const imageUrl = getListingCoverImage(listing);
+  const imageUrl = getListingCoverUrl(listing);
   const [hasImageError, setHasImageError] = useState(false);
 
   useEffect(() => setHasImageError(false), [imageUrl]);
 
   if (!imageUrl || hasImageError) {
     if (layout === 'mobile') {
-      return <span className="inline-flex h-14 w-14 shrink-0 rounded-photo bg-[var(--color-border)]" aria-label="No listing cover available" />;
+      return <span className="inline-flex h-14 w-14 shrink-0 rounded-[calc(var(--radius-photo)*0.7)] bg-[var(--color-border)]" aria-label="No listing cover available" />;
     }
 
     if (layout === 'grid') {
       return (
         <div className="flex aspect-[4/3] items-center justify-center bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]">
-          <FiHome className="h-9 w-9" aria-label="No listing cover available" />
+          <House className="h-9 w-9" aria-label="No listing cover available" />
         </div>
       );
     }
 
     if (layout === 'dialog') {
-      return <FiHome className="h-10 w-10 text-[var(--color-text-secondary)]" aria-label="No listing cover available" />;
+      return <House className="h-10 w-10 text-[var(--color-text-secondary)]" aria-label="No listing cover available" />;
     }
 
     return (
-      <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-photo bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]">
-        <FiHome className="h-6 w-6" aria-label="No listing cover available" />
+      <span className="inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-[calc(var(--radius-photo)*0.7)] bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]">
+        <House className="h-6 w-6" aria-label="No listing cover available" />
       </span>
     );
   }
@@ -237,7 +177,7 @@ function ListingCover({
 
   if (layout === 'mobile') {
     return (
-      <span className="inline-flex h-14 w-14 shrink-0 overflow-hidden rounded-photo bg-[var(--color-border)]">
+      <span className="inline-flex h-14 w-14 shrink-0 overflow-hidden rounded-[calc(var(--radius-photo)*0.7)] bg-[var(--color-border)]">
         <ShimmerImage
           src={imageUrl}
           alt=""
@@ -250,7 +190,7 @@ function ListingCover({
   }
 
   return (
-    <span className="inline-flex h-16 w-16 shrink-0 overflow-hidden rounded-photo bg-[var(--color-border)]">
+    <span className="inline-flex h-16 w-16 shrink-0 overflow-hidden rounded-[calc(var(--radius-photo)*0.7)] bg-[var(--color-border)]">
       <ShimmerImage
         src={imageUrl}
         alt=""
@@ -263,6 +203,8 @@ function ListingCover({
 }
 
 function MobileAttentionCard({ onClick, className = '' }: { onClick: () => void; className?: string }) {
+  const { t } = useTranslation('dashboard');
+
   return (
     <button
       type="button"
@@ -274,15 +216,18 @@ function MobileAttentionCard({ onClick, className = '' }: { onClick: () => void;
         <ThreeDIcon name="attentionCalendar" sourceSize={60} className="absolute inset-0 h-full w-full object-contain" />
         <span className="absolute -left-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-neutral-900 px-1 text-xs font-bold text-white">4</span>
       </span>
-      <span className="min-w-0 flex-1 text-sm font-semibold leading-5">Actions need your attention</span>
-      <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
+      <span className="min-w-0 flex-1">
+        <span className="block text-[15px] font-semibold leading-5">{t('attention.title')}</span>
+        <span className="mt-0.5 block text-sm leading-5 text-[var(--color-text-secondary)]">{t('attention.subtitle')}</span>
+      </span>
     </button>
   );
 }
 
-function ListingsView({ createdListingId }: { createdListingId?: string }) {
+function ListingsView({ createdListingId, onOpenCalendar }: { createdListingId?: string; onOpenCalendar: () => void }) {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
+  const { t } = useTranslation('dashboard');
   const [listings, setListings] = useState<ListingDraft[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -291,9 +236,16 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
   const [isManageMode, setIsManageMode] = useState(false);
   const [selectedListing, setSelectedListing] = useState<ListingDraft | null>(null);
   const [actionRequiredListing, setActionRequiredListing] = useState<ListingDraft | null>(null);
+  const handleListingChange = useCallback((updated: ListingDraft) => {
+    setListings((current) => current.map((listing) => listing.id === updated.id ? updated : listing));
+  }, []);
   const [openingListingId, setOpeningListingId] = useState<string | null>(null);
   const [isRemovingListing, setIsRemovingListing] = useState(false);
   const mobileActionRequiredRef = useRef<HTMLDivElement>(null);
+  // Keeps the sheet's content while it animates closed after `selectedListing` is cleared.
+  const lastSelectedListing = useRef<ListingDraft | null>(null);
+  if (selectedListing) lastSelectedListing.current = selectedListing;
+  const sheetListing = selectedListing ?? lastSelectedListing.current;
 
   useEffect(() => {
     let isActive = true;
@@ -330,6 +282,8 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
   const isActionRequired = (listing: ListingDraft) => listing.status === 'action-required';
   const isListingInteractive = (listing: ListingDraft) =>
     isInProgress(listing) || isActionRequired(listing);
+  // Deployed from the listing editor (`action-required → published`).
+  const readyListings = visibleListings.filter((listing) => listing.status === 'published');
   const actionRequiredListings = visibleListings.filter(isActionRequired);
   const inProgressListings = visibleListings.filter(isInProgress);
   const activeListings = visibleListings.filter((listing) => listing.status === 'active');
@@ -363,14 +317,14 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
         }}
         className={`flex min-w-0 gap-3 rounded-card text-left transition ${layout === 'grid' ? 'flex-col items-start border border-[var(--color-border)] p-3' : 'items-center py-1'} ${interactive ? 'cursor-pointer active:bg-[var(--color-surface-muted)]' : ''} ${openingListingId === listing.id ? 'animate-pulse' : ''}`}
       >
-        <div className={layout === 'grid' ? 'w-full overflow-hidden rounded-photo' : 'shrink-0'}>
+        <div className={layout === 'grid' ? 'w-full overflow-hidden rounded-[calc(var(--radius-photo)*0.7)]' : 'shrink-0'}>
           <ListingCover listing={listing} layout={layout === 'grid' ? 'grid' : 'mobile'} />
         </div>
         <span className="min-w-0 flex-1">
           <span className="block text-[13px] font-semibold leading-4">{getMobileListingTitle(listing)}</span>
           <span className="mt-0.5 line-clamp-2 block text-xs leading-[1.45] text-[var(--color-text-secondary)]">{summary.location}</span>
         </span>
-        {isManageMode ? <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" /> : null}
+        {isManageMode ? <ChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" /> : null}
       </article>
     );
   };
@@ -401,10 +355,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
   }
 
   const resumeListing = (listing: ListingDraft) => {
-    const resumePath =
-      listing.resumePath && resumableListingPaths.has(listing.resumePath)
-        ? listing.resumePath
-        : ROUTES.hostListingCreate;
+    const { path: resumePath, page: initialPage } = getListingResumeTarget(listing.resumePage);
 
     if (listing.confirmedLocation) {
       window.sessionStorage.setItem(
@@ -423,7 +374,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
     navigate(resumePath, {
       state: {
         listingId: listing.id,
-        initialPage: listing.resumePage,
+        initialPage,
         confirmedLocation: listing.confirmedLocation,
         flowDraft: listing.flowDraft
       }
@@ -449,10 +400,11 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
 
   if (actionRequiredListing) {
     return (
-      <ActionRequiredListingEditor
-        listing={actionRequiredListing}
-        photoUrls={getListingImageUrls(actionRequiredListing)}
+      <CurrentListingEditor
+        listingId={actionRequiredListing.id}
+        onListingChange={handleListingChange}
         onBack={() => setActionRequiredListing(null)}
+        onOpenCalendar={onOpenCalendar}
       />
     );
   }
@@ -478,7 +430,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                 aria-expanded={isSearchOpen}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
               >
-                <FiSearch className="h-5 w-5" aria-hidden="true" />
+                <SearchIcon className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -486,7 +438,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                 aria-label={layout === 'list' ? 'Use grid layout' : 'Use list layout'}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
               >
-                {layout === 'list' ? <FiGrid className="h-4 w-4" /> : <FiList className="h-4 w-4" />}
+                {layout === 'list' ? <LayoutGrid className="h-4 w-4" aria-hidden="true" /> : <List className="h-4 w-4" aria-hidden="true" />}
               </button>
               <button
                 type="button"
@@ -494,7 +446,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                 aria-label="Create another listing"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
               >
-                <FiPlus className="h-5 w-5" aria-hidden="true" />
+                <Plus className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -503,14 +455,14 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                 onClick={() => setIsManageMode((current) => !current)}
                 className={`inline-flex h-11 w-11 items-center justify-center rounded-full active:scale-95 ${isManageMode ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]' : 'bg-[var(--color-surface-muted)]'}`}
               >
-                <FiEdit3 className="h-4 w-4" aria-hidden="true" />
+                <PenLine className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {isSearchOpen ? (
             <label className="mt-4 flex h-12 items-center gap-2 rounded-field border border-[var(--color-border)] px-4">
-              <FiSearch className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
+              <SearchIcon className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
               <span className="sr-only">Search your listings</span>
               <input
                 value={search}
@@ -535,6 +487,13 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
             </div>
           ) : (
             <div className="space-y-9">
+              {readyListings.length ? (
+                <div>
+                  <h2 className="mb-4 text-lg font-semibold tracking-[-0.02em]">{t('listingPublishReady.sectionTitle')}</h2>
+                  <div className={layout === 'grid' ? 'grid grid-cols-2 gap-3' : 'grid gap-2.5'}>{readyListings.map(renderMobileListing)}</div>
+                </div>
+              ) : null}
+
               {actionRequiredListings.length ? (
                 <div ref={mobileActionRequiredRef}>
                   <h2 className="mb-4 text-lg font-semibold tracking-[-0.02em]">Action required</h2>
@@ -576,7 +535,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
               aria-expanded={isSearchOpen}
               className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
-              <FiSearch className="h-5 w-5" aria-hidden="true" />
+              <SearchIcon className="h-5 w-5" aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -584,7 +543,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
               aria-label={layout === 'list' ? 'Use grid layout' : 'Use list layout'}
               className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
-              {layout === 'list' ? <FiGrid className="h-5 w-5" /> : <FiList className="h-5 w-5" />}
+              {layout === 'list' ? <LayoutGrid className="h-5 w-5" aria-hidden="true" /> : <List className="h-5 w-5" aria-hidden="true" />}
             </button>
             <button
               type="button"
@@ -592,14 +551,14 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
               aria-label="Create another listing"
               className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
             >
-              <FiPlus className="h-5 w-5" aria-hidden="true" />
+              <Plus className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
         </div>
 
         {isSearchOpen ? (
           <label className="mt-5 flex h-11 max-w-md items-center gap-2 rounded-field border border-[var(--color-border)] px-4">
-            <FiSearch className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
+            <SearchIcon className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
             <span className="sr-only">Search your listings</span>
             <input
               value={search}
@@ -638,13 +597,14 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                       void openListing(listing.id);
                     }
                   }}
-                  className={`overflow-hidden rounded-card border bg-[var(--color-surface)] shadow-[var(--shadow-sm)] ${
+                  className={`overflow-hidden rounded-card rounded-t-[calc(var(--radius-card)*0.7)] border bg-[var(--color-surface)] shadow-[var(--shadow-sm)] ${
                     listing.id === createdListingId
                       ? 'border-[var(--color-text-primary)]'
                       : 'border-[var(--color-border)]'
                   } ${isListingInteractive(listing) ? 'cursor-pointer transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]' : ''} ${openingListingId === listing.id ? 'animate-pulse' : ''}`}
                 >
                   <ListingCover listing={listing} layout="grid" />
+                  
                   <div className="p-5">
                     <h2 className="font-semibold">{summary.title}</h2>
                     <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{summary.location}</p>
@@ -694,7 +654,7 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
                         <span className={`h-3 w-3 rounded-full ${status.color}`} />
                         {status.label}
                       </span>
-                      {isListingInteractive(listing) ? <FiChevronRight className="h-5 w-5" aria-hidden="true" /> : <span />}
+                      {isListingInteractive(listing) ? <ChevronRight className="h-5 w-5" aria-hidden="true" /> : <span />}
                     </article>
                   );
                 })}
@@ -703,217 +663,77 @@ function ListingsView({ createdListingId }: { createdListingId?: string }) {
           </div>
         )}
       </div>
-      {selectedListing ? (
+      {sheetListing ? (
         <InProgressListingDialog
-          open
-          title={`Your ${getListingSummary(selectedListing).type} listing started ${formatDate(
-            (selectedListing.createdAt ?? selectedListing.updatedAt)?.toDate() ?? new Date(),
+          open={selectedListing !== null}
+          title={`Your ${getListingSummary(sheetListing).type} listing started ${formatDate(
+            (sheetListing.createdAt ?? sheetListing.updatedAt)?.toDate() ?? new Date(),
             i18n.resolvedLanguage
           )}`}
-          location={getListingSummary(selectedListing).location}
-          cover={<ListingCover listing={selectedListing} layout="dialog" />}
+          location={getListingSummary(sheetListing).location}
+          cover={<ListingCover listing={sheetListing} layout="dialog" />}
           isRemoving={isRemovingListing}
           onClose={() => setSelectedListing(null)}
-          onEdit={() => resumeListing(selectedListing)}
-          onRemove={() => void removeListing(selectedListing)}
+          onEdit={() => resumeListing(sheetListing)}
+          onRemove={() => void removeListing(sheetListing)}
         />
       ) : null}
     </motion.section>
   );
 }
 
-function MessagesView({ onOpenAttention }: { onOpenAttention: () => void }) {
-  const { t } = useTranslation('dashboard');
-  const { t: tCommon } = useTranslation('common');
-  const [filter, setFilter] = useState<MessageFilter>('all');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [search, setSearch] = useState('');
-
-  const clearFilters = () => {
-    setFilter('all');
-    setSearch('');
-    setIsSearchOpen(false);
+const toCalendarListing = (listing: ListingDraft): CalendarListing => {
+  const location = listing.confirmedLocation?.location as Record<string, unknown> | undefined;
+  return {
+    id: listing.id,
+    title: getListingSummary(listing).title,
+    coverImageUrl: getListingCoverUrl(listing),
+    ...resolveListingPricing(listing),
+    timeZone: typeof location?.timezone === 'string' ? location.timezone : undefined
   };
+};
+
+function CalendarView({ onOpenListings }: { onOpenListings: () => void }) {
+  const { t } = useTranslation('dashboard');
+  const [listings, setListings] = useState<CalendarListing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isActive = true;
+
+    listCurrentUserListings()
+      .then((result) => {
+        if (isActive) setListings(result.map(toCalendarListing));
+      })
+      .catch((error) => {
+        console.error('Unable to load calendar listings.', error);
+        if (isActive) toast.error(t('calendar.loadError'));
+      })
+      .finally(() => {
+        if (isActive) setIsLoading(false);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [t]);
 
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.25 }}
-      className="min-h-[calc(100dvh-72px-env(safe-area-inset-bottom))] bg-[var(--color-surface)] md:min-h-[calc(100vh-95px)]"
-    >
-      <div className="min-h-[calc(100dvh-72px-env(safe-area-inset-bottom))] px-4 pb-[calc(150px+env(safe-area-inset-bottom))] pt-7 md:hidden">
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="text-[28px] font-semibold tracking-[-0.035em]">{t('messages.title')}</h1>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              aria-label={t('messages.search')}
-              aria-expanded={isSearchOpen}
-              onClick={() => setIsSearchOpen((open) => !open)}
-              className="inline-flex h-8 max-sm:h-11 max-sm:w-11 w-8 items-center justify-center rounded-full border border-[var(--color-text-primary)] active:scale-95"
-            >
-              <FiSearch className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              aria-label={t('messages.settings')}
-              className="inline-flex h-8 max-sm:h-11 max-sm:w-11 w-8 items-center justify-center rounded-full border border-[var(--color-text-primary)] active:scale-95"
-            >
-              <FiSettings className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-
-        {isSearchOpen ? (
-          <label className="mt-4 flex h-12 items-center gap-2 rounded-field border border-[var(--color-border)] px-4">
-            <FiSearch className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
-            <span className="sr-only">{tCommon('actions.search')}</span>
-            <input
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              autoFocus
-              placeholder={tCommon('actions.search')}
-              className="h-full min-w-0 flex-1 bg-transparent text-base sm:text-sm outline-none placeholder:text-[var(--color-text-secondary)]"
-            />
-          </label>
-        ) : null}
-
-        <div className="-mx-4 mt-8 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex w-max gap-2">
-            {([
-              ['all', 'All'],
-              ['hosting', 'Hosting'],
-              ['traveling', 'Traveling'],
-              ['support', 'Support']
-            ] as const).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setFilter(value)}
-                aria-pressed={filter === value}
-                className={`h-9 rounded-button border px-4 text-xs font-semibold transition active:scale-95 ${
-                  filter === value
-                    ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
-                    : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="mx-auto mt-10 flex max-w-[308px] flex-col items-center text-center">
-          <span className="relative inline-flex h-10 w-10 items-center justify-center" aria-hidden="true">
-            <FiMessageSquare className="absolute left-1 top-1 h-7 w-7" />
-            <FiMessageSquare className="absolute bottom-0 right-0 h-6 w-6 fill-[var(--color-surface)]" />
-          </span>
-          <h2 className="mt-5 text-md font-semibold">You don&apos;t have any messages</h2>
-          <p className="mt-2 text-[13px] leading-[1.5] text-[var(--color-text-secondary)]">
-            When you receive a new message, it will appear here.
-          </p>
-        </div>
-
-        <MobileAttentionCard onClick={onOpenAttention} className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30" />
-      </div>
-
-      <div className="hidden md:block">
-        <div className="h-32 border-b border-[var(--color-border)] bg-[var(--color-surface-muted)]" />
-        <div className="flex min-h-[calc(100vh-223px)] bg-[var(--color-surface)]">
-        <aside className="w-full border-r border-[var(--color-border)] px-5 py-7 sm:px-8 lg:w-[462px] lg:px-12">
-          <div className="flex items-center justify-between gap-4">
-            <h1 className="text-2xl font-semibold tracking-tight">{t('messages.title')}</h1>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                aria-label={t('messages.search')}
-                aria-expanded={isSearchOpen}
-                onClick={() => setIsSearchOpen((open) => !open)}
-                className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
-              >
-                <FiSearch className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                aria-label={t('messages.settings')}
-                className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
-              >
-                <FiSettings className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-
-          {isSearchOpen ? (
-            <label className="mt-4 flex h-11 items-center gap-2 rounded-field border border-[var(--color-border)] px-4">
-              <FiSearch className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
-              <span className="sr-only">{tCommon('actions.search')}</span>
-              <input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                autoFocus
-                placeholder={tCommon('actions.search')}
-                className="h-full min-w-0 flex-1 bg-transparent text-base sm:text-sm outline-none placeholder:text-[var(--color-text-secondary)]"
-              />
-            </label>
-          ) : null}
-
-          <div className="mt-4 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setFilter('all')}
-              className={`inline-flex h-10 items-center gap-2 rounded-pill px-5 text-sm font-semibold transition ${
-                filter === 'all'
-                  ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
-                  : 'border border-[var(--color-text-primary)]'
-              }`}
-            >
-              {t('messages.all')}
-              <FiChevronDown className="h-4 w-4" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setFilter('unread')}
-              className={`h-10 rounded-pill px-5 text-sm font-semibold transition ${
-                filter === 'unread'
-                  ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
-                  : 'border border-[var(--color-text-primary)]'
-              }`}
-            >
-              {t('messages.unread')}
-            </button>
-          </div>
-
-          <div className="mx-auto mt-10 flex max-w-xs flex-col items-center text-center sm:mt-12">
-            <FiMessageSquare className="h-9 w-9" aria-hidden="true" />
-            <h2 className="mt-6 text-base font-semibold">{t('messages.empty')}</h2>
-            <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
-              {t('messages.emptyHelp')}
-            </p>
-            <button
-              type="button"
-              onClick={clearFilters}
-              className="mt-6 rounded-button border border-[var(--color-text-primary)] px-5 py-2.5 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)]"
-            >
-              {t('messages.clearFilters')}
-            </button>
-          </div>
-        </aside>
-        <div className="hidden flex-1 bg-[var(--color-surface)] lg:block" aria-hidden="true" />
-        </div>
-      </div>
-    </motion.section>
+    <div className="flex h-[calc(100dvh-72px-env(safe-area-inset-bottom))] flex-col md:mx-auto md:h-[calc(100dvh-96px)] md:max-w-3xl">
+      <HostCalendar listings={listings} isLoading={isLoading} onOpenListings={onOpenListings} className="flex-1" />
+      <MobileAttentionCard onClick={onOpenListings} className="shrink-0 md:hidden" />
+    </div>
   );
 }
 
 const mobileMenuItems = [
-  { label: 'Account settings', Icon: FiSettings, path: ROUTES.hostAccountSettings },
-  { label: 'Languages & currency', Icon: FiGlobe, path: ROUTES.hostAccountSettings, section: 'languages-currency' },
-  { label: 'Hosting resources', Icon: FiBookOpen },
-  { label: 'Get help', Icon: FiHelpCircle },
-  { label: 'Find a co-host', Icon: FiUserPlus },
-  { label: 'Create a new listing', Icon: FiPlus, path: ROUTES.hostListingSetup },
-  { label: 'Refer a host', Icon: FiUsers }
+  { label: 'Account settings', Icon: Settings, path: ROUTES.hostAccountSettings },
+  { label: 'Languages & currency', Icon: Globe, path: ROUTES.hostAccountSettings, section: 'languages-currency' },
+  { label: 'Hosting resources', Icon: BookOpen },
+  { label: 'Get help', Icon: CircleHelp },
+  { label: 'Find a co-host', Icon: UserPlus },
+  { label: 'Create a new listing', Icon: Plus, path: ROUTES.hostListingSetup },
+  { label: 'Refer a host', Icon: Users }
 ] as const;
 
 function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
@@ -944,7 +764,7 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
           onClick={() => toast('You have no new notifications.')}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] active:scale-95"
         >
-          <FiBell className="h-4 w-4" aria-hidden="true" />
+          <Bell className="h-4 w-4" aria-hidden="true" />
         </button>
         <button
           type="button"
@@ -973,7 +793,7 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
                 src={image}
                 alt=""
                 aria-hidden="true"
-                className="absolute h-[90.2px] w-[107.8px] rounded-photo border-[3px] border-[var(--color-surface-muted)] object-cover shadow-md"
+                className="absolute h-[108.24px] w-[129.36px] rounded-photo border-[3px] border-[var(--color-surface-muted)] object-cover shadow-md"
                 style={{ left: position.left, top: position.top, rotate: position.rotate, zIndex: position.zIndex }}
               />
             );
@@ -1000,9 +820,9 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
             onClick={() => openMenuItem(item)}
             className="flex min-h-12 w-full items-center gap-4 rounded-button py-2 text-left active:bg-[var(--color-surface-muted)]"
           >
-            <item.Icon className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
+            <item.Icon className="h-5 w-5 shrink-0 stroke-[1.5]" aria-hidden="true" />
             <span className="min-w-0 flex-1 text-md">{item.label}</span>
-            <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
+            <ChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
           </button>
         ))}
       </nav>
@@ -1013,9 +833,9 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
           onClick={() => void logout()}
           className="flex min-h-12 w-full items-center gap-4 rounded-button py-2 text-left active:bg-[var(--color-surface-muted)]"
         >
-          <FiLogOut className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
+          <LogOut className="h-5 w-5 shrink-0 stroke-[1.5]" aria-hidden="true" />
           <span className="min-w-0 flex-1 text-md">Log out</span>
-          <FiChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
+          <ChevronRight className="h-4 w-4 shrink-0 text-[var(--color-text-secondary)]" aria-hidden="true" />
         </button>
       </div>
 
@@ -1042,7 +862,7 @@ function MobileHostMenu({ onOpenAttention }: { onOpenAttention: () => void }) {
           onClick={() => navigate(ROUTES.home)}
           className="inline-flex h-12 items-center gap-2 rounded-button bg-neutral-900 px-7 text-md font-semibold text-white active:scale-95"
         >
-          <FiRefreshCw className="h-4 w-4" aria-hidden="true" />
+          <RefreshCw className="h-4 w-4" aria-hidden="true" />
           Switch to traveling
         </button>
       </div>
@@ -1134,7 +954,7 @@ export default function HostListingsPage() {
                 onClick={() => setIsMenuOpen((open) => !open)}
                 className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
-                <FiMenu className="h-5 w-5" aria-hidden="true" />
+                <MenuIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -1145,9 +965,18 @@ export default function HostListingsPage() {
       {activeSection === 'menu' ? (
         <MobileHostMenu onOpenAttention={() => setActiveSection('listings')} />
       ) : activeSection === 'messages' ? (
-        <MessagesView onOpenAttention={() => setActiveSection('listings')} />
+        <MessagesInbox
+          mobileFooter={
+            <MobileAttentionCard
+              onClick={() => setActiveSection('listings')}
+              className="fixed inset-x-0 bottom-[calc(72px+env(safe-area-inset-bottom))] z-30"
+            />
+          }
+        />
       ) : activeSection === 'listings' ? (
-        <ListingsView createdListingId={routeState?.createdListingId} />
+        <ListingsView createdListingId={routeState?.createdListingId} onOpenCalendar={() => setActiveSection('calendar')} />
+      ) : activeSection === 'calendar' ? (
+        <CalendarView onOpenListings={() => setActiveSection('listings')} />
       ) : (
         <>
           <motion.section
@@ -1161,10 +990,10 @@ export default function HostListingsPage() {
                 type="button"
                 onClick={() => setReservationView('today')}
                 aria-pressed={reservationView === 'today'}
-                className={`min-h-11 rounded-full border px-5 text-sm font-semibold transition-colors ${
+                className={`min-h-11 rounded-full px-5 text-sm font-semibold transition-colors ${
                   reservationView === 'today'
-                    ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-sm'
-                    : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
+                    ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
+                    : 'bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] hover:brightness-95'
                 }`}
               >
                 {t('nav.today')}
@@ -1173,35 +1002,34 @@ export default function HostListingsPage() {
                 type="button"
                 onClick={() => setReservationView('upcoming')}
                 aria-pressed={reservationView === 'upcoming'}
-                className={`min-h-11 rounded-full border px-5 text-sm font-semibold transition-colors ${
+                className={`min-h-11 rounded-full px-5 text-sm font-semibold transition-colors ${
                   reservationView === 'upcoming'
-                    ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)] shadow-sm'
-                    : 'border-[var(--color-text-primary)] bg-[var(--color-surface)]'
+                    ? 'bg-[var(--color-text-primary)] text-[var(--color-surface)]'
+                    : 'bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] hover:brightness-95'
                 }`}
               >
                 {t('reservations.upcoming')}
               </button>
             </div>
 
-            <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
-              <div className="relative flex h-32 w-40 items-center justify-center">
-                <span className="select-none text-8xl leading-none" aria-hidden="true">📖</span>
-                <ThreeDIcon
-                  name="reservationNotebook"
-                  sourceSize={200}
-                  className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_10px_12px_rgba(15,23,42,0.15)]"
-                />
-              </div>
-              <h1 className="mt-6 max-w-xs text-[28px] font-semibold leading-tight tracking-[-0.03em]">
+            <div className="flex flex-1 flex-col items-center justify-center px-6 py-10">
+              <img
+                src={todayReservationsImage}
+                alt=""
+                aria-hidden="true"
+                decoding="async"
+                className="h-44 w-44 select-none object-contain drop-shadow-md"
+              />
+              <h1 className="mt-4 max-w-[280px] text-balance text-[22px] font-semibold leading-[1.2] tracking-[-0.02em]">
                 {t('reservations.empty')}
               </h1>
-              <p className="mt-3 max-w-xs text-base leading-6 text-[var(--color-text-secondary)]">
+              <p className="mt-3 max-w-[300px] text-balance text-[15px] leading-[1.4] text-[var(--color-text-secondary)]">
                 {t('reservations.emptyHelp')}
               </p>
               <button
                 type="button"
                 onClick={() => navigate(ROUTES.hostListingSetup)}
-                className="mt-6 min-h-12 rounded-button border border-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold transition hover:bg-[var(--color-surface-muted)] active:scale-[0.98]"
+                className="mt-10 min-h-12 rounded-md bg-[var(--color-surface-muted)] px-6 py-3 text-[15px] font-semibold transition hover:brightness-95 active:scale-[0.98]"
               >
                 {t('reservations.finishListing')}
               </button>
@@ -1225,10 +1053,10 @@ export default function HostListingsPage() {
               </button>
             </div>
             <div className="flex w-full max-w-md flex-1 flex-col items-center justify-center py-16">
-              <span className="select-none text-9xl leading-none drop-shadow-sm" role="img" aria-label={t('reservations.calendarImage')}>📖</span>
-              <h1 className="mt-8 text-[32px] font-semibold leading-tight tracking-[-0.03em]">{t('reservations.empty')}</h1>
-              <p className="mt-4 max-w-sm text-base leading-6 text-[var(--color-text-secondary)]">{t('reservations.emptyHelp')}</p>
-              <button type="button" onClick={() => navigate(ROUTES.hostListingSetup)} className="mt-6 min-h-12 rounded-button border border-[var(--color-text-primary)] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[var(--color-surface-muted)]">{t('reservations.finishListing')}</button>
+              <img src={todayReservationsImage} alt="" aria-hidden="true" decoding="async" className="h-52 w-52 select-none object-contain drop-shadow-md" />
+              <h1 className="mt-6 max-w-sm text-balance text-[32px] font-semibold leading-tight tracking-[-0.03em]">{t('reservations.empty')}</h1>
+              <p className="mt-4 max-w-sm text-balance text-base leading-6 text-[var(--color-text-secondary)]">{t('reservations.emptyHelp')}</p>
+              <button type="button" onClick={() => navigate(ROUTES.hostListingSetup)} className="mt-10 min-h-12 rounded-md bg-[var(--color-surface-muted)] px-6 py-3 text-[15px] font-semibold transition hover:brightness-95 active:scale-[0.98]">{t('reservations.finishListing')}</button>
             </div>
           </motion.section>
         </>
@@ -1248,7 +1076,7 @@ export default function HostListingsPage() {
               aria-current={isActive ? 'page' : undefined}
               className={`flex flex-col items-center justify-center gap-1.5 rounded-button text-[11px] font-medium transition-colors hover:bg-[var(--color-surface-muted)] ${isActive ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
             >
-              <Icon className={`h-5 w-5 ${isActive ? 'stroke-[2.3]' : 'stroke-[1.7]'}`} aria-hidden="true" />
+              <Icon className="h-5 w-5 stroke-[1.5]" aria-hidden="true" />
               <span>{t(labelKey)}</span>
             </button>
           );
@@ -1259,7 +1087,7 @@ export default function HostListingsPage() {
           aria-current={activeSection === 'menu' ? 'page' : undefined}
           className={`flex flex-col items-center justify-center gap-1.5 rounded-button text-[11px] font-medium transition-colors hover:bg-[var(--color-surface-muted)] ${activeSection === 'menu' ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
         >
-          <FiMenu className={`h-5 w-5 ${activeSection === 'menu' ? 'stroke-[2.3]' : 'stroke-[1.7]'}`} aria-hidden="true" />
+          <MenuIcon className="h-5 w-5 stroke-[1.5]" aria-hidden="true" />
           <span>Menu</span>
         </button>
       </nav>

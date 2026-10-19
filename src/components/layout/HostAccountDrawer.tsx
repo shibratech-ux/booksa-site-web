@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
-  FiBell,
-  FiBookOpen,
-  FiGlobe,
-  FiHelpCircle,
-  FiLogOut,
-  FiPlus,
-  FiSettings,
-  FiUserPlus,
-  FiUsers,
-  FiX
-} from 'react-icons/fi';
+  Bell,
+  BookOpen,
+  Globe,
+  CircleHelp,
+  LogOut,
+  Plus,
+  Settings,
+  UserPlus,
+  Users,
+  X
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/utils/constants';
@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 import type { AccountSettingsSection } from '@/pages/home/listing/account-settings/components/AccountSettingsSidebar';
 
 type DrawerAction = {
-  icon: typeof FiSettings;
+  icon: typeof Settings;
   labelKey:
     | 'drawer.accountSettings'
     | 'drawer.languagesCurrency'
@@ -34,13 +34,13 @@ type DrawerAction = {
 };
 
 const drawerActions: DrawerAction[] = [
-  { icon: FiSettings, labelKey: 'drawer.accountSettings', path: ROUTES.hostAccountSettings },
-  { icon: FiGlobe, labelKey: 'drawer.languagesCurrency', path: ROUTES.hostAccountSettings, section: 'languages-currency' },
-  { icon: FiBookOpen, labelKey: 'drawer.hostResources' },
-  { icon: FiHelpCircle, labelKey: 'drawer.getHelp' },
-  { icon: FiUserPlus, labelKey: 'drawer.findCoHost' },
-  { icon: FiPlus, labelKey: 'drawer.newListing', path: ROUTES.hostListingSetup },
-  { icon: FiUsers, labelKey: 'drawer.referHost' }
+  { icon: Settings, labelKey: 'drawer.accountSettings', path: ROUTES.hostAccountSettings },
+  { icon: Globe, labelKey: 'drawer.languagesCurrency', path: ROUTES.hostAccountSettings, section: 'languages-currency' },
+  { icon: BookOpen, labelKey: 'drawer.hostResources' },
+  { icon: CircleHelp, labelKey: 'drawer.getHelp' },
+  { icon: UserPlus, labelKey: 'drawer.findCoHost' },
+  { icon: Plus, labelKey: 'drawer.newListing', path: ROUTES.hostListingSetup },
+  { icon: Users, labelKey: 'drawer.referHost' }
 ];
 
 export const hostOnboardingImages = [
@@ -114,7 +114,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                 aria-label={tNavigation('notifications')}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
-                <FiBell className="h-5 w-5" aria-hidden="true" />
+                <Bell className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -122,7 +122,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                 aria-label={tNavigation('closeMenu')}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-surface-muted)] transition hover:brightness-95"
               >
-                <FiX className="h-5 w-5" aria-hidden="true" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -216,7 +216,7 @@ export function HostAccountDrawer({ open, onClose }: { open: boolean; onClose: (
                   onClick={handleLogout}
                   className="flex w-full items-center gap-5 rounded-button px-1 py-3.5 text-left transition hover:bg-[var(--color-surface-muted)]"
                 >
-                  <FiLogOut className="h-6 w-6" aria-hidden="true" />
+                  <LogOut className="h-6 w-6" aria-hidden="true" />
                   <span className="text-base">{tNavigation('logout')}</span>
                 </button>
               </div>

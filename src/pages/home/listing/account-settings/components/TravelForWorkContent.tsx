@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { FiFileText, FiShield, FiSmartphone } from 'react-icons/fi';
+import { FileText, Shield, Smartphone } from 'lucide-react';
 import { updateLoggedInUserProfile } from '@/services/user.service';
 
 const benefits = [
-  { icon: FiSmartphone, title: 'Simplified expensing', description: 'We’ll send work trip receipts to your work inbox for easy expensing.' },
-  { icon: FiFileText, title: 'Trip description', description: 'Add an expense code and business purpose to work trips.' },
-  { icon: FiShield, title: 'Keep personal trips private', description: 'Your company can only get info about trips you mark for work at checkout.' }
+  { icon: Smartphone, title: 'Simplified expensing', description: 'We’ll send work trip receipts to your work inbox for easy expensing.' },
+  { icon: FileText, title: 'Trip description', description: 'Add an expense code and business purpose to work trips.' },
+  { icon: Shield, title: 'Keep personal trips private', description: 'Your company can only get info about trips you mark for work at checkout.' }
 ];
 
 export function TravelForWorkContent({

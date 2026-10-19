@@ -96,7 +96,7 @@ export const colors: ThemeColorTokens = {
     dark: {
       topLeft: 'rgba(37, 99, 235, 0.16)',
       topRight: 'rgba(12, 170, 220, 0.10)',
-      base: '#0F172A'
+      base: '#1B1B1B'
     }
   },
   light: {
@@ -111,17 +111,18 @@ export const colors: ThemeColorTokens = {
     surfaceMuted: '#F7F7F7',
     surfaceRaised: '#FFFFFF'
   },
+  // Neutral grays anchored on #1B1B1B; keep in sync with :root[data-theme="dark"] in index.css.
   dark: {
-    background: '#0F172A',
-    surface: '#1E293B',
-    card: '#1E293B',
-    sidebar: '#111827',
-    textPrimary: '#F8FAFC',
-    textSecondary: '#CBD5E1',
-    border: '#334155',
-    borderSubtle: '#27364A',
-    surfaceMuted: '#172033',
-    surfaceRaised: '#253349'
+    background: '#1B1B1B',
+    surface: '#1B1B1B',
+    card: '#1B1B1B',
+    sidebar: '#141414',
+    textPrimary: '#F7F7F7',
+    textSecondary: '#B0B0B0',
+    border: '#3D3D3D',
+    borderSubtle: '#2B2B2B',
+    surfaceMuted: '#141414',
+    surfaceRaised: '#2B2B2B'
   },
   chart: {
     blue: ['#2563EB', '#5B8CFF', '#1D4ED8', '#60A5FA', '#8AB4FF'],

@@ -1,7 +1,10 @@
-import { useEffect, useId, useRef, useState, type FormEvent, type RefObject } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FiArrowLeft, FiChevronDown, FiMapPin, FiSearch, FiX } from 'react-icons/fi';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ChevronDown, LoaderCircle, MapPin, Navigation, SearchIcon, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { BackButton } from '@/components/ui/BackButton';
+import { IconButton } from '@/components/ui/IconButton';
 import worldLocationsData from '@/data/worldLocations.json';
 
 export type WorldLocation = {
@@ -96,15 +99,36 @@ const getLocationSearchScore = (location: WorldLocation, query: string) => {
   return Number.POSITIVE_INFINITY;
 };
 
+const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+
+// Snaps device coordinates to the closest catalog city so the details form starts with a known country and time zone.
+const findNearestLocation = (latitude: number, longitude: number) => {
+  let nearest: WorldLocation | null = null;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  for (const location of worldLocations) {
+    const deltaLatitude = toRadians(location.latitude - latitude);
+    const deltaLongitude = toRadians(location.longitude - longitude);
+    const haversine =
+      Math.sin(deltaLatitude / 2) ** 2 +
+      Math.cos(toRadians(latitude)) * Math.cos(toRadians(location.latitude)) * Math.sin(deltaLongitude / 2) ** 2;
+
+    if (haversine < nearestDistance) {
+      nearest = location;
+      nearestDistance = haversine;
+    }
+  }
+
+  return nearest;
+};
+
 function AddressDetailsForm({
   location,
-  streetInputRef,
-  onBack,
+  submitLabel,
   onSubmit
 }: {
   location: WorldLocation;
-  streetInputRef: RefObject<HTMLInputElement>;
-  onBack: () => void;
+  submitLabel: string;
   onSubmit: (details: AddressDetails) => void;
 }) {
   const selectedCountry = countries.find(({ countryCode }) => countryCode === location.countryCode);
@@ -119,6 +143,12 @@ function AddressDetailsForm({
   }));
   const [errors, setErrors] = useState<AddressFieldErrors>({});
   const errorIdPrefix = useId();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Move focus into the step without opening the on-screen keyboard over the prefilled fields.
+  useEffect(() => {
+    containerRef.current?.focus({ preventScroll: true });
+  }, []);
 
   const setFieldError = (field: keyof AddressDetails, message: string) => {
     setErrors((current) => {
@@ -172,38 +202,34 @@ function AddressDetailsForm({
   };
 
   const fieldClassName =
-    'h-[66px] w-full bg-transparent px-4 pb-2 pt-6 text-base outline-none placeholder:text-transparent';
+    'h-14 w-full bg-transparent px-4 pb-1.5 pt-6 text-base leading-6 outline-none placeholder:text-transparent';
+  const plainFieldClassName =
+    'h-14 w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]';
+  const floatingLabelClassName =
+    'pointer-events-none absolute left-4 top-2 text-xs leading-4 text-[var(--color-text-secondary)]';
+  const rowClassName = 'relative block border-b border-[var(--color-border)] last:border-b-0';
   const invalidFieldClassName = 'z-10 ring-2 ring-inset ring-[var(--color-danger)]';
   const errorMessageClassName =
-    'pointer-events-none absolute right-3 top-2 max-w-[48%] text-right text-xs font-medium leading-3 text-[var(--color-danger)]';
+    'pointer-events-none absolute right-3 top-2 max-w-[48%] text-right text-xs font-medium leading-4 text-[var(--color-danger)]';
 
   return (
     <motion.div
-      key="address-details"
+      ref={containerRef}
+      tabIndex={-1}
       initial={{ opacity: 0, x: 24 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 24 }}
       transition={{ duration: 0.18 }}
+      className="flex min-h-full flex-col outline-none"
     >
-      <button
-        type="button"
-        onClick={onBack}
-        aria-label="Back to address search"
-        className="absolute left-5 top-5 inline-flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
-      >
-        <FiArrowLeft className="h-5 w-5" aria-hidden="true" />
-      </button>
-
-      <form noValidate onSubmit={handleSubmit}>
-        <div className="relative mt-11">
+      <form noValidate onSubmit={handleSubmit} className="flex flex-1 flex-col">
+        <div className="flex-1 px-6 pb-6 pt-2">
           <label
-            className={`relative block h-[66px] overflow-hidden rounded-field border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)] ${
+            className={`relative block h-14 overflow-hidden rounded-card border border-[var(--color-text-secondary)] transition-colors focus-within:border-[var(--color-text-primary)] focus-within:ring-1 focus-within:ring-inset focus-within:ring-[var(--color-text-primary)] ${
               errors.country ? invalidFieldClassName : ''
             }`}
           >
-            <span className="pointer-events-none absolute left-4 top-2.5 text-xs text-[var(--color-text-secondary)]">
-              Country / region
-            </span>
+            <span className={floatingLabelClassName}>Country / region</span>
             <select
               value={details.countryCode}
               onChange={(event) => {
@@ -216,15 +242,15 @@ function AddressDetailsForm({
               aria-label="Country or region"
               aria-invalid={Boolean(errors.country)}
               aria-describedby={errors.country ? `${errorIdPrefix}-country-error` : undefined}
-              className={`${fieldClassName} appearance-none pr-12`}
+              className={`${fieldClassName} cursor-pointer appearance-none truncate pr-12`}
             >
               {countries.map(({ country, countryCode }) => (
                 <option key={countryCode} value={countryCode}>
-                  {country} - {countryCode}
+                  {country}
                 </option>
               ))}
             </select>
-            <FiChevronDown
+            <ChevronDown
               className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2"
               aria-hidden="true"
             />
@@ -239,17 +265,10 @@ function AddressDetailsForm({
             ) : null}
           </label>
 
-          <div className="mt-4 overflow-hidden rounded-field border border-[var(--color-text-secondary)] focus-within:border-[var(--color-text-primary)]">
-            <label
-              className={`relative block border-b border-[var(--color-border)] ${
-                errors.streetAddress ? invalidFieldClassName : ''
-              }`}
-            >
-              <span className="pointer-events-none absolute left-4 top-2.5 text-xs text-[var(--color-text-secondary)]">
-                Street address
-              </span>
+          <div className="mt-4 overflow-hidden rounded-card border border-[var(--color-text-secondary)]">
+            <label className={`${rowClassName} ${errors.streetAddress ? invalidFieldClassName : ''}`}>
+              <span className={floatingLabelClassName}>Street address</span>
               <input
-                ref={streetInputRef}
                 required
                 autoComplete="address-line1"
                 value={details.streetAddress}
@@ -265,11 +284,7 @@ function AddressDetailsForm({
               ) : null}
             </label>
 
-            <label
-              className={`relative block border-b border-[var(--color-border)] ${
-                errors.apartment ? invalidFieldClassName : ''
-              }`}
-            >
+            <label className={`${rowClassName} ${errors.apartment ? invalidFieldClassName : ''}`}>
               <span className="sr-only">Apartment, floor, or building</span>
               <input
                 autoComplete="address-line2"
@@ -278,7 +293,7 @@ function AddressDetailsForm({
                 aria-invalid={Boolean(errors.apartment)}
                 aria-describedby={errors.apartment ? `${errorIdPrefix}-apartment-error` : undefined}
                 placeholder="Apt, floor, bldg (if applicable)"
-                className="h-[66px] w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]"
+                className={plainFieldClassName}
               />
               {errors.apartment ? (
                 <span id={`${errorIdPrefix}-apartment-error`} className={errorMessageClassName} role="alert">
@@ -287,14 +302,8 @@ function AddressDetailsForm({
               ) : null}
             </label>
 
-            <label
-              className={`relative block border-b border-[var(--color-border)] ${
-                errors.city ? invalidFieldClassName : ''
-              }`}
-            >
-              <span className="pointer-events-none absolute left-4 top-2.5 text-xs text-[var(--color-text-secondary)]">
-                City / town / village
-              </span>
+            <label className={`${rowClassName} ${errors.city ? invalidFieldClassName : ''}`}>
+              <span className={floatingLabelClassName}>City / town / village</span>
               <input
                 required
                 autoComplete="address-level2"
@@ -311,14 +320,8 @@ function AddressDetailsForm({
               ) : null}
             </label>
 
-            <label
-              className={`relative block border-b border-[var(--color-border)] ${
-                errors.region ? invalidFieldClassName : ''
-              }`}
-            >
-              <span className="pointer-events-none absolute left-4 top-2.5 text-xs text-[var(--color-text-secondary)]">
-                Province / state / territory (if applicable)
-              </span>
+            <label className={`${rowClassName} ${errors.region ? invalidFieldClassName : ''}`}>
+              <span className={floatingLabelClassName}>Province / state / territory (if applicable)</span>
               <input
                 autoComplete="address-level1"
                 value={details.region}
@@ -334,7 +337,7 @@ function AddressDetailsForm({
               ) : null}
             </label>
 
-            <label className={`relative block ${errors.postalCode ? invalidFieldClassName : ''}`}>
+            <label className={`${rowClassName} ${errors.postalCode ? invalidFieldClassName : ''}`}>
               <span className="sr-only">Postal code</span>
               <input
                 autoComplete="postal-code"
@@ -343,7 +346,7 @@ function AddressDetailsForm({
                 aria-invalid={Boolean(errors.postalCode)}
                 aria-describedby={errors.postalCode ? `${errorIdPrefix}-postalCode-error` : undefined}
                 placeholder="Postal code (if applicable)"
-                className="h-[66px] w-full bg-transparent px-4 text-base outline-none placeholder:text-[var(--color-text-secondary)]"
+                className={plainFieldClassName}
               />
               {errors.postalCode ? (
                 <span id={`${errorIdPrefix}-postalCode-error`} className={errorMessageClassName} role="alert">
@@ -354,12 +357,14 @@ function AddressDetailsForm({
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="mt-[83.6px] h-12 w-full rounded-button bg-[var(--color-text-primary)] text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90"
-        >
-          Next
-        </button>
+        <div className="sticky bottom-0 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-6 pb-[max(16px,env(safe-area-inset-bottom))] pt-4">
+          <button
+            type="submit"
+            className="h-12 w-full rounded-button bg-[var(--color-text-primary)] text-base font-semibold text-[var(--color-surface)] transition hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)] active:scale-[0.99]"
+          >
+            {submitLabel}
+          </button>
+        </div>
       </form>
     </motion.div>
   );
@@ -376,41 +381,50 @@ export function AddressSearchDialog({
   onClose: () => void;
   onSelect: (location: WorldLocation, details: AddressDetails) => void;
 }) {
+  const { t } = useTranslation('dashboard');
+  const reducedMotion = useReducedMotion();
   const [query, setQuery] = useState(initialQuery);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [selectedLocation, setSelectedLocation] = useState<WorldLocation | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const streetInputRef = useRef<HTMLInputElement>(null);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationError, setLocationError] = useState('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const locationRequestRef = useRef(0);
+  const onCloseRef = useRef(onClose);
   const titleId = useId();
   const listboxId = useId();
+  const locationErrorId = useId();
+
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     if (!open) return;
     setQuery(initialQuery);
     setActiveIndex(-1);
     setSelectedLocation(null);
+    setIsLocating(false);
+    setLocationError('');
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') onCloseRef.current();
     };
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      // Ignore a geolocation answer that arrives after the sheet closed.
+      locationRequestRef.current += 1;
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [initialQuery, onClose, open]);
+  }, [initialQuery, open]);
 
-  useEffect(() => {
-    if (!open) return;
-    const animationFrame = window.requestAnimationFrame(() => {
-      if (selectedLocation) streetInputRef.current?.focus();
-      else inputRef.current?.focus();
-    });
-    return () => window.cancelAnimationFrame(animationFrame);
-  }, [open, selectedLocation]);
+  // Steps swap with mode="wait", so the search field focuses itself whenever it mounts.
+  const searchInputRef = useCallback((node: HTMLInputElement | null) => {
+    inputRef.current = node;
+    node?.focus({ preventScroll: true });
+  }, []);
 
   const normalizedQuery = normalizeSearchValue(query);
   const filteredSuggestions = normalizedQuery
@@ -426,154 +440,235 @@ export function AddressSearchDialog({
     setSelectedLocation(location);
   };
 
+  const locateCurrentPosition = () => {
+    if (isLocating) return;
+    if (!('geolocation' in navigator)) {
+      setLocationError(t('addressSearch.locationUnsupported'));
+      return;
+    }
+
+    const requestId = ++locationRequestRef.current;
+    setIsLocating(true);
+    setLocationError('');
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        if (requestId !== locationRequestRef.current) return;
+        setIsLocating(false);
+        const nearest = findNearestLocation(coords.latitude, coords.longitude);
+        if (!nearest) {
+          setLocationError(t('addressSearch.locationError'));
+          return;
+        }
+        selectLocation({ ...nearest, latitude: coords.latitude, longitude: coords.longitude });
+      },
+      (error) => {
+        if (requestId !== locationRequestRef.current) return;
+        setIsLocating(false);
+        setLocationError(
+          error.code === error.PERMISSION_DENIED ? t('addressSearch.locationDenied') : t('addressSearch.locationError')
+        );
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  };
+
   if (typeof document === 'undefined') return null;
 
   return createPortal(
     <AnimatePresence>
       {open ? (
         <motion.div
-          className="fixed inset-0 z-[120] flex items-end justify-center bg-black/45 p-0 sm:items-center sm:px-4 sm:py-6"
+          className="fixed inset-0 z-[120] flex items-end justify-center bg-black/45 sm:items-center sm:px-4 sm:py-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onMouseDown={onClose}
+          transition={{ duration: reducedMotion ? 0 : 0.2 }}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) onClose();
+          }}
         >
           <motion.section
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            initial={{ opacity: 0, scale: 0.96, y: 18 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: 12 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            onMouseDown={(event) => event.stopPropagation()}
-            className="relative h-[92dvh] max-h-[792px] w-full max-w-[792px] overflow-y-auto rounded-dialog bg-[var(--color-surface)] px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-14 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:h-[730.4px] sm:max-h-[calc(100vh-48px)] sm:rounded-dialog sm:px-7 sm:pb-6"
+            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 48 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 32 }}
+            transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 360, damping: 34, mass: 0.8 }}
+            className="relative mt-3 flex h-[calc(100dvh-12px)] w-full flex-col overflow-hidden rounded-t-dialog bg-[var(--color-surface)] text-[var(--color-text-primary)] sm:shadow-[var(--shadow-xl)] sm:mt-0 sm:h-[min(720px,calc(100dvh-48px))] sm:max-w-[568px] sm:rounded-dialog"
           >
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close address dialog"
-              className="absolute right-5 top-5 inline-flex h-9 max-sm:h-11 max-sm:w-11 w-9 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
-            >
-              <FiX className="h-5 w-5" aria-hidden="true" />
-            </button>
+            <header className="relative flex min-h-16 shrink-0 items-center justify-center px-16">
+              <AnimatePresence initial={false}>
+                {selectedLocation ? (
+                  <motion.div
+                    key="back"
+                    className="absolute left-3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <BackButton label={t('addressSearch.back')} onClick={() => setSelectedLocation(null)} />
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+              <h2 id={titleId} className="text-center text-base font-semibold leading-5">
+                {selectedLocation ? t('addressSearch.confirmTitle') : t('addressSearch.title')}
+              </h2>
+              <IconButton
+                icon={<X className="h-5 w-5" aria-hidden="true" />}
+                label={t('addressSearch.close')}
+                variant="plain"
+                onClick={onClose}
+                className="absolute right-3"
+              />
+            </header>
 
-            <h2 id={titleId} className="text-center text-3xl font-semibold tracking-[-0.035em]">
-              {selectedLocation ? 'Confirm your address' : 'Enter your address'}
-            </h2>
-
-            <AnimatePresence initial={false}>
-              {selectedLocation ? (
-                <AddressDetailsForm
-                  key={selectedLocation.id}
-                  location={selectedLocation}
-                  streetInputRef={streetInputRef}
-                  onBack={() => {
-                    setSelectedLocation(null);
-                  }}
-                  onSubmit={(details) => {
-                    onSelect(selectedLocation, details);
-                    onClose();
-                  }}
-                />
-              ) : (
-                <motion.div
-                  key="address-search"
-                  initial={{ opacity: 0, x: -24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -24 }}
-                  transition={{ duration: 0.18 }}
-                >
-                  <div className="relative mt-6">
-                    <FiSearch className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2" aria-hidden="true" />
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      inputMode="search"
-                      value={query}
-                      onChange={(event) => {
-                        setQuery(event.target.value);
-                        setActiveIndex(-1);
-                      }}
-                      onKeyDown={(event) => {
-                        if (event.key === 'ArrowDown' && filteredSuggestions.length > 0) {
-                          event.preventDefault();
-                          setActiveIndex((current) => Math.min(current + 1, filteredSuggestions.length - 1));
-                        }
-                        if (event.key === 'ArrowUp' && filteredSuggestions.length > 0) {
-                          event.preventDefault();
-                          setActiveIndex((current) => (current <= 0 ? filteredSuggestions.length - 1 : current - 1));
-                        }
-                        if (event.key === 'Enter' && activeIndex >= 0 && filteredSuggestions[activeIndex]) {
-                          event.preventDefault();
-                          selectLocation(filteredSuggestions[activeIndex]);
-                        }
-                      }}
-                      placeholder="Enter your address"
-                      aria-label="Search for an address"
-                      aria-controls={listboxId}
-                      aria-expanded={filteredSuggestions.length > 0}
-                      aria-autocomplete="list"
-                      aria-activedescendant={activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined}
-                      className="h-14 w-full rounded-field border-2 border-[var(--color-text-primary)] bg-[var(--color-surface)] pl-12 pr-12 outline-none"
-                    />
-                    {query ? (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setQuery('');
-                          inputRef.current?.focus();
+            <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
+              <AnimatePresence initial={false} mode="wait">
+                {selectedLocation ? (
+                  <AddressDetailsForm
+                    key={selectedLocation.id}
+                    location={selectedLocation}
+                    submitLabel={t('addressSearch.next')}
+                    onSubmit={(details) => {
+                      onSelect(selectedLocation, details);
+                      onClose();
+                    }}
+                  />
+                ) : (
+                  <motion.div
+                    key="address-search"
+                    initial={{ opacity: 0, x: -24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -24 }}
+                    transition={{ duration: 0.18 }}
+                    className="px-6 pb-[max(24px,env(safe-area-inset-bottom))] pt-2"
+                  >
+                    <div className="relative">
+                      <SearchIcon
+                        className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2"
+                        aria-hidden="true"
+                      />
+                      <input
+                        ref={searchInputRef}
+                        type="text"
+                        inputMode="search"
+                        enterKeyHint="search"
+                        autoComplete="off"
+                        value={query}
+                        onChange={(event) => {
+                          setQuery(event.target.value);
+                          setActiveIndex(-1);
                         }}
-                        aria-label="Clear address search"
-                        className="absolute right-3 top-1/2 inline-flex h-8 max-sm:h-11 max-sm:w-11 w-8 -translate-y-1/2 items-center justify-center rounded-full"
-                      >
-                        <FiX className="h-4 w-4" aria-hidden="true" />
-                      </button>
-                    ) : null}
-                  </div>
+                        onKeyDown={(event) => {
+                          if (event.key === 'ArrowDown' && filteredSuggestions.length > 0) {
+                            event.preventDefault();
+                            setActiveIndex((current) => Math.min(current + 1, filteredSuggestions.length - 1));
+                          }
+                          if (event.key === 'ArrowUp' && filteredSuggestions.length > 0) {
+                            event.preventDefault();
+                            setActiveIndex((current) => (current <= 0 ? filteredSuggestions.length - 1 : current - 1));
+                          }
+                          if (event.key === 'Enter' && activeIndex >= 0 && filteredSuggestions[activeIndex]) {
+                            event.preventDefault();
+                            selectLocation(filteredSuggestions[activeIndex]);
+                          }
+                        }}
+                        placeholder={t('addressSearch.placeholder')}
+                        aria-label={t('addressSearch.searchLabel')}
+                        aria-controls={listboxId}
+                        aria-expanded={filteredSuggestions.length > 0}
+                        aria-autocomplete="list"
+                        aria-activedescendant={activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined}
+                        className="h-14 w-full rounded-search border-[1.5px] border-[var(--color-text-primary)] bg-[var(--color-surface)] pl-14 pr-14 text-base outline-none placeholder:text-[var(--color-text-secondary)] focus-visible:ring-1 focus-visible:ring-[var(--color-text-primary)]"
+                      />
+                      {query ? (
+                        <IconButton
+                          icon={<X className="h-4 w-4" aria-hidden="true" />}
+                          label={t('addressSearch.clear')}
+                          variant="plain"
+                          onClick={() => {
+                            setQuery('');
+                            setActiveIndex(-1);
+                            inputRef.current?.focus();
+                          }}
+                          className="absolute right-1.5 top-1/2 -translate-y-1/2"
+                        />
+                      ) : null}
+                    </div>
 
-                  {normalizedQuery ? (
-                    <>
-                      <p className="mt-4 text-sm font-medium text-[var(--color-text-secondary)]">
-                        Suggested destinations
-                      </p>
-                      <div id={listboxId} className="mt-3" role="listbox" aria-label="Suggested destinations">
-                        {filteredSuggestions.length ? (
-                          filteredSuggestions.map((location, index) => (
-                            <button
-                              id={`${listboxId}-option-${index}`}
-                              key={location.id}
-                              type="button"
-                              role="option"
-                              aria-selected={activeIndex === index}
-                              onMouseEnter={() => setActiveIndex(index)}
-                              onClick={() => selectLocation(location)}
-                              className={`flex w-full items-center gap-4 rounded-button px-4 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus:bg-[var(--color-surface-muted)] ${
-                                activeIndex === index ? 'bg-[var(--color-surface-muted)]' : ''
-                              }`}
-                            >
-                              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-[var(--color-surface-muted)]">
-                                <FiMapPin className="h-6 w-6" aria-hidden="true" />
-                              </span>
-                              <span className="min-w-0">
-                                <span className="block text-base font-medium">{location.city}</span>
-                                <span className="block text-sm leading-5 text-[var(--color-text-secondary)]">
-                                  {[location.region, location.country].filter(Boolean).join(', ')}
+                    {normalizedQuery ? (
+                      <>
+                        <p className="mt-6 text-sm font-medium text-[var(--color-text-secondary)]">
+                          {t('addressSearch.suggestions')}
+                        </p>
+                        <div id={listboxId} className="-mx-3 mt-2" role="listbox" aria-label={t('addressSearch.suggestions')}>
+                          {filteredSuggestions.length ? (
+                            filteredSuggestions.map((location, index) => (
+                              <button
+                                id={`${listboxId}-option-${index}`}
+                                key={location.id}
+                                type="button"
+                                role="option"
+                                aria-selected={activeIndex === index}
+                                onMouseEnter={() => setActiveIndex(index)}
+                                onClick={() => selectLocation(location)}
+                                className={`flex min-h-[72px] w-full items-center gap-4 rounded-button px-3 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus:bg-[var(--color-surface-muted)] ${
+                                  activeIndex === index ? 'bg-[var(--color-surface-muted)]' : ''
+                                }`}
+                              >
+                                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-button bg-[var(--color-surface-muted)]">
+                                  <MapPin className="h-5 w-5" aria-hidden="true" />
                                 </span>
-                              </span>
-                            </button>
-                          ))
-                        ) : (
-                          <p className="px-4 py-8 text-center text-sm text-[var(--color-text-secondary)]">
-                            No suggested addresses found.
+                                <span className="min-w-0">
+                                  <span className="block truncate text-base">{location.city}</span>
+                                  <span className="block truncate text-sm leading-5 text-[var(--color-text-secondary)]">
+                                    {[location.region, location.country].filter(Boolean).join(', ')}
+                                  </span>
+                                </span>
+                              </button>
+                            ))
+                          ) : (
+                            <p className="px-3 py-8 text-center text-sm text-[var(--color-text-secondary)]">
+                              {t('addressSearch.noResults')}
+                            </p>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="mt-5 border-b border-[var(--color-border)] pb-3">
+                        <button
+                          type="button"
+                          onClick={locateCurrentPosition}
+                          disabled={isLocating}
+                          aria-busy={isLocating}
+                          aria-describedby={locationError ? locationErrorId : undefined}
+                          className="-mx-3 flex min-h-[72px] w-[calc(100%+24px)] items-center gap-4 rounded-button px-3 py-3 text-left transition hover:bg-[var(--color-surface-muted)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text-primary)] disabled:cursor-wait"
+                        >
+                          <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-button bg-[var(--color-surface-muted)]">
+                            {isLocating ? (
+                              <LoaderCircle className="h-5 w-5 animate-spin" aria-hidden="true" />
+                            ) : (
+                              <Navigation className="h-5 w-5" aria-hidden="true" />
+                            )}
+                          </span>
+                          <span className="text-base">
+                            {isLocating ? t('addressSearch.locating') : t('addressSearch.useCurrentLocation')}
+                          </span>
+                        </button>
+                        {locationError ? (
+                          <p id={locationErrorId} role="alert" className="mt-1 text-sm leading-5 text-[var(--color-danger)]">
+                            {locationError}
                           </p>
-                        )}
+                        ) : null}
                       </div>
-                    </>
-                  ) : null}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </motion.section>
         </motion.div>
       ) : null}

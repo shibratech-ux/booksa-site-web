@@ -1,6 +1,8 @@
+import { useId } from 'react';
 import { DoorOpen, House, UsersRound, UtensilsCrossed, type LucideIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
-import type { ListingCategory } from '../listingCategories';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import type { ListingCategory, ListingCategoryOption } from '../listingCategories';
 
 type AccessOption = {
   id: string;
@@ -9,7 +11,7 @@ type AccessOption = {
   icon: LucideIcon;
 };
 
-const getAccessContent = (
+export const getAccessContent = (
   category: ListingCategory,
   listingTypeLabel: string
 ): { title: string; context: string; options: AccessOption[] } => {
@@ -97,40 +99,57 @@ const getAccessContent = (
 
 export function PlaceAccessStep({
   category,
-  listingTypeLabel,
+  listingOption,
   value,
+  everyBedroomHasLock,
+  onBedroomLockChange,
   onChange
 }: {
   category: ListingCategory;
-  listingTypeLabel: string;
+  listingOption: ListingCategoryOption;
   value: string | null;
+  everyBedroomHasLock: boolean | null;
+  onBedroomLockChange: (hasLock: boolean) => void;
   onChange: (accessType: string) => void;
 }) {
-  const content = getAccessContent(category, listingTypeLabel);
+  const { t, i18n } = useTranslation('booking');
+  const reduceMotion = useReducedMotion();
+  const lockId = useId();
+  const content = getAccessContent(category, listingOption.label);
+  const propertyLabels = t('propertyTypeStep.options', { returnObjects: true });
+  const propertyLabel = propertyLabels[listingOption.id as keyof typeof propertyLabels];
+  const propertyType = propertyLabel.toLocaleLowerCase(i18n.resolvedLanguage ?? 'fr');
+  const title = t(`placeAccessStep.titles.${category.id}`, { propertyType });
+  const optionCopy = category.id === 'private-room'
+    ? t('placeAccessStep.roomOptions', { returnObjects: true, propertyType })
+    : t('placeAccessStep.options', { returnObjects: true, propertyType });
 
   return (
     <motion.section
-      initial={{ opacity: 0, x: 24 }}
+      initial={{ opacity: 0, x: reduceMotion ? 0 : 24 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-10 sm:py-10"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
+      className="min-h-0 flex-1 overflow-y-auto px-5 pb-8 pt-5 sm:px-10 sm:pb-10 sm:pt-8"
       aria-labelledby="place-access-title"
     >
-      <div className="mx-auto w-full max-w-[704px]">
+      <div className="mx-auto w-full max-w-2xl">
         <h1
           id="place-access-title"
-          className="text-3xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
+          className="max-w-xl text-2xl font-semibold leading-tight tracking-tight text-[var(--color-text-primary)] sm:text-4xl"
         >
-          {content.title}
+          {title}
         </h1>
-        <p className="mt-2 max-w-[638px] text-sm leading-relaxed text-[var(--color-text-secondary)] sm:mt-3 sm:text-base">
-          {content.context}
+        <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          {t('placeAccessStep.selection', {
+            category: t(`propertyTypeStep.categories.${category.id}`),
+            propertyType: propertyLabel
+          })}
         </p>
-
-        <div className="mt-8 space-y-3" role="group" aria-label={content.title}>
-          {content.options.map(({ id, title, description, icon: Icon }) => {
+        <div className="mt-6 space-y-3 sm:mt-8" role="group" aria-labelledby="place-access-title">
+          {content.options.map(({ id, icon: Icon }) => {
             const selected = value === id;
+            const copy = optionCopy[id as keyof typeof optionCopy];
 
             return (
               <button
@@ -138,23 +157,55 @@ export function PlaceAccessStep({
                 type="button"
                 aria-pressed={selected}
                 onClick={() => onChange(id)}
-                className={`flex min-h-[96.8px] w-full items-center gap-4 rounded-card border bg-[var(--color-surface)] px-4 py-4 text-left transition hover:border-[var(--color-text-primary)] sm:min-h-[110px] sm:gap-5 sm:px-6 sm:py-5 ${
+                className={`flex min-h-28 w-full items-center gap-4 rounded-card border px-4 py-5 text-left transition-colors hover:border-[var(--color-text-primary)] sm:min-h-28 sm:gap-5 sm:px-6 sm:py-5 ${
                   selected
-                    ? 'border-[var(--color-text-primary)] ring-2 ring-[var(--color-text-primary)]'
-                    : 'border-[var(--color-border)]'
+                    ? 'border-[var(--color-text-primary)] bg-[var(--color-surface-muted)] ring-1 ring-[var(--color-text-primary)]'
+                    : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-muted)]'
                 }`}
               >
                 <span className="min-w-0 flex-1">
-                  <span className="block text-xl font-semibold text-[var(--color-text-primary)]">{title}</span>
-                  <span className="mt-1 block text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                    {description}
+                  <span className="block text-base font-semibold leading-snug text-[var(--color-text-primary)]">{copy.title}</span>
+                  <span className="mt-1 block max-w-md text-sm leading-snug text-[var(--color-text-secondary)]">
+                    {copy.description}
                   </span>
                 </span>
-                <Icon className="h-8 w-8 shrink-0" strokeWidth={1.7} aria-hidden="true" />
+                <Icon className="h-7 w-7 shrink-0 sm:h-8 sm:w-8" strokeWidth={1.5} aria-hidden="true" />
               </button>
             );
           })}
         </div>
+        {value === 'private-room' || value === 'private-suite' ? (
+          <fieldset className="mt-8" aria-describedby={`${lockId}-hint`}>
+            <legend className="text-base font-semibold text-[var(--color-text-primary)]">
+              {t('placeAccessStep.bedroomLock.question')}
+            </legend>
+            <p id={`${lockId}-hint`} className="mt-2 text-sm text-[var(--color-text-secondary)]">
+              {t('placeAccessStep.bedroomLock.hint')}
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              {[true, false].map((answer) => (
+                <label
+                  key={String(answer)}
+                  className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-button border px-4 py-3 text-sm text-[var(--color-text-primary)] ${
+                    everyBedroomHasLock === answer
+                      ? 'border-[var(--color-text-primary)] bg-[var(--color-surface-muted)]'
+                      : 'border-[var(--color-border)]'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name={lockId}
+                    checked={everyBedroomHasLock === answer}
+                    onChange={() => onBedroomLockChange(answer)}
+                    required
+                    className="h-4 w-4 accent-[var(--color-text-primary)]"
+                  />
+                  {t(answer ? 'placeAccessStep.bedroomLock.yes' : 'placeAccessStep.bedroomLock.no')}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ) : null}
       </div>
     </motion.section>
   );

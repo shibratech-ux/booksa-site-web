@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  ChevronLeftRegular,
-  HeartRegular,
-  MailRegular,
-  PersonFilled,
-  SearchRegular
-} from '@fluentui/react-icons';
+import { ChevronLeft, Heart, Mail, UserIcon, Search } from 'lucide-react';
 import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BooksaLogo from '@/components/layout/BooksaLogo';
@@ -60,18 +54,18 @@ function MobileLoginNavigation() {
         to={ROUTES.home}
         className="flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-500"
       >
-        <SearchRegular className="h-5 w-5" />
+        <Search className="h-5 w-5" aria-hidden="true" />
         <span>Explore</span>
       </Link>
       <button
         type="button"
         className="flex flex-col items-center justify-center gap-1 text-xs font-medium text-slate-500"
       >
-        <HeartRegular className="h-5 w-5" />
+        <Heart className="h-5 w-5" aria-hidden="true" />
         <span>Wishlists</span>
       </button>
       <div className="flex flex-col items-center justify-center gap-1 text-xs font-medium text-[var(--color-primary-500)]">
-        <PersonFilled className="h-5 w-5" />
+        <UserIcon className="h-5 w-5" fill="currentColor" aria-hidden="true" />
         <span>Log in</span>
       </div>
     </nav>
@@ -99,7 +93,7 @@ function MobileGoogleLogin({
         onClick={onBack}
         className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition active:scale-95"
       >
-        <ChevronLeftRegular className="h-5 w-5" aria-hidden="true" />
+        <ChevronLeft className="h-5 w-5" aria-hidden="true" />
       </button>
 
       <div className="flex flex-col items-center text-center">
@@ -163,7 +157,7 @@ function MobileRememberedLogin({
 
       <h1 className="mt-4 text-[28px] font-semibold tracking-[-0.04em]">Welcome back, {firstName}</h1>
       <p className="mt-6 flex items-center justify-center gap-2 text-md text-slate-800">
-        <MailRegular className="h-5 w-5" aria-hidden="true" />
+        <Mail className="h-5 w-5" aria-hidden="true" />
         <span>{email ? maskEmail(email) : 'Email unavailable'}</span>
       </p>
 

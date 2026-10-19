@@ -1,18 +1,20 @@
 import {
-  CameraSparklesRegular,
-  CopyRegular,
-  ChevronDownRegular,
-  DismissRegular,
-  AccessibilityRegular,
-  HatGraduationRegular,
-  HeartRegular,
-  PeopleRegular,
-  CalendarRegular,
-  SearchRegular,
-  ShareRegular,
-  RibbonStarRegular,
-  StarFilled
-} from '@fluentui/react-icons';
+  Camera,
+  Copy,
+  ChevronDown,
+  X,
+  Accessibility,
+  GraduationCap,
+  Heart,
+  Minus,
+  Plus,
+  Users,
+  Calendar,
+  Search,
+  Share,
+  Award,
+  Star
+} from 'lucide-react';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useRef, useState, type MutableRefObject, type RefObject } from 'react';
 import { useParams } from 'react-router-dom';
@@ -101,7 +103,7 @@ function CloseButton({ onClick }: { onClick: () => void }) {
       onClick={onClick}
       className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
     >
-      <DismissRegular className="h-5 w-5" />
+      <X className="h-5 w-5" aria-hidden="true" />
     </button>
   );
 }
@@ -191,7 +193,7 @@ function ScheduleContent({
             onClick={onClose}
             className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-neutral-700 transition hover:bg-black/5 hover:text-neutral-900"
           >
-            <DismissRegular className="h-5 w-5" />
+            <X className="h-5 w-5" aria-hidden="true" />
           </button>
         </div>
       ) : (
@@ -210,14 +212,14 @@ function ScheduleContent({
             type="button"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full text-2xl leading-none text-neutral-300 transition hover:text-neutral-500"
           >
-            −
+            <Minus className="h-4 w-4" aria-hidden="true" />
           </button>
           <span className="min-w-5 text-center text-xs font-medium leading-none">1</span>
           <button
             type="button"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full text-md leading-none transition hover:text-neutral-500"
           >
-            +
+            <Plus className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -236,7 +238,7 @@ function ScheduleContent({
               {formatDate(visibleMonth.toDate(), undefined, { month: 'long', year: 'numeric' })}
             </motion.h3>
           </AnimatePresence>
-          <CalendarRegular className="h-5 w-5 text-neutral-700" />
+          <Calendar className="h-5 w-5 text-neutral-700" aria-hidden="true" />
         </div>
 
         <div ref={monthsScrollerRef} className="mt-5 overflow-x-auto pb-1 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -262,7 +264,7 @@ function ScheduleContent({
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <h4 className="text-sm font-medium text-neutral-900">{formatDate(month.toDate(), undefined, { month: 'long', year: 'numeric' })}</h4>
-                    <CalendarRegular className="h-5 w-5 text-neutral-700" />
+                    <Calendar className="h-5 w-5 text-neutral-700" aria-hidden="true" />
                   </div>
 
                   <div className="flex gap-3 overflow-x-auto pb-1 pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -563,7 +565,7 @@ function PortfolioBlock({ heroImage }: { heroImage: string }) {
 
                 {index === 1 ? (
                   <span className="absolute bottom-4 right-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#d8c2a0] text-gray-900 shadow-[0_10px_22px_rgba(15,23,42,0.16)]">
-                    <CopyRegular className="h-5 w-5" />
+                    <Copy className="h-5 w-5" aria-hidden="true" />
                   </span>
                 ) : null}
               </button>
@@ -645,16 +647,26 @@ const reviews: Review[] = [
     location: 'Milan, Italy',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop',
     text:
-      'Victor était incroyable ! Nous avons photographié devant le Duomo di Milano et les photos étaient absolument magnifiques. Il était sympathique, professionnel et a rendu tout cela très simple. Je recommande vivement ! ☆☆☆☆☆'
+      'Victor était incroyable ! Nous avons photographié devant le Duomo di Milano et les photos étaient absolument magnifiques. Il était sympathique, professionnel et a rendu tout cela très simple. Je recommande vivement !'
   }
 ];
+
+function FiveStarRating() {
+  return (
+    <span className="inline-flex items-center" aria-label="5 sur 5">
+      {Array.from({ length: 5 }, (_, index) => (
+        <Star key={index} className="h-3 w-3 fill-current" aria-hidden="true" />
+      ))}
+    </span>
+  );
+}
 
 function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
   return (
     <section className="w-full px-3 py-6 pt-10">
       <div className="mx-auto max-w-3xl border-t border-gray-200 pt-8">
-        <h2 className="text-xl font-semibold tracking-tight text-neutral-900">
-          ★ 5.0 · 14 avis
+        <h2 className="flex items-center gap-1 text-xl font-semibold tracking-tight text-neutral-900">
+          <Star className="h-4 w-4 fill-current" aria-hidden="true" /> 5.0 · 14 avis
         </h2>
 
         <div className="flex w-full gap-4 overflow-x-auto pb-2 pt-4 [scrollbar-width:none] md:mx-0 md:grid md:w-auto md:grid-cols-2 md:gap-x-12 md:gap-y-10 md:overflow-visible [&::-webkit-scrollbar]:hidden">
@@ -676,7 +688,7 @@ function ReviewsBlock({ onShowReviews }: { onShowReviews: () => void }) {
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[13px] text-neutral-800">★★★★★ · il y a 3 semaines</p>
+                <p className="flex items-center gap-1 text-[13px] text-neutral-800"><FiveStarRating /> · il y a 3 semaines</p>
                 <p className="text-xs leading-6 text-neutral-900 line-clamp-4">{review.text}</p>
                 <button type="button" className="text-xs font-semibold text-neutral-900 underline underline-offset-2">
                   Voir plus
@@ -723,12 +735,12 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
           onClick={onClose}
           className="absolute right-5 top-5 inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full text-gray-700 transition hover:bg-gray-100"
         >
-          <DismissRegular className="h-5 w-5" />
+          <X className="h-5 w-5" aria-hidden="true" />
         </button>
 
         <div className="flex items-start justify-between gap-4 pr-12">
-          <h2 className="text-lg font-medium tracking-tight text-neutral-900">
-            ★ 5.0 · 14 avis
+          <h2 className="flex items-center gap-1 text-lg font-medium tracking-tight text-neutral-900">
+            <Star className="h-4 w-4 fill-current" aria-hidden="true" /> 5.0 · 14 avis
           </h2>
 
           <button
@@ -736,12 +748,12 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
             className="inline-flex items-center gap-2 rounded-button border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-800 shadow-sm"
           >
             Plus récents
-            <ChevronDownRegular className="h-4 w-4" />
+            <ChevronDown className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
 
         <div className="mt-6 flex items-center gap-3 rounded-field border border-gray-200 px-4 py-3">
-          <SearchRegular className="h-5 w-5 text-gray-500" />
+          <Search className="h-5 w-5 text-gray-500" aria-hidden="true" />
           <input
             type="text"
             placeholder="Rechercher dans tous les avis"
@@ -765,7 +777,7 @@ function ReviewsDialog({ open, onClose }: { open: boolean; onClose: () => void }
               </div>
 
               <div className="mt-4 space-y-3">
-                <p className="text-[13px] text-neutral-800">★★★★★ · 3 weeks ago</p>
+                <p className="flex items-center gap-1 text-[13px] text-neutral-800"><FiveStarRating /> · 3 weeks ago</p>
                 <p className="text-sm leading-5 text-neutral-900">{review.text.replace('...', '')}</p>
                 <button
                   type="button"
@@ -812,17 +824,17 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
           <div className="space-y-6">
             {[
               {
-                icon: CameraSparklesRegular,
+                icon: Camera,
                 title: '8 ans d’expérience',
                 text: 'Je suis photographe professionnel, spécialisé dans le portrait et la photographie lifestyle.'
               },
               {
-                icon: RibbonStarRegular,
+                icon: Award,
                 title: 'Moment fort de carrière',
                 text: 'J’ai travaillé avec divers médias et photographié des voyageurs pour créer des images mémorables.'
               },
               {
-                icon: HatGraduationRegular,
+                icon: GraduationCap,
                 title: 'Études et formation',
                 text: 'Je poursuis actuellement un master à Milan pour développer mes compétences.'
               }
@@ -862,18 +874,18 @@ function QualificationsBlock({ avatarImage }: { avatarImage: string }) {
 function ThingsToKnowBlock() {
   const items = [
     {
-      icon: PeopleRegular,
+      icon: Users,
       title: 'Conditions pour les voyageurs',
       text: 'Les voyageurs âgés de 2 ans et plus peuvent participer.'
     },
     {
-      icon: AccessibilityRegular,
+      icon: Accessibility,
       title: 'Accessibilité',
       text: 'Options en langue des signes',
       linkLabel: 'En savoir plus'
     },
     {
-      icon: CalendarRegular,
+      icon: Calendar,
       title: 'Politique d’annulation',
       text: 'Annulez au moins 1 jour avant l’heure de début pour un remboursement complet.'
     }
@@ -916,7 +928,7 @@ function QualityTrustBlock() {
         <div className="rounded-card bg-[#f5f2ec] px-6 py-16 text-center shadow-[0_10px_30px_rgba(15,23,42,0.04)] sm:px-10">
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-sm bg-[#f2c14f] shadow-[0_14px_24px_rgba(15,23,42,0.16)] ring-8 ring-[#e2b43f]/25">
             <div className="flex h-16 w-16 items-center justify-center rounded-sm border-[3px] border-[#a66f11] bg-[#f6cf63] text-[#8a5b09] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]">
-              <StarFilled className="h-7 w-7" />
+              <Star className="h-7 w-7" fill="currentColor" aria-hidden="true" />
             </div>
           </div>
 
@@ -1022,8 +1034,8 @@ function ServiceHeroPanel({
         </div>
 
         <div className="space-y-1 text-xs text-gray-700">
-          <p>
-            ★ {rating} • {reviewCount} • {service.hostRole} à {service.city}
+          <p className="flex items-center justify-center gap-1">
+            <Star className="h-3 w-3 fill-current" aria-hidden="true" /> {rating} • {reviewCount} • {service.hostRole} à {service.city}
           </p>
           <p className="text-gray-500 text-xs">{summary}</p>
         </div>

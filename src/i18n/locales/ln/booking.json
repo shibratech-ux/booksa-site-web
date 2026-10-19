@@ -1,3 +1,636 @@
 {
-  "selectDates": "Poná mikolo", "guests": "Bapaya", "guests_one": "Mopaya {{count}}", "guests_other": "Bapaya {{count}}", "nights_one": "Butu {{count}}", "nights_other": "Butu {{count}}", "forNights_one": "mpo na butu {{count}}", "forNights_other": "mpo na butu {{count}}", "nightsInCity_one": "Butu {{count}} na {{city}}", "nightsInCity_other": "Butu {{count}} na {{city}}", "nightlyPrice_one": "Butu {{count}} × {{price}}", "nightlyPrice_other": "Butu {{count}} × {{price}}", "checkIn": "Kokɔta", "checkOut": "Kobima", "reserve": "Bomba", "dates": "Mikolo", "priceDetails": "Makambo ya ntalo", "total": "Nyonso", "edit": "Bongisa"
+  "listingDetail": {
+    "back": "Retour",
+    "share": "Partager",
+    "save": "Enregistrer",
+    "unsave": "Retirer des favoris",
+    "linkCopied": "Lien copié",
+    "photoCounter": "{{current}} / {{total}}",
+    "openPhoto": "Ouvrir la photo {{index}} sur {{total}}",
+    "showAllPhotos": "Voir toutes les photos",
+    "typeIn": "{{type}} à {{city}}",
+    "facts": {
+      "guests_one": "{{count}} voyageur",
+      "guests_other": "{{count}} voyageurs",
+      "bedrooms_one": "{{count}} chambre",
+      "bedrooms_other": "{{count}} chambres",
+      "beds_one": "{{count}} lit",
+      "beds_other": "{{count}} lits",
+      "bathrooms_one": "{{count}} salle de bain",
+      "bathrooms_other": "{{count}} salles de bain"
+    },
+    "new": "Nouveau",
+    "noReviews": "Pas encore d’avis",
+    "reviews_one": "Avis",
+    "reviews_other": "Avis",
+    "ratingLabel": "Noté {{rating}} sur 5",
+    "guestFavorite": "Coup de cœur voyageurs",
+    "guestFavoriteDescription": "L’un des logements les plus appréciés sur Booksa, selon les notes, les avis et la fiabilité.",
+    "showAllReviews_one": "Afficher {{count}} avis",
+    "showAllReviews_other": "Afficher les {{count}} avis",
+    "reviewsTitle": "Avis des voyageurs",
+    "hostedBy": "Hôte : {{name}}",
+    "hostedOnBooksa": "Hébergé sur Booksa",
+    "hostOnBooksa": "Hôte sur Booksa",
+    "sampleHostMeta_one": "Superhôte · {{count}} an d’expérience",
+    "sampleHostMeta_other": "Superhôte · {{count}} ans d’expérience",
+    "categoryHighlights": {
+      "hotel": "Des chambres gérées avec services hôteliers.",
+      "private-room": "Votre propre chambre, avec accès aux espaces partagés.",
+      "restaurant": "Un lieu de restauration proposé sur Booksa."
+    },
+    "showMore": "Afficher plus",
+    "aboutTitle": "À propos de ce logement",
+    "noDescription": "L’hôte n’a pas encore ajouté de description.",
+    "sleepTitle": "Où vous dormirez",
+    "bedroomsSummary": "{{bedrooms}} · {{beds}}",
+    "offersTitle": "Ce que propose ce logement",
+    "showAllAmenities_one": "Afficher {{count}} équipement",
+    "showAllAmenities_other": "Afficher les {{count}} équipements",
+    "noAmenities": "L’hôte n’a pas encore indiqué d’équipements.",
+    "locationTitle": "Où vous serez",
+    "mapTitle": "Carte de {{place}}",
+    "exactLocationLater": "L’adresse exacte est communiquée après la réservation.",
+    "calendar": {
+      "previous": "Mois précédent",
+      "next": "Mois suivant",
+      "clear": "Effacer les dates",
+      "addDatesHint": "Ajoutez vos dates de voyage pour obtenir le prix exact.",
+      "range": "{{start}} – {{end}}"
+    },
+    "askTitle": "Poser une question sur ce logement",
+    "askPlaceholder": "Y a-t-il une cuisine équipée ?",
+    "comingSoon": "Bientôt disponible",
+    "meetHost": "Faites connaissance avec votre hôte",
+    "superhost": "Superhôte",
+    "statsReviews": "Avis",
+    "statsRating": "Note",
+    "statsYears": "Années d’expérience",
+    "hostDetails": "Informations sur l’hôte",
+    "responseRate": "Taux de réponse : {{rate}} %",
+    "respondsWithinHour": "Répond en moins d’une heure",
+    "messageHost": "Envoyer un message à l’hôte",
+    "paymentProtection": "Pour protéger votre paiement, utilisez toujours Booksa pour envoyer de l’argent et communiquer avec les hôtes.",
+    "thingsToKnow": "À savoir",
+    "cancellation": "Conditions d’annulation",
+    "cancellationUnset": "L’hôte n’a pas encore ajouté de conditions d’annulation.",
+    "houseRules": "Règlement intérieur",
+    "houseRulesUnset": "L’hôte n’a pas encore ajouté de règlement intérieur.",
+    "maxGuests_one": "{{count}} voyageur maximum",
+    "maxGuests_other": "{{count}} voyageurs maximum",
+    "rules": {
+      "petsAllowed": {
+        "yes": "Animaux acceptés",
+        "no": "Animaux non acceptés"
+      },
+      "eventsAllowed": {
+        "yes": "Événements autorisés",
+        "no": "Fêtes et événements interdits"
+      },
+      "smokingAllowed": {
+        "yes": "Logement fumeur",
+        "no": "Non-fumeur"
+      },
+      "quietHours": {
+        "yes": "Heures de silence à respecter",
+        "no": "Pas d’heures de silence"
+      },
+      "commercialPhotographyAllowed": {
+        "yes": "Photographie commerciale autorisée",
+        "no": "Photographie commerciale interdite"
+      }
+    },
+    "safety": "Sécurité et logement",
+    "safetyUnset": "L’hôte n’a pas encore ajouté d’informations de sécurité.",
+    "addDates": "Ajouter des dates",
+    "perNight": "{{price}} par nuit",
+    "reserveFor": "{{nights}} · {{dates}}",
+    "loading": "Chargement de l’annonce…",
+    "notFound": "Cette annonce n’est plus disponible.",
+    "loadError": "Impossible de charger cette annonce.",
+    "signIn": "Connectez-vous pour voir cette annonce.",
+    "signInAction": "Se connecter",
+    "notFoundHint": "Elle a peut-être été retirée par son hôte, ou le lien est incorrect.",
+    "signInHint": "Les annonces publiées par les hôtes sont visibles une fois connecté à Booksa.",
+    "backToExplore": "Retour à Explorer"
+  },
+  "explorePublished": {
+    "new": "Nouveau",
+    "perNight": "par nuit",
+    "loading": "Chargement des annonces…",
+    "loadError": "Impossible de charger les dernières annonces."
+  },
+  "listingDiscountsStep": {
+    "title": "Ajoutez des réductions",
+    "subtitle": {
+      "hotel": "Mettez votre logement en valeur pour obtenir des réservations et vos premiers avis plus rapidement.",
+      "private-room": "Mettez votre chambre en valeur pour obtenir des réservations et vos premiers avis plus rapidement.",
+      "restaurant": "Mettez votre restaurant en valeur pour obtenir des réservations et vos premiers avis plus rapidement."
+    },
+    "options": {
+      "new-listing": {
+        "title": "Promotion nouvelle annonce",
+        "description": "Disponible jusqu’à 3 avis ou 10 réservations pour votre annonce"
+      },
+      "last-minute": {
+        "title": "Réduction de dernière minute",
+        "description": "Pour les séjours réservés 14 jours ou moins avant l’arrivée"
+      },
+      "weekly": {
+        "title": "Réduction à la semaine",
+        "description": "Pour les séjours de 7 nuits ou plus"
+      },
+      "monthly": {
+        "title": "Réduction au mois",
+        "description": "Pour les séjours de 28 nuits ou plus"
+      }
+    },
+    "restaurantLastMinute": "Pour les réservations effectuées 14 jours ou moins à l’avance",
+    "note": "Choisissez les réductions à proposer.",
+    "learnMore": "En savoir plus",
+    "help": {
+      "stays": "Sélectionnez une carte pour activer ou désactiver sa réduction. La promotion nouvelle annonce est disponible jusqu’à 3 avis ou 10 réservations. Les réductions de dernière minute, à la semaine et au mois concernent les périodes indiquées ci-dessus.",
+      "restaurant": "Sélectionnez une carte pour activer ou désactiver sa réduction. La promotion nouvelle annonce est disponible jusqu’à 3 avis ou 10 réservations. La réduction de dernière minute concerne les réservations effectuées 14 jours ou moins à l’avance."
+    }
+  },
+  "bookingSettingsStep": {
+    "subtitle": "Vous pouvez modifier ce choix à tout moment.",
+    "learnMore": "En savoir plus",
+    "recommended": "Recommandé",
+    "hotel": {
+      "title": "Choisissez vos paramètres de réservation",
+      "help": "Examinez les demandes avant d’accepter des séjours dans votre hôtel, ou choisissez la réservation instantanée pour les accepter automatiquement. Vous pourrez modifier ce choix plus tard.",
+      "review-first": {
+        "title": "Approuvez vos 5 premières réservations",
+        "description": "Commencez par examiner les demandes pour votre hôtel, puis passez à la réservation instantanée pour que les voyageurs réservent automatiquement."
+      },
+      "instant-book": {
+        "title": "Activer la réservation instantanée",
+        "description": "Laissez les voyageurs réserver automatiquement un séjour dans votre hôtel."
+      }
+    },
+    "room": {
+      "title": "Choisissez vos paramètres de réservation",
+      "help": "Examinez les demandes avant d’accueillir des voyageurs dans votre chambre, ou choisissez la réservation instantanée pour les accepter automatiquement. Vous pourrez modifier ce choix plus tard.",
+      "review-first": {
+        "title": "Approuvez vos 5 premières réservations",
+        "description": "Commencez par examiner les demandes pour votre chambre, puis passez à la réservation instantanée pour que les voyageurs réservent automatiquement."
+      },
+      "instant-book": {
+        "title": "Activer la réservation instantanée",
+        "description": "Laissez les voyageurs réserver votre chambre automatiquement."
+      }
+    },
+    "restaurant": {
+      "title": "Choisissez vos paramètres de réservation",
+      "help": "Examinez les demandes avant d’accepter des clients dans votre restaurant, ou choisissez la réservation instantanée pour les accepter automatiquement. Vous pourrez modifier ce choix plus tard.",
+      "review-first": {
+        "title": "Approuvez vos 5 premières réservations",
+        "description": "Commencez par examiner les demandes pour votre restaurant, puis passez à la réservation instantanée pour que les clients réservent automatiquement."
+      },
+      "instant-book": {
+        "title": "Activer la réservation instantanée",
+        "description": "Laissez les clients réserver dans votre restaurant automatiquement."
+      }
+    }
+  },
+  "finishPublishIntro": {
+    "step": "Étape {{current}} sur {{total}}",
+    "stepLabel": "Étape {{current}}",
+    "title": "Finalisez et publiez",
+    "description": "Enfin, choisissez vos paramètres de réservation, fixez vos tarifs et publiez votre annonce.",
+    "booking": {
+      "title": "Choisissez comment réserver",
+      "description": "Optez pour le mode de réservation qui vous convient."
+    },
+    "pricing": {
+      "title": "Fixez votre prix",
+      "description": "Définissez votre tarif par nuit et vos réductions."
+    },
+    "review": {
+      "title": "Vérifiez les derniers détails",
+      "description": "Ajoutez les informations de sécurité et préparez votre annonce."
+    }
+  },
+  "listingDescriptionStep": {
+    "title": "Créez votre description",
+    "subtitle": {
+      "hotel": "Expliquez ce qui rend votre logement unique.",
+      "restaurant": "Expliquez ce qui rend votre expérience culinaire unique.",
+      "private-room": "Expliquez ce qui rend votre chambre unique."
+    },
+    "label": "Description de l’annonce"
+  },
+  "listingTitleStep": {
+    "title": "Donnons maintenant un titre à votre {{listingType}}",
+    "subtitle": "Les titres courts sont les meilleurs. Amusez-vous : vous pourrez toujours le modifier plus tard.",
+    "label": "Titre de l’annonce",
+    "questions": "Des questions ?",
+    "saveAndExit": "Enregistrer et quitter",
+    "saving": "Enregistrement…",
+    "back": "Retour",
+    "next": "Suivant"
+  },
+  "selectDates": "Poná mikolo",
+  "guests": "Bapaya",
+  "guests_one": "Mopaya {{count}}",
+  "guests_other": "Bapaya {{count}}",
+  "nights_one": "Butu {{count}}",
+  "nights_other": "Butu {{count}}",
+  "forNights_one": "mpo na butu {{count}}",
+  "forNights_other": "mpo na butu {{count}}",
+  "nightsInCity_one": "Butu {{count}} na {{city}}",
+  "nightsInCity_other": "Butu {{count}} na {{city}}",
+  "nightlyPrice_one": "Butu {{count}} × {{price}}",
+  "nightlyPrice_other": "Butu {{count}} × {{price}}",
+  "checkIn": "Kokɔta",
+  "checkOut": "Kobima",
+  "reserve": "Bomba",
+  "dates": "Mikolo",
+  "priceDetails": "Makambo ya ntalo",
+  "total": "Nyonso",
+  "edit": "Bongisa",
+  "propertyTypeStep": {
+    "title": "Quel type de lieu proposez-vous ?",
+    "subtitle": "Choisissez l’option qui décrit le mieux votre lieu.",
+    "categoryLabel": "Catégorie de l’annonce",
+    "optionsLabel": "Types de lieux",
+    "categories": {
+      "hotel": "Hôtel",
+      "private-room": "Chambre privée",
+      "restaurant": "Restaurant"
+    },
+    "options": {
+      "house": "Maison",
+      "apartment": "Appartement",
+      "barn": "Grange",
+      "bed-and-breakfast": "Chambre d’hôtes",
+      "boat": "Bateau",
+      "cabin": "Cabane",
+      "camper-rv": "Camping-car",
+      "casa-particular": "Casa particular",
+      "castle": "Château",
+      "cave": "Grotte",
+      "container": "Conteneur",
+      "cycladic-home": "Maison cycladique",
+      "dammuso": "Dammuso",
+      "dome": "Dôme",
+      "earth-home": "Maison en terre",
+      "farm": "Ferme",
+      "guesthouse": "Maison d’hôtes",
+      "hotel": "Hôtel",
+      "houseboat": "Péniche",
+      "minsu": "Minsu",
+      "riad": "Riad",
+      "ryokan": "Ryokan",
+      "shepherds-hut": "Cabane de berger",
+      "tent": "Tente",
+      "tiny-home": "Petite maison",
+      "tower": "Tour",
+      "treehouse": "Cabane dans les arbres",
+      "trullo": "Trullo",
+      "windmill": "Moulin",
+      "yurt": "Yourte",
+      "boutique-hotel": "Hôtel de charme",
+      "hostel": "Auberge",
+      "lodge": "Lodge",
+      "resort": "Complexe hôtelier",
+      "villa": "Villa",
+      "bedroom": "Chambre",
+      "guest-suite": "Suite privée",
+      "shared-room": "Chambre partagée",
+      "room-in-apartment": "Chambre en appartement",
+      "room-in-house": "Chambre dans une maison",
+      "room-in-guesthouse": "Chambre en maison d’hôtes",
+      "room-in-hotel": "Chambre d’hôtel",
+      "room-in-hostel": "Chambre en auberge",
+      "room-in-villa": "Chambre dans une villa",
+      "room-in-lodge": "Chambre dans un lodge",
+      "studio-room": "Chambre studio",
+      "serviced-room": "Chambre avec services",
+      "room-on-farm": "Chambre à la ferme",
+      "room-on-houseboat": "Chambre sur une péniche",
+      "restaurant": "Restaurant",
+      "cafe": "Café",
+      "bar": "Bar",
+      "bistro": "Bistro",
+      "diner": "Diner",
+      "food-truck": "Food truck",
+      "bakery": "Boulangerie",
+      "pub": "Pub",
+      "fast-food": "Restauration rapide",
+      "brasserie": "Brasserie",
+      "canteen": "Cantine",
+      "dessert-shop": "Pâtisserie",
+      "fine-dining": "Restaurant gastronomique",
+      "market-stall": "Étal de marché",
+      "lounge": "Lounge",
+      "pizzeria": "Pizzeria",
+      "tea-house": "Salon de thé",
+      "tavern": "Taverne",
+      "snack-bar": "Snack-bar",
+      "buffet": "Buffet",
+      "rooftop": "Restaurant en terrasse",
+      "private-dining": "Repas privé",
+      "pop-up": "Cuisine éphémère"
+    }
+  },
+  "listingHighlightsStep": {
+    "titles": {
+      "hotel": "Qu’est-ce qui rend votre hébergement unique ?",
+      "private-room": "Qu’est-ce qui rend votre chambre accueillante ?",
+      "restaurant": "Qu’est-ce qui donne envie de découvrir votre restaurant ?"
+    },
+    "subtitle": "Choisissez jusqu’à {{maximum}} points forts. Ils nous aideront à rédiger votre description.",
+    "selected": "{{count}} sur {{maximum}} sélectionnés",
+    "limitHint": "Désélectionnez-en un pour en choisir un autre.",
+    "options": {
+      "peaceful": "Paisible",
+      "unique": "Unique",
+      "family-friendly": "Adapté aux familles",
+      "stylish": "Élégant",
+      "central": "Central",
+      "spacious": "Spacieux",
+      "exceptional-service": "Service attentionné",
+      "luxurious": "Luxueux",
+      "romantic": "Romantique",
+      "great-coffee": "Excellent café",
+      "live-music": "Musique live",
+      "chef-led": "Cuisine de chef",
+      "private": "Intimité",
+      "cozy": "Chaleureux",
+      "work-friendly": "Adapté au travail",
+      "welcoming-host": "Hôte accueillant"
+    }
+  },
+  "listingProgress": {
+    "saving": "Enregistrement…",
+    "saveError": "Vos dernières modifications n’ont pas pu être enregistrées. Réessayez avec « Suivant » ou « Enregistrer et quitter »."
+  },
+  "placeAccessStep": {
+    "titles": {
+      "hotel": "Quel accès proposez-vous pour votre {{propertyType}} ?",
+      "private-room": "Quelle intimité proposez-vous pour votre {{propertyType}} ?",
+      "restaurant": "Comment les clients profiteront-ils de votre {{propertyType}} ?"
+    },
+    "options": {
+      "entire-place": {
+        "title": "Un logement entier",
+        "description": "Les voyageurs disposent de l’intégralité de votre {{propertyType}}, pour eux seuls."
+      },
+      "private-room": {
+        "title": "Une chambre",
+        "description": "Les voyageurs ont une chambre privée dans votre {{propertyType}} et accèdent aux espaces communs."
+      },
+      "shared-room": {
+        "title": "Une chambre partagée",
+        "description": "Les voyageurs partagent un espace de couchage dans votre {{propertyType}} avec d’autres personnes."
+      },
+      "private-suite": {
+        "title": "Une suite privée",
+        "description": "Les voyageurs réservent votre {{propertyType}} avec des espaces privés supplémentaires."
+      },
+      "entire-venue": {
+        "title": "Un établissement entier",
+        "description": "Les clients réservent l’intégralité de votre {{propertyType}} pour un repas exclusif."
+      },
+      "private-dining-area": {
+        "title": "Un espace de restauration privé",
+        "description": "Les clients disposent d’une salle ou d’un espace réservé dans votre {{propertyType}}."
+      },
+      "shared-dining-area": {
+        "title": "Un espace de restauration partagé",
+        "description": "Les clients prennent leur repas aux côtés d’autres clients dans votre {{propertyType}}."
+      }
+    },
+    "selection": "Votre choix : {{category}} · {{propertyType}}",
+    "roomOptions": {
+      "private-suite": {
+        "title": "Une suite privée",
+        "description": "Les voyageurs réservent votre {{propertyType}} avec des espaces privés supplémentaires."
+      },
+      "private-room": {
+        "title": "Une chambre",
+        "description": "Les voyageurs disposent de votre {{propertyType}} pour eux seuls et accèdent aux espaces communs."
+      },
+      "shared-room": {
+        "title": "Une chambre partagée",
+        "description": "Les voyageurs partagent votre {{propertyType}} avec d’autres personnes."
+      }
+    },
+    "bedroomLock": {
+      "question": "Chaque chambre dispose-t-elle d’une serrure ?",
+      "hint": "Répondez pour continuer avec une chambre ou une suite privée.",
+      "yes": "Oui",
+      "no": "Non"
+    }
+  },
+  "listingBasicsStep": {
+    "title": "Donnez les informations de base sur votre {{propertyType}}",
+    "labels": {
+      "guests": "Voyageurs",
+      "bedrooms": "Chambres",
+      "beds": "Lits",
+      "bathrooms": "Salles de bain",
+      "tables": "Tables",
+      "indoorSeats": "Places à l’intérieur",
+      "outdoorSeats": "Places à l’extérieur"
+    },
+    "increase": "Augmenter : {{label}}",
+    "decrease": "Diminuer : {{label}}",
+    "value": "{{label}} : {{value}}",
+    "variants": {
+      "hotel-entire-place": {
+        "description": "Vous ajouterez d’autres précisions plus tard, comme les types de lits.",
+        "labels": {}
+      },
+      "hotel-private-room": {
+        "description": "Indiquez la capacité de la chambre proposée. Vous préciserez les types de lits plus tard.",
+        "labels": {
+          "bedrooms": "Chambres proposées"
+        }
+      },
+      "hotel-shared-room": {
+        "description": "Indiquez la capacité des chambres partagées. Vous préciserez les types de lits plus tard.",
+        "labels": {
+          "bedrooms": "Chambres partagées",
+          "bathrooms": "Salles de bain partagées"
+        }
+      },
+      "private-room-private-room": {
+        "description": "Indiquez la capacité de votre chambre privée. Vous décrirez les espaces communs plus tard.",
+        "labels": {}
+      },
+      "private-room-private-suite": {
+        "description": "Indiquez la capacité de votre suite privée. Vous décrirez ses différents espaces plus tard.",
+        "labels": {
+          "bedrooms": "Chambres privées",
+          "bathrooms": "Salles de bain privées"
+        }
+      },
+      "private-room-shared-room": {
+        "description": "Indiquez combien de voyageurs peuvent séjourner dans cet espace de couchage partagé.",
+        "labels": {
+          "bedrooms": "Chambres partagées",
+          "bathrooms": "Salles de bain partagées"
+        }
+      },
+      "restaurant-entire-venue": {
+        "description": "Indiquez la capacité de tout l’établissement. Vous ajouterez les menus et les horaires plus tard.",
+        "labels": {
+          "guests": "Capacité totale"
+        }
+      },
+      "restaurant-private-dining-area": {
+        "description": "Indiquez la capacité de votre espace de restauration privé. Vous décrirez le menu et l’ambiance plus tard.",
+        "labels": {
+          "guests": "Convives en espace privé",
+          "tables": "Tables de repas"
+        }
+      },
+      "restaurant-shared-dining-area": {
+        "description": "Indiquez la capacité disponible par réservation, tout en accueillant d’autres clients.",
+        "labels": {
+          "guests": "Convives par réservation",
+          "tables": "Tables réservables",
+          "indoorSeats": "Places réservables à l’intérieur",
+          "outdoorSeats": "Places réservables à l’extérieur"
+        }
+      }
+    }
+  },
+  "amenitiesStep": {
+    "titles": {
+      "hotel": "Indiquez les équipements disponibles dans votre lieu",
+      "private-room": "Indiquez les équipements disponibles dans votre chambre",
+      "restaurant": "Indiquez ce que propose votre espace de restauration"
+    },
+    "descriptions": {
+      "hotel": "Sélectionnez tout ce qui est à disposition des voyageurs. Vous pourrez modifier vos équipements plus tard.",
+      "private-room": "Sélectionnez les équipements accessibles dans la chambre et les espaces communs. Vous pourrez les modifier plus tard.",
+      "restaurant": "Sélectionnez les équipements, les options de restauration et les services proposés à vos clients. Vous pourrez les modifier plus tard."
+    },
+    "choose": "Sélectionnez tout ce qui s’applique",
+    "selected_one": "{{count}} sélectionné",
+    "selected_other": "{{count}} sélectionnés",
+    "groups": {
+      "basics": "Les indispensables",
+      "popular": "Plus de confort",
+      "features": "Équipements remarquables",
+      "hotel-services": "Services hôteliers",
+      "location": "Emplacement",
+      "safety": "Sécurité",
+      "dining-basics": "Les essentiels de la restauration",
+      "food-and-drink": "Repas et boissons",
+      "service-options": "Services et expériences",
+      "access-and-payment": "Accès et paiement"
+    },
+    "labels": {
+      "air-conditioning": "Climatisation",
+      "dryer": "Sèche-linge",
+      "essentials": "Équipements de base",
+      "heating": "Chauffage",
+      "hot-water": "Eau chaude",
+      "kitchen": "Cuisine",
+      "refrigerator": "Réfrigérateur",
+      "tv": "Télévision",
+      "washer": "Lave-linge",
+      "wifi": "Wifi",
+      "coffee-maker": "Cafetière",
+      "cooking-basics": "Équipements de cuisine",
+      "hair-dryer": "Sèche-cheveux",
+      "hangers": "Cintres",
+      "iron": "Fer à repasser",
+      "shampoo": "Shampoing",
+      "crib": "Lit bébé",
+      "dedicated-workspace": "Espace de travail",
+      "ev-charger": "Borne de recharge électrique",
+      "free-parking": "Parking gratuit sur place",
+      "gym": "Salle de sport",
+      "hot-tub": "Bain à remous",
+      "indoor-fireplace": "Cheminée intérieure",
+      "outdoor-furniture": "Mobilier d’extérieur",
+      "pool": "Piscine",
+      "beach-access": "Accès à la plage",
+      "waterfront": "Bord de l’eau",
+      "carbon-monoxide-alarm": "Détecteur de monoxyde de carbone",
+      "smoke-alarm": "Détecteur de fumée",
+      "front-desk": "Réception ouverte 24 h/24",
+      "breakfast": "Petit-déjeuner",
+      "room-service": "Service en chambre",
+      "indoor-seating": "Places à l’intérieur",
+      "outdoor-seating": "Places à l’extérieur",
+      "bar": "Bar",
+      "coffee": "Café",
+      "lunch": "Déjeuner",
+      "dinner": "Dîner",
+      "desserts": "Desserts",
+      "vegetarian-options": "Options végétariennes",
+      "alcohol": "Vin et boissons alcoolisées",
+      "reservations": "Réservations",
+      "takeaway": "Vente à emporter",
+      "table-service": "Service à table",
+      "private-dining": "Repas privés",
+      "late-night": "Service tardif",
+      "live-music": "Musique en direct",
+      "accessible": "Accès en fauteuil roulant",
+      "parking": "Parking",
+      "card-payment": "Paiement par carte"
+    },
+    "details": {
+      "essentials": "Serviettes, draps, savon et papier toilette",
+      "cooking-basics": "Casseroles, poêles, huile, sel et poivre"
+    }
+  },
+  "photoStep": {
+    "reviewTitle": "Et voilà ! Qu’en pensez-vous ?",
+    "reviewSubtitle": "Choisissez la couverture et vérifiez vos photos.",
+    "reviewReady": "Vous pouvez continuer",
+    "title": "Ajoutez des photos de votre lieu",
+    "subtitle": "Il vous faut {{minimum}} photos pour commencer. Vous pourrez en ajouter ou les modifier plus tard.",
+    "gallery": "Photos de votre annonce",
+    "photoAlt": "Photo {{number}} de l’annonce",
+    "remove": "Supprimer la photo {{number}}",
+    "cover": "Photo de couverture",
+    "coverHint": "C’est la première photo que les voyageurs verront.",
+    "makeCover": "Choisir comme couverture",
+    "actions": "Options de la photo {{number}}",
+    "delete": "Supprimer",
+    "progress": "{{count}} sur {{minimum}} photos",
+    "add": "Ajouter des photos",
+    "addMore": "Ajouter des photos",
+    "loading": "Chargement de vos photos",
+    "loadError": "Impossible de charger vos photos Booksa. Veuillez réessayer.",
+    "saveError": "Impossible d’enregistrer vos photos Booksa. Veuillez réessayer.",
+    "uploaded_one": "{{count}} photo ajoutée",
+    "uploaded_other": "{{count}} photos ajoutées",
+    "remaining_one": "Ajoutez encore {{count}} photo pour continuer.",
+    "remaining_other": "Ajoutez encore {{count}} photos pour continuer.",
+    "ready": "Vous pouvez continuer. Vous pourrez ajouter d’autres photos plus tard.",
+    "saving": "Enregistrement de vos photos…",
+    "emptyTitle": "Commencez par vos meilleures photos",
+    "emptyDescription": "Montrez les espaces dont vos voyageurs pourront profiter, ainsi que les détails qui rendent votre lieu unique.",
+    "tip": "Pour une bonne première impression, privilégiez la lumière naturelle et montrez chaque espace.",
+    "dialog": {
+      "title": "Ajouter des photos",
+      "imageOnly": "Choisissez des fichiers image pour votre annonce.",
+      "uploadError": "Impossible d’ajouter vos photos Booksa. Veuillez réessayer.",
+      "browseButton": "Parcourir",
+      "browse": "Choisir des photos",
+      "dropTitle": "Glissez vos photos ici",
+      "dropDescription": "ou choisissez des images sur votre appareil",
+      "selected_zero": "Aucune photo sélectionnée",
+      "selected_one": "{{count}} photo sélectionnée",
+      "selected_other": "{{count}} photos sélectionnées",
+      "complete_one": "{{count}} photo ajoutée",
+      "complete_other": "{{count}} photos ajoutées",
+      "progress": "{{completed}} photos sur {{total}} ajoutées",
+      "uploading": "Ajout en cours…",
+      "uploaded": "Photos ajoutées",
+      "keepOpen": "Gardez cette fenêtre ouverte pendant l’enregistrement de vos photos.",
+      "upload": "Ajouter les photos",
+      "cancel": "Annuler",
+      "done": "Terminé"
+    }
+  }
 }

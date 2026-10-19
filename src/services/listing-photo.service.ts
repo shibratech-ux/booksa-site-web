@@ -1,16 +1,14 @@
-import { deleteField, doc, getDoc, serverTimestamp, Timestamp, updateDoc, writeBatch } from 'firebase/firestore';
+import type { ListingPhoto } from '../domain/listing';
+import { getOwnListingImageUrls } from '../domain/listing-photos';
+
+// Photo writes only consider photos this document owns (its `listingPhotos` under the owner's Storage
+// folder), matching what the editor shows; legacy fields and nested copies are ignored.
+const ownPhotoUrls = (data: Record<string, unknown>) => getOwnListingImageUrls(data);
+import { doc, getDoc, serverTimestamp, Timestamp, runTransaction } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { firebaseAuth, firebaseDb, firebaseStorage } from './firebase';
 
-export type UploadedListingPhoto = {
-  id: string;
-  url: string;
-  storagePath: string;
-  originalName: string;
-  contentType: string;
-  size: number;
-  uploadedAt: Timestamp;
-};
+export type UploadedListingPhoto = ListingPhoto;
 
 export type UploadedListingPhotoMap = Record<string, UploadedListingPhoto>;
 
@@ -95,28 +93,16 @@ export function getPhotoTourDescriptions(
   return photoUrls.map((photoUrl) => descriptionsByUrl.get(photoUrl) ?? '');
 }
 
-export async function updateListingPhotoTour(
-  listingId: string,
-  photoUrls: string[],
-  roomLabels: string[],
-  descriptions?: string[]
-): Promise<void> {
-  const currentUser = firebaseAuth?.currentUser;
-
-  if (!currentUser) throw new Error('You must be signed in to update a photo tour.');
-  if (!firebaseDb) throw new Error('Firestore is not configured.');
-  if (photoUrls.length !== roomLabels.length) {
-    throw new Error('Every listing photo must have a matching room assignment.');
+function buildPhotoTour(
+  data: Record<string, unknown>, photoUrls: string[], roomLabels: string[], descriptions?: string[]
+) {
+  const storedUrls = new Set(ownPhotoUrls(data));
+  if (photoUrls.length !== roomLabels.length || (descriptions && descriptions.length !== photoUrls.length) ||
+      new Set(photoUrls).size !== photoUrls.length || photoUrls.some(url => !storedUrls.has(url))) {
+    throw new Error('The listing photos changed. Please reload and try again.');
   }
-
-  const reference = doc(firebaseDb, 'annonceslisting', listingId);
-  const listingSnapshot = await getDoc(reference);
-  if (!listingSnapshot.exists() || listingSnapshot.data().userUid !== currentUser.uid) {
-    throw new Error('This listing does not belong to the signed-in user.');
-  }
-
-  const storedListingPhotos = isRecord(listingSnapshot.data().listingPhotos)
-    ? listingSnapshot.data().listingPhotos
+  const storedListingPhotos = isRecord(data.listingPhotos)
+    ? data.listingPhotos
     : {};
   const photoIdsByUrl = new Map<string, string>();
   Object.entries(storedListingPhotos).forEach(([storedPhotoId, storedPhoto]) => {
@@ -126,7 +112,7 @@ export async function updateListingPhotoTour(
     if (storedPhotoUrl) photoIdsByUrl.set(storedPhotoUrl, photoId);
   });
   const storedDescriptionsByUrl = new Map<string, string>();
-  const storedPhotoTour = listingSnapshot.data().photoTour;
+  const storedPhotoTour = data.photoTour;
   if (isRecord(storedPhotoTour) && isRecord(storedPhotoTour.photoAssignments)) {
     Object.values(storedPhotoTour.photoAssignments).forEach((assignment) => {
       if (!isRecord(assignment)) return;
@@ -159,16 +145,34 @@ export async function updateListingPhotoTour(
     photoAssignments[id] = { ...photo, ...assignmentDetails, roomId, roomLabel };
   });
 
-  await updateDoc(reference, {
-    photoTour: {
-      version: 1,
-      rooms,
-      photoAssignments,
-      unassignedPhotos,
+  return { version: 1, rooms, photoAssignments, unassignedPhotos, updatedAt: serverTimestamp() };
+}
+
+export async function updateListingPhotoTour(
+  listingId: string, photoUrls: string[], roomLabels: string[], descriptions?: string[], coverPhotoUrl?: string
+): Promise<void> {
+  const currentUser = firebaseAuth?.currentUser;
+  if (!currentUser || !firebaseDb) throw new Error('You must be signed in to update a photo tour.');
+  const reference = doc(firebaseDb, 'annonceslisting', listingId);
+  await runTransaction(firebaseDb, async transaction => {
+    if (firebaseAuth?.currentUser !== currentUser) throw new Error('Your session changed. Please try again.');
+    const snapshot = await transaction.get(reference);
+    if (firebaseAuth?.currentUser !== currentUser || !snapshot.exists() || snapshot.data().userUid !== currentUser.uid || snapshot.data().ownerUid !== currentUser.uid) {
+      throw new Error('This listing does not belong to the signed-in user.');
+    }
+    const data = snapshot.data();
+    if (ownPhotoUrls(data).length !== photoUrls.length) throw new Error('The listing photos changed. Please reload and try again.');
+    if (coverPhotoUrl !== undefined && !photoUrls.includes(coverPhotoUrl)) throw new Error('Choose a cover from this listing’s photos.');
+    transaction.update(reference, {
+      photoTour: buildPhotoTour(data, photoUrls, roomLabels, descriptions),
+      ...(coverPhotoUrl !== undefined ? {
+        coverImageUrl: coverPhotoUrl,
+        ...(isRecord(data.generatedSummary) ? { generatedSummary: { ...data.generatedSummary, coverImageUrl: coverPhotoUrl } } : {})
+      } : {}),
       updatedAt: serverTimestamp()
-    },
-    updatedAt: serverTimestamp()
+    });
   });
+  if (firebaseAuth?.currentUser !== currentUser) throw new Error('Your session changed. Please try again.');
 }
 
 export async function setListingCoverPhoto(listingId: string, photoUrl: string): Promise<void> {
@@ -177,12 +181,21 @@ export async function setListingCoverPhoto(listingId: string, photoUrl: string):
   if (!firebaseDb) throw new Error('Firestore is not configured.');
 
   const reference = doc(firebaseDb, 'annonceslisting', listingId);
-  const snapshot = await getDoc(reference);
-  if (!snapshot.exists() || snapshot.data().userUid !== currentUser.uid) {
-    throw new Error('This listing does not belong to the signed-in user.');
-  }
-
-  await updateDoc(reference, { coverImageUrl: photoUrl, updatedAt: serverTimestamp() });
+  await runTransaction(firebaseDb, async transaction => {
+    if (firebaseAuth?.currentUser !== currentUser) throw new Error('Your session changed. Please try again.');
+    const snapshot = await transaction.get(reference);
+    if (firebaseAuth?.currentUser !== currentUser || !snapshot.exists() || snapshot.data().userUid !== currentUser.uid || snapshot.data().ownerUid !== currentUser.uid) {
+      throw new Error('This listing does not belong to the signed-in user.');
+    }
+    const data = snapshot.data();
+    if (!ownPhotoUrls(data).includes(photoUrl)) throw new Error('Choose a cover from this listing’s photos.');
+    transaction.update(reference, {
+      coverImageUrl: photoUrl,
+      ...(isRecord(data.generatedSummary) ? { generatedSummary: { ...data.generatedSummary, coverImageUrl: photoUrl } } : {}),
+      updatedAt: serverTimestamp()
+    });
+  });
+  if (firebaseAuth?.currentUser !== currentUser) throw new Error('Your session changed. Please try again.');
 }
 
 export async function removeListingPhotos(
@@ -197,39 +210,42 @@ export async function removeListingPhotos(
   if (!firebaseDb) throw new Error('Firestore is not configured.');
 
   const reference = doc(firebaseDb, 'annonceslisting', listingId);
-  const snapshot = await getDoc(reference);
-  if (!snapshot.exists() || snapshot.data().userUid !== currentUser.uid) {
-    throw new Error('This listing does not belong to the signed-in user.');
-  }
-
-  const storedPhotos = isRecord(snapshot.data().listingPhotos)
-    ? snapshot.data().listingPhotos
-    : {};
-  const urlsToDelete = new Set(photoUrlsToDelete);
-  const matchingEntries = Object.entries(storedPhotos).filter(([, value]) =>
-    isRecord(value) && typeof value.url === 'string' && urlsToDelete.has(value.url)
-  );
-  const storagePaths = matchingEntries.flatMap(([, photo]) =>
-    isRecord(photo) && typeof photo.storagePath === 'string' ? [photo.storagePath] : []
-  );
-
-  await updateListingPhotoTour(
-    listingId,
-    remainingPhotoUrls,
-    remainingRoomLabels,
-    remainingDescriptions
-  );
-
-  const coverImageUrl = urlsToDelete.has(snapshot.data().coverImageUrl)
-    ? remainingPhotoUrls[0] ?? ''
-    : snapshot.data().coverImageUrl;
-  await updateDoc(reference, {
-    ...Object.fromEntries(
-      matchingEntries.map(([photoId]) => [`listingPhotos.${photoId}`, deleteField()])
-    ),
-    coverImageUrl,
-    updatedAt: serverTimestamp()
+  const storagePaths = await runTransaction(firebaseDb, async transaction => {
+    if (firebaseAuth?.currentUser !== currentUser) throw new Error('Your session changed. Please try again.');
+    const snapshot = await transaction.get(reference);
+    if (firebaseAuth?.currentUser !== currentUser || !snapshot.exists() || snapshot.data().userUid !== currentUser.uid || snapshot.data().ownerUid !== currentUser.uid) {
+      throw new Error('This listing does not belong to the signed-in user.');
+    }
+    const data = snapshot.data();
+    const storedPhotos = isRecord(data.listingPhotos) ? data.listingPhotos : {};
+    const urlsToDelete = new Set(photoUrlsToDelete);
+    const remaining = ownPhotoUrls(data).filter(url => !urlsToDelete.has(url));
+    if (remaining.length !== remainingPhotoUrls.length || remaining.some(url => !remainingPhotoUrls.includes(url))) {
+      throw new Error('The listing photos changed. Please reload and try again.');
+    }
+    const matchingEntries = Object.entries(storedPhotos).filter(([, photo]) =>
+      isRecord(photo) && typeof photo.url === 'string' && urlsToDelete.has(photo.url)
+    );
+    if (urlsToDelete.size !== photoUrlsToDelete.length || matchingEntries.length !== urlsToDelete.size) {
+      throw new Error('Choose photos from this listing to remove.');
+    }
+    const removedIds = new Set(matchingEntries.map(([id]) => id));
+    // Own list is cover-first, so its first entry is the current (own) cover.
+    const previousCover = ownPhotoUrls(data)[0] ?? '';
+    const coverImageUrl = urlsToDelete.has(previousCover) ? remainingPhotoUrls[0] ?? '' : previousCover;
+    transaction.update(reference, {
+      listingPhotos: Object.fromEntries(Object.entries(storedPhotos).filter(([id]) => !removedIds.has(id))),
+      photoTour: buildPhotoTour(data, remainingPhotoUrls, remainingRoomLabels, remainingDescriptions),
+      coverImageUrl,
+      ...(isRecord(data.generatedSummary) ? { generatedSummary: { ...data.generatedSummary, coverImageUrl } } : {}),
+      updatedAt: serverTimestamp()
+    });
+    return matchingEntries.flatMap(([, photo]) =>
+      isRecord(photo) && typeof photo.storagePath === 'string' && photo.storagePath.startsWith(`users/${currentUser.uid}/listing-photos/`)
+        ? [photo.storagePath] : []
+    );
   });
+  if (firebaseAuth?.currentUser !== currentUser) throw new Error('Your session changed. Please try again.');
 
   if (storagePaths.length > 0 && firebaseStorage) {
     const storage = firebaseStorage;
@@ -248,6 +264,7 @@ export async function uploadListingPhotos(
 
   if (!currentUser) throw new Error('You must be signed in to upload listing photos.');
   if (!firebaseStorage || !firebaseDb) throw new Error('Firebase Storage is not configured.');
+  if (!listingId) throw new Error('We could not upload your photos. Please try again.');
   if (files.length === 0) throw new Error('Select at least one photo to upload.');
 
   const storage = firebaseStorage;
@@ -256,17 +273,18 @@ export async function uploadListingPhotos(
 
   if (listingId) {
     const listingSnapshot = await getDoc(doc(firebaseDb, 'annonceslisting', listingId));
-    if (!listingSnapshot.exists() || listingSnapshot.data().userUid !== currentUser.uid) {
+    if (firebaseAuth?.currentUser !== currentUser || !listingSnapshot.exists() || listingSnapshot.data().userUid !== currentUser.uid || listingSnapshot.data().ownerUid !== currentUser.uid) {
       throw new Error('This listing draft does not belong to the signed-in user.');
     }
   }
 
   try {
     for (const [index, file] of files.entries()) {
-      if (!file.type.startsWith('image/')) throw new Error(`${file.name} is not a supported image file.`);
+      if (firebaseAuth?.currentUser !== currentUser) throw new Error('Upload interrupted.');
+      if (!file.size || !file.type.startsWith('image/')) throw new Error(`${file.name} is not a supported image file.`);
 
       const photoId = createPhotoId(index);
-      const storagePath = `users/${currentUser.uid}/listing-photos/${photoId}-${sanitizeFileName(file.name)}`;
+      const storagePath = `users/${currentUser.uid}/listing-photos/${listingId}-${photoId}-${sanitizeFileName(file.name)}`;
       const storageReference = ref(storage, storagePath);
       const uploadResult = await uploadBytes(storageReference, file, {
         contentType: file.type,
@@ -276,9 +294,8 @@ export async function uploadListingPhotos(
           ...(listingId ? { listingId } : {})
         }
       });
-      const url = await getDownloadURL(uploadResult.ref);
-
       uploadedStoragePaths.push(storagePath);
+      const url = await getDownloadURL(uploadResult.ref);
       uploadedPhotos[photoId] = {
         id: photoId,
         url,
@@ -286,52 +303,32 @@ export async function uploadListingPhotos(
         originalName: file.name,
         contentType: file.type,
         size: file.size,
-        uploadedAt: Timestamp.now()
+        uploadedAt: Timestamp.now(),
+        order: index
       };
       onProgress?.(index + 1, files.length);
     }
 
-    const photoWriteBatch = writeBatch(firebaseDb);
-    photoWriteBatch.set(
-      doc(firebaseDb, 'users', currentUser.uid),
-      {
-        listingPhotos: uploadedPhotos,
+    await runTransaction(firebaseDb, async transaction => {
+      if (firebaseAuth?.currentUser !== currentUser) throw new Error('Upload interrupted.');
+      const reference = doc(firebaseDb!, 'annonceslisting', listingId);
+      const snapshot = await transaction.get(reference);
+      if (firebaseAuth?.currentUser !== currentUser || !snapshot.exists() || snapshot.data().userUid !== currentUser.uid || snapshot.data().ownerUid !== currentUser.uid || !['draft', 'action-required', 'published', 'active'].includes(snapshot.data().status)) throw new Error('Upload interrupted.');
+      const existing = snapshot.data().listingPhotos ?? {};
+      const nextOrder = Math.max(-1, ...Object.values(existing).map(p => Number((p as UploadedListingPhoto).order) || 0)) + 1;
+      Object.values(uploadedPhotos).forEach((photo, index) => { photo.order = nextOrder + index; });
+      transaction.update(reference, {
+        listingPhotos: { ...existing, ...uploadedPhotos },
+        coverImageUrl: snapshot.data().coverImageUrl || Object.values(uploadedPhotos)[0].url,
         updatedAt: serverTimestamp()
-      },
-      {
-        mergeFields: [
-          ...Object.keys(uploadedPhotos).map((photoId) => `listingPhotos.${photoId}`),
-          'updatedAt'
-        ]
-      }
-    );
-
-    if (listingId) {
-      const coverImageUrl = Object.values(uploadedPhotos)[0]?.url;
-      photoWriteBatch.set(
-        doc(firebaseDb, 'annonceslisting', listingId),
-        {
-          listingPhotos: uploadedPhotos,
-          ...(coverImageUrl ? { coverImageUrl } : {}),
-          updatedAt: serverTimestamp()
-        },
-        {
-          mergeFields: [
-            ...Object.keys(uploadedPhotos).map((photoId) => `listingPhotos.${photoId}`),
-            ...(coverImageUrl ? ['coverImageUrl'] : []),
-            'updatedAt'
-          ]
-        }
-      );
-    }
-
-    await photoWriteBatch.commit();
+      });
+    });
 
     return uploadedPhotos;
   } catch (error) {
     await Promise.allSettled(
       uploadedStoragePaths.map((storagePath) => deleteObject(ref(storage, storagePath)))
     );
-    throw error;
+    throw new Error('We could not upload your photos. Please try again.');
   }
 }

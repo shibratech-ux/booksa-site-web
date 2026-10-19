@@ -237,7 +237,7 @@ export default function AccountSettingsPage() {
         onClick={() => openMobileSetting(item)}
         className="flex min-h-[47.3px] w-full items-center gap-4 text-left text-sm text-slate-800"
       >
-        <Icon className="h-5 w-5 shrink-0 stroke-[1.6]" aria-hidden="true" />
+        <Icon className="h-5 w-5 shrink-0 stroke-[1.5]" aria-hidden="true" />
         <span className="flex-1">{item.label}</span>
         {item.badge ? (
           <span className="rounded-sm bg-pink-50 px-2 py-1 text-xs font-medium text-pink-600">
@@ -284,7 +284,7 @@ export default function AccountSettingsPage() {
             aria-label="Back"
             className="grid h-8 max-sm:h-11 max-sm:w-11 w-8 place-items-center rounded-full bg-slate-50 text-slate-700"
           >
-            <ArrowLeft className="h-5 w-5 stroke-[1.7]" />
+            <ArrowLeft className="h-5 w-5 stroke-[1.5]" />
           </button>
 
           {!isMobileSectionOpen ? (

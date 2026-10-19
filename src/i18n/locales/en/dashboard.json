@@ -1,8 +1,1132 @@
 {
-  "nav": { "today": "Today", "calendar": "Calendar", "listings": "Listings", "messages": "Messages", "host": "Host navigation", "hostMobile": "Mobile host navigation", "travelerMode": "Switch to traveling" },
-  "messages": { "title": "Messages", "search": "Search messages", "settings": "Message settings", "all": "All", "unread": "Unread", "empty": "No messages found", "emptyHelp": "Try removing or changing your filters.", "clearFilters": "Clear all filters" },
-  "reservations": { "upcoming": "Upcoming", "empty": "You have no reservations", "emptyHelp": "To receive reservations, finish and publish your listing.", "finishListing": "Finish your listing", "calendarImage": "Open calendar" },
-  "listingSetup": { "welcomeBack": "Welcome back, {{name}}", "finish": "Finish your listing", "create": "Create a listing", "startedOn": "{{listing}} started on {{date}}", "uniqueSpace": "Your unique space", "bedBreakfast": "Your bed and breakfast", "listing": "Your listing", "new": "Create a new listing", "fromExisting": "Create from an existing listing", "createError": "We couldn't create your listing. Please try again.", "loadError": "We couldn't load your unfinished listings." },
-  "drawer": { "title": "Menu", "accountSettings": "Account settings", "languagesCurrency": "Languages & currency", "hostResources": "Resources for hosts", "getHelp": "Get help", "findCoHost": "Find a co-host", "newListing": "Create a new listing", "referHost": "Refer a host", "newToBooksa": "Discover to Booksa?", "onboarding": "Discover tips and best practices shared by experienced hosts.", "hostAccountMenu": "Host account menu" },
-  "accessibility": { "hostHome": "Booksa host home", "hostAccount": "{{name}}’s account", "accountMenu": "Account menu" }
+  "listingAddTax": {
+    "close": "Cancel adding a tax",
+    "introduction": "Add one or more sample taxes to your listing preview.",
+    "required": "Required",
+    "integerError": "Enter a positive whole number.",
+    "name": "Tax name",
+    "select": "Select",
+    "names": {
+      "accommodation": "Accommodation tax",
+      "tourism": "Tourism tax",
+      "local": "Local tax",
+      "other": "Other tax"
+    },
+    "type": "Tax type",
+    "types": {
+      "booking": "Per reservation",
+      "guest": "Per guest",
+      "night": "Per night",
+      "guestNight": "Per guest, per night"
+    },
+    "rate": "Tax rate",
+    "fixed": "Fixed",
+    "amount": "Amount (CDF)",
+    "partialTitle": "Partial-stay exemption",
+    "partialDescription": "For overnight stays, optionally enter the number of nights after which the sample tax would stop applying.",
+    "fullTitle": "Full-stay exemption",
+    "fullDescription": "For overnight stays, optionally enter the number of nights after which the whole stay would be exempt.",
+    "optional": "Optional",
+    "registration": "Tax registration number",
+    "registrationHelp": "Use a sample number for this preview. Do not enter a real tax registration number.",
+    "registrationPlaceholder": "Sample tax registration number",
+    "termsTitle": "Terms for adding taxes",
+    "terms": "I confirm that I am using sample information. I understand this tax is saved only while the preferences page is open. Booksa will not apply, collect or remit this tax, or share these details with a tax authority.",
+    "help": {
+      "intro": "These sample taxes are for previewing your listing settings. They do not change booking totals. The fixed amount is expressed in CDF.",
+      "partial": "This optional preview field describes an exemption for nights beyond the threshold. It is not applied to bookings. Leave it blank for restaurant reservations.",
+      "full": "This optional preview field describes an exemption for the entire stay at the threshold. It is not applied to bookings. Leave it blank for restaurant reservations."
+    },
+    "savedHeading": "Preview taxes",
+    "savedNote": "These taxes stay on this page only and are not applied to bookings."
+  },
+  "phoneVerification": {
+    "title": "Confirm your phone number",
+    "description": "Add a mobile number and Booksa will send you a 6-digit confirmation code.",
+    "back": "Back to steps to publish",
+    "phoneLabel": "Phone number",
+    "phoneHelp": "Include your country code, for example +243 812 345 678.",
+    "consent": "Booksa does not send real SMS yet: your code is shown on the next screen. Your confirmed number is saved to your Booksa account.",
+    "send": "Send code",
+    "codeTitle": "Enter your confirmation code",
+    "codeDescription": "Enter the 6-digit code we sent to {{phone}}.",
+    "codeLabel": "Verification code",
+    "codeHelp": "Copy the code from the Booksa message above. Never share it with anyone.",
+    "simulatedSms": {
+      "label": "Simulated SMS · Booksa",
+      "body": "Your Booksa confirmation code is {{code}}. It expires in {{minutes}} minutes.",
+      "fill": "Use this code"
+    },
+    "verify": "Verify phone number",
+    "resend": "Resend code",
+    "change": "Change phone number",
+    "cooldown": "You can request another code in {{seconds}} seconds.",
+    "working": "Please wait…",
+    "sending": "Sending your code…",
+    "verifying": "Verifying and saving your phone number…",
+    "successTitle": "Your phone number is confirmed",
+    "successDescription": "Your verified phone number has been saved to your Booksa account.",
+    "done": "Got it",
+    "completed": "Completed",
+    "errors": {
+      "session": "Your session changed. Return to steps to publish, sign in again if needed, and reopen phone confirmation.",
+      "unavailable": "Phone confirmation is unavailable right now. Please try again later.",
+      "invalidPhone": "Enter a valid mobile number with its country code, starting with +.",
+      "invalidCode": "That code is incorrect. Check the 6-digit code and try again.",
+      "expired": "This code has expired. Request a new code and try again.",
+      "throttled": "You requested a code recently. Wait a moment before requesting another one.",
+      "generic": "We could not complete phone confirmation. Check your connection and try again.",
+      "attempts": "Too many incorrect codes. Request a new code to continue."
+    }
+  },
+  "listingPublishSteps": {
+    "title": "Steps to publish",
+    "close": "Back to listing editor",
+    "started": "Your listing started {{date}}",
+    "identity": "Identity verification",
+    "notStarted": "Not started",
+    "verifyTitle": "Verify your identity",
+    "description": "We’ll gather some information to help confirm you’re you.",
+    "status": { "not-started": "Not started", "selfie-submitted": "Selfie submitted", "pending": "In review", "verified": "Verified" },
+    "statusDescription": {
+      "not-started": "We’ll gather some information to help confirm you’re you.",
+      "selfie-submitted": "Your selfie is saved, but your ID details are missing. Start again to finish verification.",
+      "pending": "We’re reviewing your ID details and selfie. This simulated review takes about {{seconds}} seconds.",
+      "verified": "Your identity is verified. No further action is needed."
+    },
+    "startAgain": "Start again",
+    "phone": "Phone number confirmation",
+    "birthDate": "Date of birth confirmation",
+    "loading": "Loading your verification details…",
+    "loadError": "We couldn’t load your verification details. You can retry or start verification.",
+    "retry": "Try again"
+  },
+  "listingPublishReady": {
+    "sectionTitle": "Ready for guests",
+    "cardTitle": "Verify your identity",
+    "cardRequired": "Required to publish",
+    "cardReady": "Ready to publish",
+    "cardPublished": "Published",
+    "title": "You’re ready to publish",
+    "description": "Your phone number and identity are verified. Deploy your listing to make it visible to guests on Booksa, or continue editing first.",
+    "publishedTitle": "Your listing is live",
+    "publishedDescription": "Your listing is published on Booksa. You can keep editing it at any time.",
+    "checks": { "phone": "Phone number confirmed", "identity": "Identity verified" },
+    "deploy": "Deploy",
+    "deploying": "Deploying…",
+    "continue": "Continue",
+    "close": "Close",
+    "success": "Your listing is now published on Booksa.",
+    "errors": {
+      "verification-required": "Your phone number or identity is no longer verified. Open the steps to publish and complete them again.",
+      "not-publishable": "This listing can’t be published right now. Review the required items and try again.",
+      "generic": "We couldn’t publish your listing. Check your connection and try again."
+    }
+  },
+  "listingTaxesSheet": {
+    "heading": "Taxes",
+    "close": "Close taxes",
+    "introduction": "Taxes on Booksa are simulated. No taxes are collected or submitted on your behalf.",
+    "cardTitle": "Add taxes you’ll submit",
+    "description": "Add sample taxes to preview your listing settings. These taxes are not applied to bookings.",
+    "learnMore": "Learn more",
+    "help": "This preview applies to hotels, rooms and restaurants. Tax amounts are not calculated or added to bookings, and no funds are transferred to you or a tax authority.",
+    "add": "Add a tax",
+    "unavailable": "Adding a tax isn’t available yet. Your listing’s prices remain unchanged."
+  },
+  "guestRequirementsSheet": {
+    "heading": "Guest requirements",
+    "close": "Close guest requirements",
+    "requirePhoto": "Require a profile photo",
+    "photoDescription": "When turned on, guests who book your listing need a profile photo. You’ll only see it after their booking is confirmed.",
+    "learnMore": "Learn more",
+    "photoHelp": "A profile photo helps you recognize guests after confirmation. It should never be used to decide who can book.",
+    "standardHeading": "Guest requirements on Booksa",
+    "requirements": {
+      "contact": "Confirm an email address and phone number",
+      "booking": "Complete the simulated booking details",
+      "rules": "Agree to your listing’s rules"
+    },
+    "requirementsHelp": "Bookings and guest requirements are currently previews on Booksa. No real payment details are collected.",
+    "preview": "Preview only. Save keeps your choice while this page is open; it is not applied to bookings.",
+    "enabledPreview": "Profile photo required · Preview"
+  },
+  "identitySelfieSubmission": {
+    "title": "Your identity verification has been submitted",
+    "description": "Your ID details and selfie were saved to your account. This is a simulated review: your identity will be marked as verified in about {{seconds}} seconds.",
+    "done": "Got it",
+    "close": "Return to steps to publish",
+    "uploading": "Submitting…",
+    "errors": {
+      "unauthenticated": "Sign in again to submit your selfie.",
+      "session-changed": "Your session changed. Reopen identity verification and try again.",
+      "invalid-image": "This photo could not be submitted. Please retake your selfie.",
+      "invalid-details": "Some ID details are missing or invalid. Go back, check your document and legal name, then try again.",
+      "already-verified": "Your identity is already verified. There is nothing more to submit.",
+      "upload-failed": "Your selfie could not be uploaded. Please check your connection and try again.",
+      "save-failed": "Your selfie details could not be saved. Please try submitting again.",
+      "unavailable": "Selfie submission is unavailable. Please try again later."
+    }
+  },
+  "identitySelfieCapture": {
+    "title": "Take a photo of yourself",
+    "instructions": "Hold your device straight out in front of you, or ask a friend to take your photo. Make sure your entire face is showing.",
+    "reviewTitle": "Review your photo",
+    "reviewInstructions": "Make sure it’s well-lit, clear, and matches the person in the ID.",
+    "back": "Back to photo review options",
+    "backToCamera": "Back to the camera",
+    "livePreview": "Live front camera preview",
+    "photoAlt": "Your captured selfie",
+    "starting": "Starting your camera…",
+    "take": "Take photo",
+    "taking": "Taking photo…",
+    "retake": "Retake photo",
+    "submit": "Submit photo",
+    "retry": "Try camera again",
+    "errors": {
+      "denied": "Allow camera access in your browser, then try again.",
+      "missing": "No camera was found. Connect a camera or open this page on a device with a camera.",
+      "unavailable": "The camera could not be started. Use a secure connection and check that another app isn’t using your camera, then try again.",
+      "interrupted": "Your camera stopped. Try again to restart the preview."
+    },
+    "captureError": "We couldn’t take your photo. Please try again.",
+    "submissionUnavailable": "Your selfie is ready to review locally. Verification submission is not connected yet, so your photo has not been uploaded."
+  },
+  "identitySelfieReview": {
+    "title": "Next, you’ll take a selfie",
+    "intro": "A selfie helps compare your face with the ID you provided.",
+    "question": "How should we match your photos?",
+    "close": "Return to your legal name",
+    "methods": {
+      "manual": {
+        "title": "Manual photo review",
+        "description": "A person compares your selfie with your ID photos."
+      },
+      "automatic": {
+        "title": "Automatic photo review",
+        "description": "Facial recognition compares your selfie with your ID photos."
+      }
+    },
+    "notice": {
+      "manual": "Manual photo review means a person would compare your selfie with your ID photos, rather than using facial recognition.",
+      "automatic": "Automatic photo review would let Booksa compare a selfie with your ID using facial recognition. Choose manual review if you prefer a person to compare your photos."
+    },
+    "learnMore": "Learn more",
+    "learnMoreTitle": "About photo review",
+    "learnMoreText": "Manual review means a person compares the photos. Automatic review uses facial recognition to compare them. This screen records only your local preference. Your selfie is uploaded only when you select Submit photo. Automated identity matching and its biometric-processing policy are not connected.",
+    "continue": "Agree and continue",
+    "unavailable": "Your review preference is selected for this session. Selfie capture and identity verification are not available yet."
+  },
+  "identityLegalName": {
+    "title": "Confirm your legal name",
+    "intro": "Check that your name matches your ID. If it isn’t correct, please update it below.",
+    "close": "Return to document images",
+    "legalName": "Legal name",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "legalHelp": "Use your name exactly as it appears on your ID. If you go by a different name, you can add a preferred name below.",
+    "preferredName": "Preferred name",
+    "preferredFirstName": "Preferred first name (optional)",
+    "preferredHelp": "Your preferred name is the first name you go by. It can differ from your legal first name.",
+    "learnMore": "Learn more",
+    "learnMoreText": "Enter your legal name as it appears on your identity document. You can also add an optional preferred first name, such as a nickname. This does not change the legal name you provide for verification.",
+    "loading": "Loading your account details…",
+    "loadError": "We couldn’t load your account details. You can enter your name below.",
+    "confirm": "Confirm",
+    "confirmed": "Confirmed",
+    "confirmedNotice": "Your name has been reviewed for this session. It has not been saved to your account or submitted for identity verification."
+  },
+  "identityUpload": {
+    "titles": {
+      "identity-card": "Upload images of your identity card",
+      "drivers-license": "Upload images of your driver’s license",
+      "passport": "Upload an image of your passport"
+    },
+    "instructions": {
+      "identity-card": "Make sure your photos aren’t blurry and the front of your identity card clearly shows your face.",
+      "drivers-license": "Make sure your photos aren’t blurry and the front of your driver’s license clearly shows your face.",
+      "passport": "Make sure the photo page is clear, with your face and all document details visible."
+    },
+    "back": "Back to ID selection",
+    "upload": {
+      "front": "Upload front",
+      "back": "Upload back"
+    },
+    "replace": {
+      "front": "Replace front",
+      "back": "Replace back"
+    },
+    "uploadPassport": "Upload photo page",
+    "replacePassport": "Replace photo page",
+    "preview": {
+      "front": "Selected identity document image",
+      "back": "Selected back of identity document"
+    },
+    "remove": {
+      "front": "Remove front image",
+      "back": "Remove back image"
+    },
+    "formats": "JPEG or PNG · Max 10 MB",
+    "checking": "Checking image…",
+    "invalidFile": "Choose a JPEG or PNG image up to 10 MB.",
+    "unreadableFile": "This image could not be opened. Please choose another image."
+  },
+  "identityVerification": {
+    "getStarted": "Get started",
+    "title": "Choose an ID type to add",
+    "issuingCountry": "Issuing country/region",
+    "congo": "Democratic Republic of the Congo",
+    "types": {
+      "drivers-license": "Driver’s license",
+      "passport": "Passport",
+      "identity-card": "Identity card"
+    },
+    "back": "Back to steps to publish",
+    "backLabel": "Back",
+    "continue": "Continue",
+    "privacyLead": "Review our",
+    "privacyPolicy": "Privacy Policy",
+    "privacyTail": "before sharing an identity document.",
+    "privacyUnavailable": "The identity-verification privacy policy is not available here yet. No identity documents are collected on this screen.",
+    "unavailable": "Identity verification is not available yet. Please try again later."
+  },
+  "listingSafetyStep": {
+    "heading": "Share safety details",
+    "prompts": {
+      "hotel": "Does your hotel have any of these?",
+      "private-room": "Does your room or property have any of these?",
+      "restaurant": "Does your restaurant have any of these?"
+    },
+    "helpLabel": "Learn about safety disclosures",
+    "help": "Select every item present at your property, including shared areas. Leave an item unchecked if it is not present. You can select more than one.",
+    "options": {
+      "exterior-camera": "Exterior security camera present",
+      "noise-monitor": "Noise decibel monitor present",
+      "weapons": "Weapon(s) on the property"
+    },
+    "important": "Important things to know",
+    "cameras": "Security cameras that monitor indoor spaces are not allowed even if they’re turned off. All exterior security cameras must be disclosed.",
+    "responsibilities": "Be sure to comply with applicable local laws and provide accurate safety details. Welcome all Booksa guests fairly and respectfully.",
+    "hostingDetails": "Hosting details",
+    "hostingQuestion": "How are you hosting on Booksa?",
+    "hosting": {
+      "individual": "I’m hosting as a private individual",
+      "business": "I’m hosting as a business"
+    },
+    "exit": "Exit",
+    "create": "Create listing",
+    "creating": "Creating listing…"
+  },
+  "listingPricingStep": {
+    "heading": "Now, set your prices",
+    "learnMore": "Learn more",
+    "basePrice": "Base price",
+    "weekendAdjustment": "Weekend adjustment",
+    "weekendPrice": "{{price}} for Fri and Sat",
+    "similarUnavailable": "Price comparisons are coming soon.",
+    "contexts": {
+      "hotel": {
+        "plural": "hotels",
+        "description": "Set your hotel’s base price and adjust it for weekend stays.",
+        "help": "The base price applies to hotel stays. Your percentage adjustment applies on Fridays and Saturdays. Booksa’s starting price is a placeholder; live demand suggestions are not available yet.",
+        "similar": "View similar hotels"
+      },
+      "room": {
+        "plural": "rooms",
+        "description": "Set your room’s base price and adjust it for weekend stays.",
+        "help": "The base price applies to room stays. Your percentage adjustment applies on Fridays and Saturdays. Booksa’s starting price is a placeholder; live demand suggestions are not available yet.",
+        "similar": "View similar rooms"
+      },
+      "restaurant": {
+        "plural": "restaurants",
+        "description": "Set your restaurant’s base price and adjust it for weekend reservations.",
+        "help": "The base price applies to restaurant reservations. Your percentage adjustment applies on Fridays and Saturdays. Booksa’s starting price is a placeholder; live demand suggestions are not available yet.",
+        "similar": "View similar restaurants"
+      }
+    }
+  },
+  "photoTourBadge": {
+    "photos_one": "{{count}} photo",
+    "photos_other": "{{count}} photos"
+  },
+  "arrivalGuide": {
+    "tab": "Arrival guide",
+    "yourSpace": "Your space",
+    "tabsLabel": "Listing editor sections",
+    "checkIn": "Check-in",
+    "checkout": "Checkout",
+    "addDetails": "Add details",
+    "guidebookHelp": "Create a guidebook to share your local tips with guests.",
+    "guestsMaximum_one": "{{count}} guest maximum",
+    "guestsMaximum_other": "{{count}} guests maximum",
+    "more_one": "+ {{count}} more",
+    "more_other": "+ {{count}} more",
+    "intro": "Share the information guests need for arrival and their stay. Choose a section to review its details.",
+    "unavailable": "Editing this part of your arrival guide isn’t available yet.",
+    "sections": {
+      "checkInOut": "Check-in and checkout",
+      "directions": "Directions",
+      "checkInMethod": "Check-in method",
+      "wifi": "Wifi details",
+      "houseManual": "House manual",
+      "checkoutInstructions": "Checkout instructions",
+      "guidebooks": "Guidebooks",
+      "interaction": "Interaction preferences"
+    }
+  },
+  "listingRemoveSheet": {
+    "heading": "Let us know why you changed your mind about hosting",
+    "chooseAll": "Choose all that apply",
+    "close": "Close",
+    "next": "Next",
+    "selected_one": "{{count}} selected",
+    "selected_other": "{{count}} selected",
+    "unavailableHeading": "This listing can’t be removed here yet",
+    "reasons": {
+      "noLongerAble": {
+        "label": "I’m no longer able to host.",
+        "options": {
+          "moving": "I’m moving or selling the place",
+          "situation": "My personal situation changed",
+          "time": "Hosting takes too much time",
+          "rules": "Local rules don’t allow me to host"
+        }
+      },
+      "notReady": {
+        "label": "I’m not ready to host right now.",
+        "options": {
+          "prepare": "I need to get my place ready",
+          "learn": "I want to learn more about hosting first",
+          "later": "I’ll host again later"
+        }
+      },
+      "expectedMore": {
+        "label": "I expected more from Booksa.",
+        "options": {
+          "requests": "I didn’t get enough booking requests",
+          "tools": "The hosting tools were hard to use",
+          "support": "I needed more help"
+        }
+      },
+      "moreMoney": {
+        "label": "I was hoping to make more money.",
+        "options": {
+          "earnings": "My earnings were lower than expected",
+          "fees": "Fees were higher than expected",
+          "prices": "Prices in my area are too low"
+        }
+      },
+      "smoother": {
+        "label": "I expected things to go more smoothly with guests.",
+        "options": {
+          "communication": "Communicating with guests was difficult",
+          "houseRules": "Guests didn’t follow my house rules",
+          "damage": "Something was damaged"
+        }
+      },
+      "duplicate": {
+        "label": "This is a duplicate listing.",
+        "options": {
+          "mistake": "I created this listing by mistake",
+          "otherListing": "I already have a listing for this place"
+        }
+      }
+    }
+  },
+  "listingPreferences": {
+    "languages": {
+      "description": "For some settings, you can add details in any language you add to your listing. Guests will be shown automatic translations for everything else.",
+      "default": "{{language}} (Default)",
+      "delete": "Delete",
+      "deleteLabel": "Delete {{language}}",
+      "add": "Add a language",
+      "dialogTitle": "Add a language",
+      "allAdded": "You’ve added every language available on Booksa.",
+      "added": "{{language}} added.",
+      "removed": "{{language}} removed."
+    },
+    "heading": "Edit preferences",
+    "open": "Listing settings",
+    "back": "Back to listing editor",
+    "backToPreferences": "Back to preferences",
+    "openListings": "Go to your listings",
+    "unavailable": "This preference isn’t available to edit yet.",
+    "rows": {
+      "languages": {
+        "label": "Languages",
+        "summary": "Not set",
+        "help": "Listing language preferences will be available here."
+      },
+      "guestRequirements": {
+        "label": "Guest requirements",
+        "summary": "Review guest requirements",
+        "help": "Guest requirements will be available here when bookings are supported."
+      },
+      "localLaws": {
+        "label": "Local laws",
+        "summary": "Review your local laws",
+        "help": "Local information for your listing isn’t available in Booksa yet."
+      },
+      "taxes": {
+        "label": "Taxes",
+        "summary": "Learn how taxes work for hosts",
+        "help": "Tax information for your listing isn’t available yet. Payments on Booksa are simulated."
+      },
+      "communityStays": {
+        "label": "Booksa community stays",
+        "summary": "Set a discount",
+        "help": "Community stay discounts aren’t available in Booksa yet."
+      },
+      "removeListing": {
+        "label": "Remove listing",
+        "summary": "Permanently remove your listing",
+        "help": "This listing can’t be removed here. Only listings still in progress can be removed from Your listings."
+      }
+    }
+  },
+  "listingAmenities": {
+    "heading": "Amenities",
+    "subtitle": "You’ve added these to your listing so far.",
+    "back": "Back to listing editor",
+    "backToAmenities": "Back to amenities",
+    "edit": "Edit",
+    "add": "Add amenities",
+    "select": "Select the amenities guests can use at your listing.",
+    "empty": "No amenities added yet. Use + to add your first amenity.",
+    "unavailable": "Amenities can’t be edited for this listing type right now.",
+    "unknown": "Other amenity",
+    "saveError": "We couldn’t save your amenities. Please try again.",
+    "saved": "Amenities saved.",
+    "selected_one": "{{count}} amenity selected",
+    "selected_other": "{{count}} amenities selected",
+    "labels": {
+      "air-conditioning": "Air conditioning",
+      "dryer": "Dryer",
+      "essentials": "Essentials",
+      "heating": "Heating",
+      "hot-water": "Hot water",
+      "kitchen": "Kitchen",
+      "refrigerator": "Refrigerator",
+      "tv": "TV",
+      "washer": "Washer",
+      "wifi": "Wifi",
+      "coffee-maker": "Coffee maker",
+      "cooking-basics": "Cooking basics",
+      "hair-dryer": "Hair dryer",
+      "hangers": "Hangers",
+      "iron": "Iron",
+      "shampoo": "Shampoo",
+      "crib": "Crib",
+      "dedicated-workspace": "Dedicated workspace",
+      "ev-charger": "EV charger",
+      "free-parking": "Free parking on premises",
+      "gym": "Gym",
+      "hot-tub": "Hot tub",
+      "indoor-fireplace": "Indoor fireplace",
+      "outdoor-furniture": "Outdoor furniture",
+      "pool": "Pool",
+      "beach-access": "Beach access",
+      "waterfront": "Waterfront",
+      "carbon-monoxide-alarm": "Carbon monoxide alarm",
+      "smoke-alarm": "Smoke alarm",
+      "front-desk": "24-hour front desk",
+      "breakfast": "Breakfast",
+      "room-service": "Room service",
+      "indoor-seating": "Indoor seating",
+      "outdoor-seating": "Outdoor seating",
+      "bar": "Bar",
+      "coffee": "Coffee",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "desserts": "Desserts",
+      "vegetarian-options": "Vegetarian options",
+      "alcohol": "Wine and alcohol",
+      "reservations": "Reservations",
+      "takeaway": "Takeaway",
+      "table-service": "Table service",
+      "private-dining": "Private dining",
+      "late-night": "Late-night service",
+      "live-music": "Live music",
+      "accessible": "Wheelchair accessible",
+      "parking": "Parking",
+      "card-payment": "Card payments"
+    },
+    "descriptions": {
+      "essentials": "Towels, bed sheets, soap, and toilet paper",
+      "cooking-basics": "Pots and pans, oil, salt and pepper",
+      "hot-water": "Water from the sink and shower or tub that’s hot enough for washing",
+      "tv": "A device for watching television"
+    },
+    "groups": {
+      "basics": "Basics",
+      "popular": "Popular",
+      "features": "Features",
+      "hotel-services": "Hotel services",
+      "location": "Location",
+      "safety": "Safety",
+      "dining-basics": "Dining basics",
+      "food-and-drink": "Food & drink",
+      "service-options": "Service options",
+      "access-and-payment": "Access & payment"
+    }
+  },
+  "listingEditorSync": {
+    "loadError": "We couldn’t load the current listing. Check your connection and try again.",
+    "back": "Back to your listings"
+  },
+  "listingHost": {
+    "heading": "About the host",
+    "fallbackName": "Booksa host",
+    "memberSince": "Member since {{year}}",
+    "loading": "Loading your profile…",
+    "loadError": "We couldn’t load your profile. Your account details are shown instead.",
+    "retry": "Try again",
+    "signedOut": "Sign in to view your host profile."
+  },
+  "descriptionSheet": {
+    "close": "Close description editor",
+    "help": "Tell guests what makes your place special and what they can expect during their visit.",
+    "counter": "{{count}}/{{max}} characters",
+    "invalid": "Enter a description between 1 and 500 characters.",
+    "saveError": "We couldn’t save your description. Please try again.",
+    "saved": "Description saved."
+  },
+  "guestCountSheet": {
+    "heading": "Number of guests",
+    "close": "Close guest count editor",
+    "prompt": "How many guests can fit comfortably in your space?",
+    "decrease": "Remove one guest",
+    "increase": "Add one guest",
+    "limits": "Between {{min}} and {{max}} guests",
+    "unavailable": "Guest limits are unavailable for this listing type.",
+    "saveError": "We couldn’t save your guest count. Please try again.",
+    "saved": "Guest count saved.",
+    "guests_one": "{{count}} guest",
+    "guests_other": "{{count}} guests"
+  },
+  "weekendAdjustmentSheet": {
+    "close": "Close weekend adjustment editor",
+    "helpLabel": "About weekend adjustments",
+    "help": "Choose a whole percentage from −99% to +99%. Positive values increase the nightly rate; negative values reduce it. Use 0% to keep your standard nightly price.",
+    "inputLabel": "Weekend adjustment percentage",
+    "edit": "Edit weekend adjustment",
+    "invalid": "Enter a whole percentage from −99 to 99.",
+    "note": "Increase or decrease your weekend nightly rate.",
+    "slider": "Adjust weekend percentage",
+    "preview": "Weekend nightly rate",
+    "saveError": "We couldn’t save your weekend adjustment. Please try again.",
+    "saved": "Weekend adjustment saved."
+  },
+  "nightlyPriceSheet": {
+    "heading": "Nightly price",
+    "close": "Close nightly price editor",
+    "helpLabel": "About nightly pricing",
+    "help": "Set your nightly price in whole Congolese francs (CDF), from 1 to 9,999,999. Your existing weekend adjustment still applies.",
+    "inputLabel": "Nightly price in {{currency}}",
+    "edit": "Edit nightly price",
+    "invalid": "Enter a whole amount from 1 to 9,999,999.",
+    "beforeFees": "Nightly rate before fees and taxes",
+    "details": "Price details",
+    "feesNote": "Guest fees and taxes aren’t calculated here. This amount is your listing’s nightly rate.",
+    "similar": "View similar listings",
+    "similarUnavailable": "Price comparisons are coming soon.",
+    "saveError": "We couldn’t save your nightly price. Please try again.",
+    "saved": "Nightly price saved."
+  },
+  "listingPricing": {
+    "heading": "Pricing",
+    "subtitle": "These settings apply to all nights, unless you customize them by date.",
+    "learnMore": "Learn more",
+    "help": "The nightly rate and weekend adjustment shown here are saved with your listing. The calendar shows the rate for each date.",
+    "perNight": "Per night",
+    "notSet": "Not set",
+    "weekendAdjustment": "Weekend adjustment",
+    "smartPricing": "Smart Pricing",
+    "smartPricingDescription": "Automatically adjust your prices based on guest demand.",
+    "unavailable": "Smart Pricing is not available yet.",
+    "calendar": "Find more discounts and fees in the calendar"
+  },
+  "titleSaveError": "We couldn’t save your title. Please try again.",
+  "nav": {
+    "today": "Today",
+    "calendar": "Calendar",
+    "listings": "Listings",
+    "messages": "Messages",
+    "host": "Host navigation",
+    "hostMobile": "Mobile host navigation",
+    "travelerMode": "Switch to traveling"
+  },
+  "messages": {
+    "title": "Messages",
+    "search": "Search messages",
+    "settings": "Message settings",
+    "all": "All",
+    "unread": "Unread",
+    "empty": "No messages found",
+    "emptyHelp": "Try removing or changing your filters.",
+    "clearFilters": "Clear all filters",
+    "inboxEmpty": "Your inbox is empty",
+    "inboxEmptyHelp": "Come back soon for conversations with your guests.",
+    "guestInboxEmptyHelp": "Come back soon for conversations with your hosts.",
+    "pastConversations": "Past conversations",
+    "pastEmpty": "No past conversations",
+    "pastEmptyHelp": "Conversations from completed stays will appear here.",
+    "backToInbox": "Back to inbox"
+  },
+  "reservations": {
+    "upcoming": "Upcoming",
+    "empty": "You don’t have any reservations",
+    "emptyHelp": "To get booked, you’ll need to complete and publish your listing.",
+    "finishListing": "Complete your listing",
+    "calendarImage": "Open calendar"
+  },
+  "listingSetup": {
+    "welcomeBack": "Welcome back, {{name}}",
+    "finish": "Finish your listing",
+    "create": "Create a listing",
+    "startedOn": "{{listing}} started {{date}}",
+    "uniqueSpace": "Your unique space",
+    "bedBreakfast": "Your bed and breakfast",
+    "listing": "Your listing",
+    "new": "Create a new listing",
+    "fromExisting": "Create from an existing listing",
+    "chooseListing": "Choose a listing",
+    "noInProgressListings": "You don’t have any listings in progress yet.",
+    "addressTitle": "Set up your Booksa listing",
+    "addressIntroduction": "It’s easy to create a great listing—let’s start with your address.",
+    "enterAddress": "Enter your address",
+    "notListingHome": "Not listing a home? Explore an",
+    "experience": "experience",
+    "or": "or",
+    "service": "service",
+    "startNew": "Start a new listing",
+    "showAll": "Show all",
+    "showLess": "Show less",
+    "createError": "We couldn't create your listing. Please try again.",
+    "loadError": "We couldn't load your unfinished listings."
+  },
+  "addressSearch": {
+    "title": "Enter your address",
+    "confirmTitle": "Confirm your address",
+    "searchLabel": "Search for an address",
+    "placeholder": "Enter your address",
+    "clear": "Clear address search",
+    "close": "Close address dialog",
+    "back": "Back to address search",
+    "useCurrentLocation": "Use my current location",
+    "locating": "Finding your location…",
+    "locationUnsupported": "Location isn’t available on this device. Enter your address instead.",
+    "locationDenied": "Allow location access in your browser to use your current location.",
+    "locationError": "We couldn’t find your location. Enter your address instead.",
+    "suggestions": "Suggested destinations",
+    "noResults": "No suggested addresses found.",
+    "next": "Next"
+  },
+  "drawer": {
+    "title": "Menu",
+    "accountSettings": "Account settings",
+    "languagesCurrency": "Languages & currency",
+    "hostResources": "Resources for hosts",
+    "getHelp": "Get help",
+    "findCoHost": "Find a co-host",
+    "newListing": "Create a new listing",
+    "referHost": "Refer a host",
+    "newToBooksa": "Discover to Booksa?",
+    "onboarding": "Discover tips and best practices shared by experienced hosts.",
+    "hostAccountMenu": "Host account menu"
+  },
+  "accessibility": {
+    "hostHome": "Booksa host home",
+    "hostAccount": "{{name}}’s account",
+    "accountMenu": "Account menu"
+  },
+  "attention": {
+    "title": "Actions need your attention",
+    "subtitle": "Required to publish"
+  },
+  "calendar": {
+    "chooseListing": "Choose listing",
+    "chooseMonth": "Choose month",
+    "openListings": "Open listings",
+    "settings": "Calendar settings",
+    "noListings": "No listings yet",
+    "loadError": "We could not load your calendar.",
+    "jumpToToday": "Jump to today",
+    "unavailable": "Past date"
+  },
+  "titleSheet": {
+    "heading": "Title",
+    "close": "Close title editor",
+    "edit": "Edit title",
+    "fieldLabel": "Listing title",
+    "helper": "Your title is saved with the listing details.",
+    "primaryLanguage": "English",
+    "secondaryLanguage": "Français",
+    "translationSoon": "Translations are coming soon.",
+    "counter": "{{count}}/{{max}}",
+    "required": "Add a title to continue.",
+    "tipsLabel": "Title tips",
+    "tip": "Short titles work best. Highlight what makes your place special.",
+    "saved": "Title saved."
+  },
+  "sleepingArrangements": {
+    "heading": "Sleeping arrangements",
+    "addDetails": "Add details",
+    "pageHeading": "Add sleeping arrangements",
+    "pageSubtitle": "Make it clear to guests which type of bed is in each room.",
+    "bedroom": "Bedroom",
+    "bedroomNumbered": "Bedroom {{number}}",
+    "bedrooms_one": "{{count}} bedroom",
+    "bedrooms_other": "{{count}} bedrooms",
+    "sleepingArea": "Sleeping area",
+    "beds_one": "{{count}} bed",
+    "beds_other": "{{count}} beds",
+    "addBeds": "Add beds",
+    "empty": "Add bedrooms and beds to your listing basics to set up sleeping arrangements."
+  },
+  "discountsSection": {
+    "heading": "Discounts",
+    "addDetails": "Add details",
+    "pageHeading": "Discounts",
+    "title_new-listing": "New listing",
+    "title_last-minute": "Last-minute",
+    "title_weekly": "Weekly",
+    "title_monthly": "Monthly",
+    "condition_new-listing": "Until 3 reviews or 10 bookings",
+    "condition_last-minute": "Booked 14 days or less before arrival",
+    "condition_weekly": "For 7 nights or more",
+    "condition_monthly": "For 28 nights or more",
+    "summary_new-listing": "{{percent}}% new listing promotion",
+    "summary_last-minute": "{{percent}}% last-minute discount",
+    "summary_weekly": "{{percent}}% weekly discount",
+    "summary_monthly": "{{percent}}% monthly discount",
+    "percent": "{{percent}}%",
+    "empty": "No discounts selected for this listing yet.",
+    "calendarLink": "Find more discounts and fees in the calendar"
+  },
+  "descriptionSection": {
+    "heading": "Description",
+    "addDetails": "Add details",
+    "pageHeading": "Description",
+    "listingDescription": "Listing description",
+    "yourProperty": "Your property",
+    "guestAccess": "Guest access",
+    "guestInteraction": "Interaction with guests",
+    "otherDetails": "Other details to note"
+  },
+  "editorSheet": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…"
+  },
+  "propertyTypeSheet": {
+    "heading": "Property type",
+    "close": "Close property type editor",
+    "category": "Which is most like your place?",
+    "categoryLocked": "The category can’t be changed after your listing is created.",
+    "propertyType": "Property type",
+    "listingType": "Listing type",
+    "choose": "Choose an option",
+    "lockQuestion": "Does every bedroom have a lock?",
+    "yes": "Yes",
+    "no": "No",
+    "lockRequired": "Answer this question to save a private room or suite.",
+    "countersInvalid": "Your guest and room counts don’t fit this listing type. Update them before switching.",
+    "saveError": "We couldn’t save your property type. Please try again.",
+    "saved": "Property type saved.",
+    "detailsSoon": "More property details are coming soon.",
+    "floorCount": "How many floors in the building?",
+    "listingFloor": "Which floor is the listing on?",
+    "yearBuilt": "Year built",
+    "propertySize": "Property size",
+    "unit": "Unit",
+    "propertySizeHelper": "The amount of indoor space that’s available to guests.",
+    "unknownCategory": "This listing’s category isn’t recognized, so its property type can’t be edited here."
+  },
+  "houseRulesPage": {
+    "heading": "House rules",
+    "back": "Back to listing editor",
+    "intro": "Guests are expected to follow your rules and may be removed from Booksa if they don’t.",
+    "allow": "{{rule}}: yes",
+    "disallow": "{{rule}}: no",
+    "rules": {
+      "petsAllowed": {
+        "label": "Pets allowed",
+        "helper": "You can refuse pets, but must reasonably accommodate service animals."
+      },
+      "eventsAllowed": {
+        "label": "Events allowed"
+      },
+      "smokingAllowed": {
+        "label": "Smoking, vaping, e-cigarettes allowed"
+      },
+      "quietHours": {
+        "label": "Quiet hours"
+      },
+      "commercialPhotographyAllowed": {
+        "label": "Commercial photography and filming allowed"
+      }
+    },
+    "checkInOut": {
+      "label": "Check-in and checkout times",
+      "summary": "Arrive after 3:00 PM"
+    },
+    "additionalRules": {
+      "label": "Additional rules",
+      "summary": "Share anything else you expect from guests."
+    },
+    "moreSoon": "Check-in times and additional rules are coming soon.",
+    "saveError": "We couldn’t save your house rules. Please try again.",
+    "saved": "House rules saved.",
+    "learnMore": "Learn more",
+    "petDetails": "Let guests know about any pet-related conditions in your listing so they can plan their stay."
+  },
+  "availabilitySection": {
+    "heading": "Availability",
+    "pageHeading": "Availability",
+    "subtitle": "These settings apply to all nights, unless you customize them by date.",
+    "summaryNights": "{{min}} – {{max}} night stays",
+    "minNights": "Minimum nights",
+    "maxNights": "Maximum nights",
+    "advanceNotice": "Advance notice",
+    "sameDay": "Same day",
+    "sameDayNotice": "Same day advance notice",
+    "calendarLink": "Find more availability settings"
+  },
+  "availabilitySheet": {
+    "close": "Close availability editor",
+    "heading_minNights": "Minimum nights",
+    "heading_maxNights": "Maximum nights",
+    "perStay": "Per stay",
+    "invalid": "Enter a number of nights from {{min}} to {{max}}.",
+    "saveError": "We couldn’t update this setting. Please try again.",
+    "customizeByCheckIn": "Customize by check-in day",
+    "comingSoon": "Coming soon",
+    "localOnly": "Updated on this page only. Availability isn’t saved to your listing yet."
+  },
+  "advanceNoticeSheet": {
+    "close": "Close advance notice editor",
+    "description": "How much notice do you need between a guest’s booking and their arrival?",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "summary_one": "{{count}} day advance notice",
+    "summary_other": "{{count}} days advance notice",
+    "allowRequests": "Allow requests with shorter notice",
+    "allowRequestsDescription": "You’ll review and approve each reservation request.",
+    "saveError": "We couldn’t update your advance notice. Please try again."
+  },
+  "sameDayCutoffSheet": {
+    "close": "Close same day advance notice editor",
+    "description": "Guests can book on the same day as check-in until this time.",
+    "saveError": "We couldn’t update this time. Please try again."
+  },
+  "accessibilityFeatures": {
+    "heading": "Accessibility features",
+    "back": "Back to listing editor",
+    "add": "Add {{feature}}",
+    "remove": "Remove {{feature}}",
+    "added_one": "{{count}} feature added",
+    "added_other": "{{count}} features added",
+    "labels": {
+      "disabled-parking": "Disabled parking spot",
+      "lit-path": "Lit path to the guest entrance",
+      "step-free-entrance": "Step-free access",
+      "wide-entrance": "Guest entrance wider than 32 inches (81 cm)",
+      "pool-hoist": "Swimming pool or hot tub hoist",
+      "ceiling-hoist": "Ceiling or mobile hoist",
+      "step-free-bedroom": "Step-free bedroom access",
+      "wide-bedroom-entrance": "Bedroom entrance wider than 32 inches (81 cm)",
+      "step-free-bathroom": "Step-free bathroom access",
+      "step-free-shower": "Step-free shower",
+      "shower-grab-bar": "Shower grab bar",
+      "toilet-grab-bar": "Toilet grab bar",
+      "shower-chair": "Shower or bath chair"
+    }
+  },
+  "hostProfileSheet": {
+    "open": "Edit your host profile",
+    "heading": "Edit profile",
+    "close": "Close profile editor",
+    "addPhoto": "Add",
+    "editPhoto": "Edit",
+    "myProfile": "My profile",
+    "intro": "Hosts and guests can see your profile and it may appear across Booksa to help us build trust in our community.",
+    "comingSoon": "Editing your photo and profile details is coming soon.",
+    "prompts": {
+      "decadeBorn": "Decade I was born",
+      "work": "My work",
+      "dreamDestination": "Where I’ve always wanted to go",
+      "pets": "Pets",
+      "school": "Where I went to school",
+      "funFact": "My fun fact",
+      "favoriteSong": "My favorite song in high school",
+      "tooMuchTime": "I spend too much time",
+      "biographyTitle": "My biography title would be",
+      "languages": "Languages I speak",
+      "location": "Where I live",
+      "obsessedWith": "I’m obsessed with"
+    }
+  },
+  "listingPreview": {
+    "view": "View",
+    "back": "Back to listing editor",
+    "share": "Share",
+    "save": "Save to wishlist",
+    "previewOnly": "This is a preview. Guest actions work once your listing is published.",
+    "carousel": "carousel",
+    "photos": "Listing photos",
+    "photoAlt": "Photo {{number}} of {{total}} of {{title}}",
+    "typeIn": "{{type}} in {{place}}",
+    "bedrooms_zero": "No bedrooms",
+    "bedrooms_one": "{{count}} bedroom",
+    "bedrooms_other": "{{count}} bedrooms",
+    "beds_zero": "No beds",
+    "beds_one": "{{count}} bed",
+    "beds_other": "{{count}} beds",
+    "bathrooms_zero": "No bathroom",
+    "bathrooms_one": "{{count}} bathroom",
+    "bathrooms_other": "{{count}} bathrooms",
+    "noReviews": "No reviews yet",
+    "hostedBy": "Hosted by {{name}}",
+    "monthsHosting_one": "{{count}} month on Booksa",
+    "monthsHosting_other": "{{count}} months on Booksa",
+    "yearsHosting_one": "{{count}} year on Booksa",
+    "yearsHosting_other": "{{count}} years on Booksa",
+    "noDescription": "No description yet.",
+    "offers": "What this place offers",
+    "unavailable": "not available",
+    "showAllAmenities_one": "Show {{count}} amenity",
+    "showAllAmenities_other": "Show all {{count}} amenities",
+    "showFewerAmenities": "Show fewer amenities",
+    "whereYoullBe": "Where you’ll be",
+    "locationMissing": "Location not provided",
+    "mapTitle": "Map of {{place}}",
+    "selectCheckIn": "Select check-in date",
+    "selectCheckInHelp": "Add your travel dates for exact pricing",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "clearDates": "Clear dates",
+    "noReviewsHeading": "No reviews (yet)",
+    "beFirst": "Be the first to review this place.",
+    "askAboutHome": "Ask about this home",
+    "askPlaceholder": "Can I do laundry there?",
+    "meetHost": "Meet your host",
+    "startedHosting": "Started hosting in {{year}}",
+    "messageHost": "Message host",
+    "paymentProtection": "To help protect your payment, always use Booksa to send money and communicate with hosts.",
+    "thingsToKnow": "Things to know",
+    "cancellationPolicy": "Cancellation policy",
+    "cancellationHelp": "Add your trip dates to get the cancellation details for this stay.",
+    "guestsMaximum_one": "{{count}} guest maximum",
+    "guestsMaximum_other": "{{count}} guests maximum",
+    "safetyProperty": "Safety & property",
+    "notReported": "{{amenity}} not reported",
+    "alarmsReported": "Safety alarms reported",
+    "report": "Report this listing",
+    "addDates": "Add dates for prices",
+    "checkInOn": "Check-in {{date}} · add checkout",
+    "checkAvailability": "Check availability",
+    "selectCheckOut": "Select checkout date",
+    "minimumStay_one": "Minimum stay: {{count}} night",
+    "minimumStay_other": "Minimum stay: {{count}} nights",
+    "nightsIn_one": "{{count}} night in {{place}}",
+    "nightsIn_other": "{{count}} nights in {{place}}",
+    "checkInDay": "check-in",
+    "checkOutDay": "checkout",
+    "unavailableDay": "not available for this stay length",
+    "changeDates": "Change dates",
+    "editDates": "Change dates, {{dates}}",
+    "notBookable": "Listing not published yet",
+    "nights_one": "{{count}} night",
+    "nights_other": "{{count}} nights",
+    "selectDates": "Select dates",
+    "closeDates": "Close date picker",
+    "openGallery": "Open photo {{number}} of {{total}} in the gallery"
+  },
+  "listingGallery": {
+    "back": "Back to listing preview",
+    "count_one": "{{count}} photo",
+    "count_other": "{{count}} photos",
+    "empty": "This listing has no photos yet."
+  },
+  "photoTour": {
+    "photos_one": "{{count}} photo",
+    "photos_other": "{{count}} photos",
+    "addPhotos": "Add photos",
+    "additionalPhotos": "Additional photos"
+  },
+  "checkInOutSheet": {
+    "close": "Close check-in and checkout",
+    "window": "Check-in window",
+    "start": "Start time",
+    "end": "End time",
+    "time": "Time",
+    "flexible": "Flexible",
+    "localOnly": "Changes stay in this editor session and are not saved to your listing yet."
+  },
+  "directionsSheet": {
+    "close": "Close directions",
+    "placeholder": "Let guests know how to get to your place. Include any tips for parking or public transportation.",
+    "visibility": "Shared once a booking is confirmed",
+    "localOnly": "Changes stay in this editor session and are not saved to your listing yet."
+  },
+  "checkInMethod": {
+    "heading": "Select a check-in method",
+    "back": "Back to arrival guide",
+    "methods": {
+      "smart-lock": {
+        "title": "Smart lock",
+        "description": "Guests will use a code or app to open a wifi-connected lock.",
+        "detailsHeading": "Add smart lock details"
+      },
+      "keypad": {
+        "title": "Keypad",
+        "description": "Guests will use the code you provide to open an electronic lock.",
+        "detailsHeading": "Add keypad details"
+      },
+      "lockbox": {
+        "title": "Lockbox",
+        "description": "Guests will use a code you provide to open a small safe that has a key inside.",
+        "detailsHeading": "Add lockbox details"
+      },
+      "building-staff": {
+        "title": "Building staff",
+        "description": "Someone will be available 24 hours a day to let guests in.",
+        "detailsHeading": "Add building staff details"
+      },
+      "in-person-greeting": {
+        "title": "In-person greeting",
+        "description": "Guests will meet you or your co-host to pick up keys.",
+        "detailsHeading": "Add in-person greeting details"
+      }
+    },
+    "backToMethods": "Back to check-in methods",
+    "detailsPlaceholder": "Add any important details for getting inside your place. This info will be shared with guests 24 - 48 hours before check-in.",
+    "sharedBefore": "Shared 48 hours before check-in"
+  },
+  "allPhotosNavigation": {
+    "backToPhotos": "Back to all photos",
+    "backToTour": "Back to photo tour",
+    "manage": "Manage photos",
+    "done": "Done"
+  },
+  "photoDetails": {
+    "heading": "Photo details",
+    "close": "Close photo details",
+    "makeCover": "Make cover photo",
+    "cover": "Cover photo",
+    "remove": "Remove photo",
+    "imageAlt": "Selected listing photo",
+    "addDescription": "Add a visual description",
+    "editDescription": "Edit visual description",
+    "moveFrom": "Move from <strong>{{room}}</strong>?",
+    "unassigned": "Unassigned",
+    "descriptionLabel": "Visual description",
+    "placeholder": "Add a description for this room or space.",
+    "remaining_one": "{{count}} character available",
+    "remaining_other": "{{count}} characters available",
+    "pending": "Save or cancel your changes before moving or removing this photo.",
+    "unsaved": "Unsaved changes",
+    "saved": "All changes saved"
+  }
 }

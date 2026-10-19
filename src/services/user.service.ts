@@ -57,14 +57,20 @@ export async function updateLoggedInUserProfile(
   });
 }
 
-export async function getLoggedInUserProfile(): Promise<Record<string, unknown>> {
+export async function getLoggedInUserProfile(expectedUserId?: string): Promise<Record<string, unknown>> {
   const currentUser = firebaseAuth?.currentUser;
 
-  if (!currentUser) {
+  if (!currentUser || (expectedUserId !== undefined && currentUser.uid !== expectedUserId)) {
     throw new Error('You must be signed in to view your account information.');
   }
 
-  return getUserProfileById(currentUser.uid);
+  const profile = await getUserProfileById(currentUser.uid);
+
+  if (firebaseAuth?.currentUser !== currentUser) {
+    throw new Error('Your session changed. Please try loading your profile again.');
+  }
+
+  return profile;
 }
 
 export async function getUserProfileById(userId: string): Promise<Record<string, unknown>> {

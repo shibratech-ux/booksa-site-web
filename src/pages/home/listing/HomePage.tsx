@@ -1,11 +1,6 @@
-import {
-  ArrowRightRegular,
-  ChevronLeftRegular,
-  ChevronRightRegular,
-  HeartFilled,
-  HeartRegular
-} from '@fluentui/react-icons';
-import { useRef, useState } from 'react';
+import { ArrowRight, ChevronLeft, ChevronRight, Heart, Star } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, generatePath, useNavigate } from 'react-router-dom';
 import Footer from '@/components/layout/Footer';
 import BooksaHeader from '@/components/layout/BooksaHeader';
@@ -16,6 +11,9 @@ import type { Listing } from './listing.types';
 import { persistListingContext, persistSeeAllSectionTitle } from '@/utils/navigationPersistence';
 import { ROUTES } from '@/utils/constants';
 import { useTheme } from '@/theme/useTheme';
+import { exploreCategoryIds, listPublishedListings, type ExploreCategoryId, type PublishedListingSummary } from '@/services/listing-catalog.service';
+import { useAuthStore } from '@/store/auth.store';
+import { formatCurrency } from '@/utils/formatters';
 
 const popularHomes: Listing[] = [
   {
@@ -406,7 +404,7 @@ const homeskigali: Listing[] = [
 
 // Reusable card used for the horizontal property grids.
 function ListingCard({ listing }: { listing: Listing }) {
-  const listingId = encodeURIComponent(`${listing.location}-${listing.price}`);
+  const listingId = encodeURIComponent(listing.id ?? `${listing.location}-${listing.price}`);
   const detailPath = generatePath(ROUTES.listingDetail, { listingId });
   const [isSaved, setIsSaved] = useState(false);
   const { theme } = useTheme();
@@ -442,11 +440,17 @@ function ListingCard({ listing }: { listing: Listing }) {
             <p className="flex min-w-0 items-center text-[12px] font-semibold leading-[15px]">
               <span className="min-w-0 truncate">
                 <span style={{ color: theme.colors.textPrimary }}>{listing.price}</span>{' '}
-                <span style={{ color: theme.colors.textSecondary }}>pour 2 nuits</span>
+                {listing.priceSuffix === '' ? null : <span style={{ color: theme.colors.textSecondary }}>{listing.priceSuffix ?? 'pour 2 nuits'}</span>}
               </span>
-              <span className="shrink-0" aria-label={`Note ${listing.rating} sur 5`}>
-                <span aria-hidden="true"> · ★ {listing.rating}</span>
-              </span>
+              {listing.rating ? (
+                <span className="shrink-0" aria-label={`Note ${listing.rating} sur 5`}>
+                  <span className="inline-flex items-center gap-1">
+                    <span aria-hidden="true">·</span>
+                    <Star className="h-3 w-3 fill-current" aria-hidden="true" />
+                    {listing.rating}
+                  </span>
+                </span>
+              ) : null}
             </p>
           </div>
         </div>
@@ -460,9 +464,9 @@ function ListingCard({ listing }: { listing: Listing }) {
         className="absolute right-1 top-1 inline-flex h-11 w-11 items-center justify-center rounded-full text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.65)] transition hover:scale-105"
       >
         {isSaved ? (
-          <HeartFilled className="h-6 w-6 text-[var(--color-primary-500)]" />
+          <Heart className="h-6 w-6 text-[var(--color-primary-500)]" fill="currentColor" aria-hidden="true" />
         ) : (
-          <HeartRegular className="h-6 w-6" />
+          <Heart className="h-6 w-6" aria-hidden="true" />
         )}
       </button>
     </article>
@@ -478,19 +482,23 @@ function SectionHeader({
 }: {
   title: string;
   subtitle?: string;
-  onSeeAll: () => void;
+  onSeeAll?: () => void;
   onPrevious: () => void;
   onNext: () => void;
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="min-w-0">
-        <button type="button" onClick={onSeeAll} className="group flex min-h-11 min-w-0 items-center gap-1.5 text-left sm:min-h-0">
-          <h2 className="truncate text-[18px] font-bold tracking-[-0.025em] text-slate-900 sm:text-[22px]">{title}</h2>
-          <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 shadow-sm ring-1 ring-slate-200/70 transition group-hover:bg-slate-200">
-            <ArrowRightRegular className="h-2 w-2 transition group-hover:translate-x-0.5" />
-          </span>
-        </button>
+        {onSeeAll ? (
+          <button type="button" onClick={onSeeAll} className="group flex min-h-11 min-w-0 items-center gap-1.5 text-left sm:min-h-0">
+            <h2 className="truncate text-[18px] font-bold tracking-[-0.025em] text-slate-900 sm:text-[22px]">{title}</h2>
+            <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 shadow-sm ring-1 ring-slate-200/70 transition group-hover:bg-slate-200">
+              <ArrowRight className="h-2 w-2 transition group-hover:translate-x-0.5" aria-hidden="true" />
+            </span>
+          </button>
+        ) : (
+          <h2 className="flex min-h-11 items-center truncate text-[18px] font-bold tracking-[-0.025em] text-slate-900 sm:min-h-0 sm:text-[22px]">{title}</h2>
+        )}
         {subtitle ? <p className="mt-0.5 truncate text-[11.76px] text-slate-500 sm:text-[13px]">{subtitle}</p> : null}
       </div>
       <div className="hidden shrink-0 items-center gap-[6px] sm:flex">
@@ -500,7 +508,7 @@ function SectionHeader({
           onClick={onPrevious}
           className="hidden h-[28px] w-[28px] items-center justify-center rounded-full bg-slate-100 text-slate-400 transition hover:bg-slate-200 hover:text-slate-900 sm:inline-flex"
         >
-          <ChevronLeftRegular className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
         </button>
         <button
           type="button"
@@ -508,7 +516,7 @@ function SectionHeader({
           onClick={onNext}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full sm:h-[28px] sm:w-[28px] bg-slate-100 text-slate-800 transition hover:bg-slate-200"
         >
-          <ChevronRightRegular className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -526,7 +534,8 @@ function PropertyRail({
   subtitle?: string;
   listings: Listing[];
   sectionClassName?: string;
-  onSeeAll: (sectionTitle: string) => void;
+  /** Omit for rails without a See all destination. */
+  onSeeAll?: (sectionTitle: string) => void;
 }) {
   const railRef = useRef<HTMLDivElement>(null);
 
@@ -542,7 +551,7 @@ function PropertyRail({
       <SectionHeader
         title={title}
         subtitle={subtitle}
-        onSeeAll={() => onSeeAll(title)}
+        onSeeAll={onSeeAll ? () => onSeeAll(title) : undefined}
         onPrevious={() => scrollRail(-1)}
         onNext={() => scrollRail(1)}
       />
@@ -552,14 +561,62 @@ function PropertyRail({
         className="flex snap-x snap-mandatory gap-[12px] overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] max-sm:-mx-4 max-sm:scroll-pl-4 max-sm:[&>*:first-child]:ml-4 max-sm:[&>*:last-child]:mr-4 [&::-webkit-scrollbar]:hidden"
       >
         {listings.map((listing) => (
-          <ListingCard key={`${listing.location}-${listing.price}`} listing={listing} />
+          <ListingCard key={listing.id ?? `${listing.location}-${listing.price}`} listing={listing} />
         ))}
 
-        <SeeAllCard
-          title={title}
-          images={listings.map((listing) => listing.image)}
-          onClick={() => onSeeAll(title)}
-        />
+        {onSeeAll ? (
+          <SeeAllCard
+            title={title}
+            images={listings.map((listing) => listing.image)}
+            onClick={() => onSeeAll(title)}
+          />
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+// Explore tags in BooksaHeader (navigation namespace) for each listing category.
+const categoryTagKeys: Record<ExploreCategoryId, 'hotel' | 'room' | 'restaurant'> = {
+  hotel: 'hotel',
+  'private-room': 'room',
+  restaurant: 'restaurant'
+};
+
+type PublishedState =
+  | { status: 'signed-out' | 'loading' | 'error' }
+  | { status: 'loaded'; listings: PublishedListingSummary[] };
+
+function usePublishedListings(userId: string | undefined, attempt: number): PublishedState {
+  const [state, setState] = useState<PublishedState>({ status: userId ? 'loading' : 'signed-out' });
+
+  useEffect(() => {
+    if (!userId) {
+      setState({ status: 'signed-out' });
+      return;
+    }
+    let active = true;
+    setState({ status: 'loading' });
+    listPublishedListings()
+      .then((listings) => { if (active) setState({ status: 'loaded', listings }); })
+      .catch(() => { if (active) setState({ status: 'error' }); });
+    return () => { active = false; };
+  }, [userId, attempt]);
+
+  return state;
+}
+
+function PublishedRailSkeleton({ label }: { label: string }) {
+  return (
+    <section role="status" aria-label={label} className="space-y-3">
+      <div className="h-6 w-40 animate-pulse rounded-button bg-[var(--color-surface-muted)]" />
+      <div className="flex gap-[12px] overflow-hidden">
+        {[0, 1, 2, 3].map((item) => (
+          <div key={item} className="marketplace-reference-card shrink-0">
+            <div className="aspect-[1.04/1] animate-pulse rounded-photo bg-[var(--color-surface-muted)]" />
+            <div className="mt-2 h-4 w-3/4 animate-pulse rounded-button bg-[var(--color-surface-muted)]" />
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -567,18 +624,64 @@ function PropertyRail({
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation('booking');
+  const { t: tNavigation } = useTranslation('navigation');
+  const { t: tCommon } = useTranslation('common');
+  const userId = useAuthStore((state) => state.user?.id);
+  const [publishedAttempt, setPublishedAttempt] = useState(0);
+  const published = usePublishedListings(userId, publishedAttempt);
+
+  const toCard = (listing: PublishedListingSummary): Listing => ({
+    id: listing.id,
+    image: listing.coverImageUrl,
+    location: listing.title,
+    title: listing.title,
+    description: listing.location,
+    price: formatCurrency(listing.basePrice, listing.currency, i18n.resolvedLanguage),
+    // TODO(team): confirm what basePrice means for restaurants; no unit is shown until then.
+    priceSuffix: listing.category === 'restaurant' ? '' : t('explorePublished.perNight'),
+    rating: '',
+    badge: t('explorePublished.new')
+  });
+  const publishedRails = published.status === 'loaded'
+    ? exploreCategoryIds
+      .map((category) => ({ category, listings: published.listings.filter((listing) => listing.category === category) }))
+      .filter(({ listings }) => listings.length > 0)
+    : [];
 
   return (
     <div className="min-h-screen bg-[var(--color-surface)]">
       <BooksaHeader />
 
       <main className="marketplace-reference-container mx-auto space-y-8 overflow-hidden px-4 pb-24 pt-4 sm:space-y-9 sm:px-6 sm:py-8 lg:space-y-10 lg:px-0 lg:pb-11 lg:pt-10">
+        {/* Listings deployed by hosts ("Ready for guests"), grouped by the tag chosen when describing the place. */}
+        {published.status === 'loading' ? <PublishedRailSkeleton label={t('explorePublished.loading')} /> : null}
+        {published.status === 'error' ? (
+          <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-card border border-[var(--color-border)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+            <span>{t('explorePublished.loadError')}</span>
+            <button
+              type="button"
+              onClick={() => setPublishedAttempt((value) => value + 1)}
+              className="min-h-11 rounded-button px-3 font-semibold text-[var(--color-text-primary)] underline underline-offset-4"
+            >
+              {tCommon('actions.retry')}
+            </button>
+          </div>
+        ) : null}
+        {publishedRails.map(({ category, listings }) => (
+          <PropertyRail
+            key={category}
+            title={tNavigation(categoryTagKeys[category])}
+            listings={listings.map(toCard)}
+          />
+        ))}
+
         <PropertyRail
           title={HOME_SECTION_TITLES.popularHomesKinshasa}
           listings={popularHomes}
           onSeeAll={(sectionTitle) => {
             persistSeeAllSectionTitle(sectionTitle);
-            navigate(ROUTES.seeAll, { state: { sectionTitle } });
+            navigate(ROUTES.seeAllMap, { state: { sectionTitle } });
           }}
         />
 
@@ -588,7 +691,7 @@ export default function HomePage() {
           listings={hotelDeals}
           onSeeAll={(sectionTitle) => {
             persistSeeAllSectionTitle(sectionTitle);
-            navigate(ROUTES.seeAll, { state: { sectionTitle } });
+            navigate(ROUTES.seeAllMap, { state: { sectionTitle } });
           }}
         />
 
@@ -597,7 +700,7 @@ export default function HomePage() {
           listings={homesInJohannesburg}
           onSeeAll={(sectionTitle) => {
             persistSeeAllSectionTitle(sectionTitle);
-            navigate(ROUTES.seeAll, { state: { sectionTitle } });
+            navigate(ROUTES.seeAllMap, { state: { sectionTitle } });
           }}
         />
 
@@ -606,7 +709,7 @@ export default function HomePage() {
           listings={homeskigali}
           onSeeAll={(sectionTitle) => {
             persistSeeAllSectionTitle(sectionTitle);
-            navigate(ROUTES.seeAll, { state: { sectionTitle } });
+            navigate(ROUTES.seeAllMap, { state: { sectionTitle } });
           }}
         />
 
@@ -615,7 +718,7 @@ export default function HomePage() {
           listings={homesInGoma}
           onSeeAll={(sectionTitle) => {
             persistSeeAllSectionTitle(sectionTitle);
-            navigate(ROUTES.seeAll, { state: { sectionTitle } });
+            navigate(ROUTES.seeAllMap, { state: { sectionTitle } });
           }}
         />
       </main>

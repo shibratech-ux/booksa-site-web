@@ -1,8 +1,8 @@
-import { BuildingRegular, BuildingBankRegular, WalletRegular } from '@fluentui/react-icons';
+import { Building, Landmark, Wallet } from 'lucide-react';
 
 export const financeIcons = {
-  wallet: WalletRegular,
-  bank: BuildingBankRegular,
-  enterprise: BuildingRegular,
-  institution: BuildingBankRegular
+  wallet: Wallet,
+  bank: Landmark,
+  enterprise: Building,
+  institution: Landmark
 } as const;

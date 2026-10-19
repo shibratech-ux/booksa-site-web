@@ -88,7 +88,7 @@ export function WeekendAdjustmentDialog({
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(event) => event.stopPropagation()}
-            className="flex h-[min(420px,92dvh)] max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-dialog bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:h-[433.4px] sm:max-h-[calc(100vh-32px)] sm:rounded-dialog sm:px-6 sm:pb-4"
+            className="flex h-[min(420px,92dvh)] max-h-[92dvh] w-full max-w-[528px] flex-col overflow-y-auto rounded-t-dialog bg-[var(--color-surface)] px-5 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 text-[var(--color-text-primary)] shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:h-[433.4px] sm:max-h-[calc(100vh-32px)] sm:rounded-dialog sm:px-6 sm:pb-4"
           >
             <header className="grid h-12 shrink-0 grid-cols-[44px_1fr_44px] items-center">
               <button
@@ -96,7 +96,7 @@ export function WeekendAdjustmentDialog({
                 aria-label="Learn about weekend adjustments"
                 className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
               >
-                <CircleHelp className="h-5 w-5" strokeWidth={1.7} aria-hidden="true" />
+                <CircleHelp className="h-5 w-5" aria-hidden="true" />
               </button>
               <h2 id={titleId} className="text-center text-base font-semibold">
                 Weekend adjustment
@@ -107,7 +107,7 @@ export function WeekendAdjustmentDialog({
                 aria-label="Close weekend adjustment dialog"
                 className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
               >
-                <X className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
             </header>
 

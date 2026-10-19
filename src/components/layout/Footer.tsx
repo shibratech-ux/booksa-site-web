@@ -1,4 +1,4 @@
-import { ChevronRightRegular } from '@fluentui/react-icons';
+import { ChevronRight } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/language/LanguageSwitcher';
 
 const footerBrowseTabs = ['Populaire', 'Arts et culture', 'Appartements adaptés à Booksa'];
@@ -76,7 +76,7 @@ function Footer() {
                 className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[var(--color-text-primary)] transition hover:text-[var(--color-primary-500)]"
               >
                 Voir plus
-                <ChevronRightRegular className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
               </button>
             </div>
           </div>

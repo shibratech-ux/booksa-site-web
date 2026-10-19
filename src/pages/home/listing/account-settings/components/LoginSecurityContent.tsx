@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiLock, FiMonitor } from 'react-icons/fi';
+import { Lock, Monitor } from 'lucide-react';
 import { firebaseAuth } from '@/services/firebase';
 import { updateLoggedInUserPassword } from '@/services/auth.service';
 import { useTranslation } from 'react-i18next';
@@ -246,7 +246,7 @@ export function LoginSecurityContent() {
               <h3 className="text-2xl font-semibold tracking-[-0.03em]">Device history</h3>
               <div className="mt-7 border-y border-[var(--color-border)] py-6">
                 <div className="flex items-center gap-4">
-                  <FiMonitor className="h-7 w-7 shrink-0" aria-hidden="true" />
+                  <Monitor className="h-7 w-7 shrink-0" aria-hidden="true" />
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <h4 className="font-semibold">{currentDevice}</h4>
@@ -282,7 +282,7 @@ export function LoginSecurityContent() {
 
             <article className="mt-12 flex gap-5 rounded-card border border-[var(--color-border)] p-6">
               <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-pink-500 text-pink-500">
-                <FiLock className="h-5 w-5" aria-hidden="true" />
+                <Lock className="h-5 w-5" aria-hidden="true" />
               </span>
               <div>
                 <h4 className="text-lg font-semibold">Adding devices from people you trust</h4>

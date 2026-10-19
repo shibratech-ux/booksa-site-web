@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AlertRegular, PanelLeftRegular, SearchRegular } from '@fluentui/react-icons';
+import { Bell, PanelLeft, Search } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useAppStore } from '@/store/app.store';
 import { createAvatarFallback, cn } from '@/utils/helpers';
@@ -25,12 +25,12 @@ export function Header() {
             size="sm"
             className="lg:hidden"
             onClick={toggleSidebar}
-            leftIcon={<PanelLeftRegular className="h-4 w-4" />}
+            leftIcon={<PanelLeft className="h-4 w-4" aria-hidden="true" />}
           >
             {t('menu')}
           </Button>
           <div className="search-surface hidden px-4 md:flex md:items-center md:gap-3">
-            <SearchRegular className="h-5 w-5 text-[var(--color-text-secondary)]" />
+            <Search className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
             <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher des rapports, des utilisateurs, des transactions..."
@@ -41,7 +41,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher compact />
-          <IconButton icon={<AlertRegular className="h-4 w-4" />} label={t('notifications')} />
+          <IconButton icon={<Bell className="h-4 w-4" aria-hidden="true" />} label={t('notifications')} />
           <div className="flex items-center gap-3 rounded-pill border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary-500)] text-sm font-bold text-white">
               {initials}
@@ -56,7 +56,7 @@ export function Header() {
 
       <div className="px-4 pb-4 md:hidden">
         <div className="search-surface flex items-center gap-3 px-4">
-          <SearchRegular className="h-5 w-5 text-[var(--color-text-secondary)]" />
+          <Search className="h-5 w-5 text-[var(--color-text-secondary)]" aria-hidden="true" />
           <input
             aria-label={tCommon('actions.search')}
             placeholder="Rechercher..."

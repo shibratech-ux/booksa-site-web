@@ -9,7 +9,7 @@ Use the live 3dicons.co catalog to select a semantically appropriate icon and in
 
 ## Project conventions
 
-- Use 3D icons for decorative navigation, feature, category, and empty-state artwork. Keep the existing Fluent, Lucide, or React Icons glyphs for small functional controls where crisp strokes and `currentColor` are important.
+- Use 3D icons for decorative navigation, feature, category, and empty-state artwork. Use `lucide-react` glyphs for small functional controls where crisp strokes and `currentColor` are important (see the `lucide-icons` skill).
 - Prefer catalog variants whose metadata is `pro: false` and whose collection is licensed `CC0`. Do not infer that a Pro asset is included merely because its preview is publicly readable.
 - Add every icon slug to `src/icons/threeDIcons.ts`; do not scatter Supabase URLs across components.
 - Use an available rendered size at or just above the displayed CSS size. The catalog currently exposes 20, 60, 100, 200, 400, and 500 pixel WebP previews.

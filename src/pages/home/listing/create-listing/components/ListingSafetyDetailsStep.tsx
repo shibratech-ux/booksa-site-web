@@ -1,30 +1,33 @@
-import { motion } from 'framer-motion';
+import { useId, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Check, Info } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import type { ListingCategory } from '../listingCategories';
 
 export type HostingType = 'individual' | 'business';
 export type SafetyDetailId = 'exterior-camera' | 'noise-monitor' | 'weapons';
 
-const safetyOptions: Array<{ id: SafetyDetailId; label: string }> = [
-  { id: 'exterior-camera', label: 'Exterior security camera present' },
-  { id: 'noise-monitor', label: 'Noise decibel monitor present' },
-  { id: 'weapons', label: 'Weapon(s) on the property' }
-];
-
-function InfoIcon() {
-  return <Info className="h-4 w-4" strokeWidth={2} aria-hidden="true" />;
-}
+const safetyOptions: SafetyDetailId[] = ['exterior-camera', 'noise-monitor', 'weapons'];
 
 export function ListingSafetyDetailsStep({
+  categoryId = 'hotel',
   hostingType,
   selectedSafetyDetailIds,
   onHostingTypeChange,
   onSafetyDetailsChange
 }: {
+  categoryId?: ListingCategory['id'];
   hostingType: HostingType;
   selectedSafetyDetailIds: SafetyDetailId[];
   onHostingTypeChange: (hostingType: HostingType) => void;
   onSafetyDetailsChange: (detailIds: SafetyDetailId[]) => void;
 }) {
+  const { t } = useTranslation('dashboard');
+  const helpId = useId();
+  const hostingName = useId();
+  const helpRef = useRef<HTMLParagraphElement>(null);
+  const [showHelp, setShowHelp] = useState(false);
+  const reduceMotion = useReducedMotion();
   const toggleSafetyDetail = (detailId: SafetyDetailId) => {
     onSafetyDetailsChange(
       selectedSafetyDetailIds.includes(detailId)
@@ -35,61 +38,42 @@ export function ListingSafetyDetailsStep({
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 14 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, x: -24 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="mx-auto flex min-h-0 w-full max-w-[781px] flex-1 flex-col overflow-y-auto px-5 py-6 sm:px-10 sm:py-8"
+      exit={{ opacity: 0, x: reduceMotion ? 0 : -24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.35, ease: 'easeOut' }}
+      className="mx-auto flex min-h-0 w-full max-w-[640px] flex-1 flex-col overflow-y-auto overscroll-contain px-6 pb-8 pt-3 sm:px-10 sm:py-8"
     >
-      <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Share safety details</h1>
+      <h1 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
+        {t('listingSafetyStep.heading')}
+      </h1>
 
-      <fieldset className="mt-8">
-        <legend className="flex items-center gap-2 text-lg font-semibold">
-          How are you hosting on Booksa?
-          <button type="button" aria-label="Learn about hosting types" className="rounded-button">
-            <InfoIcon />
+      <fieldset className="mt-5 min-w-0">
+        <legend className="flex max-w-full items-center gap-1 text-sm font-semibold sm:text-base">
+          {t(`listingSafetyStep.prompts.${categoryId}`)}
+          <button
+            type="button"
+            aria-label={t('listingSafetyStep.helpLabel')}
+            aria-expanded={showHelp}
+            aria-controls={helpId}
+            onClick={() => {
+              setShowHelp((current) => !current);
+              if (!showHelp) window.requestAnimationFrame(() => helpRef.current?.scrollIntoView({ block: 'nearest' }));
+            }}
+            className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full hover:bg-[var(--color-surface-muted)]"
+          >
+            <Info className="h-4 w-4" aria-hidden="true" />
           </button>
         </legend>
-        <div className="mt-5 grid gap-4">
-          {([
-            ['individual', "I'm hosting as a private individual"],
-            ['business', "I'm hosting as a business"]
-          ] as const).map(([value, label]) => (
-            <label key={value} className="flex w-fit cursor-pointer items-center gap-4 text-base">
-              <input
-                type="radio"
-                name="hosting-type"
-                value={value}
-                checked={hostingType === value}
-                onChange={() => onHostingTypeChange(value)}
-                className="peer sr-only"
-              />
-              <span className="inline-flex h-[25.3px] w-[25.3px] items-center justify-center rounded-full border border-[var(--color-text-secondary)] peer-checked:border-2 peer-checked:border-[var(--color-text-primary)]">
-                <span className={`h-[14.3px] w-[14.3px] rounded-full ${hostingType === value ? 'bg-[var(--color-text-primary)]' : ''}`} />
-              </span>
-              {label}
-            </label>
-          ))}
-        </div>
-      </fieldset>
-
-      <fieldset className="mt-10">
-        <legend className="flex items-center gap-2 text-lg font-semibold">
-          Does your place have any of these?
-          <button type="button" aria-label="Learn about required safety disclosures" className="rounded-button">
-            <InfoIcon />
-          </button>
-        </legend>
-        <div className="mt-4 grid gap-1">
-          {safetyOptions.map(({ id, label }) => {
+        <p ref={helpRef} id={helpId} hidden={!showHelp} className="mb-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+          {t('listingSafetyStep.help')}
+        </p>
+        <div>
+          {safetyOptions.map((id) => {
             const selected = selectedSafetyDetailIds.includes(id);
-
             return (
-              <label
-                key={id}
-                className="flex min-h-12 cursor-pointer items-center justify-between gap-5 text-base"
-              >
-                <span>{label}</span>
+              <label key={id} className="flex min-h-11 cursor-pointer items-center justify-between gap-4 py-1 text-sm sm:text-base">
+                <span>{t(`listingSafetyStep.options.${id}`)}</span>
                 <input
                   type="checkbox"
                   checked={selected}
@@ -97,14 +81,14 @@ export function ListingSafetyDetailsStep({
                   className="peer sr-only"
                 />
                 <span
-                  className={`inline-flex h-[25.3px] w-[25.3px] shrink-0 items-center justify-center rounded-xs border transition ${
+                  className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-xs border transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-[var(--color-text-primary)] ${
                     selected
                       ? 'border-[var(--color-text-primary)] bg-[var(--color-text-primary)] text-[var(--color-surface)]'
-                      : 'border-[var(--color-text-secondary)] bg-[var(--color-surface)]'
+                      : 'border-[var(--color-border)] bg-[var(--color-surface)]'
                   }`}
                   aria-hidden="true"
                 >
-                  {selected ? <Check className="h-4 w-4" strokeWidth={3} /> : null}
+                  {selected ? <Check className="h-4 w-4" /> : null}
                 </span>
               </label>
             );
@@ -112,13 +96,33 @@ export function ListingSafetyDetailsStep({
         </div>
       </fieldset>
 
-      <div className="mt-8 border-t border-[var(--color-border)] pt-8">
-        <h2 className="text-lg font-semibold">Important things to know</h2>
-        <p className="mt-2 max-w-[715px] text-base leading-snug">
-          Security cameras that monitor indoor spaces are not allowed even if they’re turned off.
-          All exterior security cameras must be disclosed.
-        </p>
+      <div className="mt-6 border-t border-[var(--color-border)] pt-6 text-sm leading-relaxed sm:text-base">
+        <h2 className="font-semibold">{t('listingSafetyStep.important')}</h2>
+        <p className="mt-2">{t('listingSafetyStep.cameras')}</p>
+        <p className="mt-4">{t('listingSafetyStep.responsibilities')}</p>
       </div>
+
+      <details className="mt-5 text-sm">
+        <summary className="min-h-11 cursor-pointer content-center rounded-button font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-text-primary)]">
+          {t('listingSafetyStep.hostingDetails')}
+        </summary>
+        <fieldset className="mt-2">
+          <legend className="font-semibold">{t('listingSafetyStep.hostingQuestion')}</legend>
+          {(['individual', 'business'] as const).map((value) => (
+            <label key={value} className="flex min-h-11 cursor-pointer items-center gap-3 py-2">
+              <input
+                type="radio"
+                name={hostingName}
+                value={value}
+                checked={hostingType === value}
+                onChange={() => onHostingTypeChange(value)}
+                className="h-5 w-5 shrink-0 accent-[var(--color-text-primary)]"
+              />
+              {t(`listingSafetyStep.hosting.${value}`)}
+            </label>
+          ))}
+        </fieldset>
+      </details>
     </motion.section>
   );
 }

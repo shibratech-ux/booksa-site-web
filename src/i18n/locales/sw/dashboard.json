@@ -1,8 +1,1051 @@
 {
-  "nav": { "today": "Leo", "calendar": "Kalenda", "listings": "Matangazo", "messages": "Ujumbe", "host": "Urambazaji wa mwenyeji", "hostMobile": "Urambazaji wa simu wa mwenyeji", "travelerMode": "Badili kuwa msafiri" },
-  "messages": { "title": "Ujumbe", "search": "Tafuta ujumbe", "settings": "Mipangilio ya ujumbe", "all": "Yote", "unread": "Haijasomwa", "empty": "Hakuna ujumbe uliopatikana", "emptyHelp": "Jaribu kuondoa au kubadilisha vichujio.", "clearFilters": "Ondoa vichujio vyote" },
-  "reservations": { "upcoming": "Zijazo", "empty": "Huna nafasi zilizowekwa", "emptyHelp": "Ili upokee nafasi, kamilisha na uchapishe tangazo lako.", "finishListing": "Kamilisha tangazo lako", "calendarImage": "Kalenda iliyofunguliwa" },
-  "listingSetup": { "welcomeBack": "Karibu tena, {{name}}", "finish": "Kamilisha tangazo lako", "create": "Unda tangazo", "startedOn": "{{listing}} lilianza {{date}}", "uniqueSpace": "Nafasi yako ya kipekee", "bedBreakfast": "Nyumba yako ya wageni", "listing": "Tangazo lako", "new": "Unda tangazo jipya", "fromExisting": "Unda kutokana na tangazo lililopo", "createError": "Hatukuweza kuunda tangazo lako. Tafadhali jaribu tena.", "loadError": "Hatukuweza kupakia matangazo yako ambayo hayajakamilika." },
-  "drawer": { "title": "Menyu", "accountSettings": "Mipangilio ya akaunti", "languagesCurrency": "Lugha na sarafu", "hostResources": "Nyenzo za wenyeji", "getHelp": "Pata msaada", "findCoHost": "Tafuta mwenyeji mwenza", "newListing": "Unda tangazo jipya", "referHost": "Pendekeza mwenyeji", "newToBooksa": "Ni mgeni Booksa?", "onboarding": "Gundua ushauri na mbinu bora kutoka kwa wenyeji wenye uzoefu.", "hostAccountMenu": "Menyu ya akaunti ya mwenyeji" },
-  "accessibility": { "hostHome": "Mwanzo wa mwenyeji Booksa", "hostAccount": "Akaunti ya {{name}}", "accountMenu": "Menyu ya akaunti" }
+  "listingAddTax": {
+    "close": "Annuler l’ajout d’une taxe",
+    "introduction": "Ajoutez une ou plusieurs taxes fictives à l’aperçu de votre annonce.",
+    "required": "Obligatoire",
+    "integerError": "Saisissez un nombre entier positif.",
+    "name": "Nom de la taxe",
+    "select": "Sélectionner",
+    "names": {
+      "accommodation": "Taxe d’hébergement",
+      "tourism": "Taxe de séjour",
+      "local": "Taxe locale",
+      "other": "Autre taxe"
+    },
+    "type": "Type de taxe",
+    "types": {
+      "booking": "Par réservation",
+      "guest": "Par voyageur",
+      "night": "Par nuit",
+      "guestNight": "Par voyageur et par nuit"
+    },
+    "rate": "Taux de la taxe",
+    "fixed": "Fixe",
+    "amount": "Montant (CDF)",
+    "partialTitle": "Exonération partielle du séjour",
+    "partialDescription": "Pour les séjours avec nuitées, indiquez éventuellement le nombre de nuits après lequel la taxe fictive ne s’appliquerait plus.",
+    "fullTitle": "Exonération totale du séjour",
+    "fullDescription": "Pour les séjours avec nuitées, indiquez éventuellement le nombre de nuits à partir duquel tout le séjour serait exonéré.",
+    "optional": "Facultatif",
+    "registration": "Numéro d’enregistrement fiscal",
+    "registrationHelp": "Utilisez un numéro fictif pour cet aperçu. Ne saisissez pas de véritable numéro d’enregistrement fiscal.",
+    "registrationPlaceholder": "Numéro d’enregistrement fiscal fictif",
+    "termsTitle": "Conditions d’ajout de taxes",
+    "terms": "Je confirme utiliser des informations fictives. Je comprends que cette taxe est conservée uniquement tant que la page des préférences reste ouverte. Booksa ne l’appliquera, ne la collectera ni ne la reversera et ne partagera pas ces informations avec une administration fiscale.",
+    "help": {
+      "intro": "Ces taxes fictives servent à prévisualiser les paramètres de votre annonce. Elles ne modifient pas les totaux des réservations. Le montant fixe est exprimé en CDF.",
+      "partial": "Ce champ facultatif décrit une exonération des nuits au-delà du seuil. Elle n’est pas appliquée aux réservations. Laissez ce champ vide pour les réservations au restaurant.",
+      "full": "Ce champ facultatif décrit une exonération de tout le séjour à partir du seuil. Elle n’est pas appliquée aux réservations. Laissez ce champ vide pour les réservations au restaurant."
+    },
+    "savedHeading": "Taxes en aperçu",
+    "savedNote": "Ces taxes restent uniquement sur cette page et ne s’appliquent pas aux réservations."
+  },
+  "phoneVerification": {
+    "title": "Confirmez votre numéro de téléphone",
+    "description": "Ajoutez un numéro de mobile et Booksa vous enverra un code de confirmation à 6 chiffres.",
+    "back": "Retour aux étapes de publication",
+    "phoneLabel": "Numéro de téléphone",
+    "phoneHelp": "Incluez l’indicatif du pays, par exemple +243 812 345 678.",
+    "consent": "Booksa n’envoie pas encore de vrais SMS : votre code s’affiche sur l’écran suivant. Votre numéro confirmé est enregistré dans votre compte Booksa.",
+    "send": "Envoyer le code",
+    "codeTitle": "Saisissez votre code de confirmation",
+    "codeDescription": "Saisissez le code à 6 chiffres envoyé au {{phone}}.",
+    "codeLabel": "Code de vérification",
+    "codeHelp": "Copiez le code du message Booksa ci-dessus. Ne le partagez avec personne.",
+    "simulatedSms": {
+      "label": "SMS simulé · Booksa",
+      "body": "Votre code de confirmation Booksa est {{code}}. Il expire dans {{minutes}} minutes.",
+      "fill": "Utiliser ce code"
+    },
+    "verify": "Vérifier le numéro",
+    "resend": "Renvoyer le code",
+    "change": "Modifier le numéro",
+    "cooldown": "Vous pourrez demander un nouveau code dans {{seconds}} secondes.",
+    "working": "Veuillez patienter…",
+    "sending": "Envoi de votre code…",
+    "verifying": "Vérification et enregistrement du numéro…",
+    "successTitle": "Votre numéro est confirmé",
+    "successDescription": "Votre numéro vérifié a été enregistré dans votre compte Booksa.",
+    "done": "Compris",
+    "completed": "Terminé",
+    "errors": {
+      "session": "Votre session a changé. Retournez aux étapes de publication, reconnectez-vous si nécessaire et rouvrez la confirmation du numéro.",
+      "unavailable": "La confirmation du numéro est indisponible pour le moment. Veuillez réessayer plus tard.",
+      "invalidPhone": "Saisissez un numéro de mobile valide avec son indicatif de pays, commençant par +.",
+      "invalidCode": "Ce code est incorrect. Vérifiez les 6 chiffres et réessayez.",
+      "expired": "Ce code a expiré. Demandez un nouveau code et réessayez.",
+      "throttled": "Vous avez demandé un code récemment. Patientez un instant avant d’en demander un autre.",
+      "generic": "La confirmation du numéro a échoué. Vérifiez votre connexion et réessayez.",
+      "attempts": "Trop de codes incorrects. Demandez un nouveau code pour continuer."
+    }
+  },
+  "listingPublishSteps": {
+    "title": "Étapes avant publication",
+    "close": "Retour à l’éditeur d’annonce",
+    "started": "Annonce commencée le {{date}}",
+    "identity": "Vérification d’identité",
+    "notStarted": "Non commencé",
+    "verifyTitle": "Vérifiez votre identité",
+    "description": "Nous allons recueillir quelques informations pour confirmer votre identité.",
+    "status": { "not-started": "Non commencé", "selfie-submitted": "Selfie envoyé", "pending": "En cours de vérification", "verified": "Vérifiée" },
+    "statusDescription": {
+      "not-started": "Nous allons recueillir quelques informations pour confirmer qu’il s’agit bien de vous.",
+      "selfie-submitted": "Votre selfie est enregistré, mais les informations de votre pièce d’identité manquent. Recommencez pour terminer la vérification.",
+      "pending": "Nous vérifions votre pièce d’identité et votre selfie. Cette vérification simulée prend environ {{seconds}} secondes.",
+      "verified": "Votre identité est vérifiée. Aucune autre action n’est nécessaire."
+    },
+    "startAgain": "Recommencer",
+    "phone": "Confirmation du numéro de téléphone",
+    "birthDate": "Confirmation de la date de naissance",
+    "loading": "Chargement de vos informations de vérification…",
+    "loadError": "Impossible de charger vos informations de vérification. Vous pouvez réessayer ou commencer la vérification.",
+    "retry": "Réessayer"
+  },
+  "listingPublishReady": {
+    "sectionTitle": "Prêtes à accueillir des voyageurs",
+    "cardTitle": "Vérifiez votre identité",
+    "cardRequired": "Requis pour publier",
+    "cardReady": "Prêt à publier",
+    "cardPublished": "Publiée",
+    "title": "Vous êtes prêt à publier",
+    "description": "Votre numéro de téléphone et votre identité sont vérifiés. Déployez votre annonce pour la rendre visible aux voyageurs sur Booksa, ou continuez d’abord à la modifier.",
+    "publishedTitle": "Votre annonce est en ligne",
+    "publishedDescription": "Votre annonce est publiée sur Booksa. Vous pouvez la modifier à tout moment.",
+    "checks": { "phone": "Numéro de téléphone confirmé", "identity": "Identité vérifiée" },
+    "deploy": "Déployer",
+    "deploying": "Déploiement…",
+    "continue": "Continuer",
+    "close": "Fermer",
+    "success": "Votre annonce est maintenant publiée sur Booksa.",
+    "errors": {
+      "verification-required": "Votre numéro de téléphone ou votre identité n’est plus vérifié. Ouvrez les étapes de publication et terminez-les à nouveau.",
+      "not-publishable": "Cette annonce ne peut pas être publiée pour le moment. Vérifiez les éléments requis et réessayez.",
+      "generic": "Nous n’avons pas pu publier votre annonce. Vérifiez votre connexion et réessayez."
+    }
+  },
+  "listingTaxesSheet": {
+    "heading": "Taxes",
+    "close": "Fermer les taxes",
+    "introduction": "Les taxes sur Booksa sont simulées. Aucune taxe n’est collectée ni reversée en votre nom.",
+    "cardTitle": "Ajouter les taxes que vous reverserez",
+    "description": "Ajoutez des taxes fictives pour prévisualiser les paramètres de votre annonce. Elles ne s’appliquent pas aux réservations.",
+    "learnMore": "En savoir plus",
+    "help": "Cet aperçu concerne les hôtels, les chambres et les restaurants. Les taxes ne sont ni calculées ni ajoutées aux réservations, et aucun fonds n’est transféré à vous ou à une administration fiscale.",
+    "add": "Ajouter une taxe",
+    "unavailable": "L’ajout de taxes n’est pas encore disponible. Les prix de votre annonce restent inchangés."
+  },
+  "guestRequirementsSheet": {
+    "heading": "Conditions pour les voyageurs",
+    "close": "Fermer les conditions pour les voyageurs",
+    "requirePhoto": "Exiger une photo de profil",
+    "photoDescription": "Si cette option est activée, les voyageurs qui réservent votre annonce doivent avoir une photo de profil. Vous ne la verrez qu’après la confirmation de leur réservation.",
+    "learnMore": "En savoir plus",
+    "photoHelp": "Une photo de profil vous aide à reconnaître les voyageurs après confirmation. Elle ne doit jamais servir à décider qui peut réserver.",
+    "standardHeading": "Conditions pour les voyageurs sur Booksa",
+    "requirements": {
+      "contact": "Confirmer une adresse e-mail et un numéro de téléphone",
+      "booking": "Compléter les informations de réservation simulée",
+      "rules": "Accepter les règles de votre annonce"
+    },
+    "requirementsHelp": "Les réservations et les conditions pour les voyageurs sont actuellement en aperçu sur Booksa. Aucune donnée de paiement réelle n’est collectée.",
+    "preview": "Aperçu uniquement. Enregistrer conserve votre choix tant que cette page reste ouverte ; il ne s’applique pas aux réservations.",
+    "enabledPreview": "Photo de profil requise · Aperçu"
+  },
+  "identitySelfieSubmission": {
+    "title": "Votre demande de vérification d’identité a été envoyée",
+    "description": "Les informations de votre pièce d’identité et votre selfie ont été enregistrés dans votre compte. Il s’agit d’une vérification simulée : votre identité sera marquée comme vérifiée dans environ {{seconds}} secondes.",
+    "done": "Compris",
+    "close": "Retour aux étapes de publication",
+    "uploading": "Envoi en cours…",
+    "errors": {
+      "unauthenticated": "Reconnectez-vous pour envoyer votre selfie.",
+      "session-changed": "Votre session a changé. Rouvrez la vérification d’identité et réessayez.",
+      "invalid-image": "Cette photo ne peut pas être envoyée. Veuillez reprendre votre selfie.",
+      "invalid-details": "Certaines informations de votre pièce d’identité sont manquantes ou invalides. Revenez en arrière, vérifiez votre document et votre nom légal, puis réessayez.",
+      "already-verified": "Votre identité est déjà vérifiée. Il n’y a rien d’autre à envoyer.",
+      "upload-failed": "Impossible d’envoyer votre selfie. Vérifiez votre connexion et réessayez.",
+      "save-failed": "Impossible d’enregistrer les informations de votre selfie. Réessayez de l’envoyer.",
+      "unavailable": "L’envoi du selfie est indisponible. Veuillez réessayer plus tard."
+    }
+  },
+  "identitySelfieCapture": {
+    "title": "Prenez une photo de vous",
+    "instructions": "Tenez votre appareil face à vous, ou demandez à un proche de prendre la photo. Votre visage doit être entièrement visible.",
+    "reviewTitle": "Vérifiez votre photo",
+    "reviewInstructions": "Assurez-vous que la photo est nette, bien éclairée et correspond à la personne sur la pièce d’identité.",
+    "back": "Retour au choix de la comparaison des photos",
+    "backToCamera": "Retour à l’appareil photo",
+    "livePreview": "Aperçu en direct de la caméra avant",
+    "photoAlt": "Votre selfie",
+    "starting": "Démarrage de l’appareil photo…",
+    "take": "Prendre une photo",
+    "taking": "Capture en cours…",
+    "retake": "Reprendre la photo",
+    "submit": "Envoyer la photo",
+    "retry": "Réessayer la caméra",
+    "errors": {
+      "denied": "Autorisez l’accès à la caméra dans votre navigateur, puis réessayez.",
+      "missing": "Aucune caméra détectée. Connectez une caméra ou ouvrez cette page sur un appareil équipé d’une caméra.",
+      "unavailable": "Impossible de démarrer la caméra. Utilisez une connexion sécurisée et vérifiez qu’aucune autre application n’utilise la caméra, puis réessayez.",
+      "interrupted": "Votre caméra s’est arrêtée. Réessayez pour relancer l’aperçu."
+    },
+    "captureError": "Impossible de prendre la photo. Veuillez réessayer.",
+    "submissionUnavailable": "Votre selfie peut être vérifié localement. L’envoi pour vérification n’est pas encore disponible : votre photo n’a pas été envoyée."
+  },
+  "identitySelfieReview": {
+    "title": "Vous allez maintenant prendre un selfie",
+    "intro": "Un selfie permet de comparer votre visage à la pièce d’identité fournie.",
+    "question": "Comment souhaitez-vous comparer vos photos ?",
+    "close": "Retour à votre nom légal",
+    "methods": {
+      "manual": {
+        "title": "Vérification manuelle des photos",
+        "description": "Une personne compare votre selfie aux photos de votre pièce d’identité."
+      },
+      "automatic": {
+        "title": "Vérification automatique des photos",
+        "description": "La reconnaissance faciale compare votre selfie aux photos de votre pièce d’identité."
+      }
+    },
+    "notice": {
+      "manual": "La vérification manuelle consiste à faire comparer votre selfie et votre pièce d’identité par une personne, sans reconnaissance faciale.",
+      "automatic": "La vérification automatique permettrait à Booksa de comparer votre selfie à votre pièce d’identité par reconnaissance faciale. Choisissez la vérification manuelle si vous préférez une comparaison par une personne."
+    },
+    "learnMore": "En savoir plus",
+    "learnMoreTitle": "À propos de la comparaison des photos",
+    "learnMoreText": "La vérification manuelle consiste à faire comparer les photos par une personne. La vérification automatique utilise la reconnaissance faciale. Cet écran conserve uniquement votre préférence pour cette session. Votre selfie est envoyé uniquement lorsque vous sélectionnez Envoyer la photo. La comparaison automatique d’identité et sa politique de traitement biométrique ne sont pas encore mises en place.",
+    "continue": "Accepter et continuer",
+    "unavailable": "Votre préférence est sélectionnée pour cette session. La capture de selfie et la vérification d’identité ne sont pas encore disponibles."
+  },
+  "identityLegalName": {
+    "title": "Confirmez votre nom légal",
+    "intro": "Vérifiez que votre nom correspond à votre pièce d’identité. Si nécessaire, corrigez-le ci-dessous.",
+    "close": "Retour aux photos du document",
+    "legalName": "Nom légal",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "legalHelp": "Utilisez le nom figurant sur votre pièce d’identité. Si vous utilisez un autre prénom, vous pouvez l’ajouter ci-dessous.",
+    "preferredName": "Prénom d’usage",
+    "preferredFirstName": "Prénom d’usage (facultatif)",
+    "preferredHelp": "Votre prénom d’usage est celui que vous utilisez au quotidien. Il peut être différent de votre prénom légal.",
+    "learnMore": "En savoir plus",
+    "learnMoreText": "Saisissez votre nom légal tel qu’il apparaît sur votre pièce d’identité. Vous pouvez aussi ajouter un prénom d’usage, comme un surnom. Cela ne modifie pas le nom légal fourni pour la vérification.",
+    "loading": "Chargement des informations de votre compte…",
+    "loadError": "Impossible de charger les informations de votre compte. Vous pouvez saisir votre nom ci-dessous.",
+    "confirm": "Confirmer",
+    "confirmed": "Confirmé",
+    "confirmedNotice": "Votre nom a été vérifié pour cette session. Il n’a pas été enregistré dans votre compte ni envoyé pour vérification d’identité."
+  },
+  "identityUpload": {
+    "titles": {
+      "identity-card": "Ajoutez les photos de votre carte d’identité",
+      "drivers-license": "Ajoutez les photos de votre permis de conduire",
+      "passport": "Ajoutez une photo de votre passeport"
+    },
+    "instructions": {
+      "identity-card": "Vos photos doivent être nettes et le recto de votre carte d’identité doit montrer clairement votre visage.",
+      "drivers-license": "Vos photos doivent être nettes et le recto de votre permis de conduire doit montrer clairement votre visage.",
+      "passport": "La page avec votre photo doit être nette, avec votre visage et toutes les informations du document visibles."
+    },
+    "back": "Retour au choix de la pièce d’identité",
+    "upload": {
+      "front": "Ajouter le recto",
+      "back": "Ajouter le verso"
+    },
+    "replace": {
+      "front": "Remplacer le recto",
+      "back": "Remplacer le verso"
+    },
+    "uploadPassport": "Ajouter la page photo",
+    "replacePassport": "Remplacer la page photo",
+    "preview": {
+      "front": "Photo sélectionnée de la pièce d’identité",
+      "back": "Photo sélectionnée du verso de la pièce d’identité"
+    },
+    "remove": {
+      "front": "Retirer la photo du recto",
+      "back": "Retirer la photo du verso"
+    },
+    "formats": "JPEG ou PNG · Max. 10 Mo",
+    "checking": "Vérification de l’image…",
+    "invalidFile": "Choisissez une image JPEG ou PNG de 10 Mo maximum.",
+    "unreadableFile": "Impossible d’ouvrir cette image. Veuillez en choisir une autre."
+  },
+  "identityVerification": {
+    "getStarted": "Commencer",
+    "title": "Choisissez une pièce d’identité",
+    "issuingCountry": "Pays ou région de délivrance",
+    "congo": "République démocratique du Congo",
+    "types": {
+      "drivers-license": "Permis de conduire",
+      "passport": "Passeport",
+      "identity-card": "Carte d’identité"
+    },
+    "back": "Retour aux étapes de publication",
+    "backLabel": "Retour",
+    "continue": "Continuer",
+    "privacyLead": "Consultez notre",
+    "privacyPolicy": "Politique de confidentialité",
+    "privacyTail": "avant de partager une pièce d’identité.",
+    "privacyUnavailable": "La politique de confidentialité liée à la vérification d’identité n’est pas encore disponible ici. Aucune pièce d’identité n’est collectée sur cet écran.",
+    "unavailable": "La vérification d’identité n’est pas encore disponible. Veuillez réessayer plus tard."
+  },
+  "listingSafetyStep": {
+    "heading": "Partagez les informations de sécurité",
+    "prompts": {
+      "hotel": "Votre hôtel possède-t-il l’un de ces équipements ?",
+      "private-room": "Votre chambre ou propriété possède-t-elle l’un de ces équipements ?",
+      "restaurant": "Votre restaurant possède-t-il l’un de ces équipements ?"
+    },
+    "helpLabel": "En savoir plus sur les informations de sécurité",
+    "help": "Sélectionnez tous les éléments présents dans votre propriété, y compris dans les espaces partagés. Ne cochez pas les éléments absents. Vous pouvez en sélectionner plusieurs.",
+    "options": {
+      "exterior-camera": "Caméra de surveillance extérieure",
+      "noise-monitor": "Détecteur de décibels",
+      "weapons": "Arme(s) sur la propriété"
+    },
+    "important": "Informations importantes",
+    "cameras": "Les caméras de surveillance des espaces intérieurs sont interdites, même lorsqu’elles sont éteintes. Toutes les caméras de surveillance extérieures doivent être signalées.",
+    "responsibilities": "Veillez à respecter les lois locales applicables et à fournir des informations de sécurité exactes. Accueillez tous les voyageurs Booksa avec équité et respect.",
+    "hostingDetails": "Informations sur l’hôte",
+    "hostingQuestion": "Comment accueillez-vous sur Booksa ?",
+    "hosting": {
+      "individual": "J’accueille en tant que particulier",
+      "business": "J’accueille en tant qu’entreprise"
+    },
+    "exit": "Quitter",
+    "create": "Créer l’annonce",
+    "creating": "Création de l’annonce…"
+  },
+  "listingPricingStep": {
+    "heading": "Maintenant, fixez vos prix",
+    "learnMore": "En savoir plus",
+    "basePrice": "Prix de base",
+    "weekendAdjustment": "Ajustement du week-end",
+    "weekendPrice": "{{price}} le ven. et le sam.",
+    "similarUnavailable": "La comparaison des prix sera bientôt disponible.",
+    "contexts": {
+      "hotel": {
+        "plural": "hôtels",
+        "description": "Fixez le prix de base de votre hôtel et ajustez-le pour les séjours du week-end.",
+        "help": "Le prix de base s’applique aux séjours à l’hôtel. Votre ajustement en pourcentage s’applique les vendredis et samedis. Le prix initial de Booksa est indicatif ; les suggestions liées à la demande ne sont pas encore disponibles.",
+        "similar": "Voir des hôtels similaires"
+      },
+      "room": {
+        "plural": "chambres",
+        "description": "Fixez le prix de base de votre chambre et ajustez-le pour les séjours du week-end.",
+        "help": "Le prix de base s’applique aux séjours en chambre. Votre ajustement en pourcentage s’applique les vendredis et samedis. Le prix initial de Booksa est indicatif ; les suggestions liées à la demande ne sont pas encore disponibles.",
+        "similar": "Voir des chambres similaires"
+      },
+      "restaurant": {
+        "plural": "restaurants",
+        "description": "Fixez le prix de base de votre restaurant et ajustez-le pour les réservations du week-end.",
+        "help": "Le prix de base s’applique aux réservations au restaurant. Votre ajustement en pourcentage s’applique les vendredis et samedis. Le prix initial de Booksa est indicatif ; les suggestions liées à la demande ne sont pas encore disponibles.",
+        "similar": "Voir des restaurants similaires"
+      }
+    }
+  },
+  "photoTourBadge": {
+    "photos_one": "{{count}} photo",
+    "photos_other": "{{count}} photos"
+  },
+  "arrivalGuide": {
+    "tab": "Guide d’arrivée",
+    "yourSpace": "Votre logement",
+    "tabsLabel": "Sections de l’éditeur d’annonce",
+    "checkIn": "Arrivée",
+    "checkout": "Départ",
+    "addDetails": "Ajouter des informations",
+    "guidebookHelp": "Créez un guide pour partager vos conseils locaux avec les voyageurs.",
+    "guestsMaximum_one": "{{count}} voyageur maximum",
+    "guestsMaximum_other": "{{count}} voyageurs maximum",
+    "more_one": "+ {{count}} autre règle",
+    "more_other": "+ {{count}} autres règles",
+    "intro": "Partagez les informations utiles aux voyageurs pour leur arrivée et leur séjour. Choisissez une rubrique pour consulter ses détails.",
+    "unavailable": "Cette partie du guide d’arrivée ne peut pas encore être modifiée.",
+    "sections": {
+      "checkInOut": "Arrivée et départ",
+      "directions": "Itinéraire",
+      "checkInMethod": "Mode d’arrivée",
+      "wifi": "Informations Wi-Fi",
+      "houseManual": "Manuel de la maison",
+      "checkoutInstructions": "Instructions de départ",
+      "guidebooks": "Guides",
+      "interaction": "Préférences d’interaction"
+    }
+  },
+  "listingRemoveSheet": {
+    "heading": "Dites-nous pourquoi vous avez changé d’avis sur l’accueil de voyageurs",
+    "chooseAll": "Sélectionnez toutes les réponses pertinentes",
+    "close": "Fermer",
+    "next": "Suivant",
+    "selected_one": "{{count}} sélectionnée",
+    "selected_other": "{{count}} sélectionnées",
+    "unavailableHeading": "Cette annonce ne peut pas encore être supprimée ici",
+    "reasons": {
+      "noLongerAble": {
+        "label": "Je ne suis plus en mesure d’accueillir des voyageurs.",
+        "options": {
+          "moving": "Je déménage ou je vends le logement",
+          "situation": "Ma situation personnelle a changé",
+          "time": "Accueillir des voyageurs me prend trop de temps",
+          "rules": "La réglementation locale ne me permet pas d’accueillir"
+        }
+      },
+      "notReady": {
+        "label": "Je ne suis pas prêt à accueillir pour le moment.",
+        "options": {
+          "prepare": "Je dois préparer mon logement",
+          "learn": "Je veux d’abord en savoir plus sur l’accueil",
+          "later": "J’accueillerai à nouveau plus tard"
+        }
+      },
+      "expectedMore": {
+        "label": "Je m’attendais à plus de la part de Booksa.",
+        "options": {
+          "requests": "Je n’ai pas reçu assez de demandes de réservation",
+          "tools": "Les outils pour les hôtes étaient difficiles à utiliser",
+          "support": "J’avais besoin de plus d’aide"
+        }
+      },
+      "moreMoney": {
+        "label": "J’espérais gagner plus d’argent.",
+        "options": {
+          "earnings": "Mes revenus étaient plus faibles que prévu",
+          "fees": "Les frais étaient plus élevés que prévu",
+          "prices": "Les prix dans ma région sont trop bas"
+        }
+      },
+      "smoother": {
+        "label": "Je m’attendais à ce que tout se passe mieux avec les voyageurs.",
+        "options": {
+          "communication": "La communication avec les voyageurs était difficile",
+          "houseRules": "Les voyageurs n’ont pas respecté mon règlement intérieur",
+          "damage": "Quelque chose a été endommagé"
+        }
+      },
+      "duplicate": {
+        "label": "Cette annonce est un doublon.",
+        "options": {
+          "mistake": "J’ai créé cette annonce par erreur",
+          "otherListing": "J’ai déjà une annonce pour ce logement"
+        }
+      }
+    }
+  },
+  "listingPreferences": {
+    "languages": {
+      "description": "Pour certains paramètres, vous pouvez ajouter des informations dans chaque langue ajoutée à votre annonce. Les voyageurs verront une traduction automatique pour tout le reste.",
+      "default": "{{language}} (par défaut)",
+      "delete": "Supprimer",
+      "deleteLabel": "Supprimer {{language}}",
+      "add": "Ajouter une langue",
+      "dialogTitle": "Ajouter une langue",
+      "allAdded": "Vous avez ajouté toutes les langues disponibles sur Booksa.",
+      "added": "{{language}} ajouté.",
+      "removed": "{{language}} supprimé."
+    },
+    "heading": "Modifier les préférences",
+    "open": "Paramètres de l’annonce",
+    "back": "Retour à l’éditeur d’annonce",
+    "backToPreferences": "Retour aux préférences",
+    "openListings": "Accéder à vos annonces",
+    "unavailable": "Cette préférence ne peut pas encore être modifiée.",
+    "rows": {
+      "languages": {
+        "label": "Langues",
+        "summary": "Non renseignées",
+        "help": "Les préférences linguistiques de l’annonce seront disponibles ici."
+      },
+      "guestRequirements": {
+        "label": "Conditions pour les voyageurs",
+        "summary": "Consulter les conditions",
+        "help": "Les conditions pour les voyageurs seront disponibles ici lorsque les réservations seront prises en charge."
+      },
+      "localLaws": {
+        "label": "Réglementation locale",
+        "summary": "Consulter la réglementation locale",
+        "help": "Les informations locales relatives à votre annonce ne sont pas encore disponibles dans Booksa."
+      },
+      "taxes": {
+        "label": "Taxes",
+        "summary": "Comprendre les taxes pour les hôtes",
+        "help": "Les informations fiscales de votre annonce ne sont pas encore disponibles. Les paiements sur Booksa sont simulés."
+      },
+      "communityStays": {
+        "label": "Séjours solidaires Booksa",
+        "summary": "Définir une réduction",
+        "help": "Les réductions pour les séjours solidaires ne sont pas encore disponibles sur Booksa."
+      },
+      "removeListing": {
+        "label": "Supprimer l’annonce",
+        "summary": "Supprimer définitivement votre annonce",
+        "help": "Cette annonce ne peut pas être supprimée ici. Seules les annonces en cours de création peuvent être supprimées depuis Vos annonces."
+      }
+    }
+  },
+  "houseRulesPage": {
+    "learnMore": "En savoir plus",
+    "petDetails": "Précisez dans votre annonce les conditions d’accueil des animaux pour aider les voyageurs à préparer leur séjour."
+  },
+  "listingAmenities": {
+    "heading": "Équipements",
+    "subtitle": "Voici les équipements déjà ajoutés à votre annonce.",
+    "back": "Retour à l’éditeur d’annonce",
+    "backToAmenities": "Retour aux équipements",
+    "edit": "Modifier",
+    "add": "Ajouter des équipements",
+    "select": "Sélectionnez les équipements accessibles aux voyageurs dans votre logement.",
+    "empty": "Aucun équipement ajouté. Utilisez + pour ajouter votre premier équipement.",
+    "unavailable": "Les équipements ne peuvent pas être modifiés pour ce type d’annonce pour le moment.",
+    "unknown": "Autre équipement",
+    "saveError": "Vos équipements n’ont pas pu être enregistrés. Veuillez réessayer.",
+    "saved": "Équipements enregistrés.",
+    "selected_one": "{{count}} équipement sélectionné",
+    "selected_other": "{{count}} équipements sélectionnés",
+    "labels": {
+      "air-conditioning": "Climatisation",
+      "dryer": "Sèche-linge",
+      "essentials": "Équipements de base",
+      "heating": "Chauffage",
+      "hot-water": "Eau chaude",
+      "kitchen": "Cuisine",
+      "refrigerator": "Réfrigérateur",
+      "tv": "Télévision",
+      "washer": "Lave-linge",
+      "wifi": "Wifi",
+      "coffee-maker": "Cafetière",
+      "cooking-basics": "Équipements de cuisine de base",
+      "hair-dryer": "Sèche-cheveux",
+      "hangers": "Cintres",
+      "iron": "Fer à repasser",
+      "shampoo": "Shampoing",
+      "crib": "Lit pour bébé",
+      "dedicated-workspace": "Espace de travail dédié",
+      "ev-charger": "Borne de recharge pour véhicules électriques",
+      "free-parking": "Parking gratuit sur place",
+      "gym": "Salle de sport",
+      "hot-tub": "Bain à remous",
+      "indoor-fireplace": "Cheminée intérieure",
+      "outdoor-furniture": "Mobilier d’extérieur",
+      "pool": "Piscine",
+      "beach-access": "Accès à la plage",
+      "waterfront": "Bord de l’eau",
+      "carbon-monoxide-alarm": "Détecteur de monoxyde de carbone",
+      "smoke-alarm": "Détecteur de fumée",
+      "front-desk": "Réception ouverte 24 h/24",
+      "breakfast": "Petit-déjeuner",
+      "room-service": "Service en chambre",
+      "indoor-seating": "Places assises à l’intérieur",
+      "outdoor-seating": "Places assises à l’extérieur",
+      "bar": "Bar",
+      "coffee": "Café",
+      "lunch": "Déjeuner",
+      "dinner": "Dîner",
+      "desserts": "Desserts",
+      "vegetarian-options": "Options végétariennes",
+      "alcohol": "Vin et boissons alcoolisées",
+      "reservations": "Réservations",
+      "takeaway": "Vente à emporter",
+      "table-service": "Service à table",
+      "private-dining": "Salle à manger privée",
+      "late-night": "Service tard le soir",
+      "live-music": "Musique en direct",
+      "accessible": "Accessible en fauteuil roulant",
+      "parking": "Parking",
+      "card-payment": "Paiement par carte"
+    },
+    "descriptions": {
+      "essentials": "Serviettes, draps, savon et papier toilette",
+      "cooking-basics": "Casseroles, poêles, huile, sel et poivre",
+      "hot-water": "Eau du lavabo, de la douche ou de la baignoire suffisamment chaude pour se laver",
+      "tv": "Un appareil pour regarder la télévision"
+    },
+    "groups": {
+      "basics": "Équipements de base",
+      "popular": "Équipements populaires",
+      "features": "Installations",
+      "hotel-services": "Services de l’hôtel",
+      "location": "Emplacement",
+      "safety": "Sécurité",
+      "dining-basics": "Équipements de restauration",
+      "food-and-drink": "Repas et boissons",
+      "service-options": "Services proposés",
+      "access-and-payment": "Accès et paiement"
+    }
+  },
+  "listingEditorSync": {
+    "loadError": "L’annonce actuelle n’a pas pu être chargée. Vérifiez votre connexion et réessayez.",
+    "back": "Retour à vos annonces"
+  },
+  "listingHost": {
+    "heading": "À propos de l’hôte",
+    "fallbackName": "Hôte Booksa",
+    "memberSince": "Membre depuis {{year}}",
+    "loading": "Chargement de votre profil…",
+    "loadError": "Votre profil n’a pas pu être chargé. Les informations de votre compte sont affichées à la place.",
+    "retry": "Réessayer",
+    "signedOut": "Connectez-vous pour voir votre profil d’hôte."
+  },
+  "descriptionSheet": {
+    "close": "Fermer l’éditeur de description",
+    "help": "Expliquez aux voyageurs ce qui rend votre logement unique et ce qui les attend pendant leur séjour.",
+    "counter": "{{count}}/{{max}} caractères",
+    "invalid": "Saisissez une description de 1 à 500 caractères.",
+    "saveError": "Impossible d’enregistrer votre description. Veuillez réessayer.",
+    "saved": "Description enregistrée."
+  },
+  "guestCountSheet": {
+    "heading": "Nombre de voyageurs",
+    "close": "Fermer l’éditeur du nombre de voyageurs",
+    "prompt": "Combien de voyageurs votre logement peut-il accueillir confortablement ?",
+    "decrease": "Retirer un voyageur",
+    "increase": "Ajouter un voyageur",
+    "limits": "Entre {{min}} et {{max}} voyageurs",
+    "unavailable": "Les limites de capacité ne sont pas disponibles pour ce type d’annonce.",
+    "saveError": "Impossible d’enregistrer le nombre de voyageurs. Veuillez réessayer.",
+    "saved": "Nombre de voyageurs enregistré.",
+    "guests_one": "{{count}} voyageur",
+    "guests_other": "{{count}} voyageurs"
+  },
+  "weekendAdjustmentSheet": {
+    "close": "Fermer l’éditeur de l’ajustement du week-end",
+    "helpLabel": "À propos de l’ajustement du week-end",
+    "help": "Choisissez un pourcentage entier de −99 % à +99 %. Une valeur positive augmente le tarif par nuit ; une valeur négative le réduit. Utilisez 0 % pour conserver votre tarif standard.",
+    "inputLabel": "Pourcentage d’ajustement du week-end",
+    "edit": "Modifier l’ajustement du week-end",
+    "invalid": "Saisissez un pourcentage entier de −99 à 99.",
+    "note": "Augmentez ou réduisez votre tarif par nuit le week-end.",
+    "slider": "Ajuster le pourcentage du week-end",
+    "preview": "Tarif par nuit le week-end",
+    "saveError": "Impossible d’enregistrer l’ajustement du week-end. Veuillez réessayer.",
+    "saved": "Ajustement du week-end enregistré."
+  },
+  "nightlyPriceSheet": {
+    "heading": "Prix par nuit",
+    "close": "Fermer l’éditeur du prix par nuit",
+    "helpLabel": "À propos du prix par nuit",
+    "help": "Fixez votre prix par nuit en francs congolais entiers (CDF), de 1 à 9 999 999. L’ajustement du week-end reste applicable.",
+    "inputLabel": "Prix par nuit en {{currency}}",
+    "edit": "Modifier le prix par nuit",
+    "invalid": "Saisissez un montant entier de 1 à 9 999 999.",
+    "beforeFees": "Tarif par nuit hors frais et taxes",
+    "details": "Détails du prix",
+    "feesNote": "Les frais voyageurs et les taxes ne sont pas calculés ici. Ce montant correspond au tarif par nuit de votre annonce.",
+    "similar": "Voir des annonces similaires",
+    "similarUnavailable": "La comparaison des prix sera bientôt disponible.",
+    "saveError": "Impossible d’enregistrer votre prix par nuit. Veuillez réessayer.",
+    "saved": "Prix par nuit enregistré."
+  },
+  "listingPricing": {
+    "heading": "Tarification",
+    "subtitle": "Ces paramètres s’appliquent à toutes les nuits, sauf si vous les personnalisez par date.",
+    "learnMore": "En savoir plus",
+    "help": "Le tarif par nuit et l’ajustement du week-end affichés ici sont enregistrés avec votre annonce. Le calendrier affiche le tarif de chaque date.",
+    "perNight": "Par nuit",
+    "notSet": "Non défini",
+    "weekendAdjustment": "Ajustement du week-end",
+    "smartPricing": "Tarification intelligente",
+    "smartPricingDescription": "Ajustez automatiquement vos tarifs en fonction de la demande des voyageurs.",
+    "unavailable": "La tarification intelligente n’est pas encore disponible.",
+    "calendar": "Retrouvez plus de réductions et de frais dans le calendrier"
+  },
+  "titleSaveError": "Impossible d’enregistrer votre titre. Veuillez réessayer.",
+  "titleSheet": {
+    "heading": "Titre",
+    "close": "Fermer l’éditeur de titre",
+    "edit": "Modifier le titre",
+    "fieldLabel": "Titre de l’annonce",
+    "helper": "Votre titre est enregistré avec les détails de l’annonce.",
+    "primaryLanguage": "Anglais",
+    "secondaryLanguage": "Français",
+    "translationSoon": "Les traductions arriveront bientôt.",
+    "counter": "{{count}}/{{max}}",
+    "required": "Ajoutez un titre pour continuer.",
+    "tipsLabel": "Conseils pour le titre",
+    "tip": "Les titres courts fonctionnent le mieux. Mettez en avant ce qui rend votre logement unique.",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "saved": "Titre enregistré."
+  },
+  "sleepingArrangements": {
+    "heading": "Couchages",
+    "addDetails": "Ajouter des détails",
+    "pageHeading": "Ajoutez les couchages",
+    "pageSubtitle": "Indiquez clairement aux voyageurs quel type de lit se trouve dans chaque chambre.",
+    "bedroom": "Chambre",
+    "bedroomNumbered": "Chambre {{number}}",
+    "bedrooms_one": "{{count}} chambre",
+    "bedrooms_other": "{{count}} chambres",
+    "sleepingArea": "Espace nuit",
+    "beds_one": "{{count}} lit",
+    "beds_other": "{{count}} lits",
+    "addBeds": "Ajouter des lits",
+    "empty": "Ajoutez des chambres et des lits dans les informations de base de l’annonce pour configurer les couchages."
+  },
+  "discountsSection": {
+    "heading": "Réductions",
+    "addDetails": "Ajouter des détails",
+    "pageHeading": "Réductions",
+    "title_new-listing": "Nouvelle annonce",
+    "title_last-minute": "Dernière minute",
+    "title_weekly": "À la semaine",
+    "title_monthly": "Au mois",
+    "condition_new-listing": "Jusqu’à 3 commentaires ou 10 réservations",
+    "condition_last-minute": "Réservé 14 jours ou moins avant l’arrivée",
+    "condition_weekly": "Pour 7 nuits ou plus",
+    "condition_monthly": "Pour 28 nuits ou plus",
+    "summary_new-listing": "Promotion nouvelle annonce de {{percent}} %",
+    "summary_last-minute": "Réduction de dernière minute de {{percent}} %",
+    "summary_weekly": "Réduction à la semaine de {{percent}} %",
+    "summary_monthly": "Réduction au mois de {{percent}} %",
+    "percent": "{{percent}} %",
+    "empty": "Aucune réduction sélectionnée pour cette annonce.",
+    "calendarLink": "Trouvez plus de réductions et de frais dans le calendrier"
+  },
+  "descriptionSection": {
+    "heading": "Description",
+    "addDetails": "Ajouter des détails",
+    "pageHeading": "Description",
+    "listingDescription": "Description de l’annonce",
+    "yourProperty": "Votre logement",
+    "guestAccess": "Accès des voyageurs",
+    "guestInteraction": "Interactions avec les voyageurs",
+    "otherDetails": "Autres informations à noter"
+  },
+  "nav": {
+    "today": "Leo",
+    "calendar": "Kalenda",
+    "listings": "Matangazo",
+    "messages": "Ujumbe",
+    "host": "Urambazaji wa mwenyeji",
+    "hostMobile": "Urambazaji wa simu wa mwenyeji",
+    "travelerMode": "Badili kuwa msafiri"
+  },
+  "messages": {
+    "title": "Ujumbe",
+    "search": "Tafuta ujumbe",
+    "settings": "Mipangilio ya ujumbe",
+    "all": "Yote",
+    "unread": "Haijasomwa",
+    "empty": "Hakuna ujumbe uliopatikana",
+    "emptyHelp": "Jaribu kuondoa au kubadilisha vichujio.",
+    "clearFilters": "Ondoa vichujio vyote"
+  },
+  "reservations": {
+    "upcoming": "Zijazo",
+    "empty": "Huna nafasi zilizowekwa",
+    "emptyHelp": "Ili upokee nafasi, kamilisha na uchapishe tangazo lako.",
+    "finishListing": "Kamilisha tangazo lako",
+    "calendarImage": "Kalenda iliyofunguliwa"
+  },
+  "listingSetup": {
+    "welcomeBack": "Karibu tena, {{name}}",
+    "finish": "Kamilisha tangazo lako",
+    "create": "Unda tangazo",
+    "startedOn": "{{listing}} lilianza {{date}}",
+    "uniqueSpace": "Nafasi yako ya kipekee",
+    "bedBreakfast": "Nyumba yako ya wageni",
+    "listing": "Tangazo lako",
+    "new": "Unda tangazo jipya",
+    "fromExisting": "Unda kutokana na tangazo lililopo",
+    "chooseListing": "Chagua tangazo",
+    "noInProgressListings": "Bado huna matangazo yanayoendelea.",
+    "addressTitle": "Sanidi tangazo lako la Booksa",
+    "addressIntroduction": "Ni rahisi kuunda tangazo zuri—tuanze na anwani yako.",
+    "enterAddress": "Weka anwani yako",
+    "notListingHome": "Huorodheshi nyumba? Gundua",
+    "experience": "tukio",
+    "or": "au",
+    "service": "huduma",
+    "startNew": "Anza tangazo jipya",
+    "showAll": "Onyesha yote",
+    "showLess": "Onyesha machache",
+    "createError": "Hatukuweza kuunda tangazo lako. Tafadhali jaribu tena.",
+    "loadError": "Hatukuweza kupakia matangazo yako ambayo hayajakamilika."
+  },
+  "addressSearch": {
+    "title": "Weka anwani yako",
+    "confirmTitle": "Thibitisha anwani yako",
+    "searchLabel": "Tafuta anwani",
+    "placeholder": "Weka anwani yako",
+    "clear": "Futa utafutaji wa anwani",
+    "close": "Funga dirisha la anwani",
+    "back": "Rudi kwenye utafutaji wa anwani",
+    "useCurrentLocation": "Tumia mahali nilipo sasa",
+    "locating": "Tunatafuta mahali ulipo…",
+    "locationUnsupported": "Huduma ya mahali haipatikani kwenye kifaa hiki. Weka anwani yako badala yake.",
+    "locationDenied": "Ruhusu ufikiaji wa mahali kwenye kivinjari chako ili kutumia mahali ulipo sasa.",
+    "locationError": "Hatukuweza kupata mahali ulipo. Weka anwani yako badala yake.",
+    "suggestions": "Maeneo yanayopendekezwa",
+    "noResults": "Hakuna anwani zinazopendekezwa.",
+    "next": "Endelea"
+  },
+  "drawer": {
+    "title": "Menyu",
+    "accountSettings": "Mipangilio ya akaunti",
+    "languagesCurrency": "Lugha na sarafu",
+    "hostResources": "Nyenzo za wenyeji",
+    "getHelp": "Pata msaada",
+    "findCoHost": "Tafuta mwenyeji mwenza",
+    "newListing": "Unda tangazo jipya",
+    "referHost": "Pendekeza mwenyeji",
+    "newToBooksa": "Ni mgeni Booksa?",
+    "onboarding": "Gundua ushauri na mbinu bora kutoka kwa wenyeji wenye uzoefu.",
+    "hostAccountMenu": "Menyu ya akaunti ya mwenyeji"
+  },
+  "accessibility": {
+    "hostHome": "Mwanzo wa mwenyeji Booksa",
+    "hostAccount": "Akaunti ya {{name}}",
+    "accountMenu": "Menyu ya akaunti"
+  },
+  "availabilitySection": {
+    "heading": "Disponibilités",
+    "pageHeading": "Disponibilités",
+    "subtitle": "Ces paramètres s’appliquent à toutes les nuits, sauf si vous les personnalisez par date.",
+    "summaryNights": "Séjours de {{min}} à {{max}} nuits",
+    "minNights": "Nombre minimum de nuits",
+    "maxNights": "Nombre maximum de nuits",
+    "advanceNotice": "Délai de prévenance",
+    "sameDay": "Le jour même",
+    "sameDayNotice": "Délai de prévenance le jour même",
+    "calendarLink": "Plus de paramètres de disponibilité"
+  },
+  "availabilitySheet": {
+    "close": "Fermer l’éditeur de disponibilités",
+    "heading_minNights": "Nombre minimum de nuits",
+    "heading_maxNights": "Nombre maximum de nuits",
+    "perStay": "Par séjour",
+    "invalid": "Saisissez un nombre de nuits entre {{min}} et {{max}}.",
+    "saveError": "Impossible de mettre à jour ce paramètre. Veuillez réessayer.",
+    "customizeByCheckIn": "Personnaliser selon le jour d’arrivée",
+    "comingSoon": "Bientôt disponible",
+    "localOnly": "Mis à jour sur cette page uniquement. Les disponibilités ne sont pas encore enregistrées dans votre annonce."
+  },
+  "advanceNoticeSheet": {
+    "close": "Fermer l’éditeur du délai de prévenance",
+    "description": "De combien de temps avez-vous besoin entre la réservation d’un voyageur et son arrivée ?",
+    "days_one": "{{count}} jour",
+    "days_other": "{{count}} jours",
+    "summary_one": "Délai de prévenance de {{count}} jour",
+    "summary_other": "Délai de prévenance de {{count}} jours",
+    "allowRequests": "Autoriser les demandes avec un délai plus court",
+    "allowRequestsDescription": "Vous examinerez et approuverez chaque demande de réservation.",
+    "saveError": "Impossible de mettre à jour votre délai de prévenance. Veuillez réessayer."
+  },
+  "sameDayCutoffSheet": {
+    "close": "Fermer l’éditeur du délai le jour même",
+    "description": "Les voyageurs peuvent réserver le jour de l’arrivée jusqu’à cette heure.",
+    "saveError": "Impossible de mettre à jour cette heure. Veuillez réessayer."
+  },
+  "accessibilityFeatures": {
+    "heading": "Fonctionnalités d’accessibilité",
+    "back": "Retour à l’éditeur d’annonce",
+    "add": "Ajouter : {{feature}}",
+    "remove": "Retirer : {{feature}}",
+    "added_one": "{{count}} fonctionnalité ajoutée",
+    "added_other": "{{count}} fonctionnalités ajoutées",
+    "labels": {
+      "disabled-parking": "Place de parking pour personnes handicapées",
+      "lit-path": "Chemin éclairé jusqu’à l’entrée",
+      "step-free-entrance": "Accès sans marche",
+      "wide-entrance": "Entrée de plus de 81 cm de large",
+      "pool-hoist": "Lève-personne pour piscine ou jacuzzi",
+      "ceiling-hoist": "Lève-personne fixe ou mobile",
+      "step-free-bedroom": "Accès à la chambre sans marche",
+      "wide-bedroom-entrance": "Porte de chambre de plus de 81 cm de large",
+      "step-free-bathroom": "Accès à la salle de bain sans marche",
+      "step-free-shower": "Douche de plain-pied",
+      "shower-grab-bar": "Barre d’appui dans la douche",
+      "toilet-grab-bar": "Barre d’appui près des toilettes",
+      "shower-chair": "Chaise de douche ou de bain"
+    }
+  },
+  "hostProfileSheet": {
+    "open": "Modifier votre profil d’hôte",
+    "heading": "Modifier le profil",
+    "close": "Fermer l’éditeur de profil",
+    "addPhoto": "Ajouter",
+    "editPhoto": "Modifier",
+    "myProfile": "Mon profil",
+    "intro": "Les hôtes et les voyageurs peuvent voir votre profil, qui peut apparaître sur Booksa pour renforcer la confiance au sein de notre communauté.",
+    "comingSoon": "La modification de votre photo et de votre profil sera bientôt disponible.",
+    "prompts": {
+      "decadeBorn": "Décennie de naissance",
+      "work": "Mon travail",
+      "dreamDestination": "L’endroit où j’ai toujours rêvé d’aller",
+      "pets": "Animaux de compagnie",
+      "school": "Où j’ai fait mes études",
+      "funFact": "Mon anecdote amusante",
+      "favoriteSong": "Ma chanson préférée au lycée",
+      "tooMuchTime": "Je passe trop de temps à",
+      "biographyTitle": "Le titre de ma biographie serait",
+      "languages": "Langues parlées",
+      "location": "Où je vis",
+      "obsessedWith": "Je suis passionné(e) par"
+    }
+  },
+  "listingPreview": {
+    "view": "Aperçu",
+    "back": "Retour à l’éditeur d’annonce",
+    "share": "Partager",
+    "save": "Enregistrer dans les favoris",
+    "previewOnly": "Ceci est un aperçu. Les actions des voyageurs fonctionneront une fois votre annonce publiée.",
+    "carousel": "carrousel",
+    "photos": "Photos de l’annonce",
+    "photoAlt": "Photo {{number}} sur {{total}} de {{title}}",
+    "typeIn": "{{type}} à {{place}}",
+    "bedrooms_zero": "Aucune chambre",
+    "bedrooms_one": "{{count}} chambre",
+    "bedrooms_other": "{{count}} chambres",
+    "beds_zero": "Aucun lit",
+    "beds_one": "{{count}} lit",
+    "beds_other": "{{count}} lits",
+    "bathrooms_zero": "Aucune salle de bain",
+    "bathrooms_one": "{{count}} salle de bain",
+    "bathrooms_other": "{{count}} salles de bain",
+    "noReviews": "Aucun commentaire pour l’instant",
+    "hostedBy": "Hôte : {{name}}",
+    "monthsHosting_one": "{{count}} mois sur Booksa",
+    "monthsHosting_other": "{{count}} mois sur Booksa",
+    "yearsHosting_one": "{{count}} an sur Booksa",
+    "yearsHosting_other": "{{count}} ans sur Booksa",
+    "noDescription": "Pas encore de description.",
+    "offers": "Ce que propose ce logement",
+    "unavailable": "non disponible",
+    "showAllAmenities_one": "Afficher {{count}} équipement",
+    "showAllAmenities_other": "Afficher les {{count}} équipements",
+    "showFewerAmenities": "Afficher moins d’équipements",
+    "whereYoullBe": "Où vous serez",
+    "locationMissing": "Adresse non renseignée",
+    "mapTitle": "Carte de {{place}}",
+    "selectCheckIn": "Sélectionnez la date d’arrivée",
+    "selectCheckInHelp": "Ajoutez vos dates de voyage pour obtenir le prix exact",
+    "previousMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "clearDates": "Effacer les dates",
+    "noReviewsHeading": "Aucun commentaire (pour l’instant)",
+    "beFirst": "Soyez le premier à évaluer ce logement.",
+    "askAboutHome": "Posez une question sur ce logement",
+    "askPlaceholder": "Puis-je faire ma lessive sur place ?",
+    "meetHost": "Faites connaissance avec votre hôte",
+    "startedHosting": "Hôte depuis {{year}}",
+    "messageHost": "Envoyer un message à l’hôte",
+    "paymentProtection": "Pour protéger votre paiement, utilisez toujours Booksa pour envoyer de l’argent et communiquer avec les hôtes.",
+    "thingsToKnow": "À savoir",
+    "cancellationPolicy": "Conditions d’annulation",
+    "cancellationHelp": "Ajoutez les dates de votre voyage pour connaître les conditions d’annulation de ce séjour.",
+    "guestsMaximum_one": "{{count}} voyageur maximum",
+    "guestsMaximum_other": "{{count}} voyageurs maximum",
+    "safetyProperty": "Sécurité et logement",
+    "notReported": "{{amenity}} non signalé",
+    "alarmsReported": "Détecteurs signalés",
+    "report": "Signaler cette annonce",
+    "addDates": "Ajoutez des dates pour voir les prix",
+    "checkInOn": "Arrivée le {{date}} · ajoutez le départ",
+    "checkAvailability": "Vérifier la disponibilité",
+    "selectCheckOut": "Sélectionnez la date de départ",
+    "minimumStay_one": "Séjour minimum : {{count}} nuit",
+    "minimumStay_other": "Séjour minimum : {{count}} nuits",
+    "nightsIn_one": "{{count}} nuit à {{place}}",
+    "nightsIn_other": "{{count}} nuits à {{place}}",
+    "checkInDay": "arrivée",
+    "checkOutDay": "départ",
+    "unavailableDay": "indisponible pour cette durée de séjour",
+    "changeDates": "Modifier les dates",
+    "editDates": "Modifier les dates, {{dates}}",
+    "notBookable": "Annonce pas encore publiée",
+    "nights_one": "{{count}} nuit",
+    "nights_other": "{{count}} nuits",
+    "selectDates": "Sélectionnez des dates",
+    "closeDates": "Fermer le sélecteur de dates",
+    "openGallery": "Ouvrir la photo {{number}} sur {{total}} dans la galerie"
+  },
+  "listingGallery": {
+    "back": "Retour à l’aperçu de l’annonce",
+    "count_one": "{{count}} photo",
+    "count_other": "{{count}} photos",
+    "empty": "Cette annonce n’a pas encore de photos."
+  },
+  "photoTour": {
+    "photos_one": "{{count}} photo",
+    "photos_other": "{{count}} photos",
+    "addPhotos": "Ajouter des photos",
+    "additionalPhotos": "Photos supplémentaires"
+  },
+  "checkInOutSheet": {
+    "close": "Fermer les horaires d’arrivée et de départ",
+    "window": "Plage horaire d’arrivée",
+    "start": "Heure de début",
+    "end": "Heure de fin",
+    "time": "Heure",
+    "flexible": "Flexible",
+    "localOnly": "Les modifications restent dans cette session de l’éditeur et ne sont pas encore enregistrées dans votre annonce."
+  },
+  "directionsSheet": {
+    "close": "Fermer l’itinéraire",
+    "placeholder": "Indiquez aux voyageurs comment se rendre dans votre logement. Ajoutez des conseils pour le stationnement ou les transports en commun.",
+    "visibility": "Partagé une fois la réservation confirmée",
+    "localOnly": "Les modifications restent dans cette session de l’éditeur et ne sont pas encore enregistrées dans votre annonce."
+  },
+  "checkInMethod": {
+    "heading": "Choisissez un mode d’arrivée",
+    "back": "Retour au guide d’arrivée",
+    "methods": {
+      "smart-lock": {
+        "title": "Serrure connectée",
+        "description": "Les voyageurs utiliseront un code ou une application pour ouvrir une serrure connectée au wifi.",
+        "detailsHeading": "Détails de la serrure connectée"
+      },
+      "keypad": {
+        "title": "Digicode",
+        "description": "Les voyageurs utiliseront le code que vous fournissez pour ouvrir une serrure électronique.",
+        "detailsHeading": "Détails du digicode"
+      },
+      "lockbox": {
+        "title": "Boîte à clés",
+        "description": "Les voyageurs utiliseront un code que vous fournissez pour ouvrir un petit coffre contenant une clé.",
+        "detailsHeading": "Détails de la boîte à clés"
+      },
+      "building-staff": {
+        "title": "Personnel de l’immeuble",
+        "description": "Quelqu’un sera disponible 24 h/24 pour faire entrer les voyageurs.",
+        "detailsHeading": "Détails du personnel de l’immeuble"
+      },
+      "in-person-greeting": {
+        "title": "Accueil en personne",
+        "description": "Les voyageurs vous rencontreront, vous ou votre co-hôte, pour récupérer les clés.",
+        "detailsHeading": "Détails de l’accueil en personne"
+      }
+    },
+    "backToMethods": "Retour aux modes d’arrivée",
+    "detailsPlaceholder": "Ajoutez les informations importantes pour entrer dans votre logement. Elles seront communiquées aux voyageurs 24 à 48 heures avant leur arrivée.",
+    "sharedBefore": "Communiqué 48 heures avant l’arrivée"
+  },
+  "allPhotosNavigation": {
+    "backToPhotos": "Retour à toutes les photos",
+    "backToTour": "Retour à la visite photo",
+    "manage": "Gérer les photos",
+    "done": "Terminé"
+  },
+  "photoDetails": {
+    "heading": "Détails de la photo",
+    "close": "Fermer les détails de la photo",
+    "makeCover": "Définir comme couverture",
+    "cover": "Photo de couverture",
+    "remove": "Retirer la photo",
+    "imageAlt": "Photo sélectionnée de l’annonce",
+    "addDescription": "Ajouter une description visuelle",
+    "editDescription": "Modifier la description visuelle",
+    "moveFrom": "Déplacer depuis <strong>{{room}}</strong> ?",
+    "unassigned": "Non attribuée",
+    "descriptionLabel": "Description visuelle",
+    "placeholder": "Ajoutez une description de cette pièce ou de cet espace.",
+    "remaining_one": "{{count}} caractère disponible",
+    "remaining_other": "{{count}} caractères disponibles",
+    "pending": "Enregistrez ou annulez vos modifications avant de déplacer ou de retirer cette photo.",
+    "unsaved": "Modifications non enregistrées",
+    "saved": "Toutes les modifications sont enregistrées"
+  }
 }
