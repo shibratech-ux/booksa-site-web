@@ -44,13 +44,13 @@ const navigationItems: NavigationItem[] = [
     label: "Room",
     labelKey: "room",
     emoji: "🛏️",
-    path: ROUTES.experiences,
+    path: ROUTES.rooms,
   },
   {
     label: "Restaurant",
     labelKey: "restaurant",
     emoji: "🛎️",
-    path: ROUTES.services,
+    path: ROUTES.restaurants,
   },
 ] as const;
 

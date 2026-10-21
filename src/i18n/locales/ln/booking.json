@@ -1,4 +1,60 @@
 {
+  "restaurantDates": {
+    "title": "Trouvez une table",
+    "partySize": "Personnes à table",
+    "removeGuest": "Retirer un couvert",
+    "addGuest": "Ajouter un couvert",
+    "today": "Aujourd’hui, {{date}}",
+    "tomorrow": "Demain, {{date}}",
+    "sampleNotice": "Horaires de repas d’exemple · Tables à confirmer.",
+    "soldOut": "Complet",
+    "available": "Table disponible",
+    "diners_one": "{{count}} couvert",
+    "diners_other": "{{count}} couverts",
+    "tableFor": "Table pour {{count}}",
+    "lunch": "Déjeuner",
+    "dinner": "Dîner",
+    "previewTitle": "Aperçu de votre réservation de table",
+    "previewAction": "Aperçu de la réservation",
+    "editReservation": "Modifier la réservation de table",
+    "previewNotice": "Ceci est un aperçu de votre réservation de table. Le restaurant n’a pas confirmé la disponibilité. Aucune table n’a été réservée et aucun paiement n’a été effectué."
+  },
+  "restaurantDetail": {
+    "category": "Restaurant",
+    "dining": "Un lieu pour se retrouver autour d’un bon repas",
+    "atAGlance": "En un coup d’œil",
+    "capacity": "De la place pour votre groupe",
+    "about": "Votre expérience à table",
+    "offers": "Ce qui vous attend",
+    "reviewsEmpty": "Les avis des voyageurs apparaîtront ici après leurs visites.",
+    "planVisit": "Préparez votre visite",
+    "chooseDate": "Choisissez votre date",
+    "datesHint": "Choisissez une date pour votre visite. La disponibilité reste à confirmer.",
+    "location": "Où vous retrouver",
+    "locationMissing": "La position sur la carte n’a pas encore été renseignée.",
+    "moreRestaurants": "D’autres restaurants à découvrir",
+    "noRelated": "D’autres restaurants apparaîtront ici lorsque les hôtes publieront leurs annonces.",
+    "meetHost": "Rencontrez votre hôte",
+    "messagingSoon": "La messagerie sera bientôt disponible.",
+    "guestRequirements": "Conditions de participation",
+    "accessibility": "Accessibilité",
+    "askAccessibility": "Les informations d’accessibilité n’ont pas encore été renseignées.",
+    "listedPrice": "Prix affiché",
+    "priceHint": "Vérifiez les détails du tarif auprès de votre hôte avant de réserver.",
+    "showDates": "Voir les dates",
+    "previewHint": "Préparez votre visite · aucune réservation effectuée.",
+    "previewOnly": "Ceci est un aperçu de votre visite. La disponibilité reste à confirmer et aucune réservation ni aucun paiement n’a été effectué.",
+    "yourVisit": "Aperçu de votre visite",
+    "date": "Date souhaitée",
+    "guests": "Nombre de personnes",
+    "previewVisit": "Voir l’aperçu",
+    "editVisit": "Modifier ma visite",
+    "done": "Terminer",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "retry": "Réessayer",
+    "shareError": "Impossible de partager cette annonce. Veuillez réessayer."
+  },
   "listingDetail": {
     "back": "Retour",
     "share": "Partager",
@@ -118,7 +174,64 @@
     "new": "Nouveau",
     "perNight": "par nuit",
     "loading": "Chargement des annonces…",
-    "loadError": "Impossible de charger les dernières annonces."
+    "loadError": "Impossible de charger les dernières annonces.",
+    "emptyTitle": "Aucune annonce pour le moment",
+    "emptyDescription": "Les annonces publiées par les hôtes sur Booksa apparaîtront ici.",
+    "signedOutTitle": "Connectez-vous pour découvrir les annonces",
+    "signedOutDescription": "Les annonces publiées par les hôtes sur Booksa sont visibles une fois connecté.",
+    "signIn": "Se connecter",
+    "cityTitles": {
+      "hotel": [
+        "Hôtels à {{city}}",
+        "Hôtels populaires à {{city}}",
+        "Séjournez à l’hôtel à {{city}}",
+        "Nouveaux hôtels à {{city}}",
+        "Réservez un hôtel à {{city}}",
+        "Hôtels pour votre voyage à {{city}}",
+        "Hôtels à découvrir à {{city}}",
+        "Hôtels confortables à {{city}}",
+        "Hôtels pour un week-end à {{city}}",
+        "Votre prochain hôtel à {{city}}"
+      ],
+      "private-room": [
+        "Chambres privées à {{city}}",
+        "Chambres populaires à {{city}}",
+        "Séjournez dans une chambre privée à {{city}}",
+        "Nouvelles chambres à {{city}}",
+        "Chambres à réserver à {{city}}",
+        "Une chambre rien que pour vous à {{city}}",
+        "Chambres privées à découvrir à {{city}}",
+        "Chambres cosy à {{city}}",
+        "Chambres pour un court séjour à {{city}}",
+        "Votre prochaine chambre à {{city}}"
+      ],
+      "restaurant": [
+        "Restaurants à {{city}}",
+        "Restaurants populaires à {{city}}",
+        "Où manger à {{city}}",
+        "Nouveaux restaurants à {{city}}",
+        "Bonnes adresses à {{city}}",
+        "Restaurants à découvrir à {{city}}",
+        "Tables à essayer à {{city}}",
+        "Saveurs locales à {{city}}",
+        "Sortir manger à {{city}}",
+        "Votre prochain repas à {{city}}"
+      ]
+    },
+    "emptyCategory": {
+      "hotel": {
+        "title": "Aucun hôtel pour le moment",
+        "description": "Les hôtels publiés par les hôtes sur Booksa apparaîtront ici."
+      },
+      "private-room": {
+        "title": "Aucune chambre privée pour le moment",
+        "description": "Les chambres privées publiées par les hôtes sur Booksa apparaîtront ici."
+      },
+      "restaurant": {
+        "title": "Aucun restaurant pour le moment",
+        "description": "Les restaurants publiés par les hôtes sur Booksa apparaîtront ici."
+      }
+    }
   },
   "listingDiscountsStep": {
     "title": "Ajoutez des réductions",

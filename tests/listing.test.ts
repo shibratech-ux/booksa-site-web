@@ -20,6 +20,8 @@ import { generatePhoneOtp, hashPhoneOtp, PHONE_OTP_MAX_ATTEMPTS, PHONE_OTP_RESEN
 import { getCurrentUserListing, listCurrentUserDrafts, listCurrentUserListings, ListingPublishError, publishCurrentUserListing, queueCurrentUserDraftUpdate } from '../src/services/listing-draft.service';
 import { readPublishReadiness } from '../src/domain/publish-readiness';
 import { getPublishedListingDetail, listPublishedListings } from '../src/services/listing-catalog.service';
+import { mostFrequentCity } from '../src/pages/home/listing/exploreCity';
+import { groupExploreRails } from '../src/pages/home/listing/exploreRails';
 import { countStayNights, MAX_STAY_NIGHTS, quoteStay } from '../src/domain/pricing';
 import assert from 'node:assert/strict';
 import { state, firebaseAuth, Timestamp, emitSnapshot, failSnapshot } from './listing-firebase.mock';
@@ -1286,12 +1288,44 @@ test('explore lists only published listings, newest first, with their describe-y
  const listings = await listPublishedListings();
  assert.deepEqual(listings.map(listing => [listing.id, listing.category]), [['room', 'private-room'], ['restaurant', 'restaurant'], ['older-hotel', 'hotel']]);
  assert.deepEqual(listings[2], {
-  id: 'older-hotel', category: 'hotel', title: 'My hotel', location: 'Gombe, Kinshasa',
+  id: 'older-hotel', category: 'hotel', title: 'My hotel', location: 'Gombe, Kinshasa', city: null,
   coverImageUrl: 'https://firebasestorage.googleapis.com/p0', basePrice: 25000, currency: 'CDF', publishedAt: 1_000
  });
  // Host identity and contact details stored on the listing never reach guest-facing code.
  assert.ok(!JSON.stringify(listings).includes('@example.com'));
  assert.ok(!JSON.stringify(listings).includes('+243'));
+});
+
+test('explore headings use the most frequent confirmed city and keep display order for ties', async () => {
+ for (const [id, city] of [['first', 'Goma'], ['second', ' Kinshasa '], ['third', 'kinshasa']]) {
+  publishedListing(id, { category: 'private-room' });
+  state.docs.get(`annonceslisting/${id}`).confirmedLocation = { address: { city } };
+ }
+ const listings = await listPublishedListings();
+ assert.equal(listings[1].city, 'Kinshasa');
+ assert.equal(mostFrequentCity(listings), 'Kinshasa');
+ assert.equal(mostFrequentCity([{ city: 'Goma' }, { city: 'Kinshasa' }]), 'Goma');
+ assert.equal(mostFrequentCity([{ city: null }, { city: ' ' }]), null);
+ assert.equal(mostFrequentCity([]), null);
+});
+
+test('explore rails group by tag and city, biggest first, capped at 10 rails of 7 listings', () => {
+ const listing = (id: string, category: string, city: string | null) => ({ id, category, city });
+ const rails = groupExploreRails([
+  listing('h1', 'hotel', 'Goma'), listing('r1', 'private-room', 'Kinshasa'), listing('h2', 'hotel', ' goma '),
+  listing('r2', 'private-room', null), listing('r3', 'private-room', ' ')
+ ]);
+ assert.deepEqual(rails.map(rail => [rail.key, rail.city, rail.listings.map(item => item.id)]), [
+  ['hotel:goma', 'Goma', ['h1', 'h2']],
+  ['private-room:', null, ['r2', 'r3']],
+  ['private-room:kinshasa', 'Kinshasa', ['r1']]
+ ]);
+
+ const many = Array.from({ length: 12 }, (_, city) => Array.from({ length: 9 }, (_, index) => listing(`${city}-${index}`, 'hotel', `City ${city}`))).flat();
+ const capped = groupExploreRails(many);
+ assert.equal(capped.length, 10);
+ assert.ok(capped.every(rail => rail.listings.length === 7));
+ assert.deepEqual(capped[0].listings.map(item => item.id), ['0-0', '0-1', '0-2', '0-3', '0-4', '0-5', '0-6']);
 });
 
 test('explore skips published listings with unknown categories, foreign photos or invalid prices', async () => {

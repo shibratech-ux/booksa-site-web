@@ -6,6 +6,8 @@ export const ROUTES = {
   experiences: '/experiences',
   experienceDetail: '/experiences/:experienceId',
   services: '/services',
+  restaurants: '/restaurants',
+  rooms: '/rooms',
   serviceDetail: '/services/:serviceId',
   seeAll: '/see-all',
   seeAllMap: '/see-all/map',

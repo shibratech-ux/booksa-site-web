@@ -60,10 +60,12 @@ export function AppRouter() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<MainLayout />} />
-          <Route path={ROUTES.homes} element={<MainLayout />} />
+          <Route path={ROUTES.homes} element={<MainLayout category="hotel" />} />
           <Route path={ROUTES.experiences} element={<ExperiencesPage />} />
           <Route path={ROUTES.experienceDetail} element={<ExperienceDetailPage />} />
           <Route path={ROUTES.services} element={<ServicesPage />} />
+          <Route path={ROUTES.restaurants} element={<MainLayout category="restaurant" />} />
+          <Route path={ROUTES.rooms} element={<MainLayout category="private-room" />} />
           <Route path={ROUTES.serviceDetail} element={<ServiceDetailPage />} />
           <Route path={ROUTES.seeAll} element={<SeeAllPage />} />
           <Route path={ROUTES.seeAllMap} element={<SeeAllMapPage />} />

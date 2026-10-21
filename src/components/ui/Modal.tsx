@@ -10,7 +10,7 @@ interface ModalProps {
   title: string;
   children: ReactNode;
   onClose: () => void;
-  variant?: 'default' | 'sheet' | 'bottom-sheet';
+  variant?: 'default' | 'sheet' | 'bottom-sheet' | 'fullscreen';
   subtitle?: ReactNode;
   headerAction?: ReactNode;
   footer?: ReactNode;
@@ -22,6 +22,7 @@ interface ModalProps {
 export function Modal({ open, title, children, onClose, variant = 'default', subtitle, headerAction, footer, sheetSize = 'default', dismissDisabled = false, sheetTone = 'surface' }: ModalProps) {
   const isSheet = variant === 'sheet';
   const isBottomSheet = variant === 'bottom-sheet';
+  const isFullscreen = variant === 'fullscreen';
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef(onClose);
@@ -71,7 +72,7 @@ export function Modal({ open, title, children, onClose, variant = 'default', sub
     <AnimatePresence>
       {open ? (
         <motion.div
-          className={`fixed inset-0 z-[150] flex items-end justify-center bg-[var(--color-overlay)] sm:p-6 ${isBottomSheet ? 'pt-[max(12px,env(safe-area-inset-top))]' : 'sm:items-center'}`}
+          className={`fixed inset-0 z-[150] flex items-end justify-center bg-[var(--color-overlay)] ${isFullscreen ? '' : 'sm:p-6'} ${isBottomSheet ? 'pt-[max(12px,env(safe-area-inset-top))]' : 'sm:items-center'}`}
           onClick={(event) => { if (event.target === event.currentTarget) closeRef.current(); }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -80,11 +81,11 @@ export function Modal({ open, title, children, onClose, variant = 'default', sub
           <motion.div
             ref={panelRef}
             tabIndex={-1}
-            initial={{ scale: reducedMotion || isBottomSheet ? 1 : 0.98, y: reducedMotion ? 0 : isBottomSheet ? '100%' : 18, opacity: 0 }}
+            initial={{ scale: reducedMotion || isBottomSheet || isFullscreen ? 1 : 0.98, y: reducedMotion ? 0 : isBottomSheet ? '100%' : 18, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: reducedMotion || isBottomSheet ? 1 : 0.98, y: reducedMotion ? 0 : isBottomSheet ? '100%' : 18, opacity: 0 }}
+            exit={{ scale: reducedMotion || isBottomSheet || isFullscreen ? 1 : 0.98, y: reducedMotion ? 0 : isBottomSheet ? '100%' : 18, opacity: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.2 }}
-            className={`w-full max-w-2xl overscroll-contain rounded-t-dialog border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-xl)] outline-none sm:rounded-dialog ${isBottomSheet
+            className={isFullscreen ? 'flex h-dvh w-full flex-col overflow-hidden bg-[var(--color-surface)] text-[var(--color-text-primary)] outline-none' : `w-full max-w-2xl overscroll-contain rounded-t-dialog border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-xl)] outline-none sm:rounded-dialog ${isBottomSheet
               ? `flex h-full max-h-full flex-col overflow-hidden p-0 sm:h-[min(760px,90dvh)] ${sheetTone === 'muted' ? 'bg-[var(--color-surface-muted)]!' : ''}`
               : isSheet
               ? `flex max-h-[calc(100dvh-16px)] flex-col overflow-hidden ${sheetSize === 'compact' ? 'h-[min(380px,85dvh)] sm:h-[min(560px,85dvh)]' : 'h-[85dvh] sm:h-[min(640px,85dvh)]'}`
@@ -93,7 +94,12 @@ export function Modal({ open, title, children, onClose, variant = 'default', sub
             aria-modal="true"
             aria-labelledby={titleId}
           >
-            {isBottomSheet ? (
+            {isFullscreen ? (
+              <div className="flex shrink-0 justify-end px-3 pb-3 pt-[max(12px,env(safe-area-inset-top))] sm:px-6">
+                <h3 id={titleId} className="sr-only">{title}</h3>
+                {headerAction ?? <IconButton variant="plain" disabled={dismissDisabled} label={t('actions.close')} onClick={onClose} icon={<X className="h-5 w-5" aria-hidden="true" />} />}
+              </div>
+            ) : isBottomSheet ? (
               <div className="shrink-0 px-5 pb-3 pt-5">
                 <h3 id={titleId} className="sr-only">{title}</h3>
                 {headerAction}
@@ -116,7 +122,9 @@ export function Modal({ open, title, children, onClose, variant = 'default', sub
                 <IconButton disabled={dismissDisabled} label={t('actions.close')} onClick={onClose} icon={<X className="h-5 w-5" aria-hidden="true" />} />
               </div>
             )}
-            {isBottomSheet ? (
+            {isFullscreen ? (
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">{children}</div>
+            ) : isBottomSheet ? (
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[max(16px,env(safe-area-inset-bottom))]">{children}</div>
             ) : isSheet ? (
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[max(24px,env(safe-area-inset-bottom))] pt-3 sm:px-8">

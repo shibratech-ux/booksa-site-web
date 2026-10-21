@@ -1,4 +1,60 @@
 {
+  "restaurantDates": {
+    "title": "Find a table",
+    "partySize": "People at your table",
+    "removeGuest": "Remove a diner",
+    "addGuest": "Add a diner",
+    "today": "Today, {{date}}",
+    "tomorrow": "Tomorrow, {{date}}",
+    "sampleNotice": "Sample dining times · Table availability is not confirmed.",
+    "soldOut": "Fully booked",
+    "available": "Table available",
+    "diners_one": "{{count}} diner",
+    "diners_other": "{{count}} diners",
+    "tableFor": "Table for {{count}}",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "previewTitle": "Your table reservation preview",
+    "previewAction": "Preview table reservation",
+    "editReservation": "Edit table reservation",
+    "previewNotice": "This is a preview of your table reservation. The restaurant has not confirmed availability. No table has been reserved and no payment has been made."
+  },
+  "restaurantDetail": {
+    "category": "Restaurant",
+    "dining": "A place to gather over good food",
+    "atAGlance": "At a glance",
+    "capacity": "Space for your group",
+    "about": "Your dining experience",
+    "offers": "What’s on offer",
+    "reviewsEmpty": "Guest reviews will appear here after visits.",
+    "planVisit": "Plan your visit",
+    "chooseDate": "Choose your preferred date",
+    "datesHint": "Choose a date for your visit. Availability is not yet confirmed.",
+    "location": "Where you’ll dine",
+    "locationMissing": "A map location has not been provided yet.",
+    "moreRestaurants": "More restaurants to discover",
+    "noRelated": "More restaurants will appear here as hosts publish their listings.",
+    "meetHost": "Meet your host",
+    "messagingSoon": "Messaging will be available soon.",
+    "guestRequirements": "Guest requirements",
+    "accessibility": "Accessibility",
+    "askAccessibility": "Accessibility details have not been provided yet.",
+    "listedPrice": "Listed price",
+    "priceHint": "Check pricing details with your host before booking.",
+    "showDates": "Show dates",
+    "previewHint": "Explore your visit · no reservation is made.",
+    "previewOnly": "This is a preview of your visit. Availability is unconfirmed and no reservation or payment has been made.",
+    "yourVisit": "Your visit preview",
+    "date": "Preferred date",
+    "guests": "Number of guests",
+    "previewVisit": "Preview my visit",
+    "editVisit": "Edit my visit",
+    "done": "Done",
+    "previous": "Previous",
+    "next": "Next",
+    "retry": "Try again",
+    "shareError": "We couldn’t share this listing. Please try again."
+  },
   "listingDetail": {
     "back": "Back",
     "share": "Share",
@@ -118,7 +174,64 @@
     "new": "New",
     "perNight": "per night",
     "loading": "Loading listings…",
-    "loadError": "We couldn’t load the latest listings."
+    "loadError": "We couldn’t load the latest listings.",
+    "emptyTitle": "No listings yet",
+    "emptyDescription": "Listings published by Booksa hosts will appear here.",
+    "signedOutTitle": "Sign in to browse listings",
+    "signedOutDescription": "Listings published by Booksa hosts are visible once you sign in.",
+    "signIn": "Sign in",
+    "cityTitles": {
+      "hotel": [
+        "Hotels in {{city}}",
+        "Popular hotels in {{city}}",
+        "Stay at a hotel in {{city}}",
+        "New hotels in {{city}}",
+        "Book a hotel in {{city}}",
+        "Hotels for your trip to {{city}}",
+        "Hotels to discover in {{city}}",
+        "Comfortable hotels in {{city}}",
+        "Hotels for a weekend in {{city}}",
+        "Your next hotel in {{city}}"
+      ],
+      "private-room": [
+        "Private rooms in {{city}}",
+        "Popular rooms in {{city}}",
+        "Stay in a private room in {{city}}",
+        "New rooms in {{city}}",
+        "Rooms to book in {{city}}",
+        "A room of your own in {{city}}",
+        "Private rooms to discover in {{city}}",
+        "Cozy rooms in {{city}}",
+        "Rooms for a short stay in {{city}}",
+        "Your next room in {{city}}"
+      ],
+      "restaurant": [
+        "Restaurants in {{city}}",
+        "Popular restaurants in {{city}}",
+        "Places to eat in {{city}}",
+        "New restaurants in {{city}}",
+        "Where to eat in {{city}}",
+        "Restaurants to discover in {{city}}",
+        "Places to try in {{city}}",
+        "Local flavors in {{city}}",
+        "Eat out in {{city}}",
+        "Your next meal in {{city}}"
+      ]
+    },
+    "emptyCategory": {
+      "hotel": {
+        "title": "No hotels yet",
+        "description": "Hotels published by Booksa hosts will appear here."
+      },
+      "private-room": {
+        "title": "No private rooms yet",
+        "description": "Private rooms published by Booksa hosts will appear here."
+      },
+      "restaurant": {
+        "title": "No restaurants yet",
+        "description": "Restaurants published by Booksa hosts will appear here."
+      }
+    }
   },
   "listingDiscountsStep": {
     "title": "Add discounts",

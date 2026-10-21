@@ -17,6 +17,8 @@ export default function MarketplaceMobileNav() {
     location.pathname === ROUTES.homes ||
     location.pathname === ROUTES.experiences ||
     location.pathname === ROUTES.services ||
+    location.pathname === ROUTES.restaurants ||
+    location.pathname === ROUTES.rooms ||
     location.pathname === ROUTES.seeAll ||
     location.pathname === ROUTES.seeAllMap;
 

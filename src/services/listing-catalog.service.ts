@@ -13,6 +13,7 @@ export type PublishedListingSummary = {
   category: ExploreCategoryId;
   title: string;
   location: string;
+  city: string | null;
   coverImageUrl: string;
   basePrice: number;
   currency: 'CDF';
@@ -28,7 +29,6 @@ export type PublishedListingDetail = PublishedListingSummary & {
   basics: { guests: number; bedrooms: number; beds: number; bathrooms: number };
   amenityIds: string[];
   houseRules: HouseRules;
-  city: string | null;
   coordinates: { latitude: number; longitude: number } | null;
   hostFirstName: string | null;
 };
@@ -51,7 +51,9 @@ function toSummary(id: string, data: Record<string, unknown>): PublishedListingS
   if (typeof basePrice !== 'number' || !Number.isInteger(basePrice) || basePrice < 1) return null;
   const publishedAt = data.publishedAt as { toMillis?: () => number } | null | undefined;
   return {
-    id, category, title, location, coverImageUrl, basePrice, currency: 'CDF',
+    id, category, title, location,
+    city: text(record(record(data.confirmedLocation).address).city),
+    coverImageUrl, basePrice, currency: 'CDF',
     publishedAt: typeof publishedAt?.toMillis === 'function' ? publishedAt.toMillis() : 0
   };
 }
@@ -80,7 +82,6 @@ function toDetail(id: string, data: Record<string, unknown>): PublishedListingDe
     basics: { guests: count(basics.guests), bedrooms: count(basics.bedrooms), beds: count(basics.beds), bathrooms: count(basics.bathrooms) },
     amenityIds: Array.isArray(flowDraft.amenityIds) ? flowDraft.amenityIds.filter((value): value is string => typeof value === 'string') : [],
     houseRules: readHouseRules(data.houseRules),
-    city: text(record(confirmed.address).city),
     coordinates: validPoint ? { latitude, longitude } : null,
     hostFirstName: firstName(record(data.user))
   };

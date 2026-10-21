@@ -31,6 +31,7 @@ import {
 import { DesktopReserveCard, MobileReserveBar, useReserveSummary } from './detail/ReservePanel';
 import { sampleGallery } from './detail/sampleListingContent';
 import type { StayRange } from './detail/StayCalendar';
+import RestaurantDetailPage from './RestaurantDetailPage';
 import { useListingDetailView, type ListingDetailView } from './detail/useListingDetailView';
 
 // Firestore ids are URL-safe; sample cards use "<location>-<price>", which never matches.
@@ -103,6 +104,9 @@ export default function ListingDetailPage() {
   }
 
   if (!view) return <Navigate to={ROUTES.home} replace />;
+  if (published.status === 'loaded' && published.listing.category === 'restaurant') {
+    return <RestaurantDetailPage key={listingId} listing={published.listing} view={view} />;
+  }
   return <ListingDetailContent key={listingId} view={view} />;
 }
 
