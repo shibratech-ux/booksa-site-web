@@ -62,13 +62,13 @@ export function MobileReserveBar({ summary, onReserve }: { summary: ReserveSumma
   const { t } = useTranslation('booking');
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border)] bg-[var(--color-surface)] pb-[env(safe-area-inset-bottom)] lg:hidden">
-      <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-6 py-3">
+      <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-5 py-3 sm:px-6">
         <div className="min-w-0">
-          <p className="truncate text-base font-semibold underline underline-offset-2">{summary.amountLabel}</p>
-          <p className="mt-0.5 truncate text-sm text-[var(--color-text-secondary)]">{summary.contextLabel}</p>
+          <p className="truncate text-sm font-semibold underline underline-offset-2 sm:text-base">{summary.amountLabel}</p>
+          <p className="mt-0.5 truncate text-xs text-[var(--color-text-secondary)] sm:text-sm">{summary.contextLabel}</p>
         </div>
-        <button type="button" onClick={onReserve} className={`${reserveButton} shrink-0 sm:w-auto`}>
-          {summary.nights ? t('reserve') : t('listingDetail.addDates')}
+        <button type="button" onClick={onReserve} className={`${reserveButton} w-[42%] shrink-0 rounded-full sm:w-auto`}>
+          {t('reserve')}
         </button>
       </div>
     </div>
@@ -82,7 +82,7 @@ export function DesktopReserveCard({ summary, onReserve }: { summary: ReserveSum
       <p className="text-xl font-semibold">{summary.amountLabel}</p>
       <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{summary.contextLabel}</p>
       <button type="button" onClick={onReserve} className={`${reserveButton} mt-5 w-full`}>
-        {summary.nights ? t('reserve') : t('listingDetail.addDates')}
+        {t('reserve')}
       </button>
       {!summary.nights ? <p className="mt-3 text-center text-xs text-[var(--color-text-secondary)]">{t('listingDetail.calendar.addDatesHint')}</p> : null}
     </div>

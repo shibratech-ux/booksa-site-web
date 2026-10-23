@@ -14,6 +14,7 @@ export const ROUTES = {
   photoTour: '/phototour',
   confirmPay: '/confirm-pay',
   listingDetail: '/listing/:listingId',
+  restaurantBooking: '/listing/:listingId/booking',
   messages: '/messages',
   trips: '/trips',
   hostListings: '/host/listings',

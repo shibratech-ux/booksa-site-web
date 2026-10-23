@@ -15,6 +15,7 @@ const SeeAllPage = lazy(() => import('@/pages/home/listing/SeeAllPage'));
 const SeeAllMapPage = lazy(() => import('@/pages/home/listing/SeeAllMapPage'));
 const PhotoTourPage = lazy(() => import('@/pages/home/listing/PhotoTourPage'));
 const ListingDetailPage = lazy(() => import('@/pages/home/listing/ListingDetailPage'));
+const RestaurantBookingPage = lazy(() => import('@/pages/home/listing/RestaurantBookingPage'));
 const HostListingsPage = lazy(() => import('@/pages/home/listing/HostListingsPage'));
 const HostProfilePage = lazy(() => import('@/pages/home/listing/HostProfilePage'));
 const MessagesPage = lazy(() => import('@/pages/messages/MessagesPage'));
@@ -70,10 +71,11 @@ export function AppRouter() {
           <Route path={ROUTES.seeAll} element={<SeeAllPage />} />
           <Route path={ROUTES.seeAllMap} element={<SeeAllMapPage />} />
           <Route path={ROUTES.photoTour} element={<PhotoTourPage />} />
-          <Route path={ROUTES.confirmPay} element={<ConfirmPayPage />} />
           <Route path={ROUTES.listingDetail} element={<ListingDetailPage />} />
           <Route path={ROUTES.login} element={<LoginPage />} />
           <Route element={<ProtectedRoute />}>
+            <Route path={ROUTES.confirmPay} element={<ConfirmPayPage />} />
+            <Route path={ROUTES.restaurantBooking} element={<RestaurantBookingPage />} />
             <Route path={ROUTES.trips} element={<TripsPage />} />
             <Route path={ROUTES.messages} element={<MessagesPage />} />
             <Route path={ROUTES.hostListings} element={<HostListingsPage />} />

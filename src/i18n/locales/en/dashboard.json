@@ -752,7 +752,37 @@
     "noListings": "No listings yet",
     "loadError": "We could not load your calendar.",
     "jumpToToday": "Jump to today",
-    "unavailable": "Past date"
+    "unavailable": "Past date",
+    "priceSheet": {
+      "title": "Nightly price for {{date}}",
+      "help": "About this price",
+      "helpText": "This is what guests pay for this night before Booksa fees. It replaces your base price for this date only.",
+      "close": "Close price editor",
+      "inputLabel": "Price for {{date}}",
+      "edit": "Edit price",
+      "invalid": "Enter a whole amount between 1 and 9,999,999.",
+      "baseNote": "Your base price",
+      "weekendNote": "Includes your weekend adjustment ({{percent}})",
+      "customNote": "Custom price · base price {{price}}",
+      "reset": "Use base price",
+      "localOnly": "Custom prices are not saved yet. They reset when you leave the calendar.",
+      "save": "Save"
+    },
+    "dayPanel": {
+      "close": "Close date details",
+      "available": "Available",
+      "blocked": "Blocked",
+      "availability": "Availability",
+      "block": "Block this night",
+      "open": "Open this night",
+      "nightlyPrice": "Nightly price",
+      "noPrice": "Set a price on the listing",
+      "customSettings": "Custom settings",
+      "minimumNights": "Minimum nights",
+      "cancellationPolicy": "Cancellation policy",
+      "done": "Done",
+      "localOnly": "Availability changes are not saved yet."
+    }
   },
   "titleSheet": {
     "heading": "Title",

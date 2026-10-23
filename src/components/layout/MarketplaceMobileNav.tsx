@@ -106,7 +106,8 @@ export default function MarketplaceMobileNav() {
         </>
       ) : (
         <Link
-          to={ROUTES.login}
+          to={ROUTES.home}
+          state={{ authRequired: true, from: { pathname: location.pathname, search: location.search, hash: location.hash } }}
           className="flex flex-col items-center justify-center gap-1 px-1 text-[11px] font-medium leading-4 text-[var(--color-text-secondary)]"
         >
           <User className="h-5 w-5" aria-hidden="true" />

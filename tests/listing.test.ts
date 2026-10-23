@@ -11,6 +11,7 @@ import { ListingBasicsStep } from '../src/pages/home/listing/create-listing/comp
 import { PlaceAccessStep } from '../src/pages/home/listing/create-listing/components/PlaceAccessStep';
 import { getListingResumeTarget } from '../src/pages/home/listing/create-listing/listingResume';
 import { ROUTES } from '../src/utils/constants';
+import { formatCalendarDate } from '../src/utils/formatters';
 import { getListingCategory } from '../src/pages/home/listing/create-listing/listingCategories';
 import { test, beforeEach } from 'node:test';
 import { completeSimulatedIdentityReview, submitCurrentUserIdentityVerification, submitCurrentUserSelfie, SelfieSubmissionError } from '../src/services/identity-verification.service';
@@ -22,7 +23,10 @@ import { readPublishReadiness } from '../src/domain/publish-readiness';
 import { getPublishedListingDetail, listPublishedListings } from '../src/services/listing-catalog.service';
 import { mostFrequentCity } from '../src/pages/home/listing/exploreCity';
 import { groupExploreRails } from '../src/pages/home/listing/exploreRails';
-import { countStayNights, MAX_STAY_NIGHTS, quoteStay } from '../src/domain/pricing';
+import { countStayNights, MAX_STAY_NIGHTS, quoteRestaurantVisit, quoteStay } from '../src/domain/pricing';
+import { EMPTY_RESERVATION_SIMULATION, ReservationSimulationError, simulateReservationRequest, simulateReservationTransition, type SimulatedReservationRequest } from '../src/domain/reservation-simulator';
+import { buildRestaurantBookingSearch, parseRestaurantBookingSearch } from '../src/domain/restaurant-booking';
+import { restaurantCashDetailsSchema } from '../src/domain/restaurant-cash-details';
 import assert from 'node:assert/strict';
 import { state, firebaseAuth, Timestamp, emitSnapshot, failSnapshot } from './listing-firebase.mock';
 import { subscribeToCurrentUserListing } from '../src/services/listing-draft.service';
@@ -1367,6 +1371,46 @@ test('stay pricing counts half-open nights and multiplies an integer nightly pri
  }
 });
 
+test('restaurant preview pricing multiplies the listed price by adults and children', () => {
+ assert.deepEqual(quoteRestaurantVisit(25000, 3, 1), {
+  perGuestPrice: 25000, adults: 3, children: 1,
+  adultSubtotal: 75000, childSubtotal: 25000, total: 100000, currency: 'CDF'
+ });
+ assert.equal(quoteRestaurantVisit(25000, 1, 0)?.total, 25000);
+ for (const [price, adults, children] of [[0, 1, 0], [12.5, 1, 0], [10_000_000, 1, 0], [25000, 0, 1], [25000, 1.5, 0], [25000, 1, -1], [9_999_999, Number.MAX_SAFE_INTEGER, 0]]) {
+  assert.equal(quoteRestaurantVisit(price, adults, children), null);
+ }
+});
+
+test('restaurant booking URL keeps the selected date, time, guests and preview method', () => {
+ const selection = { date: '2026-12-04', time: '19:30', adults: 2, children: 1, paymentMethod: 'cash' } as const;
+ assert.deepEqual(parseRestaurantBookingSearch(buildRestaurantBookingSearch(selection)), selection);
+ for (const search of [
+  '?date=2026-02-30&time=19%3A30&adults=2&children=1&payment=cash',
+  '?date=2026-12-04&time=25%3A00&adults=2&children=1&payment=cash',
+  '?date=2026-12-04&time=12%3A30&adults=2&children=1&payment=cash',
+  '?date=2026-12-04&time=19%3A30&adults=0&children=1&payment=cash',
+  '?date=2026-12-04&time=19%3A30&adults=2&children=101&payment=cash',
+  '?date=2026-12-04&time=19%3A30&adults=2&children=1&payment=unknown',
+  '?date=2026-12-04&date=2026-12-05&time=19%3A30&adults=2&children=1&payment=cash'
+ ]) assert.equal(parseRestaurantBookingSearch(search), null);
+});
+
+test('cash checkout requires valid names and billing details before the preview continues', () => {
+ const valid = {
+  firstName: 'Amani', lastName: 'Kabeya', streetAddress: '12 Avenue Kasai', apartment: '',
+  city: 'Kinshasa', region: 'Kinshasa', postalCode: '', countryCode: 'CD'
+ };
+ assert.deepEqual(restaurantCashDetailsSchema.parse(valid), valid);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, firstName: '  ' }).success, false);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, streetAddress: '  ' }).success, false);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, city: 'X' }).success, false);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, region: '' }).success, false);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, postalCode: 'bad!' }).success, false);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, countryCode: 'US' }).success, false);
+ assert.equal(restaurantCashDetailsSchema.safeParse({ ...valid, cardNumber: '4111111111111111' }).success, false);
+});
+
 test('guest listing detail returns only published listings with a guest-safe projection', async () => {
  publishedListing('stay', { category: 'private-room', publishedAt: 1_000 });
  const listing = state.docs.get('annonceslisting/stay');
@@ -1379,6 +1423,7 @@ test('guest listing detail returns only published listings with a guest-safe pro
  assert.ok(detail);
  assert.equal(detail.category, 'private-room');
  assert.equal(detail.hostFirstName, 'Amani');
+ assert.equal(detail.isOwnedByCurrentUser, false);
  assert.deepEqual(detail.basics, { guests: 2, bedrooms: 1, beds: 1, bathrooms: 1 });
  assert.deepEqual(detail.amenityIds, ['wifi', 'tv']);
  assert.equal(detail.houseRules.petsAllowed, false);
@@ -1395,6 +1440,89 @@ test('guest listing detail returns only published listings with a guest-safe pro
  }
  assert.equal(await getPublishedListingDetail('missing'), null);
  assert.equal(await getPublishedListingDetail('Appartement à Gombe-CDF 438,245'), null);
+ publishedListing('owned-stay', { owner: 'owner' });
+ assert.equal((await getPublishedListingDetail('owned-stay'))?.isOwnedByCurrentUser, true);
  firebaseAuth.currentUser = null;
  await assert.rejects(getPublishedListingDetail('stay'), /signed in/);
+});
+
+test('reservation simulator quotes a stay, records transitions, and retries the same request once', () => {
+ const request: SimulatedReservationRequest = {
+  requestId: 'request-1', listingKey: 'listing-1', listingTitle: 'A stay', listingLocation: 'Kinshasa',
+  imageUrl: 'https://example.com/photo.jpg', guestUid: 'guest-1', checkIn: '2026-11-06', checkOut: '2026-11-08',
+  adults: 2, children: 0, totalLabel: 'CDF 50,000', nightlyPriceCdf: 25000, paymentTiming: 'now'
+ };
+ const first = simulateReservationRequest(EMPTY_RESERVATION_SIMULATION, request, '2026-10-23T12:00:00.000Z');
+ assert.equal(first.reservation.nights, 2);
+ assert.equal(first.reservation.totalCdf, 50000);
+ assert.equal(first.reservation.status, 'confirmed');
+ assert.deepEqual(first.reservation.events.map(event => [event.from, event.to, event.actor]), [
+  [null, 'pending', 'guest'], ['pending', 'confirmed', 'system']
+ ]);
+ const retried = simulateReservationRequest(first.state, request, '2026-10-23T13:00:00.000Z');
+ assert.equal(retried.state, first.state);
+ assert.equal(retried.reservation, first.reservation);
+ assert.throws(() => simulateReservationRequest(first.state, { ...request, listingKey: 'another-listing' }, '2026-10-23T13:00:00.000Z'),
+  (error: unknown) => error instanceof ReservationSimulationError && error.code === 'invalid');
+ assert.throws(() => simulateReservationRequest(first.state, { ...request, paymentTiming: 'later' }, '2026-10-23T13:00:00.000Z'),
+  (error: unknown) => error instanceof ReservationSimulationError && error.code === 'invalid');
+});
+
+test('reservation simulator checks half-open overlaps and releases cancelled dates', () => {
+ const request: SimulatedReservationRequest = {
+  requestId: 'request-1', listingKey: 'listing-1', listingTitle: 'A stay', listingLocation: 'Kinshasa',
+  imageUrl: '', guestUid: 'guest-1', checkIn: '2026-11-06', checkOut: '2026-11-08',
+  adults: 1, children: 0, totalLabel: 'CDF 50,000', nightlyPriceCdf: 25000, paymentTiming: 'later'
+ };
+ const first = simulateReservationRequest(EMPTY_RESERVATION_SIMULATION, request, '2026-10-23T12:00:00.000Z');
+ assert.throws(() => simulateReservationRequest(first.state, { ...request, requestId: 'request-2', checkIn: '2026-11-07', checkOut: '2026-11-09' }, '2026-10-23T12:01:00.000Z'),
+  (error: unknown) => error instanceof ReservationSimulationError && error.code === 'unavailable');
+ const adjacent = simulateReservationRequest(first.state, { ...request, requestId: 'request-3', checkIn: '2026-11-08', checkOut: '2026-11-09' }, '2026-10-23T12:01:00.000Z');
+ assert.equal(adjacent.state.reservations.length, 2);
+ const cancelled = simulateReservationTransition(first.state, request.requestId, 'cancelled_by_guest', 'guest', '2026-10-24T12:00:00.000Z');
+ assert.equal(cancelled.reservations[0].events.at(-1)?.from, 'confirmed');
+ assert.equal(cancelled.reservations[0].events.at(-1)?.actor, 'guest');
+ const replacement = simulateReservationRequest(cancelled, { ...request, requestId: 'request-4' }, '2026-10-24T12:01:00.000Z');
+ assert.equal(replacement.reservation.status, 'confirmed');
+ assert.throws(() => simulateReservationTransition(cancelled, request.requestId, 'completed', 'system', '2026-10-24T12:02:00.000Z'),
+  (error: unknown) => error instanceof ReservationSimulationError && error.code === 'transition');
+});
+
+test('reservation simulator rejects invalid requests before adding a record', () => {
+ const request: SimulatedReservationRequest = {
+  requestId: 'request-1', listingKey: 'listing-1', listingTitle: 'A stay', listingLocation: 'Kinshasa',
+  imageUrl: '', guestUid: null, checkIn: '2026-11-08', checkOut: '2026-11-06',
+  adults: 1, children: 0, totalLabel: 'CDF 50,000', nightlyPriceCdf: 25000, paymentTiming: 'now'
+ };
+ for (const invalid of [request, { ...request, checkIn: '2026-11-06', checkOut: '2026-11-08', adults: 0 },
+  { ...request, checkIn: '2026-11-06', checkOut: '2026-11-08', nightlyPriceCdf: 0 },
+  { ...request, checkIn: '2026-11-06', checkOut: '2026-11-08', adults: 2, guestCapacity: 1 }]) {
+  assert.throws(() => simulateReservationRequest(EMPTY_RESERVATION_SIMULATION, invalid, '2026-10-23T12:00:00.000Z'),
+   (error: unknown) => error instanceof ReservationSimulationError && error.code === 'invalid');
+ }
+ assert.equal(EMPTY_RESERVATION_SIMULATION.reservations.length, 0);
+});
+
+test('reservation simulator permits only the specified actor and status transitions', () => {
+ const base: SimulatedReservationRequest = {
+  requestId: 'request-1', listingKey: 'listing-1', listingTitle: 'A stay', listingLocation: 'Kinshasa',
+  imageUrl: '', guestUid: 'guest-1', checkIn: '2026-11-06', checkOut: '2026-11-08',
+  adults: 1, children: 0, totalLabel: 'CDF 50,000', paymentTiming: 'now'
+ };
+ const confirmed = simulateReservationRequest(EMPTY_RESERVATION_SIMULATION, base, '2026-10-23T12:00:00.000Z');
+ assert.throws(() => simulateReservationTransition(confirmed.state, base.requestId, 'cancelled_by_host', 'guest', '2026-10-24T12:00:00.000Z'),
+  (error: unknown) => error instanceof ReservationSimulationError && error.code === 'transition');
+ const completed = simulateReservationTransition(confirmed.state, base.requestId, 'completed', 'system', '2026-11-09T12:00:00.000Z');
+ assert.equal(completed.reservations[0].status, 'completed');
+ assert.throws(() => simulateReservationTransition(completed, base.requestId, 'cancelled_by_guest', 'guest', '2026-11-10T12:00:00.000Z'),
+  (error: unknown) => error instanceof ReservationSimulationError && error.code === 'transition');
+ const pending = { reservations: [{ ...confirmed.reservation, status: 'pending' as const }] };
+ assert.equal(simulateReservationTransition(pending, base.requestId, 'declined', 'host', '2026-10-24T12:00:00.000Z').reservations[0].status, 'declined');
+ assert.equal(simulateReservationTransition(pending, base.requestId, 'expired', 'system', '2026-10-24T12:00:00.000Z').reservations[0].status, 'expired');
+});
+
+test('calendar date formatting preserves the selected day across viewer time zones', () => {
+ assert.equal(formatCalendarDate('2026-11-06', 'en', { month: 'short', day: 'numeric', year: 'numeric' }), 'Nov 6, 2026');
+ assert.equal(formatCalendarDate('2026-02-30', 'en'), '');
+ assert.equal(formatCalendarDate('2026-11-06T00:00:00Z', 'en'), '');
 });

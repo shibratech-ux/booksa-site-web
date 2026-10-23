@@ -7,6 +7,8 @@ import Footer from '@/components/layout/Footer';
 import { EmptyState } from '@/components/common/EmptyState';
 import { ErrorState } from '@/components/common/ErrorState';
 import { LoadingScreen } from '@/components/common/LoadingScreen';
+import { AuthRequiredSheet } from '@/components/auth/AuthRequiredSheet';
+import { useAuthGate } from '@/hooks/useAuthGate';
 import { getPublishedListingDetail, type PublishedListingDetail } from '@/services/listing-catalog.service';
 import { useAuthStore } from '@/store/auth.store';
 import { ROUTES } from '@/utils/constants';
@@ -33,6 +35,7 @@ import { sampleGallery } from './detail/sampleListingContent';
 import type { StayRange } from './detail/StayCalendar';
 import RestaurantDetailPage from './RestaurantDetailPage';
 import { useListingDetailView, type ListingDetailView } from './detail/useListingDetailView';
+import './detail/listing-detail.css';
 
 // Firestore ids are URL-safe; sample cards use "<location>-<price>", which never matches.
 const PUBLISHED_ID = /^[A-Za-z0-9_-]{1,128}$/;
@@ -75,6 +78,7 @@ export default function ListingDetailPage() {
   const userId = useAuthStore(state => state.user?.id);
   const [attempt, setAttempt] = useState(0);
   const published = usePublishedListing(publishedId, userId, attempt);
+  const { requireAuth, authSheet } = useAuthGate();
 
   const stateListing = (location.state as { listing?: Listing } | null)?.listing;
   const persisted = readPersistedListingContext<Listing>();
@@ -95,10 +99,11 @@ export default function ListingDetailPage() {
               title={t(published.status === 'signed-out' ? 'listingDetail.signIn' : 'listingDetail.notFound')}
               description={t(published.status === 'signed-out' ? 'listingDetail.signInHint' : 'listingDetail.notFoundHint')}
               actionLabel={t(published.status === 'signed-out' ? 'listingDetail.signInAction' : 'listingDetail.backToExplore')}
-              onAction={() => navigate(published.status === 'signed-out' ? ROUTES.login : ROUTES.home)}
+              onAction={() => { if (published.status === 'signed-out') requireAuth(); else navigate(ROUTES.home); }}
             />
           ) : null}
         </main>
+        <AuthRequiredSheet {...authSheet} />
       </div>
     );
   }
@@ -116,6 +121,7 @@ function ListingDetailContent({ view }: { view: ListingDetailView }) {
   const [range, setRange] = useState<StayRange>({ start: null, end: null });
   const [saved, setSaved] = useState(false);
   const summary = useReserveSummary(view, range);
+  const { requireAuth, authSheet } = useAuthGate();
 
   const openPhotos = () => {
     persistPhotoTourContext({ listing: view.contextListing });
@@ -134,32 +140,42 @@ function ListingDetailContent({ view }: { view: ListingDetailView }) {
     }
   };
   // TODO(team): persist to wishlists once that collection exists; local only for now.
-  const toggleSave = () => setSaved(value => !value);
+  const toggleSave = () => { if (requireAuth()) setSaved(value => !value); };
   const reserve = () => {
-    if (!summary.nights || !summary.total) {
+    if (view.isOwnedByCurrentUser) {
+      toast.error(t('reservationSimulator.ownListing'));
+      return;
+    }
+    if (!range.start || !range.end || !summary.nights || !summary.total) {
       const section = document.getElementById('availability');
       section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       document.getElementById('availability-title')?.focus({ preventScroll: true });
       return;
     }
     const bookingState = {
+      requestId: crypto.randomUUID(),
       listing: view.contextListing,
       nights: summary.nights,
       range: {
-        start: range.start ? new Date(`${range.start}T00:00:00`).toISOString() : null,
-        end: range.end ? new Date(`${range.end}T00:00:00`).toISOString() : null
+        start: range.start,
+        end: range.end
       },
       guestCounts: { adults: 1, children: 0, infants: 0, pets: 0 },
-      total: summary.total
+      guestCapacity: view.basics.guests,
+      ownedByCurrentUser: view.isOwnedByCurrentUser,
+      total: summary.total,
+      nightlyPriceCdf: view.pricing.kind === 'nightly' ? view.pricing.nightlyPrice : undefined
     };
     persistConfirmPayContext(bookingState);
+    // Signed-out guests sign in first, then land on checkout with the persisted booking.
+    if (!requireAuth(ROUTES.confirmPay)) return;
     navigate(ROUTES.confirmPay, { state: bookingState });
   };
 
   const actions = <GalleryActions saved={saved} onBack={() => navigate(-1)} onShare={() => void share()} onToggleSave={toggleSave} />;
 
   return (
-    <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text-primary)]">
+    <div className="listing-detail-page min-h-screen bg-[var(--color-surface)] text-[var(--color-text-primary)]">
       <div className="hidden md:block"><BooksaHeader /></div>
 
       <MobileGallery photos={view.photos} title={view.title} onOpen={openPhotos} actions={actions} />
@@ -176,10 +192,10 @@ function ListingDetailContent({ view }: { view: ListingDetailView }) {
             <div className="mt-8 px-6 md:px-0">
               <HostAndHighlights view={view} />
               <DescriptionSection view={view} />
-              <SampleReviewsSection view={view} />
               <SleepAndAmenities view={view} />
               <LocationSection view={view} />
               <AvailabilitySection view={view} range={range} onChange={setRange} nights={summary.nights} />
+              <SampleReviewsSection view={view} />
               <HostSection view={view} />
               <ThingsToKnowSection view={view} />
             </div>
@@ -194,6 +210,7 @@ function ListingDetailContent({ view }: { view: ListingDetailView }) {
 
       <MobileReserveBar summary={summary} onReserve={reserve} />
       <div className="hidden md:block"><Footer /></div>
+      <AuthRequiredSheet {...authSheet} />
     </div>
   );
 }

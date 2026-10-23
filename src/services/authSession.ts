@@ -28,6 +28,13 @@ export function startAuthSessionPersistence(): void {
       return;
     }
 
+    // Do not expose a previous account while claims and profile are being refreshed.
+    // Hourly token refreshes keep the same uid and stay 'authenticated', so ProtectedRoute
+    // does not unmount the open page.
+    if (useAuthStore.getState().user?.id !== user.uid) {
+      useAuthStore.getState().clearUser();
+      useAuthStore.getState().setStatus('loading');
+    }
     try {
       const response = await createAuthResponse(user);
       if (revision !== sessionRevision || auth.currentUser?.uid !== user.uid) return;

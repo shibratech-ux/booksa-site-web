@@ -1,12 +1,15 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Heart, Star } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, generatePath, useNavigate } from 'react-router-dom';
+import { Link, generatePath, useLocation, useNavigate } from 'react-router-dom';
 import Footer from '@/components/layout/Footer';
 import BooksaHeader from '@/components/layout/BooksaHeader';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import { SeeAllCard } from '@/components/home/SeeAllCard';
 import { EmptyState } from '@/components/common/EmptyState';
+import { AuthRequiredSheet } from '@/components/auth/AuthRequiredSheet';
+import { ExploreTabContent } from './see-all/ExploreTabContent';
+import { HOME_TAB_SECTIONS } from './see-all/seeAllContent';
 import type { Listing } from './listing.types';
 import { persistListingContext } from '@/utils/navigationPersistence';
 import { ROUTES } from '@/utils/constants';
@@ -239,6 +242,8 @@ function PublishedRailSkeleton({ label }: { label: string }) {
 
 export default function HomePage({ category }: { category?: ExploreCategoryId } = {}) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const authRequest = location.state as { authRequired?: boolean; from?: { pathname: string; search?: string; hash?: string } } | null;
   const { t, i18n } = useTranslation('booking');
   const { t: tNavigation } = useTranslation('navigation');
   const { t: tCommon } = useTranslation('common');
@@ -277,6 +282,9 @@ export default function HomePage({ category }: { category?: ExploreCategoryId } 
       <BooksaHeader />
 
       <main className="marketplace-reference-container mx-auto space-y-8 overflow-hidden px-4 pb-24 pt-4 sm:space-y-9 sm:px-6 sm:py-8 lg:space-y-10 lg:px-0 lg:pb-11 lg:pt-10">
+        {published.status === 'signed-out' && !category ? (
+          <ExploreTabContent sections={HOME_TAB_SECTIONS} onOpenMap={() => navigate(ROUTES.seeAll)} />
+        ) : null}
         {/* Listings deployed by hosts ("Ready for guests"), one rail per tag + city (max 10 rails × 7 listings). */}
         {published.status === 'loading' ? <PublishedRailSkeleton label={t('explorePublished.loading')} /> : null}
         {published.status === 'error' ? (
@@ -291,12 +299,12 @@ export default function HomePage({ category }: { category?: ExploreCategoryId } 
             </button>
           </div>
         ) : null}
-        {published.status === 'signed-out' ? (
+        {published.status === 'signed-out' && category ? (
           <EmptyState
             title={t('explorePublished.signedOutTitle')}
             description={t('explorePublished.signedOutDescription')}
             actionLabel={t('explorePublished.signIn')}
-            onAction={() => navigate(ROUTES.login)}
+            onAction={() => navigate(location.pathname, { state: { authRequired: true, from: { pathname: location.pathname } } })}
           />
         ) : null}
         {published.status === 'loaded' && publishedRails.length === 0 ? (
@@ -314,6 +322,12 @@ export default function HomePage({ category }: { category?: ExploreCategoryId } 
         ))}
 
       </main>
+
+      <AuthRequiredSheet
+        open={Boolean(authRequest?.authRequired)}
+        from={authRequest?.from}
+        onClose={() => navigate(location.pathname, { replace: true, state: null })}
+      />
 
       <div className="hidden sm:block">
         <Footer />

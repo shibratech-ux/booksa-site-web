@@ -90,13 +90,21 @@ export default function SeeAllPage() {
                   onClick={() => setCategory(id)}
                   onKeyDown={handleTabKeyDown}
                   className={cn(
-                    'flex h-10 items-center gap-1.5 rounded-full border pl-2.5 pr-3.5 text-[12.88px] leading-none transition-[background-color,border-color,box-shadow] duration-[180ms]',
+                    'flex min-h-11 items-center gap-1.5 rounded-full border pl-2 pr-3.5 text-[12.88px] leading-none transition-[background-color,border-color,box-shadow] duration-[180ms]',
                     isSelected
                       ? 'border-[var(--color-border)] bg-[var(--color-surface-muted)] font-semibold text-[var(--color-text-primary)]'
                       : 'border-[var(--color-border-subtle)] bg-[var(--color-surface)] font-medium text-[var(--color-text-primary)] shadow-[var(--shadow-sm)]'
                   )}
                 >
-                  <Icon aria-hidden="true" className="h-4 w-4" />
+                  <span
+                    className={cn(
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
+                      isSelected ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-surface-muted)]'
+                    )}
+                    aria-hidden="true"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </span>
                   {t(id)}
                 </button>
               );

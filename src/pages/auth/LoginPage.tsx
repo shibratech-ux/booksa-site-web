@@ -294,8 +294,10 @@ export default function LoginPage() {
     firebaseAuth && hasResolvedFirebaseUser ? lastUser : user ?? lastUser
   );
   const hasActiveSession = Boolean(authenticatedUser) || (!firebaseAuth && isAuthenticated);
-  const requestedPath = (location.state as { from?: { pathname?: string } } | null)?.from
-    ?.pathname;
+  const requestedLocation = (location.state as { from?: { pathname?: string; search?: string; hash?: string } } | null)?.from;
+  const requestedPath = requestedLocation?.pathname
+    ? `${requestedLocation.pathname}${requestedLocation.search ?? ''}${requestedLocation.hash ?? ''}`
+    : undefined;
 
   useEffect(() => {
     if (!firebaseAuth) return;

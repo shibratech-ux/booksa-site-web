@@ -403,7 +403,7 @@ const ExperienceListing: React.FC<ExperienceProps> = ({
     borderColor: theme.colors.border
   } as const;
   const headingStyles = {
-    fontSize: `clamp(1.75rem, 2.5vw, 2rem)`,
+    fontSize: 'calc(clamp(1.75rem, 2.5vw, 2rem) * var(--mobile-text-scale))',
     lineHeight: 1.1,
     letterSpacing: '-0.03em'
   } as const;

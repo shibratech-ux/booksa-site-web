@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   animate,
   motion,
@@ -10,10 +11,14 @@ import {
 } from 'framer-motion';
 import MarketplaceMobileNav from '@/components/layout/MarketplaceMobileNav';
 import { BooksaMap } from '@/components/maps/BooksaMap';
+import { ShimmerImage } from '@/components/ui/ShimmerImage';
+import { useReservationSimulatorStore } from '@/store/reservation-simulator.store';
+import { useAuthStore } from '@/store/auth.store';
 import mapOutYourNextTripImage from '@/assets/images/map_out_your_next_trip.png';
 import { DEFAULT_MAP_VIEW } from '@/pages/home/listing/seeAllMapDefaults';
 import { useTheme } from '@/theme/useTheme';
 import { ROUTES } from '@/utils/constants';
+import { formatCalendarDate, formatCurrency } from '@/utils/formatters';
 
 type SheetSnap = 'peek' | 'default' | 'expanded';
 
@@ -29,9 +34,10 @@ const SHEET_SPRING = { type: 'spring', stiffness: 420, damping: 42, mass: 0.9 } 
 const FLING_PROJECTION = 0.2;
 
 function TripsMap({ className, showControls = true }: { className?: string; showControls?: boolean }) {
+  const { t } = useTranslation('booking');
   return (
     <BooksaMap
-      title="Map for planning your next Booksa trip"
+      title={t('reservationSimulator.mapTitle')}
       center={DEFAULT_MAP_VIEW.center}
       initialBounds={DEFAULT_MAP_VIEW.bounds}
       initialZoom={DEFAULT_MAP_VIEW.zoom}
@@ -48,6 +54,7 @@ function TripsMap({ className, showControls = true }: { className?: string; show
 function TripEmptyState() {
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const { t } = useTranslation('booking');
 
   return (
     <div className="mx-auto flex w-full max-w-[360px] flex-col items-center px-6 py-6 text-center">
@@ -61,18 +68,79 @@ function TripEmptyState() {
         />
       </div>
       <h1 className="mt-3 text-[22px] font-semibold leading-[26px] tracking-[-0.02em] text-[var(--color-text-primary)] sm:text-[26px] sm:leading-[30px]">
-        Map out your next trip
+        {t('reservationSimulator.emptyTitle')}
       </h1>
       <p className="mt-2 text-sm leading-[1.5] text-[var(--color-text-secondary)]">
-        After you book a trip, experience, or service, come back here to see details, explore the map, and save places to visit.
+        {t('reservationSimulator.emptyDescription')}
       </p>
       <button
         type="button"
         onClick={() => navigate(ROUTES.home)}
         className={`${theme.ui.button.primary} mt-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary-500)]`}
       >
-        Get started
+        {t('reservationSimulator.getStarted')}
       </button>
+    </div>
+  );
+}
+
+function SimulatedTripsContent() {
+  const { t, i18n } = useTranslation('booking');
+  const guestUid = useAuthStore(state => state.user?.id ?? null);
+  const allReservations = useReservationSimulatorStore(state => state.reservations);
+  const reservations = useMemo(() => allReservations.filter(item => item.guestUid === guestUid), [allReservations, guestUid]);
+  const cancel = useReservationSimulatorStore(state => state.cancel);
+  const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  if (!reservations.length) return <TripEmptyState />;
+
+  const dateLabel = (value: string) => formatCalendarDate(value, i18n.resolvedLanguage, {
+    month: 'short', day: 'numeric', year: 'numeric'
+  });
+
+  return (
+    <div className="mx-auto w-full max-w-xl px-5 py-6 sm:px-2">
+      <h1 className="text-[22px] font-semibold tracking-tight">{t('reservationSimulator.tripsTitle')}</h1>
+      <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">{t('reservationSimulator.tripsNotice')}</p>
+      {error ? <p role="alert" className="mt-4 text-sm text-[var(--color-danger)]">{error}</p> : null}
+      <ul className="mt-6 space-y-4">
+        {reservations.map(reservation => (
+          <li key={reservation.requestId} className="overflow-hidden rounded-card border border-[var(--color-border)] bg-[var(--color-surface)]">
+            <div className="flex gap-4 p-4">
+              <ShimmerImage src={reservation.imageUrl} alt="" className="h-24 w-24 shrink-0 rounded-card object-cover" />
+              <div className="min-w-0">
+                <h2 className="text-base font-semibold leading-5">{reservation.listingTitle}</h2>
+                <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{reservation.listingLocation}</p>
+                <p className="mt-2 text-xs font-semibold">{t(reservation.status === 'confirmed' ? 'reservationSimulator.confirmedStatus' : 'reservationSimulator.cancelledStatus')}</p>
+              </div>
+            </div>
+            <div className="border-t border-[var(--color-border-subtle)] px-4 py-3 text-sm">
+              <p>{dateLabel(reservation.checkIn)} – {dateLabel(reservation.checkOut)}</p>
+              <p className="mt-1 text-[var(--color-text-secondary)]">{t('guests', { count: reservation.adults + reservation.children })}</p>
+              <p className="mt-2 font-semibold">{reservation.totalCdf === null ? reservation.totalLabel : formatCurrency(reservation.totalCdf, 'CDF', i18n.resolvedLanguage)}</p>
+              <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{t(reservation.paymentTiming === 'now' ? 'reservationSimulator.paymentNow' : 'reservationSimulator.paymentLater')}</p>
+              <p className="mt-1 text-xs text-[var(--color-text-secondary)]">{t('reservationSimulator.reference', { id: reservation.requestId.slice(0, 8) })}</p>
+            </div>
+            {reservation.status === 'confirmed' ? (
+              <div className="border-t border-[var(--color-border-subtle)] px-4 py-3">
+                {confirmId === reservation.requestId ? (
+                  <div>
+                    <p className="text-sm font-semibold">{t('reservationSimulator.cancelPrompt')}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <button type="button" onClick={() => setConfirmId(null)} className="min-h-11 rounded-button bg-[var(--color-surface-muted)] px-4 text-sm font-semibold">{t('reservationSimulator.keepAction')}</button>
+                      <button type="button" onClick={() => {
+                        try { cancel(reservation.requestId); setConfirmId(null); setError(null); }
+                        catch { setError(t('reservationSimulator.cancelError')); }
+                      }} className="min-h-11 rounded-button border border-[var(--color-border)] px-4 text-sm font-semibold">{t('reservationSimulator.confirmCancel')}</button>
+                    </div>
+                  </div>
+                ) : <button type="button" onClick={() => setConfirmId(reservation.requestId)} className="min-h-11 text-sm font-semibold underline underline-offset-4">{t('reservationSimulator.cancelAction')}</button>}
+              </div>
+            ) : null}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -83,6 +151,7 @@ function TripEmptyState() {
  * The sheet runs to the bottom of the screen, behind the fixed nav.
  */
 function TripsBottomSheet({ children }: { children: ReactNode }) {
+  const { t } = useTranslation('booking');
   const stageRef = useRef<HTMLDivElement>(null);
   const safeTopProbeRef = useRef<HTMLDivElement>(null);
   const safeBottomProbeRef = useRef<HTMLDivElement>(null);
@@ -166,7 +235,7 @@ function TripsBottomSheet({ children }: { children: ReactNode }) {
       <div ref={safeTopProbeRef} aria-hidden="true" className="invisible absolute h-0 pt-[env(safe-area-inset-top)]" />
       <div ref={safeBottomProbeRef} aria-hidden="true" className="invisible absolute h-0 pb-[env(safe-area-inset-bottom)]" />
       <motion.section
-        aria-label="Trips"
+        aria-label={t('reservationSimulator.tripsAria')}
         drag="y"
         dragListener={false}
         dragControls={dragControls}
@@ -188,7 +257,7 @@ function TripsBottomSheet({ children }: { children: ReactNode }) {
             type="button"
             onClick={handleToggle}
             onKeyDown={handleKeyDown}
-            aria-label={snap === 'expanded' ? 'Collapse trips panel' : 'Expand trips panel'}
+            aria-label={t(snap === 'expanded' ? 'reservationSimulator.collapseTrips' : 'reservationSimulator.expandTrips')}
             aria-expanded={snap === 'expanded'}
             className="flex h-6 w-16 items-center justify-center rounded-full"
           >
@@ -208,6 +277,7 @@ function TripsBottomSheet({ children }: { children: ReactNode }) {
 }
 
 export default function TripsPage() {
+  const { t } = useTranslation('booking');
   return (
     <main className="min-h-dvh bg-[var(--color-surface)] text-[var(--color-text-primary)]">
       {/* Mobile: full-bleed map behind a draggable bottom sheet, bottom nav underneath. */}
@@ -215,14 +285,14 @@ export default function TripsPage() {
         {/* Zoom buttons are hidden here: they would sit under the status bar; pinch zoom still works. */}
         <TripsMap className="absolute inset-0 h-full w-full" showControls={false} />
         <TripsBottomSheet>
-          <TripEmptyState />
+          <SimulatedTripsContent />
         </TripsBottomSheet>
       </div>
 
       {/* Tablet/desktop: content on the left, sticky full-height map on the right. */}
       <div className="hidden min-h-dvh grid-cols-[minmax(0,5fr)_minmax(0,7fr)] sm:grid">
-        <section aria-label="Trips" className="flex items-center justify-center">
-          <TripEmptyState />
+        <section aria-label={t('reservationSimulator.tripsAria')} className="flex items-start justify-center overflow-y-auto py-8">
+          <SimulatedTripsContent />
         </section>
         <div className="sticky top-0 h-dvh">
           <TripsMap className="h-full w-full" />

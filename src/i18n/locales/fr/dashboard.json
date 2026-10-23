@@ -752,7 +752,37 @@
     "noListings": "Aucune annonce pour le moment",
     "loadError": "Impossible de charger votre calendrier.",
     "jumpToToday": "Revenir à aujourd’hui",
-    "unavailable": "Date passée"
+    "unavailable": "Date passée",
+    "priceSheet": {
+      "title": "Prix de la nuit du {{date}}",
+      "help": "À propos de ce prix",
+      "helpText": "C’est ce que les voyageurs paient pour cette nuit, hors frais Booksa. Il remplace votre prix de base pour cette date uniquement.",
+      "close": "Fermer l’éditeur de prix",
+      "inputLabel": "Prix du {{date}}",
+      "edit": "Modifier le prix",
+      "invalid": "Saisissez un montant entier entre 1 et 9 999 999.",
+      "baseNote": "Votre prix de base",
+      "weekendNote": "Inclut votre ajustement week-end ({{percent}})",
+      "customNote": "Prix personnalisé · prix de base {{price}}",
+      "reset": "Utiliser le prix de base",
+      "localOnly": "Les prix personnalisés ne sont pas encore enregistrés. Ils sont réinitialisés quand vous quittez le calendrier.",
+      "save": "Enregistrer"
+    },
+    "dayPanel": {
+      "close": "Fermer le détail de la date",
+      "available": "Disponible",
+      "blocked": "Bloquée",
+      "availability": "Disponibilité",
+      "block": "Bloquer cette nuit",
+      "open": "Ouvrir cette nuit",
+      "nightlyPrice": "Prix par nuit",
+      "noPrice": "Définissez un prix sur l’annonce",
+      "customSettings": "Paramètres personnalisés",
+      "minimumNights": "Nombre minimum de nuits",
+      "cancellationPolicy": "Conditions d’annulation",
+      "done": "Terminé",
+      "localOnly": "Les changements de disponibilité ne sont pas encore enregistrés."
+    }
   },
   "titleSheet": {
     "heading": "Titre",

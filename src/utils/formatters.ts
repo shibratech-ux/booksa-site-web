@@ -42,6 +42,18 @@ export function formatDate(
   return new Intl.DateTimeFormat(localeFor(language), options).format(toDate(value));
 }
 
+/** Format a calendar date without shifting it into the viewer's time zone. */
+export function formatCalendarDate(
+  value: string,
+  language?: LanguageInput,
+  options: Intl.DateTimeFormatOptions = { dateStyle: 'medium' }
+): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return '';
+  const instant = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(instant.getTime()) || !instant.toISOString().startsWith(value)) return '';
+  return new Intl.DateTimeFormat(localeFor(language), { ...options, timeZone: 'UTC' }).format(instant);
+}
+
 export function formatDateTime(
   value: DateValue,
   language?: LanguageInput,

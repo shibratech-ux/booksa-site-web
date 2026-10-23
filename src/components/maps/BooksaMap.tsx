@@ -32,6 +32,8 @@ type BooksaMapProps = {
   showControls?: boolean;
   showExpandControl?: boolean;
   controlLayout?: 'stacked' | 'split';
+  basemap?: 'openstreetmap' | 'google-roadmap';
+  appearance?: 'standard' | 'soft';
   children?: ReactNode;
   renderMarker?: (marker: BooksaMapMarker) => ReactNode;
 };
@@ -104,11 +106,17 @@ export function BooksaMap({
   showControls = true,
   showExpandControl = true,
   controlLayout = 'stacked',
+  basemap = 'openstreetmap',
+  appearance = 'standard',
   children,
   renderMarker
 }: BooksaMapProps) {
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [isWebGLSupported, setIsWebGLSupported] = useState<boolean>(true);
+  // VITE_GOOGLE_MAPS_API_KEY is the name set in .env.local and Netlify; the EMBED name is kept for older env files.
+  const googleEmbedKey = (import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? import.meta.env.VITE_GOOGLE_MAPS_EMBED_API_KEY)?.trim();
+  const useGoogleRoadmap = basemap === 'google-roadmap' && Boolean(googleEmbedKey);
+  const imageryStyle = appearance === 'soft' && !useGoogleRoadmap ? { filter: 'saturate(0.72) contrast(0.94) brightness(1.04)' } : undefined;
 
   useEffect(() => {
     setIsWebGLSupported(checkWebGLSupport());
@@ -120,13 +128,22 @@ export function BooksaMap({
   );
   const bounds = boundsAtZoom(baseBounds, center, initialZoom, zoom);
   const mapUrl = useMemo(() => {
+    if (useGoogleRoadmap && googleEmbedKey) {
+      const query = new URLSearchParams({
+        key: googleEmbedKey,
+        center: `${center.latitude},${center.longitude}`,
+        zoom: String(zoom),
+        maptype: 'roadmap'
+      });
+      return `https://www.google.com/maps/embed/v1/view?${query.toString()}`;
+    }
     const query = new URLSearchParams({
       bbox: `${bounds.west},${bounds.south},${bounds.east},${bounds.north}`,
       layer: 'mapnik'
     });
 
     return `https://www.openstreetmap.org/export/embed.html?${query.toString()}`;
-  }, [bounds.east, bounds.north, bounds.south, bounds.west]);
+  }, [bounds.east, bounds.north, bounds.south, bounds.west, center.latitude, center.longitude, googleEmbedKey, useGoogleRoadmap, zoom]);
 
   const centerTile = useMemo(
     () => latLngToTileFraction(center.latitude, center.longitude, zoom),
@@ -167,7 +184,9 @@ export function BooksaMap({
 
   const openExpandedMap = () => {
     window.open(
-      `https://www.openstreetmap.org/?mlat=${center.latitude}&mlon=${center.longitude}#map=${zoom}/${center.latitude}/${center.longitude}`,
+      useGoogleRoadmap
+        ? `https://www.google.com/maps/search/?api=1&query=${center.latitude},${center.longitude}`
+        : `https://www.openstreetmap.org/?mlat=${center.latitude}&mlon=${center.longitude}#map=${zoom}/${center.latitude}/${center.longitude}`,
       '_blank',
       'noopener,noreferrer'
     );
@@ -175,14 +194,15 @@ export function BooksaMap({
 
   return (
     <div className={`relative overflow-hidden rounded-[19px] bg-[#e9e7e2] ${className}`.trim()}>
-      {isWebGLSupported ? (
+      {useGoogleRoadmap || isWebGLSupported ? (
         <iframe
           key={mapUrl}
           title={title}
           src={mapUrl}
           className={`absolute inset-0 h-full w-full border-0 ${interactive ? '' : 'pointer-events-none'}`}
+          style={imageryStyle}
           loading="eager"
-          referrerPolicy="no-referrer"
+          referrerPolicy={useGoogleRoadmap ? 'no-referrer-when-downgrade' : 'no-referrer'}
           allowFullScreen
         />
       ) : (
@@ -191,7 +211,7 @@ export function BooksaMap({
           role="img"
           aria-label={title}
         >
-          <div className="absolute left-1/2 top-1/2 h-0 w-0">
+          <div className="absolute left-1/2 top-1/2 h-0 w-0" style={imageryStyle}>
             {rasterTiles.map((tile) => (
               <img
                 key={tile.key}

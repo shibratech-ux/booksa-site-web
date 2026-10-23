@@ -1,0 +1,20 @@
+/* The site uses a 1.1 type scale on phones. Keep this page 10% smaller than that value. */
+@media (max-width: 639px) {
+  .listing-detail-page {
+    --mobile-text-scale: 0.99;
+    --text-xs: calc(0.75rem * var(--mobile-text-scale));
+    --text-sm: calc(0.875rem * var(--mobile-text-scale));
+    --text-md: calc(0.9375rem * var(--mobile-text-scale));
+    --text-base: calc(1rem * var(--mobile-text-scale));
+    --text-lg: calc(1.125rem * var(--mobile-text-scale));
+    --text-xl: calc(1.25rem * var(--mobile-text-scale));
+    --text-2xl: calc(1.5rem * var(--mobile-text-scale));
+    --text-3xl: calc(2rem * var(--mobile-text-scale));
+    --text-4xl: calc(2.5rem * var(--mobile-text-scale));
+    --text-5xl: calc(3rem * var(--mobile-text-scale));
+    --text-6xl: calc(3.75rem * var(--mobile-text-scale));
+    --text-7xl: calc(4.5rem * var(--mobile-text-scale));
+    --text-8xl: calc(6rem * var(--mobile-text-scale));
+    --text-9xl: calc(8rem * var(--mobile-text-scale));
+  }
+}

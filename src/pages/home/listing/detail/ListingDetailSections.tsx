@@ -39,21 +39,29 @@ export function DetailHeader({ view }: { view: ListingDetailView }) {
       {view.facts.length ? <p className="mt-1 text-sm text-[var(--color-text-secondary)] md:text-base">{view.facts.join(' · ')}</p> : null}
 
       {view.sample ? (
-        <div className="mt-6 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center rounded-card py-3 md:max-w-xl md:border md:border-[var(--color-border)] md:px-4">
-          <div className="text-center">
-            <p className="text-lg font-semibold leading-none">{view.sample.rating}</p>
-            <p className="mt-1 inline-flex gap-px" aria-label={t('listingDetail.ratingLabel', { rating: view.sample.rating })}>
-              {Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-2.5 w-2.5" fill="currentColor" strokeWidth={1.5} aria-hidden="true" />)}
-            </p>
+        <>
+          <a href="#reviews" className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm underline-offset-2 md:hidden">
+            <Star className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true" />
+            <span>{view.sample.rating}</span>
+            <span aria-hidden="true">·</span>
+            <span className="underline">{t('listingDetail.reviews', { count: view.sample.reviewCount })}</span>
+          </a>
+          <div className="mt-6 hidden grid-cols-[1fr_auto_1fr_auto_1fr] items-center rounded-card py-3 md:grid md:max-w-xl md:border md:border-[var(--color-border)] md:px-4">
+            <div className="text-center">
+              <p className="text-lg font-semibold leading-none">{view.sample.rating}</p>
+              <p className="mt-1 inline-flex gap-px" aria-label={t('listingDetail.ratingLabel', { rating: view.sample.rating })}>
+                {Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-2.5 w-2.5" fill="currentColor" strokeWidth={1.5} aria-hidden="true" />)}
+              </p>
+            </div>
+            <span className="h-8 w-px bg-[var(--color-border)]" aria-hidden="true" />
+            <p className="px-3 text-center text-[15px] font-semibold leading-tight">{t('listingDetail.guestFavorite')}</p>
+            <span className="h-8 w-px bg-[var(--color-border)]" aria-hidden="true" />
+            <div className="text-center">
+              <p className="text-lg font-semibold leading-none">{view.sample.reviewCount}</p>
+              <p className="mt-1 text-xs font-semibold">{t('listingDetail.reviews', { count: view.sample.reviewCount })}</p>
+            </div>
           </div>
-          <span className="h-8 w-px bg-[var(--color-border)]" aria-hidden="true" />
-          <p className="px-3 text-center text-[15px] font-semibold leading-tight">{t('listingDetail.guestFavorite')}</p>
-          <span className="h-8 w-px bg-[var(--color-border)]" aria-hidden="true" />
-          <div className="text-center">
-            <p className="text-lg font-semibold leading-none">{view.sample.reviewCount}</p>
-            <p className="mt-1 text-xs font-semibold">{t('listingDetail.reviews', { count: view.sample.reviewCount })}</p>
-          </div>
-        </div>
+        </>
       ) : (
         <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold">
           <Star className="h-4 w-4" fill="currentColor" strokeWidth={1.5} aria-hidden="true" />
@@ -69,7 +77,7 @@ export function HostAndHighlights({ view }: { view: ListingDetailView }) {
   const { t } = useTranslation('booking');
   return (
     <>
-      <Section>
+      <Section className="!py-5 md:!py-8">
         <div className="flex items-center gap-4">
           <Avatar name={view.hostName} />
           <div className="min-w-0">
@@ -81,13 +89,13 @@ export function HostAndHighlights({ view }: { view: ListingDetailView }) {
         </div>
       </Section>
       {view.highlights.length ? (
-        <Section>
-          <ul className="space-y-6">
+        <Section className="!py-6 md:!py-8">
+          <ul className="space-y-5 md:space-y-6">
             {view.highlights.map(({ icon: Icon, title, description }) => (
-              <li key={title} className="flex gap-5">
+              <li key={title} className="flex gap-4 md:gap-5">
                 <Icon className="mt-0.5 h-6 w-6 shrink-0" strokeWidth={1.5} aria-hidden="true" />
                 <div>
-                  <p className="text-base font-semibold">{title}</p>
+                  <p className="text-sm font-semibold md:text-base">{title}</p>
                   <p className="mt-0.5 text-sm leading-5 text-[var(--color-text-secondary)]">{description}</p>
                 </div>
               </li>
@@ -106,8 +114,8 @@ export function DescriptionSection({ view }: { view: ListingDetailView }) {
     <Section>
       {view.description ? (
         <>
-          <p className="line-clamp-6 whitespace-pre-line text-base leading-6">{view.description}</p>
-          <button type="button" onClick={() => setOpen(true)} className={`${secondaryButton} mt-6`}>{t('listingDetail.showMore')}</button>
+          <p className="whitespace-pre-line text-base leading-6">{view.description}</p>
+          {view.description.length > 500 ? <button type="button" onClick={() => setOpen(true)} className={`${secondaryButton} mt-6`}>{t('listingDetail.showMore')}</button> : null}
           <Modal open={open} onClose={() => setOpen(false)} title={t('listingDetail.aboutTitle')} variant="bottom-sheet">
             <p className="whitespace-pre-line pb-6 text-base leading-7">{view.description}</p>
           </Modal>
@@ -145,12 +153,20 @@ export function SampleReviewsSection({ view }: { view: ListingDetailView }) {
 
   return (
     <Section id="reviews">
-      <div className="text-center">
+      <div className="md:hidden">
+        <h2 id="reviews-title" className="flex items-center gap-2 text-[22px] font-semibold tracking-tight">
+          <Star className="h-5 w-5" fill="currentColor" aria-hidden="true" />
+          <span aria-label={t('listingDetail.ratingLabel', { rating })}>{rating}</span>
+          <span aria-hidden="true">·</span>
+          {t('listingDetail.reviews', { count: reviewCount })}
+        </h2>
+      </div>
+      <div className="hidden text-center md:block">
         <p className="text-[64px] font-semibold leading-none tracking-tight" aria-label={t('listingDetail.ratingLabel', { rating })}>{rating}</p>
-        <h2 id="reviews-title" className="mt-3 text-[22px] font-semibold">{t('listingDetail.guestFavorite')}</h2>
+        <h2 className="mt-3 text-[22px] font-semibold">{t('listingDetail.guestFavorite')}</h2>
         <p className="mx-auto mt-2 max-w-xs text-sm leading-5 text-[var(--color-text-secondary)]">{t('listingDetail.guestFavoriteDescription')}</p>
       </div>
-      <div className="mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8 md:overflow-visible [&::-webkit-scrollbar]:hidden">
+      <div className="mt-7 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] md:mt-8 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8 md:overflow-visible [&::-webkit-scrollbar]:hidden">
         {sampleReviews.map(review => reviewCard(review))}
       </div>
       <button type="button" onClick={() => setOpen(true)} className={`${secondaryButton} mt-6`}>
@@ -290,7 +306,7 @@ export function HostSection({ view }: { view: ListingDetailView }) {
 
       <Section id="host" title={t('listingDetail.meetHost')}>
         <div className="grid gap-8 lg:grid-cols-[minmax(0,360px)_1fr]">
-          <div className="flex items-center justify-around gap-6 rounded-dialog bg-[var(--color-surface)] p-6 shadow-[var(--shadow-lg)] dark:border dark:border-[var(--color-border)]">
+          <div className="flex items-center justify-around gap-4 rounded-dialog border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-md)] sm:gap-6 sm:p-6">
             <div className="text-center">
               <div className="relative inline-block">
                 <Avatar name={view.hostName} size="lg" />
@@ -300,7 +316,7 @@ export function HostSection({ view }: { view: ListingDetailView }) {
                   </span>
                 ) : null}
               </div>
-              <p className="mt-3 text-[28px] font-semibold leading-none">{view.hostName ?? t('listingDetail.hostOnBooksa')}</p>
+              <p className="mt-3 max-w-[180px] text-[22px] font-semibold leading-tight sm:text-[28px]">{view.hostName ?? t('listingDetail.hostOnBooksa')}</p>
               <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{host ? t('listingDetail.superhost') : t('listingDetail.hostOnBooksa')}</p>
             </div>
             {host ? (
@@ -346,18 +362,18 @@ export function HostSection({ view }: { view: ListingDetailView }) {
 export function ThingsToKnowSection({ view }: { view: ListingDetailView }) {
   const { t } = useTranslation('booking');
   const items = [
-    { icon: CalendarX2, title: t('listingDetail.cancellation'), lines: view.sample ? [sampleCancellation] : [], empty: t('listingDetail.cancellationUnset') },
     { icon: KeyRound, title: t('listingDetail.houseRules'), lines: view.houseRules, empty: t('listingDetail.houseRulesUnset') },
-    { icon: ShieldCheck, title: t('listingDetail.safety'), lines: [], empty: t('listingDetail.safetyUnset') }
+    { icon: ShieldCheck, title: t('listingDetail.safety'), lines: [], empty: t('listingDetail.safetyUnset') },
+    { icon: CalendarX2, title: t('listingDetail.cancellation'), lines: view.sample ? [sampleCancellation] : [], empty: t('listingDetail.cancellationUnset') }
   ];
   return (
     <Section id="things-to-know" title={t('listingDetail.thingsToKnow')}>
-      <ul className="grid gap-7 md:grid-cols-3">
+      <ul className="grid gap-6 md:grid-cols-3">
         {items.map(({ icon: Icon, title, lines, empty }) => (
-          <li key={title} className="flex gap-4 md:flex-col">
+          <li key={title} className="flex min-w-0 gap-4 md:flex-col">
             <Icon className="h-6 w-6 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-            <div>
-              <h3 className="text-base font-semibold">{title}</h3>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-sm font-semibold md:text-base">{title}</h3>
               <ul className="mt-1 space-y-0.5 text-sm leading-5 text-[var(--color-text-secondary)]">
                 {(lines.length ? lines : [empty]).map(line => <li key={line}>{line}</li>)}
               </ul>

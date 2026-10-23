@@ -9,7 +9,7 @@ const calendarDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value 
   const date = new Date(`${value}T00:00:00Z`);
   return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(value);
 });
-const nightlyPriceSchema = z.number().int().min(1).max(9_999_999);
+const listingPriceSchema = z.number().int().min(1).max(9_999_999);
 
 export type StayQuote = { nightlyPrice: number; nights: number; total: number; currency: 'CDF' };
 
@@ -22,7 +22,28 @@ export function countStayNights(checkIn: string, checkOut: string): number | nul
 
 /** `total = nightly × nights`. Returns null for invalid inputs instead of guessing. */
 export function quoteStay(nightlyPrice: number, nights: number): StayQuote | null {
-  if (!nightlyPriceSchema.safeParse(nightlyPrice).success) return null;
+  if (!listingPriceSchema.safeParse(nightlyPrice).success) return null;
   if (!Number.isInteger(nights) || nights < 1 || nights > MAX_STAY_NIGHTS) return null;
   return { nightlyPrice, nights, total: nightlyPrice * nights, currency: 'CDF' };
+}
+
+export type RestaurantQuote = {
+  perGuestPrice: number;
+  adults: number;
+  children: number;
+  adultSubtotal: number;
+  childSubtotal: number;
+  total: number;
+  currency: 'CDF';
+};
+
+/** Preview quote: each adult and child uses the published restaurant listing price. */
+export function quoteRestaurantVisit(perGuestPrice: number, adults: number, children: number): RestaurantQuote | null {
+  if (!listingPriceSchema.safeParse(perGuestPrice).success) return null;
+  if (!Number.isSafeInteger(adults) || adults < 1 || !Number.isSafeInteger(children) || children < 0) return null;
+  const adultSubtotal = perGuestPrice * adults;
+  const childSubtotal = perGuestPrice * children;
+  const total = adultSubtotal + childSubtotal;
+  if (!Number.isSafeInteger(adultSubtotal) || !Number.isSafeInteger(childSubtotal) || !Number.isSafeInteger(total)) return null;
+  return { perGuestPrice, adults, children, adultSubtotal, childSubtotal, total, currency: 'CDF' };
 }

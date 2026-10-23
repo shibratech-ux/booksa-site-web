@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
-import { ArrowLeftIcon, ChevronLeft, ChevronRight, X, Heart, Share } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Share } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-hot-toast';
+import { EmptyState } from '@/components/common/EmptyState';
+import { BackButton } from '@/components/ui/BackButton';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import type { Listing } from './listing.types';
 import { ROUTES } from '@/utils/constants';
@@ -15,150 +19,53 @@ type PhotoTourState = {
 };
 
 type PhotoTourSection = {
-  description: string;
   id: string;
   images: string[];
   label: string;
 };
 
-type TourImageGroups = Record<PhotoTourSection['id'], string[]>;
-
-const defaultTourImages: TourImageGroups = {
-  'living-room': [
-    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1400&q=80'
-  ],
-  kitchen: [
-    'https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1556909172-8f7e5ad0d5f4?auto=format&fit=crop&w=1400&q=80'
-  ],
-  bedroom: [
-    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1505693416388-8c5c0d3c9d6b?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1400&q=80'
-  ],
-  bathroom: [
-    'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1564540586988-1f5d77f0b6e1?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1400&q=80'
-  ],
-  balcony: [
-    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1502005229762-cf1b2da0a4f9?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80'
-  ],
-  gym: [
-    'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1518609571773-39b7d303a87f?auto=format&fit=crop&w=1400&q=80'
-  ],
-  exterior: [
-    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1400&q=80'
-  ],
-  pool: [
-    'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80',
-    'https://images.unsplash.com/photo-1529307474719-3d0a417aaf8a?auto=format&fit=crop&w=1400&q=80'
-  ]
-};
-
-const sharedFallbackTourImages = [
-  'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1400&q=80'
-];
 
 const sectionMeta = [
-  {
-    id: 'living-room',
-    label: 'Salon',
-    description: 'Climatisation · Connexion Ethernet · TV · Système audio',
-    imageCount: 1
-  },
-  {
-    id: 'kitchen',
-    label: 'Cuisine équipée',
-    description: 'Plaque de cuisson · Café · Machine à café · Essentiels de cuisine · Lave-vaisselle',
-    imageCount: 3
-  },
-  {
-    id: 'bedroom',
-    label: 'Chambre',
-    description: 'Lit king size · Climatisation · Linge de lit · Rideaux occultants',
-    imageCount: 4
-  },
-  {
-    id: 'bathroom',
-    label: 'Salle de bain complète',
-    description: 'Douche à l’italienne · Serviettes · Produits de nettoyage · Sèche-cheveux',
-    imageCount: 5
-  },
-  {
-    id: 'balcony',
-    label: 'Balcon',
-    description: 'Coin salon extérieur · Vue dégagée · Espace café du matin',
-    imageCount: 6
-  },
-  {
-    id: 'gym',
-    label: 'Salle de sport',
-    description: 'Appareils d’entraînement · Poids libres · Espace cardio',
-    imageCount: 3
-  },
-  {
-    id: 'exterior',
-    label: 'Extérieur',
-    description: 'Façade contemporaine avec accès facile et cheminements lumineux',
-    imageCount: 4
-  },
-  {
-    id: 'pool',
-    label: 'Piscine',
-    description: 'Accès à une piscine partagée avec transats et ambiance de resort',
-    imageCount: 1
-  }
+  { id: 'living-room', labelKey: 'photoTourPage.rooms.livingRoom', imageCount: 1 },
+  { id: 'kitchen', labelKey: 'photoTourPage.rooms.kitchen', imageCount: 3 },
+  { id: 'bedroom', labelKey: 'photoTourPage.rooms.bedroom', imageCount: 4 },
+  { id: 'bathroom', labelKey: 'photoTourPage.rooms.bathroom', imageCount: 5 },
+  { id: 'balcony', labelKey: 'photoTourPage.rooms.balcony', imageCount: 6 },
+  { id: 'gym', labelKey: 'photoTourPage.rooms.gym', imageCount: 3 },
+  { id: 'exterior', labelKey: 'photoTourPage.rooms.exterior', imageCount: 4 },
+  { id: 'pool', labelKey: 'photoTourPage.rooms.pool', imageCount: 1 }
 ] as const;
 
-function buildSections(listing?: Listing): PhotoTourSection[] {
-  const sourceImages = [
+type BookingT = ReturnType<typeof useTranslation<'booking'>>['t'];
+
+function buildSections(t: BookingT, listing?: Listing): PhotoTourSection[] {
+  const sourceImages = [...new Set([
     ...(listing?.gallery?.length ? listing.gallery : []),
     listing?.image
-  ].filter(Boolean) as string[];
+  ].filter((url): url is string => typeof url === 'string' && url.trim().length > 0))];
 
   let sourceCursor = 0;
-  let fallbackCursor = 0;
 
-  return sectionMeta.map((meta) => {
-    const sectionFallbacks = defaultTourImages[meta.id] ?? [];
-    const pickedSourceImages = sourceImages.slice(sourceCursor, sourceCursor + meta.imageCount);
-    sourceCursor += pickedSourceImages.length;
-
-    const missingCount = Math.max(0, meta.imageCount - pickedSourceImages.length);
-    const pickedSectionFallbacks = sectionFallbacks.slice(0, missingCount);
-    const remainingCount = Math.max(0, meta.imageCount - pickedSourceImages.length - pickedSectionFallbacks.length);
-    const pickedSharedFallbacks = sharedFallbackTourImages.slice(fallbackCursor, fallbackCursor + remainingCount);
-    fallbackCursor += pickedSharedFallbacks.length;
-
-    return {
-      ...meta,
-      images: [...pickedSourceImages, ...pickedSectionFallbacks, ...pickedSharedFallbacks]
-    };
+  const sections: PhotoTourSection[] = sectionMeta.flatMap((meta) => {
+    const images = sourceImages.slice(sourceCursor, sourceCursor + meta.imageCount);
+    sourceCursor += images.length;
+    if (!images.length) return [];
+    return [{
+      id: meta.id,
+      label: t(meta.labelKey),
+      images
+    }];
   });
+
+  if (sourceCursor < sourceImages.length) {
+    sections.push({
+      id: 'additional',
+      label: t('photoTourPage.additionalPhotos'),
+      images: sourceImages.slice(sourceCursor)
+    });
+  }
+
+  return sections;
 }
 
 function PhotoTourGallery({
@@ -171,7 +78,7 @@ function PhotoTourGallery({
   onImageClick: () => void;
 }) {
   const galleryFrameClass =
-    'h-full overflow-hidden rounded-photo bg-slate-100 shadow-[0_18px_40px_rgba(15,23,42,0.08)] ring-1 ring-black/5';
+    'h-full overflow-hidden rounded-photo bg-[var(--color-surface-muted)] shadow-[var(--shadow-md)]';
 
   if (images.length <= 1) {
     return (
@@ -192,14 +99,14 @@ function PhotoTourGallery({
       <div className={`${galleryFrameClass} grid gap-1.5 lg:h-full lg:grid-cols-[1.35fr_0.9fr]`}>
         <div className="min-h-0 lg:h-full">
           <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-            <ShimmerImage alt={`${label} vue principale`} className="h-auto min-h-[286px] w-full object-cover sm:min-h-[462px] lg:h-full" src={images[0]} />
+            <ShimmerImage alt={`${label} 1`} className="h-auto min-h-[286px] w-full object-cover sm:min-h-[462px] lg:h-full" src={images[0]} />
           </button>
         </div>
         <div className="grid gap-1.5 lg:h-full">
           {images.slice(1).map((image, index) => (
             <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
               <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-                <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[229.9px] lg:h-full" src={image} />
+                <ShimmerImage alt={`${label} ${index + 2}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[229.9px] lg:h-full" src={image} />
               </button>
             </div>
           ))}
@@ -214,7 +121,7 @@ function PhotoTourGallery({
         {images.map((image, index) => (
           <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
             <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-              <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
+              <ShimmerImage alt={`${label} ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
             </button>
           </div>
         ))}
@@ -227,7 +134,7 @@ function PhotoTourGallery({
       <div className={`${galleryFrameClass} grid gap-1.5 lg:h-full lg:grid-cols-[1.08fr_0.92fr]`}>
         <div className="min-h-0 lg:h-full">
           <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-            <ShimmerImage alt={`${label} vue principale`} className="h-auto min-h-[286px] w-full object-cover sm:min-h-[533.5px] lg:h-full" src={images[0]} />
+            <ShimmerImage alt={`${label} 1`} className="h-auto min-h-[286px] w-full object-cover sm:min-h-[533.5px] lg:h-full" src={images[0]} />
           </button>
         </div>
         <div className="grid gap-1.5 sm:grid-cols-2 lg:h-full">
@@ -237,7 +144,7 @@ function PhotoTourGallery({
               className={`min-h-0 ${index === 3 ? 'sm:col-span-2 lg:col-span-2' : ''}`}
             >
               <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-                <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
+                <ShimmerImage alt={`${label} ${index + 2}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
               </button>
             </div>
           ))}
@@ -252,7 +159,7 @@ function PhotoTourGallery({
         {images.slice(0, 6).map((image, index) => (
           <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
             <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-              <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[242px] lg:h-full" src={image} />
+              <ShimmerImage alt={`${label} ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[242px] lg:h-full" src={image} />
             </button>
           </div>
         ))}
@@ -265,7 +172,7 @@ function PhotoTourGallery({
       {images.map((image, index) => (
         <div key={`${image}-${index}`} className="min-h-0 lg:h-1/2">
           <button type="button" onClick={onImageClick} className="block h-full w-full cursor-pointer">
-            <ShimmerImage alt={`${label} détail ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
+            <ShimmerImage alt={`${label} ${index + 1}`} className="h-auto min-h-[143px] w-full object-cover sm:min-h-[264px] lg:h-full" src={image} />
           </button>
         </div>
       ))}
@@ -276,14 +183,18 @@ function PhotoTourGallery({
 function PhotoLightbox({
   images,
   initialIndex,
-  onClose
+  onClose,
+  onShare
 }: {
   images: string[];
   initialIndex: number;
   onClose: () => void;
+  onShare: () => void;
 }) {
+  const { t } = useTranslation('booking');
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const mobileCarouselRef = useRef<HTMLDivElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setCurrentIndex(initialIndex);
@@ -314,6 +225,21 @@ function PhotoLightbox({
       if (event.key === 'ArrowRight') {
         setCurrentIndex((current) => (current + 1) % images.length);
       }
+
+      if (event.key === 'Tab') {
+        const controls = Array.from(dialogRef.current?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') ?? [])
+          .filter(button => button.getClientRects().length > 0);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (!first) event.preventDefault();
+        else if (event.shiftKey && (document.activeElement === first || document.activeElement === dialogRef.current)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || document.activeElement === dialogRef.current)) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     window.addEventListener('keydown', onKeyDown);
@@ -322,9 +248,12 @@ function PhotoLightbox({
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement as HTMLElement | null;
     document.body.style.overflow = 'hidden';
+    dialogRef.current?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
     };
   }, []);
 
@@ -336,47 +265,41 @@ function PhotoLightbox({
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 bg-black"
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('photoTourPage.title')}
+      tabIndex={-1}
+      className="fixed inset-0 z-50 bg-black text-white outline-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="absolute inset-0 bg-black/95" />
-
-      <div className="relative z-10 flex h-full flex-col">
-        <div className="flex items-center justify-between px-3 py-3 text-white sm:px-6 sm:py-5 lg:px-8">
+      <div className="flex h-dvh flex-col">
+        <div className="grid shrink-0 grid-cols-[44px_minmax(0,1fr)_44px] items-center px-3 pb-2 pt-[max(8px,env(safe-area-inset-top))] sm:px-6 sm:pt-4 lg:px-8">
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex cursor-pointer items-center gap-2 rounded-button bg-white/10 px-3 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/15 sm:bg-transparent sm:px-2 sm:py-1 sm:backdrop-blur-0"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/10"
+            aria-label={t('listingDetail.back')}
           >
-            <X className="h-5 w-5" aria-hidden="true" />
-            <span className="hidden sm:inline">Fermer</span>
+            <ArrowLeft className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
           </button>
 
-          <div className="rounded-pill bg-white/10 px-3 py-1.5 text-sm font-medium tabular-nums text-white/95 backdrop-blur-sm sm:bg-transparent sm:px-0 sm:py-0 sm:backdrop-blur-0">
+          <div className="text-center text-sm font-medium tabular-nums" aria-live="polite">
             {currentIndex + 1} / {images.length}
           </div>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              type="button"
-              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
-              aria-label="Partager"
-            >
-              <Share className="h-4 w-4" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/15"
-              aria-label="Enregistrer"
-            >
-              <Heart className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={onShare}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full transition hover:bg-white/10"
+            aria-label={t('listingDetail.share')}
+          >
+            <Share className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+          </button>
         </div>
 
-        <div className="relative flex flex-1 items-center justify-center pb-6 pt-1 sm:px-10 sm:pb-8 sm:pt-2">
+        <div className="relative flex min-h-0 flex-1 items-center justify-center pb-[env(safe-area-inset-bottom)] sm:px-10">
           <div
             ref={mobileCarouselRef}
             className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth touch-pan-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:hidden"
@@ -390,8 +313,8 @@ function PhotoLightbox({
               <div key={`${image}-${index}`} className="flex h-full w-full shrink-0 snap-center items-center justify-center">
                 <ShimmerImage
                   src={image}
-                  alt={`Photo ${index + 1}`}
-                  className="max-h-[calc(100vh-148px)] w-auto max-w-full object-contain shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+                  alt={t('photoTourPage.photoNumber', { index: index + 1, total: images.length })}
+                  className="max-h-full w-auto max-w-full object-contain"
                 />
               </div>
             ))}
@@ -401,7 +324,7 @@ function PhotoLightbox({
             type="button"
             onClick={() => setCurrentIndex((current) => (current - 1 + images.length) % images.length)}
             className="absolute left-2 top-1/2 hidden h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:left-6 sm:h-12 sm:w-12"
-            aria-label="Image précédente"
+            aria-label={t('photoTourPage.previous')}
           >
             <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
           </button>
@@ -409,8 +332,8 @@ function PhotoLightbox({
           <motion.img
             key={currentImage}
             src={currentImage}
-            alt={`Photo ${currentIndex + 1}`}
-            className="hidden max-h-[calc(100vh-148px)] w-auto max-w-[min(1040px,calc(100vw-72px))] object-contain shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:block sm:max-h-[calc(100vh-150px)] sm:max-w-[min(1040px,calc(100vw-120px))]"
+            alt={t('photoTourPage.photoNumber', { index: currentIndex + 1, total: images.length })}
+            className="hidden max-h-full w-auto max-w-[min(1040px,calc(100vw-120px))] object-contain sm:block"
             initial={{ opacity: 0, scale: 0.98, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98 }}
@@ -421,7 +344,7 @@ function PhotoLightbox({
             type="button"
             onClick={() => setCurrentIndex((current) => (current + 1) % images.length)}
             className="absolute right-2 top-1/2 hidden h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/45 text-white backdrop-blur-sm transition hover:bg-white/15 sm:inline-flex sm:right-6 sm:h-12 sm:w-12"
-            aria-label="Image suivante"
+            aria-label={t('photoTourPage.next')}
           >
             <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
           </button>
@@ -441,19 +364,16 @@ function PhotoTourSectionCard({
   return (
     <motion.section
       id={section.id}
-      className="grid gap-5 border-t border-slate-200 py-0 sm:pb-16 sm:pt-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-10 lg:pb-20 lg:pt-12"
+      className="grid gap-5 border-t border-[var(--color-border-subtle)] py-0 sm:pb-16 sm:pt-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-10 lg:pb-20 lg:pt-12"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.35 }}
       transition={{ duration: 0.55, ease: 'easeOut' }}
     >
       <div className="space-y-3 lg:sticky lg:top-8 lg:self-start">
-        <h2 className="text-xl font-medium tracking-[-0.03em] text-gray-900 sm:text-lg">
+        <h2 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)] sm:text-lg">
           {section.label}
         </h2>
-        <p className="max-w-md text-xs font-normal leading-5 text-gray-500 sm:text-sm sm:leading-6">
-          {section.description}
-        </p>
       </div>
 
       <motion.div
@@ -467,91 +387,43 @@ function PhotoTourSectionCard({
   );
 }
 
-function PhotoTourMobileCard({
-  section,
-  onActivate
-}: {
-  section: PhotoTourSection;
-  onActivate: (imageUrl: string) => void;
-}) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const mobileCarouselRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [section.id]);
-
-  useEffect(() => {
-    const container = mobileCarouselRef.current;
-    if (!container) {
-      return;
-    }
-
-    container.scrollTo({
-      left: container.clientWidth * currentIndex,
-      behavior: 'auto'
-    });
-  }, [currentIndex]);
-
-  const currentImage = section.images[currentIndex] ?? section.images[0];
-  const mobileCardHeight = ['h-52', 'h-40', 'h-60', 'h-44', 'h-56', 'h-48'][currentIndex % 6];
-
-  return (
-    <motion.button
-      type="button"
-      onClick={() => onActivate(currentImage)}
-      className="group relative overflow-hidden rounded-button bg-slate-100 text-left ring-1 ring-black/5"
-      whileTap={{ scale: 0.98 }}
-    >
-      <div
-        ref={mobileCarouselRef}
-        className={`flex w-full snap-x snap-mandatory overflow-x-auto scroll-smooth touch-pan-x ${mobileCardHeight} [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}
-        onScroll={(event) => {
-          const container = event.currentTarget;
-          const nextIndex = Math.round(container.scrollLeft / container.clientWidth);
-          setCurrentIndex(Math.min(section.images.length - 1, Math.max(0, nextIndex)));
-        }}
-      >
-        {section.images.map((image, index) => (
-          <div key={`${section.id}-${image}-${index}`} className="h-full w-full shrink-0 snap-center">
-            <ShimmerImage alt={`${section.label} image ${index + 1}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} />
-          </div>
-        ))}
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-      <div className="absolute inset-x-0 bottom-0 p-3">
-        <p className="text-[13px] font-semibold leading-4 text-white">{section.label}</p>
-        <p className="mt-1 line-clamp-2 text-xs leading-4 text-white/80">{section.description}</p>
-      </div>
-
-      {section.images.length > 1 ? (
-        <div className="absolute right-3 top-3 rounded-pill bg-black/45 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
-          {currentIndex + 1}/{section.images.length}
-        </div>
-      ) : null}
-    </motion.button>
-  );
-}
-
 function PhotoTourMobileBoard({
   sections,
   onSectionActivate
 }: {
   sections: PhotoTourSection[];
-  onSectionActivate: (imageUrl: string) => void;
+  onSectionActivate: (sectionId: string, imageIndex: number) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:hidden">
+    <div className="space-y-10 sm:hidden">
       {sections.map((section) => (
-        <PhotoTourMobileCard key={section.id} section={section} onActivate={onSectionActivate} />
+        <section key={section.id} id={`mobile-${section.id}`} className="scroll-mt-6">
+          <h2 className="mb-5 px-5 text-lg font-semibold tracking-tight text-[var(--color-text-primary)]">{section.label}</h2>
+          <div className="grid grid-cols-2 gap-1.5">
+            {section.images.map((image, index) => (
+              <button
+                key={`${section.id}-${image}-${index}`}
+                type="button"
+                onClick={() => onSectionActivate(section.id, index)}
+                aria-label={`${section.label}, ${index + 1} / ${section.images.length}`}
+                className={`block min-h-11 overflow-hidden bg-[var(--color-surface-muted)] ${section.images.length === 1 || (section.images.length % 2 === 1 && index === section.images.length - 1) ? 'col-span-2' : ''}`}
+              >
+                <ShimmerImage
+                  alt=""
+                  src={image}
+                  className={`w-full object-cover ${section.images.length === 1 || (section.images.length % 2 === 1 && index === section.images.length - 1) ? 'aspect-[3/2]' : 'aspect-[3/4]'}`}
+                />
+              </button>
+            ))}
+          </div>
+        </section>
       ))}
     </div>
   );
 }
 
 export function PhotoTourPage() {
+  const { t } = useTranslation('booking');
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state as PhotoTourState | null;
@@ -559,18 +431,23 @@ export function PhotoTourPage() {
     state?.listing ??
     readPersistedPhotoTourContext<PhotoTourState>()?.listing ??
     readPersistedListingContext<Listing>();
-  const sections = useMemo(() => buildSections(listing ?? undefined), [listing]);
+  const sections = useMemo(() => buildSections(t, listing ?? undefined), [listing, t]);
   const allImages = useMemo(() => sections.flatMap((section) => section.images), [sections]);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const openLightboxForImage = (imageUrl: string) => {
-    const index = allImages.findIndex((image) => image === imageUrl);
-    setLightboxIndex(index >= 0 ? index : 0);
+  const openLightboxForSection = (sectionId: string, imageIndex: number) => {
+    const sectionIndex = sections.findIndex(section => section.id === sectionId);
+    if (sectionIndex < 0) return;
+    const precedingPhotos = sections.slice(0, sectionIndex).reduce((count, section) => count + section.images.length, 0);
+    setLightboxIndex(precedingPhotos + imageIndex);
   };
 
   const scrollToSection = (sectionId: string) => {
-    sectionRefs.current[sectionId]?.scrollIntoView({
+    const target = window.matchMedia('(max-width: 639px)').matches
+      ? document.getElementById(`mobile-${sectionId}`)
+      : sectionRefs.current[sectionId];
+    target?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
@@ -585,64 +462,60 @@ export function PhotoTourPage() {
     navigate(ROUTES.home);
   };
 
-  const galleryTitle = listing?.location ?? 'Visite photo';
-  const subtitle = listing?.title ?? 'Un regard plus précis sur les espaces et les équipements';
+  const share = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) await navigator.share({ title: listing?.title ?? t('photoTourPage.title'), url });
+      else {
+        await navigator.clipboard.writeText(url);
+        toast.success(t('listingDetail.linkCopied'));
+      }
+    } catch {
+      // The share sheet was dismissed.
+    }
+  };
 
   if (location.pathname !== ROUTES.photoTour) {
     return <Navigate to={ROUTES.home} replace />;
   }
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <div className="sticky top-0 z-30 border-b border-transparent bg-white/90 backdrop-blur">
+    <div className="min-h-screen bg-[var(--color-surface)] text-[var(--color-text-primary)]">
+      <div className="md:sticky md:top-0 md:z-30 md:bg-[var(--color-surface)]/95 md:backdrop-blur">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-3 sm:px-8 sm:py-4 lg:px-14">
+          <BackButton onClick={handleBack} label={t('listingDetail.back')} />
           <button
             type="button"
-            onClick={handleBack}
-            className="inline-flex h-10 max-sm:h-11 max-sm:w-11 w-10 cursor-pointer items-center justify-center rounded-full text-gray-900 transition hover:bg-slate-100 sm:h-11 sm:w-11"
-            aria-label="Retour"
+            onClick={() => void share()}
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full transition hover:bg-[var(--color-surface-muted)]"
+            aria-label={t('listingDetail.share')}
           >
-            <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
+            <Share className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
           </button>
-
-          <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 sm:gap-3">
-            <button
-              type="button"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-button px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
-            >
-              <Share className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Partager</span>
-            </button>
-            <button
-              type="button"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-button px-2.5 py-2 text-sm transition hover:bg-slate-100 sm:px-3"
-            >
-              <Heart className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Enregistrer</span>
-            </button>
-          </div>
         </div>
       </div>
 
-      <main className="mx-auto max-w-[1280px] px-4 pb-16 pt-4 sm:px-8 sm:pb-20 sm:pt-8 lg:px-14">
+      <main className="mx-auto max-w-[1280px] pb-16 pt-3 sm:px-8 sm:pb-20 sm:pt-8 lg:px-14">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="mb-5 sm:mb-8"
+          className="mb-5 px-5 sm:mb-8 sm:px-0"
         >
-          <h1 className="text-xl font-medium tracking-[-0.04em] text-gray-900 sm:text-xl">
-            Visite photo
+          <h1 className="text-xl font-semibold tracking-tight">
+            {t('photoTourPage.title')}
           </h1>
-          <p className="mt-1 max-w-xl text-xs leading-5 text-gray-500 sm:mt-3 sm:max-w-2xl sm:text-[13px] sm:leading-4">
-            {galleryTitle}
-            <span className="mx-2 text-gray-300">•</span>
-            {subtitle}
-          </p>
+          {listing?.title ? <p className="mt-2 hidden text-sm text-[var(--color-text-secondary)] sm:block">{listing.title}</p> : null}
         </motion.div>
 
-        <motion.div
-          className="mb-8 grid grid-flow-col auto-cols-[101.2px] gap-2.5 overflow-x-auto pb-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mb-10 sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:auto-cols-auto lg:grid-cols-4 xl:grid-cols-8"
+        {sections.length === 0 ? (
+          <div className="px-5 sm:px-0">
+            <EmptyState title={t('photoTourPage.emptyTitle')} description={t('photoTourPage.emptyDescription')} />
+          </div>
+        ) : null}
+
+        {sections.length > 0 ? <motion.div
+          className="mb-12 grid grid-flow-col auto-cols-[142px] gap-3 overflow-x-auto px-5 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mb-10 sm:grid-cols-3 sm:auto-cols-auto sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-4 xl:grid-cols-8"
           initial="hidden"
           animate="show"
           variants={{
@@ -666,20 +539,20 @@ export function PhotoTourPage() {
               }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
             >
-              <div className="overflow-hidden rounded-photo bg-slate-100 ring-1 ring-black/5">
+              <div className="overflow-hidden rounded-card bg-[var(--color-surface-muted)]">
                 <ShimmerImage
-                  alt={section.label}
-                  className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                  alt=""
+                  className="aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.04] sm:aspect-[4/3]"
                   src={section.images[0]}
                 />
               </div>
-              <p className="mt-1.5 text-xs font-normal text-gray-900 sm:mt-2 sm:text-[13px]">{section.label}</p>
+              <p className="mt-1.5 text-xs text-[var(--color-text-primary)] sm:mt-2 sm:text-sm">{section.label}</p>
             </motion.button>
           ))}
-        </motion.div>
+        </motion.div> : null}
 
         <div className="sm:hidden">
-          <PhotoTourMobileBoard sections={sections} onSectionActivate={openLightboxForImage} />
+          <PhotoTourMobileBoard sections={sections} onSectionActivate={openLightboxForSection} />
         </div>
 
         <div className="hidden flex-col gap-16 sm:flex">
@@ -692,7 +565,7 @@ export function PhotoTourPage() {
             >
               <PhotoTourSectionCard
                 section={section}
-                onActivate={() => openLightboxForImage(section.images[0])}
+                onActivate={() => openLightboxForSection(section.id, 0)}
               />
             </div>
           ))}
@@ -704,6 +577,7 @@ export function PhotoTourPage() {
           images={allImages}
           initialIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
+          onShare={() => void share()}
         />
       ) : null}
     </div>

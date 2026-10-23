@@ -7,6 +7,7 @@ import { getLanguageOption } from '@/i18n/types';
 import { cn } from '@/utils/helpers';
 import { currencySymbol, formatCompactAmount } from '@/utils/compactAmount';
 import {
+  isWeekendNight,
   monthGrid,
   monthRange,
   nightlyPrice,
@@ -15,6 +16,8 @@ import {
   type CalendarMonth,
   type DateKey
 } from '@/domain/calendar';
+import { CalendarDayPanel } from './CalendarDayPanel';
+import { NightPriceSheet } from './NightPriceSheet';
 
 export type CalendarListing = {
   id: string;
@@ -69,8 +72,36 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
   const [visibleMonthIndex, setVisibleMonthIndex] = useState(MONTHS_BEFORE);
   const [todayIsAbove, setTodayIsAbove] = useState(true);
   const [selectedKey, setSelectedKey] = useState<DateKey | null>(null);
+  // TODO(team): load and save through the planned availability collection; screen-local until it exists.
+  const [blockedKeys, setBlockedKeys] = useState<ReadonlySet<DateKey>>(() => new Set());
+  // TODO(team): same as availability; custom nightly prices are screen-local until a collection exists.
+  const [priceOverrides, setPriceOverrides] = useState<ReadonlyMap<DateKey, number>>(() => new Map());
+  const [priceSheetOpen, setPriceSheetOpen] = useState(false);
 
-  useEffect(() => setSelectedKey(null), [listing?.id]);
+  useEffect(() => {
+    setSelectedKey(null);
+    setBlockedKeys(new Set());
+    setPriceOverrides(new Map());
+    setPriceSheetOpen(false);
+  }, [listing?.id]);
+
+  const setPriceOverride = (key: DateKey, price: number | null) => {
+    setPriceOverrides((current) => {
+      const next = new Map(current);
+      if (price === null) next.delete(key);
+      else next.set(key, price);
+      return next;
+    });
+  };
+
+  const setBlocked = (key: DateKey, blocked: boolean) => {
+    setBlockedKeys((current) => {
+      const next = new Set(current);
+      if (blocked) next.add(key);
+      else next.delete(key);
+      return next;
+    });
+  };
 
   const formatters = useMemo(() => {
     const currency = listing?.currency ?? 'CDF';
@@ -79,6 +110,7 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
       monthYear: new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }),
       weekday: new Intl.DateTimeFormat(locale, { weekday: 'narrow', timeZone: 'UTC' }),
       fullDate: new Intl.DateTimeFormat(locale, { dateStyle: 'full', timeZone: 'UTC' }),
+      shortDate: new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }),
       // Full amount for screen readers; cells show the symbol plus a compact amount (12.5k).
       price: new Intl.NumberFormat(locale, { style: 'currency', currency, currencyDisplay: 'narrowSymbol', maximumFractionDigits: 0 }),
       symbol: currencySymbol(currency, locale)
@@ -137,10 +169,10 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
   };
 
   const priceFor = (key: DateKey) =>
-    listing?.basePrice !== undefined ? nightlyPrice(listing.basePrice, listing.weekendAdjustment, key) : undefined;
+    listing?.basePrice !== undefined ? priceOverrides.get(key) ?? nightlyPrice(listing.basePrice, listing.weekendAdjustment, key) : undefined;
 
   return (
-    <section className={cn('flex min-h-0 flex-col bg-[var(--color-surface)] text-[var(--color-text-primary)]', className)}>
+    <section className={cn('flex min-h-0 flex-col bg-[var(--color-surface)] text-[90%] text-[var(--color-text-primary)]', className)}>
       <header className="flex h-14 shrink-0 items-center gap-2 border-b border-[var(--color-border-subtle)] px-4 md:h-16">
         <div className="relative flex min-w-0 flex-1 items-center gap-2.5">
           {listing?.coverImageUrl ? (
@@ -148,7 +180,7 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
           ) : (
             <span aria-hidden="true" className="h-8 w-8 shrink-0 rounded-md bg-[var(--color-surface-muted)]" />
           )}
-          <span className="truncate text-[17px] font-semibold">
+          <span className="truncate text-[15.3px] font-semibold">
             {isLoading ? <span className="inline-block h-4 w-36 animate-pulse rounded-full bg-[var(--color-surface-muted)] align-middle" /> : listing?.title ?? t('calendar.noListings')}
           </span>
           {listings.length > 1 ? (
@@ -189,12 +221,12 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
         <div
           ref={scrollRef}
           onScroll={updateScrollState}
-          className="h-full overflow-y-auto overscroll-contain pb-24 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className={cn('h-full overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden', selectedKey ? 'pb-72' : 'pb-24')}
         >
           <div ref={stickyRef} className="sticky top-0 z-10 bg-[var(--color-surface)] px-4 pt-3 md:px-6">
             <div className="flex items-center gap-3">
               <div className="relative inline-flex items-center gap-1">
-                <span className="text-[22px] font-semibold leading-8 tracking-[-0.02em]">{monthLabel(months[visibleMonthIndex])}</span>
+                <span className="text-[18.414px] font-semibold leading-8 tracking-[-0.02em]">{monthLabel(months[visibleMonthIndex])}</span>
                 <ChevronDown className="h-5 w-5" aria-hidden="true" />
                 <select
                   aria-label={t('calendar.chooseMonth')}
@@ -206,7 +238,7 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
                 </select>
               </div>
             </div>
-            <div aria-hidden="true" className="mt-2 grid grid-cols-7 border-b border-[var(--color-border-subtle)] pb-2 text-center text-[13px] text-[var(--color-text-secondary)]">
+            <div aria-hidden="true" className="mt-2 grid grid-cols-7 border-b border-[var(--color-border-subtle)] pb-2 text-center text-[11.7px] text-[var(--color-text-secondary)]">
               {weekdays.map((weekday, index) => <span key={index}>{weekday}</span>)}
             </div>
           </div>
@@ -220,13 +252,14 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
               aria-label={formatters.monthYear.format(new Date(Date.UTC(month.year, month.month, 1)))}
               className="px-1.5 pt-8 md:px-4"
             >
-              <h2 className="px-2.5 pb-4 text-[26px] font-semibold leading-8 tracking-[-0.02em] md:px-2">{monthLabel(month)}</h2>
+              <h2 className="px-2.5 pb-4 text-[21.762px] font-semibold leading-8 tracking-[-0.02em] md:px-2">{monthLabel(month)}</h2>
               <div className="grid grid-cols-7 gap-1 md:gap-1.5">
                 {monthGrid(month).map((key, index) => {
                   if (!key) return <span key={`blank-${index}`} aria-hidden="true" />;
                   const isPast = key < today;
                   const isToday = key === today;
                   const isSelected = key === selectedKey;
+                  const isBlocked = !isPast && blockedKeys.has(key);
                   const price = priceFor(key);
                   const dateLabel = formatters.fullDate.format(utcDate(key));
                   return (
@@ -237,13 +270,15 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
                       disabled={isPast}
                       aria-pressed={isPast ? undefined : isSelected}
                       aria-current={isToday ? 'date' : undefined}
-                      aria-label={[dateLabel, price !== undefined ? formatters.price.format(price) : null, isPast ? t('calendar.unavailable') : null].filter(Boolean).join(', ')}
+                      aria-label={[dateLabel, price !== undefined ? formatters.price.format(price) : null, isPast ? t('calendar.unavailable') : null, isBlocked ? t('calendar.dayPanel.blocked') : null].filter(Boolean).join(', ')}
                       onClick={() => setSelectedKey(isSelected ? null : key)}
                       className={cn(
-                        'flex h-20 min-w-0 flex-col items-center rounded-md border pt-2.5 text-[13px] transition-colors md:h-24 md:text-sm',
+                        'flex h-20 min-w-0 flex-col items-center rounded-md border pt-2.5 text-[11.7px] transition-colors md:h-24 md:text-[12.6px]',
                         isPast && 'cursor-default border-transparent bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)]',
-                        !isPast && !isSelected && 'border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-text-secondary)]',
-                        isSelected && 'border-[var(--color-text-secondary)] bg-[var(--color-border-subtle)]'
+                        !isPast && !isSelected && !isBlocked && 'border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-text-secondary)]',
+                        !isSelected && isBlocked && 'border-[var(--color-border)] bg-[var(--color-surface-muted)] text-[var(--color-text-secondary)] line-through',
+                        isSelected && 'border-transparent bg-[var(--color-inversurface)] text-[var(--color-surface)]',
+                        isSelected && isBlocked && 'line-through'
                       )}
                     >
                       <span
@@ -255,7 +290,7 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
                         {parseDateKey(key).day}
                       </span>
                       {price !== undefined ? (
-                        <span className="mt-3 max-w-full truncate px-0.5 text-[12px] font-medium md:text-[13px]">
+                        <span className="mt-3 max-w-full truncate px-0.5 text-[10.8px] font-medium md:text-[11.7px]">
                           <span className="opacity-70">{formatters.symbol}</span> {formatCompactAmount(price, locale)}
                         </span>
                       ) : null}
@@ -267,16 +302,55 @@ export function HostCalendar({ listings, isLoading = false, onOpenListings, clas
           ))}
         </div>
 
-        <button
-          type="button"
-          onClick={scrollToToday}
-          aria-label={t('calendar.jumpToToday')}
-          className="absolute bottom-4 right-4 z-20 inline-flex h-11 items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-surface)] px-5 text-[15px] font-semibold shadow-[var(--shadow-lg)] transition active:scale-[0.98]"
-        >
-          {todayIsAbove ? <ArrowUp className="h-5 w-5" aria-hidden="true" /> : <ArrowDown className="h-5 w-5" aria-hidden="true" />}
-          {t('nav.today')}
-        </button>
+        {selectedKey ? (
+          <CalendarDayPanel
+            key={selectedKey}
+            dateLabel={formatters.shortDate.format(utcDate(selectedKey))}
+            fullDateLabel={formatters.fullDate.format(utcDate(selectedKey))}
+            isBlocked={blockedKeys.has(selectedKey)}
+            onBlockedChange={(blocked) => setBlocked(selectedKey, blocked)}
+            price={(() => {
+              const price = priceFor(selectedKey);
+              return price === undefined ? undefined : { symbol: formatters.symbol, amount: formatCompactAmount(price, locale), label: formatters.price.format(price) };
+            })()}
+            onEditPrice={() => setPriceSheetOpen(true)}
+            onClose={() => setSelectedKey(null)}
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={scrollToToday}
+            aria-label={t('calendar.jumpToToday')}
+            className="absolute bottom-4 right-4 z-20 inline-flex h-11 items-center gap-2 rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-surface)] px-5 text-[13.5px] font-semibold shadow-[var(--shadow-lg)] transition active:scale-[0.98]"
+          >
+            {todayIsAbove ? <ArrowUp className="h-5 w-5" aria-hidden="true" /> : <ArrowDown className="h-5 w-5" aria-hidden="true" />}
+            {t('nav.today')}
+          </button>
+        )}
       </div>
+
+      {selectedKey && listing?.basePrice !== undefined ? (
+        <NightPriceSheet
+          open={priceSheetOpen}
+          dateLabel={formatters.shortDate.format(utcDate(selectedKey))}
+          price={priceFor(selectedKey) ?? listing.basePrice}
+          basePrice={listing.basePrice}
+          weekendAdjustment={isWeekendNight(selectedKey) ? listing.weekendAdjustment : 0}
+          isCustom={priceOverrides.has(selectedKey)}
+          currency={listing.currency}
+          locale={locale}
+          formatPrice={(value) => formatters.price.format(value)}
+          onClose={() => setPriceSheetOpen(false)}
+          onSave={(price) => {
+            setPriceOverride(selectedKey, price);
+            setPriceSheetOpen(false);
+          }}
+          onReset={() => {
+            setPriceOverride(selectedKey, null);
+            setPriceSheetOpen(false);
+          }}
+        />
+      ) : null}
     </section>
   );
 }

@@ -12,7 +12,7 @@ export function ProtectedRoute() {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to={ROUTES.login} replace state={{ from: location }} />;
+    return <Navigate to={ROUTES.home} replace state={{ authRequired: true, from: location }} />;
   }
 
   return <Outlet />;

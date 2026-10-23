@@ -34,7 +34,8 @@ export type ListingDetailView = {
   highlights: SampleHighlight[];
   hostName: string | null;
   isStay: boolean;
-  basics: { bedrooms: number; beds: number };
+  isOwnedByCurrentUser: boolean;
+  basics: { guests: number; bedrooms: number; beds: number };
   amenityGroups: DetailAmenityGroup[];
   amenityCount: number;
   place: { label: string; city: string; center: MapPoint };
@@ -100,7 +101,8 @@ export function useListingDetailView(published: PublishedListingDetail | null, s
         highlights: category ? [{ icon: category.icon, title: type, description: t(`listingDetail.categoryHighlights.${published.category}`) }] : [],
         hostName: published.hostFirstName,
         isStay,
-        basics: { bedrooms: published.basics.bedrooms, beds: published.basics.beds },
+        isOwnedByCurrentUser: published.isOwnedByCurrentUser,
+        basics: { guests: published.basics.guests, bedrooms: published.basics.bedrooms, beds: published.basics.beds },
         amenityGroups,
         amenityCount: amenityGroups.reduce((total, group) => total + group.amenities.length, 0),
         place: { label: published.location, city, center: published.coordinates ?? DEFAULT_MAP_VIEW.center },
@@ -131,7 +133,8 @@ export function useListingDetailView(published: PublishedListingDetail | null, s
       highlights: sampleHighlights,
       hostName: sample.host ?? sampleHost.name,
       isStay: true,
-      basics: { bedrooms: sampleBasics.bedrooms, beds: sampleBasics.beds },
+      isOwnedByCurrentUser: false,
+      basics: { guests: sampleBasics.guests, bedrooms: sampleBasics.bedrooms, beds: sampleBasics.beds },
       amenityGroups,
       amenityCount: amenityGroups.reduce((total, group) => total + group.amenities.length, 0),
       place: { label: DEFAULT_MAP_VIEW.label, city: 'Kinshasa', center: DEFAULT_MAP_VIEW.center },

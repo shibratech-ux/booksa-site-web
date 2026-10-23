@@ -14,6 +14,7 @@ export function useAuth() {
   const navigate = useNavigate();
 
   const login = async (credentials: AuthCredentials) => {
+    const previousStatus = useAuthStore.getState().status;
     auth.setStatus('loading');
 
     try {
@@ -21,7 +22,7 @@ export function useAuth() {
       auth.setUser(response.user, response.token);
       return response;
     } catch (error) {
-      auth.setStatus('anonymous');
+      auth.setStatus(previousStatus === 'authenticated' ? 'authenticated' : 'anonymous');
       throw error;
     }
   };
@@ -34,6 +35,7 @@ export function useAuth() {
   };
 
   const loginWithGoogle = async () => {
+    const previousStatus = useAuthStore.getState().status;
     auth.setStatus('loading');
 
     try {
@@ -41,7 +43,7 @@ export function useAuth() {
       auth.setUser(response.user, response.token);
       return response;
     } catch (error) {
-      auth.setStatus('anonymous');
+      auth.setStatus(previousStatus === 'authenticated' ? 'authenticated' : 'anonymous');
       logFirebaseAuthError('Google sign-in failed:', error);
       throw error;
     }

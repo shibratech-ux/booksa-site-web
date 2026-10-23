@@ -21,6 +21,7 @@ import {
   Star,
   Menu
 } from 'lucide-react';
+import { AuthRequiredSheet } from '@/components/auth/AuthRequiredSheet';
 import { SearchDialog } from '@/components/home/SearchDialog';
 import { BackButton } from '@/components/ui/BackButton';
 import { Modal } from '@/components/ui/Modal';
@@ -31,6 +32,7 @@ import { BooksaMap, type BooksaMapMarker } from '@/components/maps/BooksaMap';
 import { Button } from '@/components/ui/Button';
 import { ShimmerImage } from '@/components/ui/ShimmerImage';
 import { useAuth } from '@/hooks/useAuth';
+import { useAuthGate } from '@/hooks/useAuthGate';
 import type { Listing } from './listing.types';
 import { useTheme } from '@/theme/useTheme';
 import { ROUTES } from '@/utils/constants';
@@ -533,6 +535,7 @@ function StayCard({ stay }: { stay: Stay }) {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [saved, setSaved] = useState(false);
+  const { requireAuth, authSheet } = useAuthGate();
 
   const listing: Listing = {
     badge: stay.badge,
@@ -602,7 +605,7 @@ function StayCard({ stay }: { stay: Stay }) {
           aria-pressed={saved}
           onClick={(event) => {
             event.stopPropagation();
-            setSaved((value) => !value);
+            if (requireAuth()) setSaved((value) => !value);
           }}
           className="absolute right-2 top-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-white bg-[var(--color-overlay)] transition hover:scale-105"
         >
@@ -648,6 +651,7 @@ function StayCard({ stay }: { stay: Stay }) {
         <p className="mt-1.5"><span className="font-semibold underline underline-offset-2">{formatTwoNightPriceInCdf(stay.price)}</span> <span style={{ color: theme.colors.textSecondary }}>{t('mapResults.nights', { count: stay.nights })}</span></p>
         <span className="mt-1 inline-flex rounded-pill bg-[var(--color-surface-muted)] px-1.5 py-0.5 text-xs font-medium text-[var(--color-text-secondary)]">{t('mapResults.freeCancellation')}</span>
       </div>
+      <AuthRequiredSheet {...authSheet} />
     </article>
   );
 }

@@ -202,7 +202,7 @@ function ListingCover({
   );
 }
 
-function MobileAttentionCard({ onClick, className = '' }: { onClick: () => void; className?: string }) {
+function MobileAttentionCard({ onClick, className = '', compactText = false }: { onClick: () => void; className?: string; compactText?: boolean }) {
   const { t } = useTranslation('dashboard');
 
   return (
@@ -214,11 +214,11 @@ function MobileAttentionCard({ onClick, className = '' }: { onClick: () => void;
       <span className="relative flex h-10 w-10 shrink-0 items-center justify-center">
         <span className="text-2xl" aria-hidden="true">📅</span>
         <ThreeDIcon name="attentionCalendar" sourceSize={60} className="absolute inset-0 h-full w-full object-contain" />
-        <span className="absolute -left-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-neutral-900 px-1 text-xs font-bold text-white">4</span>
+        <span className={`absolute -left-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-neutral-900 px-1 font-bold text-white ${compactText ? 'text-[10.8px]' : 'text-xs'}`}>4</span>
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[15px] font-semibold leading-5">{t('attention.title')}</span>
-        <span className="mt-0.5 block text-sm leading-5 text-[var(--color-text-secondary)]">{t('attention.subtitle')}</span>
+        <span className={`block font-semibold leading-5 ${compactText ? 'text-[13.5px]' : 'text-[15px]'}`}>{t('attention.title')}</span>
+        <span className={`mt-0.5 block leading-5 text-[var(--color-text-secondary)] ${compactText ? 'text-[12.6px]' : 'text-sm'}`}>{t('attention.subtitle')}</span>
       </span>
     </button>
   );
@@ -280,10 +280,12 @@ function ListingsView({ createdListingId, onOpenCalendar }: { createdListingId?:
     listing.status === 'draft' || listing.status === 'in-progress';
 
   const isActionRequired = (listing: ListingDraft) => listing.status === 'action-required';
+  // "Ready for guests" listings reopen in the same editor so hosts can keep improving them (photos, title, price…).
+  const isReadyForGuests = (listing: ListingDraft) => listing.status === 'published';
   const isListingInteractive = (listing: ListingDraft) =>
-    isInProgress(listing) || isActionRequired(listing);
+    isInProgress(listing) || isActionRequired(listing) || isReadyForGuests(listing);
   // Deployed from the listing editor (`action-required → published`).
-  const readyListings = visibleListings.filter((listing) => listing.status === 'published');
+  const readyListings = visibleListings.filter(isReadyForGuests);
   const actionRequiredListings = visibleListings.filter(isActionRequired);
   const inProgressListings = visibleListings.filter(isInProgress);
   const activeListings = visibleListings.filter((listing) => listing.status === 'active');
@@ -341,7 +343,7 @@ function ListingsView({ createdListingId, onOpenCalendar }: { createdListingId?:
 
       if (isInProgress(currentListing)) {
         setSelectedListing(currentListing);
-      } else if (isActionRequired(currentListing)) {
+      } else if (isActionRequired(currentListing) || isReadyForGuests(currentListing)) {
         setActionRequiredListing(currentListing);
       } else {
         toast.error('This listing is no longer available for editing here.');
@@ -721,7 +723,7 @@ function CalendarView({ onOpenListings }: { onOpenListings: () => void }) {
   return (
     <div className="flex h-[calc(100dvh-72px-env(safe-area-inset-bottom))] flex-col md:mx-auto md:h-[calc(100dvh-96px)] md:max-w-3xl">
       <HostCalendar listings={listings} isLoading={isLoading} onOpenListings={onOpenListings} className="flex-1" />
-      <MobileAttentionCard onClick={onOpenListings} className="shrink-0 md:hidden" />
+      <MobileAttentionCard onClick={onOpenListings} className="shrink-0 md:hidden" compactText />
     </div>
   );
 }
@@ -923,7 +925,7 @@ export default function HostListingsPage() {
                     : 'text-[var(--color-text-secondary)]'
                 }`}
               >
-                {t(item.labelKey)}
+                <span className={item.id === 'calendar' ? 'text-[0.85em]' : undefined}>{t(item.labelKey)}</span>
               </button>
             ))}
           </nav>
@@ -1077,7 +1079,7 @@ export default function HostListingsPage() {
               className={`flex flex-col items-center justify-center gap-1.5 rounded-button text-[11px] font-medium transition-colors hover:bg-[var(--color-surface-muted)] ${isActive ? 'font-semibold text-[var(--color-primary-500)]' : 'text-[var(--color-text-secondary)]'}`}
             >
               <Icon className="h-5 w-5 stroke-[1.5]" aria-hidden="true" />
-              <span>{t(labelKey)}</span>
+              <span className={id === 'calendar' ? 'text-[0.85em]' : undefined}>{t(labelKey)}</span>
             </button>
           );
         })}

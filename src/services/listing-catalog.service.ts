@@ -22,6 +22,7 @@ export type PublishedListingSummary = {
 
 /** Everything the guest listing page needs. Host details are limited to a first name. */
 export type PublishedListingDetail = PublishedListingSummary & {
+  isOwnedByCurrentUser: boolean;
   description: string;
   listingOption: string;
   placeAccess: string;
@@ -62,7 +63,7 @@ const count = (value: unknown) => typeof value === 'number' && Number.isInteger(
 const firstName = (user: Record<string, unknown>) =>
   text(user.preferredFirstName) ?? text(user.firstName) ?? text(user.name)?.split(/\s+/)[0] ?? null;
 
-function toDetail(id: string, data: Record<string, unknown>): PublishedListingDetail | null {
+function toDetail(id: string, data: Record<string, unknown>, currentUserUid: string): PublishedListingDetail | null {
   const summary = toSummary(id, data);
   if (!summary) return null;
   const flowDraft = record(data.flowDraft);
@@ -75,6 +76,7 @@ function toDetail(id: string, data: Record<string, unknown>): PublishedListingDe
     Math.abs(latitude) <= 90 && Math.abs(longitude) <= 180;
   return {
     ...summary,
+    isOwnedByCurrentUser: data.ownerUid === currentUserUid,
     description: text(flowDraft.listingDescription) ?? text(data.description) ?? '',
     listingOption: text(flowDraft.listingOption) ?? '',
     placeAccess: text(flowDraft.placeAccess) ?? '',
@@ -99,7 +101,7 @@ export async function getPublishedListingDetail(listingId: string): Promise<Publ
     if (firebaseAuth?.currentUser !== currentUser) throw new Error(LOAD_ERROR);
     if (!snapshot.exists()) return null;
     const data = snapshot.data();
-    return data.status === 'published' ? toDetail(snapshot.id, data) : null;
+    return data.status === 'published' ? toDetail(snapshot.id, data, currentUser.uid) : null;
   } catch {
     throw new Error(LOAD_ERROR);
   }
