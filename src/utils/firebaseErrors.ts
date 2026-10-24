@@ -1,5 +1,7 @@
 type FirebaseLikeError = { code?: unknown; message?: unknown };
 
+import { FirebaseError } from 'firebase/app';
+
 const AUTH_ERROR_KEYS = {
   'auth/invalid-credential': 'auth.invalidCredential',
   'auth/user-not-found': 'auth.userNotFound',
@@ -7,7 +9,16 @@ const AUTH_ERROR_KEYS = {
   'auth/email-already-in-use': 'auth.emailInUse',
   'auth/too-many-requests': 'auth.tooManyRequests',
   'auth/network-request-failed': 'auth.network',
-  'auth/requires-recent-login': 'auth.requiresRecentLogin'
+  'auth/requires-recent-login': 'auth.requiresRecentLogin',
+  'auth/popup-closed-by-user': 'auth.popupClosed',
+  'auth/popup-blocked': 'auth.popupBlocked',
+  'auth/cancelled-popup-request': 'auth.cancelledPopup',
+  'auth/unauthorized-domain': 'auth.unauthorizedDomain',
+  'auth/operation-not-allowed': 'auth.operationNotAllowed',
+  'auth/account-exists-with-different-credential': 'auth.accountExistsWithDifferentCredential',
+  'auth/user-disabled': 'auth.userDisabled',
+  'auth/invalid-api-key': 'auth.invalidApiKey',
+  'auth/app-not-authorized': 'auth.appNotAuthorized'
 } as const;
 
 export type FirebaseAuthErrorKey =
@@ -23,15 +34,19 @@ export function getFirebaseAuthErrorKey(error: unknown): FirebaseAuthErrorKey {
 }
 
 export function logFirebaseAuthError(context: string, error: unknown): void {
-  if (!import.meta.env.DEV) return;
-
-  const firebaseError =
-    error && typeof error === 'object' ? (error as FirebaseLikeError) : null;
-  const code = typeof firebaseError?.code === 'string' ? firebaseError.code : 'unknown';
-  const message =
-    typeof firebaseError?.message === 'string'
-      ? firebaseError.message
-      : 'No Firebase error message was provided.';
-
-  console.error(context, code, message);
+  if (error instanceof FirebaseError) {
+    console.error(`[Firebase Auth Error] ${context}`, {
+      code: error.code,
+      message: error.message,
+      name: error.name
+    });
+  } else if (error && typeof error === 'object') {
+    const errObj = error as FirebaseLikeError;
+    console.error(`[Auth Error] ${context}`, {
+      code: typeof errObj.code === 'string' ? errObj.code : 'unknown',
+      message: typeof errObj.message === 'string' ? errObj.message : 'Unknown error'
+    });
+  } else {
+    console.error(`[Auth Error] ${context}`, error);
+  }
 }

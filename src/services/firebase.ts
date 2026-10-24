@@ -12,19 +12,29 @@ const firebaseConfig: FirebaseOptions = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID?.trim()
 };
 
+const requiredKeys = ['apiKey', 'authDomain', 'projectId', 'appId'] as const;
 const missingFirebaseConfigKeys = Object.entries(firebaseConfig)
-  .filter(([, value]) => !value)
+  .filter(([key, value]) => requiredKeys.includes(key as typeof requiredKeys[number]) && !value)
   .map(([key]) => key);
 const isConfigured = missingFirebaseConfigKeys.length === 0;
-const hasDefaultApp = getApps().some(({ name }) => name === '[DEFAULT]');
+const existingApps = getApps();
+const hasDefaultApp = existingApps.some(({ name }) => name === '[DEFAULT]');
 
-const app: FirebaseApp | null =
-  hasDefaultApp ? getApp() : isConfigured ? initializeApp(firebaseConfig) : null;
+let app: FirebaseApp | null = null;
+try {
+  app = hasDefaultApp ? getApp() : isConfigured ? initializeApp(firebaseConfig) : null;
+} catch (error) {
+  console.error('Firebase initialization error:', error);
+}
 
-if (import.meta.env.DEV && !app) {
-  console.warn(
-    `Firebase was not initialized. Missing configuration: ${missingFirebaseConfigKeys.join(', ')}.`
-  );
+if (!app) {
+  if (missingFirebaseConfigKeys.length > 0) {
+    console.warn(
+      `Firebase missing required configuration variables: ${missingFirebaseConfigKeys.join(', ')}.`
+    );
+  } else if (!isConfigured) {
+    console.warn('Firebase configuration is invalid or incomplete.');
+  }
 }
 
 export const firebaseApp = app;
